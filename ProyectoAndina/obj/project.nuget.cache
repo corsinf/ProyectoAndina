@@ -1,0 +1,65 @@
+{
+  "version": 2,
+  "dgSpecHash": "qZEx10+XQEM=",
+  "success": true,
+  "projectFilePath": "C:\\Users\\AdministradorElvis\\source\\repos\\ProyectoAndina\\ProyectoAndina\\ProyectoAndina.csproj",
+  "expectedPackageFiles": [
+    "C:\\Users\\AdministradorElvis\\.nuget\\packages\\bcrypt\\1.0.0\\bcrypt.1.0.0.nupkg.sha512",
+    "C:\\Users\\AdministradorElvis\\.nuget\\packages\\bcrypt.net-next\\4.0.3\\bcrypt.net-next.4.0.3.nupkg.sha512",
+    "C:\\Users\\AdministradorElvis\\.nuget\\packages\\bouncycastle.cryptography\\2.4.0\\bouncycastle.cryptography.2.4.0.nupkg.sha512",
+    "C:\\Users\\AdministradorElvis\\.nuget\\packages\\fontawesome.sharp\\6.6.0\\fontawesome.sharp.6.6.0.nupkg.sha512",
+    "C:\\Users\\AdministradorElvis\\.nuget\\packages\\guna.ui2.winforms\\2.0.4.7\\guna.ui2.winforms.2.0.4.7.nupkg.sha512",
+    "C:\\Users\\AdministradorElvis\\.nuget\\packages\\itextsharp\\5.5.13.4\\itextsharp.5.5.13.4.nupkg.sha512",
+    "C:\\Users\\AdministradorElvis\\.nuget\\packages\\krypton.toolkit\\95.25.8.235\\krypton.toolkit.95.25.8.235.nupkg.sha512",
+    "C:\\Users\\AdministradorElvis\\.nuget\\packages\\mindfusion.keyboard\\5.0.2\\mindfusion.keyboard.5.0.2.nupkg.sha512",
+    "C:\\Users\\AdministradorElvis\\.nuget\\packages\\mindfusion.keyboard.wpf\\5.1.0\\mindfusion.keyboard.wpf.5.1.0.nupkg.sha512",
+    "C:\\Users\\AdministradorElvis\\.nuget\\packages\\mindfusion.pack.winforms\\2025.1.0\\mindfusion.pack.winforms.2025.1.0.nupkg.sha512",
+    "C:\\Users\\AdministradorElvis\\.nuget\\packages\\newtonsoft.json\\13.0.3\\newtonsoft.json.13.0.3.nupkg.sha512",
+    "C:\\Users\\AdministradorElvis\\.nuget\\packages\\runtime.native.system.data.sqlclient.sni\\4.4.0\\runtime.native.system.data.sqlclient.sni.4.4.0.nupkg.sha512",
+    "C:\\Users\\AdministradorElvis\\.nuget\\packages\\runtime.win-arm64.runtime.native.system.data.sqlclient.sni\\4.4.0\\runtime.win-arm64.runtime.native.system.data.sqlclient.sni.4.4.0.nupkg.sha512",
+    "C:\\Users\\AdministradorElvis\\.nuget\\packages\\runtime.win-x64.runtime.native.system.data.sqlclient.sni\\4.4.0\\runtime.win-x64.runtime.native.system.data.sqlclient.sni.4.4.0.nupkg.sha512",
+    "C:\\Users\\AdministradorElvis\\.nuget\\packages\\runtime.win-x86.runtime.native.system.data.sqlclient.sni\\4.4.0\\runtime.win-x86.runtime.native.system.data.sqlclient.sni.4.4.0.nupkg.sha512",
+    "C:\\Users\\AdministradorElvis\\.nuget\\packages\\system.codedom\\7.0.0\\system.codedom.7.0.0.nupkg.sha512",
+    "C:\\Users\\AdministradorElvis\\.nuget\\packages\\system.data.sqlclient\\4.9.0\\system.data.sqlclient.4.9.0.nupkg.sha512",
+    "C:\\Users\\AdministradorElvis\\.nuget\\packages\\system.management\\7.0.0\\system.management.7.0.0.nupkg.sha512",
+    "C:\\Users\\AdministradorElvis\\.nuget\\packages\\tulpep.notificationwindow\\1.1.38\\tulpep.notificationwindow.1.1.38.nupkg.sha512"
+  ],
+  "logs": [
+    {
+      "code": "NU1701",
+      "level": "Warning",
+      "message": "El paquete \"BCrypt 1.0.0\" se restauró con \".NETFramework,Version=v4.6.1, .NETFramework,Version=v4.6.2, .NETFramework,Version=v4.7, .NETFramework,Version=v4.7.1, .NETFramework,Version=v4.7.2, .NETFramework,Version=v4.8, .NETFramework,Version=v4.8.1\" en lugar de la plataforma de destino del proyecto \"net8.0-windows7.0\". Puede que el paquete no sea totalmente compatible con el proyecto.",
+      "projectPath": "C:\\Users\\AdministradorElvis\\source\\repos\\ProyectoAndina\\ProyectoAndina\\ProyectoAndina.csproj",
+      "warningLevel": 1,
+      "filePath": "C:\\Users\\AdministradorElvis\\source\\repos\\ProyectoAndina\\ProyectoAndina\\ProyectoAndina.csproj",
+      "libraryId": "BCrypt",
+      "targetGraphs": [
+        "net8.0-windows7.0"
+      ]
+    },
+    {
+      "code": "NU1701",
+      "level": "Warning",
+      "message": "El paquete \"iTextSharp 5.5.13.4\" se restauró con \".NETFramework,Version=v4.6.1, .NETFramework,Version=v4.6.2, .NETFramework,Version=v4.7, .NETFramework,Version=v4.7.1, .NETFramework,Version=v4.7.2, .NETFramework,Version=v4.8, .NETFramework,Version=v4.8.1\" en lugar de la plataforma de destino del proyecto \"net8.0-windows7.0\". Puede que el paquete no sea totalmente compatible con el proyecto.",
+      "projectPath": "C:\\Users\\AdministradorElvis\\source\\repos\\ProyectoAndina\\ProyectoAndina\\ProyectoAndina.csproj",
+      "warningLevel": 1,
+      "filePath": "C:\\Users\\AdministradorElvis\\source\\repos\\ProyectoAndina\\ProyectoAndina\\ProyectoAndina.csproj",
+      "libraryId": "iTextSharp",
+      "targetGraphs": [
+        "net8.0-windows7.0"
+      ]
+    },
+    {
+      "code": "NU1701",
+      "level": "Warning",
+      "message": "El paquete \"Tulpep.NotificationWindow 1.1.38\" se restauró con \".NETFramework,Version=v4.6.1, .NETFramework,Version=v4.6.2, .NETFramework,Version=v4.7, .NETFramework,Version=v4.7.1, .NETFramework,Version=v4.7.2, .NETFramework,Version=v4.8, .NETFramework,Version=v4.8.1\" en lugar de la plataforma de destino del proyecto \"net8.0-windows7.0\". Puede que el paquete no sea totalmente compatible con el proyecto.",
+      "projectPath": "C:\\Users\\AdministradorElvis\\source\\repos\\ProyectoAndina\\ProyectoAndina\\ProyectoAndina.csproj",
+      "warningLevel": 1,
+      "filePath": "C:\\Users\\AdministradorElvis\\source\\repos\\ProyectoAndina\\ProyectoAndina\\ProyectoAndina.csproj",
+      "libraryId": "Tulpep.NotificationWindow",
+      "targetGraphs": [
+        "net8.0-windows7.0"
+      ]
+    }
+  ]
+}

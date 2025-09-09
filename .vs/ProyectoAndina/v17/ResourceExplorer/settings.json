@@ -1,0 +1,30 @@
+{
+  "ShowEmptyProjects": false,
+  "SelectedGroups": [
+    "C:\\Users\\AdministradorElvis\\source\\repos\\ProyectoAndina\\ProyectoAndina\\Views\\Modulo_Persona.resx",
+    "C:\\Users\\AdministradorElvis\\source\\repos\\ProyectoAndina\\ProyectoAndina\\Views\\RolForm.resx",
+    "C:\\Users\\AdministradorElvis\\source\\repos\\ProyectoAndina\\ProyectoAndina\\.resx",
+    "C:\\Users\\AdministradorElvis\\source\\repos\\ProyectoAndina\\ProyectoAndina\\Views\\PersonaForm.resx",
+    "C:\\Users\\AdministradorElvis\\source\\repos\\ProyectoAndina\\ProyectoAndina\\Views\\RegistroForm.resx",
+    "C:\\Users\\AdministradorElvis\\source\\repos\\ProyectoAndina\\ProyectoAndina\\Properties\\Resources.resx",
+    "C:\\Users\\AdministradorElvis\\source\\repos\\ProyectoAndina\\ProyectoAndina\\Views\\LoginForm.resx",
+    "C:\\Users\\AdministradorElvis\\source\\repos\\ProyectoAndina\\ProyectoAndina\\Views\\MenuPrincipalForm.resx",
+    "C:\\Users\\AdministradorElvis\\source\\repos\\ProyectoAndina\\ProyectoAndina\\Views\\PersonaRolForm.resx",
+    "C:\\Users\\AdministradorElvis\\source\\repos\\ProyectoAndina\\ProyectoAndina\\Views\\Vista_General.resx"
+  ],
+  "ExpandedProjects": [],
+  "EnableSpellChecker": true,
+  "ColumnOrder": [
+    "name",
+    "type",
+    "neutral-value",
+    "neutral-comment",
+    "file-path",
+    "file-name"
+  ],
+  "VisibleColumnKeys": [
+    "name",
+    "neutral-comment",
+    "neutral-value"
+  ]
+}
