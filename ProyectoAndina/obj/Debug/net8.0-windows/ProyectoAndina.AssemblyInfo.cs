@@ -14,7 +14,7 @@ using System.Reflection;
 [assembly: System.Reflection.AssemblyCompanyAttribute("ProyectoAndina")]
 [assembly: System.Reflection.AssemblyConfigurationAttribute("Debug")]
 [assembly: System.Reflection.AssemblyFileVersionAttribute("1.0.0.0")]
-[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+b7361794842b3f203bd31e740daf84ebfc6883fd")]
+[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+2fbba123e3e85fac5803417fcccb7936b37c4dcc")]
 [assembly: System.Reflection.AssemblyProductAttribute("ProyectoAndina")]
 [assembly: System.Reflection.AssemblyTitleAttribute("ProyectoAndina")]
 [assembly: System.Reflection.AssemblyVersionAttribute("1.0.0.0")]

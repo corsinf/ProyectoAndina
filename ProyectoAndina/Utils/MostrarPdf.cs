@@ -10,61 +10,79 @@ namespace ProyectoAndina.Utils
     {
 
 
-        // 📌 Ticket Consumidor Final
-        public static void GenerarPDFConsumidorFinal()
+        public static void GenerarPDFTicket()
         {
-            string ruta = "ticket_consumidor_final.pdf";
+            string ruta = SessionFactura.EsConsumidorFinal ?
+                "ticket_consumidor_final.pdf" : "ticket_factura.pdf";
 
             // 📏 80mm ticket (226 puntos)
-            var pageSize = new iTextRectangle(226, 600);
+            var pageSize = new iTextRectangle(226, 650);
             Document doc = new Document(pageSize, 10, 10, 10, 10);
 
             PdfWriter.GetInstance(doc, new FileStream(ruta, FileMode.Create));
             doc.Open();
 
-            // 🏫 Encabezado
-            var titulo = new Paragraph("UNIVERSIDAD ANDINA SIMÓN BOLÍVAR\n",
+            // 🏫 Encabezado - Universidad
+            var universidad = new Paragraph("UNIVERSIDAD ANDINA SIMON BOLI",
+                new iTextFont(iTextFont.FontFamily.HELVETICA, 8, iTextFont.BOLD));
+            universidad.Alignment = Element.ALIGN_CENTER;
+            doc.Add(universidad);
+
+            // 📋 RUC y datos de contacto
+            doc.Add(new Paragraph("RUC 1791233417001",
+                new iTextFont(iTextFont.FontFamily.HELVETICA, 7))
+            { Alignment = Element.ALIGN_CENTER });
+            doc.Add(new Paragraph("Telefono Quito 1701143 Ecuador",
+                new iTextFont(iTextFont.FontFamily.HELVETICA, 7))
+            { Alignment = Element.ALIGN_CENTER });
+            doc.Add(new Paragraph("+593 86 307 2166",
+                new iTextFont(iTextFont.FontFamily.HELVETICA, 7))
+            { Alignment = Element.ALIGN_CENTER });
+            doc.Add(new Paragraph("Quito - Ecuador",
+                new iTextFont(iTextFont.FontFamily.HELVETICA, 7))
+            { Alignment = Element.ALIGN_CENTER });
+
+            // 🎯 DINERS CLUB (título del servicio)
+            var dinersClub = new Paragraph("\nDINERS CLUB\n",
                 new iTextFont(iTextFont.FontFamily.HELVETICA, 10, iTextFont.BOLD));
-            titulo.Alignment = Element.ALIGN_CENTER;
-            doc.Add(titulo);
+            dinersClub.Alignment = Element.ALIGN_CENTER;
+            doc.Add(dinersClub);
 
-            doc.Add(new Paragraph("RUC: 9999999999", new iTextFont(iTextFont.FontFamily.HELVETICA, 8)));
-            doc.Add(new Paragraph("Quito - Ecuador\n", new iTextFont(iTextFont.FontFamily.HELVETICA, 8)));
+            // 💳 Información de la tarjeta (si no es consumidor final)
+            if (!SessionFactura.EsConsumidorFinal && !string.IsNullOrEmpty(SessionFactura.NumeroTarjeta))
+            {
+                doc.Add(new Paragraph($"TARJETA    {SessionFactura.NumeroTarjeta}",
+                    new iTextFont(iTextFont.FontFamily.HELVETICA, 7)));
+                doc.Add(new Paragraph($"LOTE#      {SessionFactura.Lote}          REF {SessionFactura.Referencia}",
+                    new iTextFont(iTextFont.FontFamily.HELVETICA, 7)));
+                doc.Add(new Paragraph($"FECHA      {SessionFactura.FechaHora:dd/MM/yy}         HORA {SessionFactura.FechaHora:HH:mm}",
+                    new iTextFont(iTextFont.FontFamily.HELVETICA, 7)));
+                doc.Add(new Paragraph("", new iTextFont(iTextFont.FontFamily.HELVETICA, 4))); // Espaciado
+            }
 
-            var factura = new Paragraph("FACTURA\n",
+            // 🏷️ Sistema de pago
+            var datafast = new Paragraph($"{SessionFactura.SistemaPago}\n",
                 new iTextFont(iTextFont.FontFamily.HELVETICA, 9, iTextFont.BOLD));
-            factura.Alignment = Element.ALIGN_CENTER;
-            doc.Add(factura);
+            datafast.Alignment = Element.ALIGN_CENTER;
+            doc.Add(datafast);
 
-            // 👤 Datos fijos de consumidor final
-            doc.Add(new Paragraph("Cliente: CONSUMIDOR FINAL", new iTextFont(iTextFont.FontFamily.HELVETICA, 8)));
-            doc.Add(new Paragraph("CI/RUC: 9999999999\n", new iTextFont(iTextFont.FontFamily.HELVETICA, 8)));
+            // 💰 Desglose de consumos (formato como en la imagen)
+            doc.Add(new Paragraph($"BASE CONSUMO TARIFA 15      US$    {SessionFactura.BaseConsumoTarifa15:F2}",
+                new iTextFont(iTextFont.FontFamily.HELVETICA, 7)));
+            doc.Add(new Paragraph($"BASE CONSUMO TARIFA 0       US$    {SessionFactura.BaseConsumoTarifa0:F2}",
+                new iTextFont(iTextFont.FontFamily.HELVETICA, 7)));
+            doc.Add(new Paragraph($"SUBTOTAL CONSUMO            US$    {SessionFactura.SubtotalConsumo:F2}",
+                new iTextFont(iTextFont.FontFamily.HELVETICA, 7)));
+            doc.Add(new Paragraph($"IVA                         US$    {SessionFactura.IVA:F2}",
+                new iTextFont(iTextFont.FontFamily.HELVETICA, 7)));
 
-            // 📋 Tabla productos
-            PdfPTable tabla = new PdfPTable(4);
-            tabla.WidthPercentage = 100;
-            tabla.SetWidths(new float[] { 40, 15, 20, 25 });
+            // 📊 Total final
+            var totalFinal = new Paragraph($"VR TOTAL    US$                {SessionFactura.Total:F2}",
+                new iTextFont(iTextFont.FontFamily.HELVETICA, 8, iTextFont.BOLD));
+            doc.Add(totalFinal);
 
-            // Encabezado
-            tabla.AddCell(new PdfPCell(new Phrase("Producto", new iTextFont(iTextFont.FontFamily.HELVETICA, 7, iTextFont.BOLD))) { HorizontalAlignment = Element.ALIGN_CENTER });
-            tabla.AddCell(new PdfPCell(new Phrase("Cant", new iTextFont(iTextFont.FontFamily.HELVETICA, 7, iTextFont.BOLD))) { HorizontalAlignment = Element.ALIGN_CENTER });
-            tabla.AddCell(new PdfPCell(new Phrase("Precio", new iTextFont(iTextFont.FontFamily.HELVETICA, 7, iTextFont.BOLD))) { HorizontalAlignment = Element.ALIGN_CENTER });
-            tabla.AddCell(new PdfPCell(new Phrase("Total", new iTextFont(iTextFont.FontFamily.HELVETICA, 7, iTextFont.BOLD))) { HorizontalAlignment = Element.ALIGN_CENTER });
-
-            // Item ejemplo
-            tabla.AddCell(new Phrase("Parqueadero", new iTextFont(iTextFont.FontFamily.HELVETICA, 7)));
-            tabla.AddCell(new Phrase("1", new iTextFont(iTextFont.FontFamily.HELVETICA, 7)));
-            tabla.AddCell(new Phrase("1.00", new iTextFont(iTextFont.FontFamily.HELVETICA, 7)));
-            tabla.AddCell(new Phrase("1.00", new iTextFont(iTextFont.FontFamily.HELVETICA, 7)));
-
-            doc.Add(tabla);
-
-            // 💰 Total
-            doc.Add(new Paragraph("\nTOTAL: $1.00",
-                new iTextFont(iTextFont.FontFamily.HELVETICA, 9, iTextFont.BOLD)));
-
-            // 🙏 Gracias
-            var gracias = new Paragraph("\n¡Gracias por su compra!\n",
+            // 🙏 Mensaje de agradecimiento
+            var gracias = new Paragraph("\n...Gracias por su compra!",
                 new iTextFont(iTextFont.FontFamily.HELVETICA, 7, iTextFont.ITALIC));
             gracias.Alignment = Element.ALIGN_CENTER;
             doc.Add(gracias);
@@ -72,64 +90,28 @@ namespace ProyectoAndina.Utils
             doc.Close();
         }
 
-        // 📌 Ticket Factura con datos
+        // 🎯 MÉTODO ESPECÍFICO PARA CONSUMIDOR FINAL
+        public static void GenerarPDFConsumidorFinal()
+        {
+            // Configurar como consumidor final
+            SessionFactura.EsConsumidorFinal = true;
+            SessionFactura.ClienteNombre = "CONSUMIDOR FINAL";
+            SessionFactura.ClienteRuc = "9999999999";
+
+            // Generar el ticket
+            GenerarPDFTicket();
+        }
+
+        // 🎯 MÉTODO ESPECÍFICO PARA FACTURA CON DATOS
         public static void GenerarPDFFactura()
         {
-            string ruta = "ticket_factura.pdf";
+            // Configurar como factura normal
+            SessionFactura.EsConsumidorFinal = false;
 
-            var pageSize = new iTextRectangle(226, 600);
-            Document doc = new Document(pageSize, 10, 10, 10, 10);
-
-            PdfWriter.GetInstance(doc, new FileStream(ruta, FileMode.Create));
-            doc.Open();
-
-            // 🏫 Encabezado
-            var titulo = new Paragraph("UNIVERSIDAD ANDINA SIMÓN BOLÍVAR\n",
-                new iTextFont(iTextFont.FontFamily.HELVETICA, 10, iTextFont.BOLD));
-            titulo.Alignment = Element.ALIGN_CENTER;
-            doc.Add(titulo);
-
-            doc.Add(new Paragraph("RUC: 9999999999", new iTextFont(iTextFont.FontFamily.HELVETICA, 8)));
-            doc.Add(new Paragraph("Quito - Ecuador\n", new iTextFont(iTextFont.FontFamily.HELVETICA, 8)));
-
-            var factura = new Paragraph("FACTURA\n",
-                new iTextFont(iTextFont.FontFamily.HELVETICA, 9, iTextFont.BOLD));
-            factura.Alignment = Element.ALIGN_CENTER;
-            doc.Add(factura);
-
-            // 👤 Datos cliente
-            doc.Add(new Paragraph($"Cliente: {SessionFactura.ClienteNombre}", new iTextFont(iTextFont.FontFamily.HELVETICA, 8)));
-            doc.Add(new Paragraph($"CI/RUC: {SessionFactura.ClienteRuc}\n", new iTextFont(iTextFont.FontFamily.HELVETICA, 8)));
-
-            // 📋 Tabla
-            PdfPTable tabla = new PdfPTable(4);
-            tabla.WidthPercentage = 100;
-            tabla.SetWidths(new float[] { 40, 15, 20, 25 });
-
-            tabla.AddCell(new PdfPCell(new Phrase("Producto", new iTextFont(iTextFont.FontFamily.HELVETICA, 7, iTextFont.BOLD))) { HorizontalAlignment = Element.ALIGN_CENTER });
-            tabla.AddCell(new PdfPCell(new Phrase("Cant", new iTextFont(iTextFont.FontFamily.HELVETICA, 7, iTextFont.BOLD))) { HorizontalAlignment = Element.ALIGN_CENTER });
-            tabla.AddCell(new PdfPCell(new Phrase("Precio", new iTextFont(iTextFont.FontFamily.HELVETICA, 7, iTextFont.BOLD))) { HorizontalAlignment = Element.ALIGN_CENTER });
-            tabla.AddCell(new PdfPCell(new Phrase("Total", new iTextFont(iTextFont.FontFamily.HELVETICA, 7, iTextFont.BOLD))) { HorizontalAlignment = Element.ALIGN_CENTER });
-
-            tabla.AddCell(new Phrase(SessionFactura.Producto, new iTextFont(iTextFont.FontFamily.HELVETICA, 7)));
-            tabla.AddCell(new Phrase(SessionFactura.Cantidad.ToString(), new iTextFont(iTextFont.FontFamily.HELVETICA, 7)));
-            tabla.AddCell(new Phrase(SessionFactura.PrecioUnitario.ToString("C"), new iTextFont(iTextFont.FontFamily.HELVETICA, 7)));
-            tabla.AddCell(new Phrase(SessionFactura.Total.ToString("C"), new iTextFont(iTextFont.FontFamily.HELVETICA, 7)));
-
-            doc.Add(tabla);
-
-            // 💰 Total
-            doc.Add(new Paragraph($"\nTOTAL: {SessionFactura.Total:C}",
-                new iTextFont(iTextFont.FontFamily.HELVETICA, 9, iTextFont.BOLD)));
-
-            // 🙏 Gracias
-            var gracias = new Paragraph("\n¡Gracias por su compra!\n",
-                new iTextFont(iTextFont.FontFamily.HELVETICA, 7, iTextFont.ITALIC));
-            gracias.Alignment = Element.ALIGN_CENTER;
-            doc.Add(gracias);
-
-            doc.Close();
+            // Generar el ticket
+            GenerarPDFTicket();
         }
-    }
 
     }
+
+}

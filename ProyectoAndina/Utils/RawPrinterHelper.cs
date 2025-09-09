@@ -33,26 +33,37 @@ namespace ProyectoAndina.Utils
         [DllImport("winspool.Drv", EntryPoint = "ClosePrinter", SetLastError = true)]
         public static extern bool ClosePrinter(IntPtr hPrinter);
 
-        public static void SendBytesToPrinter(string printerName, byte[] bytes)
+        public static bool SendBytesToPrinter(string printerName, byte[] bytes)
         {
-            IntPtr hPrinter;
-            if (OpenPrinter(printerName, out hPrinter, IntPtr.Zero))
+            IntPtr hPrinter = IntPtr.Zero;
+            try
             {
-                StartDocPrinter(hPrinter, 1, IntPtr.Zero);
-                StartPagePrinter(hPrinter);
-
-                WritePrinter(hPrinter, bytes, bytes.Length, out int written);
-
-                EndPagePrinter(hPrinter);
-                EndDocPrinter(hPrinter);
-                ClosePrinter(hPrinter);
+                if (OpenPrinter(printerName, out hPrinter, IntPtr.Zero))
+                {
+                    if (StartDocPrinter(hPrinter, 1, IntPtr.Zero))
+                    {
+                        if (StartPagePrinter(hPrinter))
+                        {
+                            WritePrinter(hPrinter, bytes, bytes.Length, out int written);
+                            EndPagePrinter(hPrinter);
+                        }
+                        EndDocPrinter(hPrinter);
+                    }
+                    return true;
+                }
+                return false;
+            }
+            finally
+            {
+                if (hPrinter != IntPtr.Zero)
+                    ClosePrinter(hPrinter);
             }
         }
 
-        public static void SendStringToPrinter(string printerName, string texto)
+        public static bool SendStringToPrinter(string printerName, string texto)
         {
-            byte[] bytes = Encoding.ASCII.GetBytes(texto);
-            SendBytesToPrinter(printerName, bytes);
+            byte[] bytes = Encoding.GetEncoding("CP850").GetBytes(texto); // Mejor codificación para impresoras térmicas
+            return SendBytesToPrinter(printerName, bytes);
         }
     }
 }

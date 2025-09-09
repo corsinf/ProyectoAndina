@@ -1,8 +1,14 @@
 {
   "version": 2,
+<<<<<<< HEAD
   "dgSpecHash": "7fvfUrFyKds=",
   "success": true,
   "projectFilePath": "C:\\Users\\lenovo\\source\\repos\\ProyectoAndina\\ProyectoAndina\\ProyectoAndina.csproj",
+=======
+  "dgSpecHash": "hMmUOqEuwMI=",
+  "success": true,
+  "projectFilePath": "D:\\ProyectosCorsinf\\ProyectoAndina\\ProyectoAndina\\ProyectoAndina.csproj",
+>>>>>>> f4e0a0dc3311630f18a853f5eb90b84dd26a3cf9
   "expectedPackageFiles": [
     "C:\\Users\\lenovo\\.nuget\\packages\\bcrypt\\1.0.0\\bcrypt.1.0.0.nupkg.sha512",
     "C:\\Users\\lenovo\\.nuget\\packages\\bcrypt.net-next\\4.0.3\\bcrypt.net-next.4.0.3.nupkg.sha512",
@@ -29,9 +35,15 @@
       "code": "NU1701",
       "level": "Warning",
       "message": "El paquete \"BCrypt 1.0.0\" se restauró con \".NETFramework,Version=v4.6.1, .NETFramework,Version=v4.6.2, .NETFramework,Version=v4.7, .NETFramework,Version=v4.7.1, .NETFramework,Version=v4.7.2, .NETFramework,Version=v4.8, .NETFramework,Version=v4.8.1\" en lugar de la plataforma de destino del proyecto \"net8.0-windows7.0\". Puede que el paquete no sea totalmente compatible con el proyecto.",
+<<<<<<< HEAD
       "projectPath": "C:\\Users\\lenovo\\source\\repos\\ProyectoAndina\\ProyectoAndina\\ProyectoAndina.csproj",
       "warningLevel": 1,
       "filePath": "C:\\Users\\lenovo\\source\\repos\\ProyectoAndina\\ProyectoAndina\\ProyectoAndina.csproj",
+=======
+      "projectPath": "D:\\ProyectosCorsinf\\ProyectoAndina\\ProyectoAndina\\ProyectoAndina.csproj",
+      "warningLevel": 1,
+      "filePath": "D:\\ProyectosCorsinf\\ProyectoAndina\\ProyectoAndina\\ProyectoAndina.csproj",
+>>>>>>> f4e0a0dc3311630f18a853f5eb90b84dd26a3cf9
       "libraryId": "BCrypt",
       "targetGraphs": [
         "net8.0-windows7.0"
@@ -41,9 +53,15 @@
       "code": "NU1701",
       "level": "Warning",
       "message": "El paquete \"iTextSharp 5.5.13.4\" se restauró con \".NETFramework,Version=v4.6.1, .NETFramework,Version=v4.6.2, .NETFramework,Version=v4.7, .NETFramework,Version=v4.7.1, .NETFramework,Version=v4.7.2, .NETFramework,Version=v4.8, .NETFramework,Version=v4.8.1\" en lugar de la plataforma de destino del proyecto \"net8.0-windows7.0\". Puede que el paquete no sea totalmente compatible con el proyecto.",
+<<<<<<< HEAD
       "projectPath": "C:\\Users\\lenovo\\source\\repos\\ProyectoAndina\\ProyectoAndina\\ProyectoAndina.csproj",
       "warningLevel": 1,
       "filePath": "C:\\Users\\lenovo\\source\\repos\\ProyectoAndina\\ProyectoAndina\\ProyectoAndina.csproj",
+=======
+      "projectPath": "D:\\ProyectosCorsinf\\ProyectoAndina\\ProyectoAndina\\ProyectoAndina.csproj",
+      "warningLevel": 1,
+      "filePath": "D:\\ProyectosCorsinf\\ProyectoAndina\\ProyectoAndina\\ProyectoAndina.csproj",
+>>>>>>> f4e0a0dc3311630f18a853f5eb90b84dd26a3cf9
       "libraryId": "iTextSharp",
       "targetGraphs": [
         "net8.0-windows7.0"
@@ -53,9 +71,15 @@
       "code": "NU1701",
       "level": "Warning",
       "message": "El paquete \"Tulpep.NotificationWindow 1.1.38\" se restauró con \".NETFramework,Version=v4.6.1, .NETFramework,Version=v4.6.2, .NETFramework,Version=v4.7, .NETFramework,Version=v4.7.1, .NETFramework,Version=v4.7.2, .NETFramework,Version=v4.8, .NETFramework,Version=v4.8.1\" en lugar de la plataforma de destino del proyecto \"net8.0-windows7.0\". Puede que el paquete no sea totalmente compatible con el proyecto.",
+<<<<<<< HEAD
       "projectPath": "C:\\Users\\lenovo\\source\\repos\\ProyectoAndina\\ProyectoAndina\\ProyectoAndina.csproj",
       "warningLevel": 1,
       "filePath": "C:\\Users\\lenovo\\source\\repos\\ProyectoAndina\\ProyectoAndina\\ProyectoAndina.csproj",
+=======
+      "projectPath": "D:\\ProyectosCorsinf\\ProyectoAndina\\ProyectoAndina\\ProyectoAndina.csproj",
+      "warningLevel": 1,
+      "filePath": "D:\\ProyectosCorsinf\\ProyectoAndina\\ProyectoAndina\\ProyectoAndina.csproj",
+>>>>>>> f4e0a0dc3311630f18a853f5eb90b84dd26a3cf9
       "libraryId": "Tulpep.NotificationWindow",
       "targetGraphs": [
         "net8.0-windows7.0"
