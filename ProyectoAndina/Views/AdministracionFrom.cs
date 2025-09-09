@@ -17,7 +17,7 @@ namespace ProyectoAndina.Views
 
             //configuracion de estilo
 
-            ConfigurarEstilo();
+            //ConfigurarEstilo();
             // se despliega en toda la pantalla
             this.WindowState = FormWindowState.Maximized;
 
@@ -160,17 +160,15 @@ namespace ProyectoAndina.Views
             panel_caja_image = new Panel();
             pictureBox2 = new PictureBox();
             panel_arqueo_caja = new Panel();
-            panel_arqueo_container = new Panel();
-            panel_arqueo_titulo = new Panel();
             label_titulo_arqueo = new Label();
-            panel_arqueo_image = new Panel();
-            pictureBox3 = new PictureBox();
             panel_transacciones = new Panel();
             panel_transacciones_container = new Panel();
             panel_transaccion_titulo = new Panel();
             label_titulo_transacciones = new Label();
             panel_transaccion_image = new Panel();
             pictureBox1 = new PictureBox();
+            groupBox1 = new GroupBox();
+            pictureBox3 = new PictureBox();
             tableLayoutPanel_contenedor_uno.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)pictureBox_logo_tipo).BeginInit();
             tableLayoutPanel_contenido.SuspendLayout();
@@ -195,15 +193,13 @@ namespace ProyectoAndina.Views
             panel_caja_image.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)pictureBox2).BeginInit();
             panel_arqueo_caja.SuspendLayout();
-            panel_arqueo_container.SuspendLayout();
-            panel_arqueo_titulo.SuspendLayout();
-            panel_arqueo_image.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)pictureBox3).BeginInit();
             panel_transacciones.SuspendLayout();
             panel_transacciones_container.SuspendLayout();
             panel_transaccion_titulo.SuspendLayout();
             panel_transaccion_image.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)pictureBox1).BeginInit();
+            groupBox1.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)pictureBox3).BeginInit();
             SuspendLayout();
             // 
             // label_titulo_administración
@@ -214,7 +210,7 @@ namespace ProyectoAndina.Views
             label_titulo_administración.Location = new Point(330, 0);
             label_titulo_administración.Name = "label_titulo_administración";
             label_titulo_administración.RightToLeft = RightToLeft.Yes;
-            label_titulo_administración.Size = new Size(360, 37);
+            label_titulo_administración.Size = new Size(288, 30);
             label_titulo_administración.TabIndex = 10;
             label_titulo_administración.Text = "Todo sobre administración";
             // 
@@ -285,7 +281,7 @@ namespace ProyectoAndina.Views
             tableLayoutPanel_contenido.RowCount = 2;
             tableLayoutPanel_contenido.RowStyles.Add(new RowStyle(SizeType.Percent, 50.2475243F));
             tableLayoutPanel_contenido.RowStyles.Add(new RowStyle(SizeType.Percent, 49.7524757F));
-            tableLayoutPanel_contenido.Size = new Size(1128, 808);
+            tableLayoutPanel_contenido.Size = new Size(1128, 671);
             tableLayoutPanel_contenido.TabIndex = 90;
             // 
             // panel_asignar_rol
@@ -295,7 +291,7 @@ namespace ProyectoAndina.Views
             panel_asignar_rol.Controls.Add(panel_asignar_rol_container);
             panel_asignar_rol.Location = new Point(755, 3);
             panel_asignar_rol.Name = "panel_asignar_rol";
-            panel_asignar_rol.Size = new Size(370, 400);
+            panel_asignar_rol.Size = new Size(370, 331);
             panel_asignar_rol.TabIndex = 72;
             // 
             // panel_asignar_rol_container
@@ -304,9 +300,9 @@ namespace ProyectoAndina.Views
             panel_asignar_rol_container.BackColor = Color.Transparent;
             panel_asignar_rol_container.Controls.Add(panel_asignar_titulo);
             panel_asignar_rol_container.Controls.Add(panel_asignar_image);
-            panel_asignar_rol_container.Location = new Point(48, 13);
+            panel_asignar_rol_container.Location = new Point(48, 17);
             panel_asignar_rol_container.Name = "panel_asignar_rol_container";
-            panel_asignar_rol_container.Size = new Size(265, 310);
+            panel_asignar_rol_container.Size = new Size(265, 271);
             panel_asignar_rol_container.TabIndex = 81;
             // 
             // panel_asignar_titulo
@@ -315,7 +311,7 @@ namespace ProyectoAndina.Views
             panel_asignar_titulo.Controls.Add(label_titulo_asignar_rol);
             panel_asignar_titulo.Location = new Point(12, 218);
             panel_asignar_titulo.Name = "panel_asignar_titulo";
-            panel_asignar_titulo.Size = new Size(244, 64);
+            panel_asignar_titulo.Size = new Size(244, 53);
             panel_asignar_titulo.TabIndex = 79;
             // 
             // label_titulo_asignar_rol
@@ -325,7 +321,7 @@ namespace ProyectoAndina.Views
             label_titulo_asignar_rol.ForeColor = Color.FromArgb(30, 60, 120);
             label_titulo_asignar_rol.Location = new Point(47, 15);
             label_titulo_asignar_rol.Name = "label_titulo_asignar_rol";
-            label_titulo_asignar_rol.Size = new Size(164, 37);
+            label_titulo_asignar_rol.Size = new Size(130, 30);
             label_titulo_asignar_rol.TabIndex = 18;
             label_titulo_asignar_rol.Text = "Asignar Rol";
             // 
@@ -355,7 +351,7 @@ namespace ProyectoAndina.Views
             panel_rol.Controls.Add(panel_roles_container);
             panel_rol.Location = new Point(379, 3);
             panel_rol.Name = "panel_rol";
-            panel_rol.Size = new Size(370, 400);
+            panel_rol.Size = new Size(370, 331);
             panel_rol.TabIndex = 71;
             // 
             // panel_roles_container
@@ -364,9 +360,9 @@ namespace ProyectoAndina.Views
             panel_roles_container.BackColor = Color.Transparent;
             panel_roles_container.Controls.Add(panel_rol_titulo);
             panel_roles_container.Controls.Add(panel_rol_image);
-            panel_roles_container.Location = new Point(53, 13);
+            panel_roles_container.Location = new Point(53, 17);
             panel_roles_container.Name = "panel_roles_container";
-            panel_roles_container.Size = new Size(271, 310);
+            panel_roles_container.Size = new Size(271, 271);
             panel_roles_container.TabIndex = 80;
             // 
             // panel_rol_titulo
@@ -375,7 +371,7 @@ namespace ProyectoAndina.Views
             panel_rol_titulo.Controls.Add(label_titulo_rol);
             panel_rol_titulo.Location = new Point(6, 218);
             panel_rol_titulo.Name = "panel_rol_titulo";
-            panel_rol_titulo.Size = new Size(250, 64);
+            panel_rol_titulo.Size = new Size(250, 53);
             panel_rol_titulo.TabIndex = 80;
             // 
             // label_titulo_rol
@@ -385,7 +381,7 @@ namespace ProyectoAndina.Views
             label_titulo_rol.ForeColor = Color.FromArgb(30, 60, 120);
             label_titulo_rol.Location = new Point(27, 15);
             label_titulo_rol.Name = "label_titulo_rol";
-            label_titulo_rol.Size = new Size(86, 37);
+            label_titulo_rol.Size = new Size(67, 30);
             label_titulo_rol.TabIndex = 15;
             label_titulo_rol.Text = "Roles";
             // 
@@ -415,7 +411,7 @@ namespace ProyectoAndina.Views
             panel_persona.Controls.Add(panel_persona_container);
             panel_persona.Location = new Point(3, 3);
             panel_persona.Name = "panel_persona";
-            panel_persona.Size = new Size(370, 400);
+            panel_persona.Size = new Size(370, 331);
             panel_persona.TabIndex = 70;
             // 
             // panel_persona_container
@@ -424,9 +420,9 @@ namespace ProyectoAndina.Views
             panel_persona_container.BackColor = Color.Transparent;
             panel_persona_container.Controls.Add(panel_persona_titulo);
             panel_persona_container.Controls.Add(panel_persona_image);
-            panel_persona_container.Location = new Point(22, 13);
+            panel_persona_container.Location = new Point(22, 17);
             panel_persona_container.Name = "panel_persona_container";
-            panel_persona_container.Size = new Size(271, 310);
+            panel_persona_container.Size = new Size(271, 271);
             panel_persona_container.TabIndex = 77;
             // 
             // panel_persona_titulo
@@ -435,7 +431,7 @@ namespace ProyectoAndina.Views
             panel_persona_titulo.Controls.Add(label_titulo_persona);
             panel_persona_titulo.Location = new Point(10, 218);
             panel_persona_titulo.Name = "panel_persona_titulo";
-            panel_persona_titulo.Size = new Size(244, 64);
+            panel_persona_titulo.Size = new Size(244, 53);
             panel_persona_titulo.TabIndex = 80;
             // 
             // label_titulo_persona
@@ -445,7 +441,7 @@ namespace ProyectoAndina.Views
             label_titulo_persona.ForeColor = Color.FromArgb(30, 60, 120);
             label_titulo_persona.Location = new Point(14, 12);
             label_titulo_persona.Name = "label_titulo_persona";
-            label_titulo_persona.Size = new Size(131, 37);
+            label_titulo_persona.Size = new Size(105, 30);
             label_titulo_persona.TabIndex = 17;
             label_titulo_persona.Text = "Personas";
             // 
@@ -473,9 +469,9 @@ namespace ProyectoAndina.Views
             panel_caja.Anchor = AnchorStyles.Top | AnchorStyles.Bottom | AnchorStyles.Left | AnchorStyles.Right;
             panel_caja.BackColor = Color.Transparent;
             panel_caja.Controls.Add(panel_caja_container);
-            panel_caja.Location = new Point(3, 409);
+            panel_caja.Location = new Point(3, 340);
             panel_caja.Name = "panel_caja";
-            panel_caja.Size = new Size(370, 396);
+            panel_caja.Size = new Size(370, 328);
             panel_caja.TabIndex = 67;
             // 
             // panel_caja_container
@@ -484,18 +480,18 @@ namespace ProyectoAndina.Views
             panel_caja_container.BackColor = Color.Transparent;
             panel_caja_container.Controls.Add(panel_caja_titulo);
             panel_caja_container.Controls.Add(panel_caja_image);
-            panel_caja_container.Location = new Point(22, 13);
+            panel_caja_container.Location = new Point(22, 28);
             panel_caja_container.Name = "panel_caja_container";
-            panel_caja_container.Size = new Size(271, 308);
+            panel_caja_container.Size = new Size(271, 259);
             panel_caja_container.TabIndex = 77;
             // 
             // panel_caja_titulo
             // 
             panel_caja_titulo.BackColor = Color.Transparent;
             panel_caja_titulo.Controls.Add(label_titulo_caja);
-            panel_caja_titulo.Location = new Point(12, 225);
+            panel_caja_titulo.Location = new Point(12, 211);
             panel_caja_titulo.Name = "panel_caja_titulo";
-            panel_caja_titulo.Size = new Size(244, 64);
+            panel_caja_titulo.Size = new Size(244, 48);
             panel_caja_titulo.TabIndex = 79;
             // 
             // label_titulo_caja
@@ -505,7 +501,7 @@ namespace ProyectoAndina.Views
             label_titulo_caja.ForeColor = Color.FromArgb(30, 60, 120);
             label_titulo_caja.Location = new Point(11, 15);
             label_titulo_caja.Name = "label_titulo_caja";
-            label_titulo_caja.Size = new Size(84, 37);
+            label_titulo_caja.Size = new Size(67, 30);
             label_titulo_caja.TabIndex = 17;
             label_titulo_caja.Text = "Cajas";
             // 
@@ -532,70 +528,31 @@ namespace ProyectoAndina.Views
             // 
             panel_arqueo_caja.Anchor = AnchorStyles.Top | AnchorStyles.Bottom | AnchorStyles.Left | AnchorStyles.Right;
             panel_arqueo_caja.BackColor = Color.Transparent;
-            panel_arqueo_caja.Controls.Add(panel_arqueo_container);
-            panel_arqueo_caja.Location = new Point(379, 409);
+            panel_arqueo_caja.Controls.Add(groupBox1);
+            panel_arqueo_caja.Location = new Point(379, 340);
             panel_arqueo_caja.Name = "panel_arqueo_caja";
-            panel_arqueo_caja.Size = new Size(370, 396);
+            panel_arqueo_caja.Size = new Size(370, 328);
             panel_arqueo_caja.TabIndex = 68;
-            // 
-            // panel_arqueo_container
-            // 
-            panel_arqueo_container.Anchor = AnchorStyles.None;
-            panel_arqueo_container.BackColor = Color.Transparent;
-            panel_arqueo_container.Controls.Add(panel_arqueo_titulo);
-            panel_arqueo_container.Controls.Add(panel_arqueo_image);
-            panel_arqueo_container.Location = new Point(53, 13);
-            panel_arqueo_container.Name = "panel_arqueo_container";
-            panel_arqueo_container.Size = new Size(271, 308);
-            panel_arqueo_container.TabIndex = 80;
-            // 
-            // panel_arqueo_titulo
-            // 
-            panel_arqueo_titulo.BackColor = Color.Transparent;
-            panel_arqueo_titulo.Controls.Add(label_titulo_arqueo);
-            panel_arqueo_titulo.Location = new Point(10, 225);
-            panel_arqueo_titulo.Name = "panel_arqueo_titulo";
-            panel_arqueo_titulo.Size = new Size(250, 64);
-            panel_arqueo_titulo.TabIndex = 79;
             // 
             // label_titulo_arqueo
             // 
             label_titulo_arqueo.AutoSize = true;
             label_titulo_arqueo.Font = new Font("Segoe UI", 16F, FontStyle.Bold);
             label_titulo_arqueo.ForeColor = Color.FromArgb(30, 60, 120);
-            label_titulo_arqueo.Location = new Point(27, 15);
+            label_titulo_arqueo.Location = new Point(64, 240);
             label_titulo_arqueo.Name = "label_titulo_arqueo";
-            label_titulo_arqueo.Size = new Size(186, 37);
+            label_titulo_arqueo.Size = new Size(149, 30);
             label_titulo_arqueo.TabIndex = 15;
             label_titulo_arqueo.Text = "Arqueo Cajas";
-            // 
-            // panel_arqueo_image
-            // 
-            panel_arqueo_image.BackColor = Color.Transparent;
-            panel_arqueo_image.Controls.Add(pictureBox3);
-            panel_arqueo_image.Location = new Point(10, 14);
-            panel_arqueo_image.Name = "panel_arqueo_image";
-            panel_arqueo_image.Size = new Size(243, 183);
-            panel_arqueo_image.TabIndex = 79;
-            // 
-            // pictureBox3
-            // 
-            pictureBox3.Image = Properties.Resources.recaudacion_actual;
-            pictureBox3.Location = new Point(18, 7);
-            pictureBox3.Name = "pictureBox3";
-            pictureBox3.Size = new Size(191, 168);
-            pictureBox3.SizeMode = PictureBoxSizeMode.Zoom;
-            pictureBox3.TabIndex = 21;
-            pictureBox3.TabStop = false;
             // 
             // panel_transacciones
             // 
             panel_transacciones.Anchor = AnchorStyles.Top | AnchorStyles.Bottom | AnchorStyles.Left | AnchorStyles.Right;
             panel_transacciones.BackColor = Color.Transparent;
             panel_transacciones.Controls.Add(panel_transacciones_container);
-            panel_transacciones.Location = new Point(755, 409);
+            panel_transacciones.Location = new Point(755, 340);
             panel_transacciones.Name = "panel_transacciones";
-            panel_transacciones.Size = new Size(370, 396);
+            panel_transacciones.Size = new Size(370, 328);
             panel_transacciones.TabIndex = 69;
             // 
             // panel_transacciones_container
@@ -604,18 +561,18 @@ namespace ProyectoAndina.Views
             panel_transacciones_container.BackColor = Color.Transparent;
             panel_transacciones_container.Controls.Add(panel_transaccion_titulo);
             panel_transacciones_container.Controls.Add(panel_transaccion_image);
-            panel_transacciones_container.Location = new Point(48, 13);
+            panel_transacciones_container.Location = new Point(48, 28);
             panel_transacciones_container.Name = "panel_transacciones_container";
-            panel_transacciones_container.Size = new Size(265, 308);
+            panel_transacciones_container.Size = new Size(265, 259);
             panel_transacciones_container.TabIndex = 81;
             // 
             // panel_transaccion_titulo
             // 
             panel_transaccion_titulo.BackColor = Color.Transparent;
             panel_transaccion_titulo.Controls.Add(label_titulo_transacciones);
-            panel_transaccion_titulo.Location = new Point(9, 225);
+            panel_transaccion_titulo.Location = new Point(12, 211);
             panel_transaccion_titulo.Name = "panel_transaccion_titulo";
-            panel_transaccion_titulo.Size = new Size(244, 64);
+            panel_transaccion_titulo.Size = new Size(244, 48);
             panel_transaccion_titulo.TabIndex = 79;
             // 
             // label_titulo_transacciones
@@ -625,7 +582,7 @@ namespace ProyectoAndina.Views
             label_titulo_transacciones.ForeColor = Color.FromArgb(30, 60, 120);
             label_titulo_transacciones.Location = new Point(17, 15);
             label_titulo_transacciones.Name = "label_titulo_transacciones";
-            label_titulo_transacciones.Size = new Size(194, 37);
+            label_titulo_transacciones.Size = new Size(156, 30);
             label_titulo_transacciones.TabIndex = 18;
             label_titulo_transacciones.Text = "Transacciones";
             // 
@@ -648,9 +605,30 @@ namespace ProyectoAndina.Views
             pictureBox1.TabIndex = 22;
             pictureBox1.TabStop = false;
             // 
+            // groupBox1
+            // 
+            groupBox1.Controls.Add(label_titulo_arqueo);
+            groupBox1.Controls.Add(pictureBox3);
+            groupBox1.Location = new Point(53, 14);
+            groupBox1.Name = "groupBox1";
+            groupBox1.Size = new Size(288, 286);
+            groupBox1.TabIndex = 78;
+            groupBox1.TabStop = false;
+            // 
+            // pictureBox3
+            // 
+            pictureBox3.Image = Properties.Resources.recaudacion_actual;
+            pictureBox3.Location = new Point(51, 35);
+            pictureBox3.Name = "pictureBox3";
+            pictureBox3.Size = new Size(191, 168);
+            pictureBox3.SizeMode = PictureBoxSizeMode.Zoom;
+            pictureBox3.TabIndex = 21;
+            pictureBox3.TabStop = false;
+            // 
             // AdministracionFrom
             // 
-            ClientSize = new Size(1128, 886);
+            BackColor = SystemColors.ControlLightLight;
+            ClientSize = new Size(1128, 749);
             Controls.Add(tableLayoutPanel_contenido);
             Controls.Add(tableLayoutPanel_contenedor_uno);
             Name = "AdministracionFrom";
@@ -684,17 +662,15 @@ namespace ProyectoAndina.Views
             panel_caja_image.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)pictureBox2).EndInit();
             panel_arqueo_caja.ResumeLayout(false);
-            panel_arqueo_container.ResumeLayout(false);
-            panel_arqueo_titulo.ResumeLayout(false);
-            panel_arqueo_titulo.PerformLayout();
-            panel_arqueo_image.ResumeLayout(false);
-            ((System.ComponentModel.ISupportInitialize)pictureBox3).EndInit();
             panel_transacciones.ResumeLayout(false);
             panel_transacciones_container.ResumeLayout(false);
             panel_transaccion_titulo.ResumeLayout(false);
             panel_transaccion_titulo.PerformLayout();
             panel_transaccion_image.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)pictureBox1).EndInit();
+            groupBox1.ResumeLayout(false);
+            groupBox1.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)pictureBox3).EndInit();
             ResumeLayout(false);
 
         }
@@ -764,6 +740,8 @@ namespace ProyectoAndina.Views
         private Label label_titulo_transacciones;
         private Panel panel_transaccion_image;
         private PictureBox pictureBox1;
+        private GroupBox groupBox1;
+        private Button button1;
         private TableLayoutPanel tableLayoutPanel_contenedor_uno;
 
         private void redirigirCaja()

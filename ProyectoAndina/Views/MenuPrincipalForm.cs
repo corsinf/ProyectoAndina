@@ -201,9 +201,9 @@ namespace ProyectoAndina.Views
             label_titulo_modulos.AutoSize = true;
             label_titulo_modulos.Font = new Font("Segoe UI", 16F, FontStyle.Bold);
             label_titulo_modulos.ForeColor = Color.FromArgb(30, 60, 120);
-            label_titulo_modulos.Location = new Point(262, 20);
+            label_titulo_modulos.Location = new Point(262, 23);
             label_titulo_modulos.Name = "label_titulo_modulos";
-            label_titulo_modulos.Size = new Size(513, 37);
+            label_titulo_modulos.Size = new Size(513, 30);
             label_titulo_modulos.TabIndex = 13;
             label_titulo_modulos.Text = "Módulos del sistema";
             label_titulo_modulos.TextAlign = ContentAlignment.MiddleCenter;
@@ -312,7 +312,7 @@ namespace ProyectoAndina.Views
             label_rol.AutoSize = true;
             label_rol.Location = new Point(111, 31);
             label_rol.Name = "label_rol";
-            label_rol.Size = new Size(34, 20);
+            label_rol.Size = new Size(27, 15);
             label_rol.TabIndex = 20;
             label_rol.Text = "Rol:";
             // 
@@ -349,7 +349,7 @@ namespace ProyectoAndina.Views
             label_persona_logueada.AutoSize = true;
             label_persona_logueada.Location = new Point(110, 31);
             label_persona_logueada.Name = "label_persona_logueada";
-            label_persona_logueada.Size = new Size(86, 20);
+            label_persona_logueada.Size = new Size(69, 15);
             label_persona_logueada.TabIndex = 16;
             label_persona_logueada.Text = "Bienvenido:";
             // 
@@ -426,7 +426,7 @@ namespace ProyectoAndina.Views
             label_acceso_admin.Font = new Font("Segoe UI", 10F, FontStyle.Bold);
             label_acceso_admin.Location = new Point(69, 2);
             label_acceso_admin.Name = "label_acceso_admin";
-            label_acceso_admin.Size = new Size(89, 23);
+            label_acceso_admin.Size = new Size(76, 19);
             label_acceso_admin.TabIndex = 62;
             label_acceso_admin.Text = "Permitido";
             // 
@@ -465,7 +465,7 @@ namespace ProyectoAndina.Views
             label_titulo_admin.ForeColor = Color.FromArgb(30, 60, 120);
             label_titulo_admin.Location = new Point(11, 15);
             label_titulo_admin.Name = "label_titulo_admin";
-            label_titulo_admin.Size = new Size(213, 37);
+            label_titulo_admin.Size = new Size(170, 30);
             label_titulo_admin.TabIndex = 17;
             label_titulo_admin.Text = "Administración";
             // 
@@ -506,7 +506,7 @@ namespace ProyectoAndina.Views
             label_acceso_arqueo.Font = new Font("Segoe UI", 10F, FontStyle.Bold);
             label_acceso_arqueo.Location = new Point(74, 10);
             label_acceso_arqueo.Name = "label_acceso_arqueo";
-            label_acceso_arqueo.Size = new Size(89, 23);
+            label_acceso_arqueo.Size = new Size(76, 19);
             label_acceso_arqueo.TabIndex = 61;
             label_acceso_arqueo.Text = "Permitido";
             // 
@@ -521,7 +521,7 @@ namespace ProyectoAndina.Views
             // 
             // pictureBox_arqueo_caja
             // 
-            pictureBox_arqueo_caja.Image = Properties.Resources.caja_registradora;
+            pictureBox_arqueo_caja.Image = Properties.Resources.logo_caja;
             pictureBox_arqueo_caja.Location = new Point(16, 6);
             pictureBox_arqueo_caja.Name = "pictureBox_arqueo_caja";
             pictureBox_arqueo_caja.Size = new Size(191, 168);
@@ -545,7 +545,7 @@ namespace ProyectoAndina.Views
             label_titulo_recaudacion.ForeColor = Color.FromArgb(30, 60, 120);
             label_titulo_recaudacion.Location = new Point(27, 15);
             label_titulo_recaudacion.Name = "label_titulo_recaudacion";
-            label_titulo_recaudacion.Size = new Size(174, 37);
+            label_titulo_recaudacion.Size = new Size(139, 30);
             label_titulo_recaudacion.TabIndex = 15;
             label_titulo_recaudacion.Text = "Arqueo Caja";
             // 
@@ -586,7 +586,7 @@ namespace ProyectoAndina.Views
             label_acceso_transacciones.Font = new Font("Segoe UI", 10F, FontStyle.Bold);
             label_acceso_transacciones.Location = new Point(69, 7);
             label_acceso_transacciones.Name = "label_acceso_transacciones";
-            label_acceso_transacciones.Size = new Size(89, 23);
+            label_acceso_transacciones.Size = new Size(76, 19);
             label_acceso_transacciones.TabIndex = 63;
             label_acceso_transacciones.Text = "Permitido";
             // 
@@ -625,7 +625,7 @@ namespace ProyectoAndina.Views
             label_titulo_transacciones.ForeColor = Color.FromArgb(30, 60, 120);
             label_titulo_transacciones.Location = new Point(17, 15);
             label_titulo_transacciones.Name = "label_titulo_transacciones";
-            label_titulo_transacciones.Size = new Size(194, 37);
+            label_titulo_transacciones.Size = new Size(156, 30);
             label_titulo_transacciones.TabIndex = 18;
             label_titulo_transacciones.Text = "Transacciones";
             // 
@@ -791,7 +791,7 @@ namespace ProyectoAndina.Views
                 panel_arqueo_image,
                 panel_arqueo_descripcion,
                 "Arqueo de Caja",
-                Properties.Resources.caja_registradora,
+                Properties.Resources.logo_caja,
                 estado_arqueo == false ? "Acceso Denegado" :  "Acceso Permitido",
                 estado_arqueo,
                 () =>
