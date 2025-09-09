@@ -49,6 +49,9 @@
     <Compile Update="Views\RolForm.cs">
       <SubType>Form</SubType>
     </Compile>
+    <Compile Update="Views\TemplateImpresionRecibo.cs">
+      <SubType>Form</SubType>
+    </Compile>
     <Compile Update="Views\TransaccionesCajaForm.cs">
       <SubType>Form</SubType>
     </Compile>

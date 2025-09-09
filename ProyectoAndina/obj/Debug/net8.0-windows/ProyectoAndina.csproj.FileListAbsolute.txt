@@ -187,3 +187,4 @@ D:\ProyectosCorsinf\ProyectoAndina\ProyectoAndina\obj\Debug\net8.0-windows\refin
 D:\ProyectosCorsinf\ProyectoAndina\ProyectoAndina\obj\Debug\net8.0-windows\ProyectoAndina.pdb
 D:\ProyectosCorsinf\ProyectoAndina\ProyectoAndina\obj\Debug\net8.0-windows\ProyectoAndina.genruntimeconfig.cache
 D:\ProyectosCorsinf\ProyectoAndina\ProyectoAndina\obj\Debug\net8.0-windows\ref\ProyectoAndina.dll
+D:\ProyectosCorsinf\ProyectoAndina\ProyectoAndina\obj\Debug\net8.0-windows\ProyectoAndina.Views.TemplateImpresionRecibo.resources

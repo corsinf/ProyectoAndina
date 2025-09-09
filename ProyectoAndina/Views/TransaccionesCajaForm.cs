@@ -19,6 +19,8 @@ namespace ProyectoAndina.Views
     public partial class TransaccionesCajaForm : Form
     {
         private readonly PersonaController _PersonaController;
+        private readonly CajaController _CajaController;
+        private readonly ArqueoCajaController _ArqueoCajaController;
         private readonly TransaccionCajaController _TransaccionCajaController;
         private readonly ApiService _apiService;
         private readonly FuncionesGenerales _funcionesGenerales = new FuncionesGenerales();
@@ -87,12 +89,14 @@ namespace ProyectoAndina.Views
         private Label label_correo;
         private int id_usuario;
 
-        public int tipo_factura;
+        public int tipo_factura = 0 ;
 
         public TransaccionesCajaForm()
         {
 
             _PersonaController = new PersonaController();
+            _CajaController = new CajaController();
+            _ArqueoCajaController = new ();
             _apiService = new ApiService();
             _TransaccionCajaController = new TransaccionCajaController();
             InitializeComponent();
@@ -842,7 +846,6 @@ namespace ProyectoAndina.Views
             // 
             button_verificar_monto.BackColor = Color.FromArgb(52, 152, 219);
             button_verificar_monto.Cursor = Cursors.Hand;
-            button_verificar_monto.Enabled = false;
             button_verificar_monto.FlatAppearance.BorderSize = 0;
             button_verificar_monto.FlatStyle = FlatStyle.Flat;
             button_verificar_monto.Font = new Font("Segoe UI", 10F, FontStyle.Bold);
@@ -1374,6 +1377,7 @@ namespace ProyectoAndina.Views
                                     button_realizar_transaccion.Enabled = true;
                                     textBox_valor_entregado.Enabled = true;
 
+
                                 }
 
                                 // Asignar a los TextBox
@@ -1428,7 +1432,9 @@ namespace ProyectoAndina.Views
             if (tipo_factura == 1)
             {
 
-            } else if (tipo_factura == 2) {
+            }
+            else if (tipo_factura == 2)
+            {
                 if (id_usuario == 0 || label_nombre.Text.Trim() == "")
                 {
                     StylesAlertas.MostrarAlerta(this, "Seleccionar un usuario", "¡Error!", TipoAlerta.Error);
@@ -1436,10 +1442,15 @@ namespace ProyectoAndina.Views
                 }
 
             }
+            else if (tipo_factura == 0)
+            {
+                StylesAlertas.MostrarAlerta(this, "Seleccione un tipo de factura", "¡Error!", TipoAlerta.Error);
+                return;
+            }
 
-                
-            // Validar que los valores sean mayores o iguales a cero (opcional)
-            if (valorEntregado >= 0 && valorCambio >= 0)
+
+                // Validar que los valores sean mayores o iguales a cero (opcional)
+                if (valorEntregado >= 0 && valorCambio >= 0)
             {
                 string descripcion = "Generado desde la aplicacion de escritorio";
                 int id_arqueo_caja = SessionArqueoCaja.id_arqueo_caja;
@@ -1447,7 +1458,11 @@ namespace ProyectoAndina.Views
                 string valor_cobrar = label_valor_a_cobrar.Text.Replace("💰", "").Trim();
                 decimal valor_a_cobrar = _funcionesGenerales.ParseDecimalFromTextBoxNormalizado(valor_cobrar);
 
-                
+
+                string tiempo_estacionamiento = label_valor_hora_ingreso.Text.Replace("⏰", "").Trim();
+                string fecha_ingreso = label_valor_tiempo.Text.Replace("⌛", "").Trim();
+
+
                 string placa = textBox_buscar_placa.Text.Trim();
 
                 var transaccionCaja = new TransaccionCajaM
@@ -1463,6 +1478,9 @@ namespace ProyectoAndina.Views
                 };
 
                 var persona = _PersonaController.ObtenerPorId(SessionUser.PerId);
+                var arqueoCaja = _ArqueoCajaController.ObtenerPorId(id_arqueo_caja);
+                var cajaTransaccion = _CajaController.ObtenerPorId(arqueoCaja.caja_id);
+
 
                 if (persona != null)
                 {
@@ -1521,19 +1539,53 @@ namespace ProyectoAndina.Views
 
                                 StylesAlertas.MostrarAlerta(this, "Transacción realizada correctamente ID:"+ objTransaccion.arqueo_id, tipo: TipoAlerta.Success);
 
+                                decimal porcentaje = 0.15m; // 15%
+                                decimal montoDescuento = transaccionCaja.valor_a_cobrar * porcentaje; // 15% del valor a cobrar
+                                decimal subTotal = transaccionCaja.valor_a_cobrar - montoDescuento;
+                                decimal total = valor_a_cobrar; // si no hay impuestos adicionales
 
-                                if (tipo_factura == 1)
+                                if (tipo_factura == 1) {
+
+                                    recibo = new ReciboModel
+                                    {
+                                        Fecha = DateTime.Now,
+                                        Hora = DateTime.Now,
+                                        IVA15 = montoDescuento,
+                                        Subtotal = subTotal,
+                                        Total = total,
+                                        SistemaPago = "consumidor",
+                                        FechaSalida = DateTime.Now,
+                                        FechaEntrada = DateTime.Parse(tiempo_estacionamiento),
+                                        TiempoConsumido = fecha_ingreso,
+                                        Caja = cajaTransaccion.nombre,
+                                        Cajero = persona.nombre_completo,
+                                    };
+                                }
+                                else if(tipo_factura == 2) {
+                                    recibo.IVA15 = montoDescuento;
+                                    recibo.Subtotal = subTotal;
+                                    recibo.Total = total;
+                                    recibo.SistemaPago = "ruc";
+                                    recibo.FechaSalida = DateTime.Now;
+                                    recibo.FechaEntrada = DateTime.Parse(tiempo_estacionamiento);
+                                    recibo.TiempoConsumido = fecha_ingreso;
+                                    recibo.Caja = cajaTransaccion.nombre;
+                                    recibo.Cajero = persona.nombre_completo;
+                                }
+                                
+                                var TemplateImpresionRecibo = new TemplateImpresionRecibo(recibo);
+                                TemplateImpresionRecibo.StartPosition = FormStartPosition.CenterParent;
+
+                                DialogResult resultado = TemplateImpresionRecibo.ShowDialog(this);
+
+                                if (TemplateImpresionRecibo.DialogResult == DialogResult.OK)
                                 {
-                                    MostrarPdf.GenerarPDFConsumidorFinal();
+                                    tableLayoutPanel_buscar_user.Visible = true;
+                                    tableLayoutPanel_usuario_encontrado.Visible = true;
+                                    button_realizar_transaccion.Enabled = true;
                                 }
-                                else {
-                                    SessionFactura.Cantidad = 1;
-                                    SessionFactura.PrecioUnitario = valor_a_cobrar;
-                                    MostrarPdf.GenerarPDFFactura();
-
-                                }
+                                
                             }
-
 
                             _funcionesGenerales.LimpiarCampos(this);
 
@@ -1546,7 +1598,6 @@ namespace ProyectoAndina.Views
                             label_correo.Text = "";
                             label_cedula.Text = "";
                             label_telefono.Text = "";
-
 
                         }
                         else
@@ -1645,7 +1696,7 @@ namespace ProyectoAndina.Views
             button_realizar_transaccion.Enabled = true;
         }
 
-
+        private ReciboModel recibo;
         async private void button_buscar_usuario_Click(object sender, EventArgs e)
         {
             string cedula = textBox_usuario_encontrar.Text.Trim();
@@ -1693,11 +1744,20 @@ namespace ProyectoAndina.Views
                                 label_telefono.Text = "📞 Teléfono: " + objRespuesta.telefono_1;
                                 id_usuario = objRespuesta.per_id;
 
-                                SessionFactura.ClienteNombre = objRespuesta.nombre_completo;
-                                SessionFactura.ClienteRuc = objRespuesta.cedula;
-                                SessionFactura.Producto = "Pago parqueadero";
+                                recibo = new ReciboModel
+                                {
+                                    Fecha = DateTime.Now,
+                                    Hora = DateTime.Now,
+                                    Cliente = objRespuesta.nombre_completo,
+                                    CI_RUC = objRespuesta.cedula,
+                                    TelefonoCliente = objRespuesta.telefono_1,
+                                    Email = objRespuesta.correo,
+                                    DireccionCliente = objRespuesta.direccion,
+                                };
 
-                               StylesAlertas.MostrarAlerta(this, "Datos cargados correctamente", tipo: TipoAlerta.Success);
+                                
+
+                                StylesAlertas.MostrarAlerta(this, "Datos cargados correctamente", tipo: TipoAlerta.Success);
                             }
 
                         }
@@ -1715,7 +1775,11 @@ namespace ProyectoAndina.Views
 
             tableLayoutPanel_buscar_user.Visible = true;
             tableLayoutPanel_usuario_encontrado.Visible = true;
+            button_realizar_transaccion.Enabled = true;
+            textBox_usuario_encontrar.Enabled = false;
+            button_buscar_usuario.Enabled = false;
 
+            id_usuario = 1;
             tipo_factura = 1;
 
         }
@@ -1725,6 +1789,8 @@ namespace ProyectoAndina.Views
 
             tableLayoutPanel_buscar_user.Visible = true;
             tableLayoutPanel_usuario_encontrado.Visible = true;
+            textBox_usuario_encontrar.Enabled = true;
+            button_buscar_usuario.Enabled = true;
 
             tipo_factura = 2;
 
@@ -1762,6 +1828,17 @@ namespace ProyectoAndina.Views
                     label_telefono.Text = "📞 Teléfono: " + personaUltima.telefono_1;
                     id_usuario = personaUltima.per_id;
                     textBox_usuario_encontrar.Text = personaUltima.cedula;
+
+                    recibo = new ReciboModel
+                    {
+                        Fecha = DateTime.Now,
+                        Hora = DateTime.Now,
+                        Cliente = personaUltima.nombre_completo,
+                        CI_RUC = personaUltima.cedula,
+                        TelefonoCliente = personaUltima.telefono_1,
+                        Email = personaUltima.correo,
+                        DireccionCliente = personaUltima.direccion,
+                    };
                 }
                 else
                 {
