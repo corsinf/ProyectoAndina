@@ -1206,6 +1206,7 @@ namespace ProyectoAndina.Views
             textBox_usuario_encontrar.Name = "textBox_usuario_encontrar";
             textBox_usuario_encontrar.Size = new Size(201, 27);
             textBox_usuario_encontrar.TabIndex = 61;
+            textBox_usuario_encontrar.Click += textBox_usuario_encontrar_Click;
             // 
             // button_consumidor_final
             // 
@@ -1424,11 +1425,19 @@ namespace ProyectoAndina.Views
             decimal valorEntregado = _funcionesGenerales.ParseDecimalFromTextBoxNormalizado(textBox_valor_entregado.Text);
             decimal valorCambio = _funcionesGenerales.ParseDecimalFromTextBoxNormalizado(texto);
 
-            if (id_usuario == 0 || label_nombre.Text.Trim() == "")
+            if (tipo_factura == 1)
             {
-                StylesAlertas.MostrarAlerta(this, "Seleccionar un usuario", "¡Error!", TipoAlerta.Error);
-                return;
+
+            } else if (tipo_factura == 2) {
+                if (id_usuario == 0 || label_nombre.Text.Trim() == "")
+                {
+                    StylesAlertas.MostrarAlerta(this, "Seleccionar un usuario", "¡Error!", TipoAlerta.Error);
+                    return;
+                }
+
             }
+
+                
             // Validar que los valores sean mayores o iguales a cero (opcional)
             if (valorEntregado >= 0 && valorCambio >= 0)
             {
@@ -1494,6 +1503,8 @@ namespace ProyectoAndina.Views
                             //insertar en el olimpo
 
                             string Transaccion = await _apiService.CrearTransaccionCajaAsync(transaccionCaja,token);
+
+                            MessageBox.Show(Transaccion);
 
                             if (Transaccion.StartsWith("Error") || Transaccion.StartsWith("Excepción"))
                             {

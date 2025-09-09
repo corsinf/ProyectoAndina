@@ -61,9 +61,6 @@ namespace ProyectoAndina.Views
             this.Paint += BilletesMonedasForm_Paint;
             this.DoubleBuffered = true;
 
-            KryptonTecladoNumericoHelper.ConfigurarFormularioConTeclado(this);
-
-
             this.Load += BilletesMonedasForm_Load;
 
             realizar_total_monto();
@@ -96,8 +93,6 @@ namespace ProyectoAndina.Views
         {
             StyleManager.ConfigurarFormPrincipal(this, "Menu de dominaciones de dinero");
             this.BackColor = StyleManager.Colors.GrisClaro;
-
-            textBox_100_dollar.Enter += (s, e) => KryptonTecladoNumericoHelper.MostrarTeclado();
 
             // Configurar labels con estilos UASB
             StyleManager.ConfigurarLabel(label_titulo_billetes, TipoLabel.TituloGrande);
