@@ -27,11 +27,29 @@ namespace ProyectoAndina.Views
         private PictureBox pictureBoxLogo;
         private Label lblMensaje;
 
+        //Variables para el cerrado con clicks en el logo
+        private int _logoTapCount = 0;
+        private DateTime _lastLogoTap = DateTime.MinValue;
+        private const int LogoTapGoal = 7;
+        private static readonly TimeSpan LogoTapWindow = TimeSpan.FromSeconds(5); 
+        private bool _permitirCerrar = false;
+
+
         public LoginForm()
         {
             _loginController = new LoginController();
             _PersonaRolController = new PersonaRolController();
             InitializeComponent();
+
+            // --- Modo kiosko base ---
+            this.FormBorderStyle = FormBorderStyle.None;   // sin barra de título (oculta cerrar/min/max)
+            this.ControlBox = false;                       // deshabilita caja de control
+            this.ShowIcon = false;
+            this.ShowInTaskbar = false;                    // no mostrar en la barra de tareas
+            this.TopMost = true;                           // siempre encima
+            this.KeyPreview = true;                        // para capturar teclas (Alt+F4)
+            this.WindowState = FormWindowState.Maximized;  // pantalla completa
+
             ConfigurarEstilo();
         }
 
@@ -84,6 +102,7 @@ namespace ProyectoAndina.Views
             pictureBoxLogo.SizeMode = PictureBoxSizeMode.Zoom;
             pictureBoxLogo.TabIndex = 0;
             pictureBoxLogo.TabStop = false;
+            pictureBoxLogo.Click += pictureBoxLogo_Click;
             // 
             // panelLogin
             // 
@@ -140,7 +159,7 @@ namespace ProyectoAndina.Views
             // 
             txtCorreo.Location = new Point(94, 215);
             txtCorreo.Name = "txtCorreo";
-            txtCorreo.Size = new Size(300, 27);
+            txtCorreo.Size = new Size(300, 23);
             txtCorreo.TabIndex = 3;
             txtCorreo.Click += txtCorreo_Click;
             // 
@@ -157,7 +176,7 @@ namespace ProyectoAndina.Views
             txtPassword.Location = new Point(94, 306);
             txtPassword.Name = "txtPassword";
             txtPassword.PasswordChar = '●';
-            txtPassword.Size = new Size(300, 27);
+            txtPassword.Size = new Size(300, 23);
             txtPassword.TabIndex = 5;
             txtPassword.Click += txtPassword_Click;
             // 
@@ -270,6 +289,9 @@ namespace ProyectoAndina.Views
             pictureBoxLogo.SizeMode = PictureBoxSizeMode.Zoom;
             pictureBoxLogo.BackColor = Color.Transparent;
             pictureBoxLogo.Dock = DockStyle.Fill; // que ocupe todo el panel
+
+            //Para el cerrado con clicks
+            pictureBoxLogo.Click += pictureBoxLogo_Click;
         }
 
 
@@ -382,7 +404,7 @@ namespace ProyectoAndina.Views
                     SessionUser.Correo = Persona.correo;
 
                     StyleManager.MostrarExito(lblMensaje, "Inicio de sesión exitoso");
-                   
+
 
                     // Pequeña pausa para mostrar mensaje de éxito
 
@@ -419,14 +441,6 @@ namespace ProyectoAndina.Views
             }
         }
 
-        
-
-        protected override void OnLoad(EventArgs e)
-        {
-            base.OnLoad(e);
-            txtCorreo.Focus();
-        }
-
         private void txtCorreo_Click(object sender, EventArgs e)
         {
             TecladoHelper.MostrarTeclado();
@@ -435,6 +449,68 @@ namespace ProyectoAndina.Views
         private void txtPassword_Click(object sender, EventArgs e)
         {
             TecladoHelper.MostrarTeclado();
+        }
+
+
+        /*
+         * Logica para el la barra de tareas y bloquear la pantalla
+         * **/
+
+        private void pictureBoxLogo_Click(object sender, EventArgs e)
+        {
+            var now = DateTime.Now;
+
+            // Si pasó mucho tiempo desde el último tap, reinicia el conteo
+            if (now - _lastLogoTap > LogoTapWindow)
+                _logoTapCount = 0;
+
+            _logoTapCount++;
+            _lastLogoTap = now;
+
+            if (_logoTapCount >= LogoTapGoal)
+            {
+                // Restaurar barra de tareas y cerrar de forma controlada
+                try { ProyectoAndina.Utils.TaskbarHelper.ShowTaskbar(); } catch { /* no-op */ }
+                _permitirCerrar = true;
+
+                // Si estás en el LoginForm solamente:
+                Application.Exit();
+
+                // Alternativa si prefieres cerrar solo este form:
+                // this.Close();
+            }
+        }
+
+        protected override void OnLoad(EventArgs e)
+        {
+            base.OnLoad(e);
+            // cubrir todos los monitores:
+            this.Bounds = Screen.AllScreens.Length > 1
+                ? Screen.AllScreens.Select(s => s.Bounds).Aggregate(Rectangle.Union)
+                : Screen.PrimaryScreen.Bounds;
+
+            TaskbarHelper.HideTaskbar();   // ocultar barra de tareas y botón inicio
+            txtCorreo.Focus();
+        }
+
+        // Evitar Alt+F4
+        protected override bool ProcessCmdKey(ref Message msg, Keys keyData)
+        {
+            if (keyData == (Keys.Alt | Keys.F4))
+                return true; // consumir
+            return base.ProcessCmdKey(ref msg, keyData);
+        }
+
+        protected override void OnFormClosing(FormClosingEventArgs e)
+        {
+            if (!_permitirCerrar)
+            {
+                e.Cancel = true;
+                return;
+            }
+
+            try { ProyectoAndina.Utils.TaskbarHelper.ShowTaskbar(); } catch { }
+            base.OnFormClosing(e);
         }
     }
 }
