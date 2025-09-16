@@ -7,7 +7,12 @@ using System.Linq;
 
 namespace ProyectoAndina.Views
 {
-    public partial class LoginForm : KioskForm
+    /* Para habilitar el diseñador */
+    public partial class LoginForm : Form
+
+    /* Para habilitar lo del kiosko */
+    //public partial class LoginForm : KioskForm
+
     {
         private readonly LoginController _loginController;
         private readonly PersonaRolController _PersonaRolController;
