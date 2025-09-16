@@ -1,12 +1,14 @@
 ﻿using System;
 using System.Diagnostics;
-using System.IO;
 using System.Runtime.InteropServices;
 using System.Threading;
 using System.Windows.Forms;
+using System.Drawing;
 
 public static class TecladoHelper
 {
+
+
     [DllImport("user32.dll", SetLastError = true)]
     private static extern IntPtr FindWindow(string lpClassName, string lpWindowName);
 
@@ -21,33 +23,19 @@ public static class TecladoHelper
 
     private const int SW_SHOW = 5;
 
-    // --- Constantes para detectar pantalla táctil ---
-    private const int SM_DIGITIZER = 94;
-    private const int NID_INTEGRATED_TOUCH = 0x01;
-    private const int NID_EXTERNAL_TOUCH = 0x02;
-
-    [DllImport("user32.dll")]
-    private static extern int GetSystemMetrics(int nIndex);
-
-    private static bool EsPantallaTactil()
-    {
-        int digitizerStatus = GetSystemMetrics(SM_DIGITIZER);
-        bool tieneTouchIntegrado = (digitizerStatus & NID_INTEGRATED_TOUCH) == NID_INTEGRATED_TOUCH;
-        bool tieneTouchExterno = (digitizerStatus & NID_EXTERNAL_TOUCH) == NID_EXTERNAL_TOUCH;
-        return tieneTouchIntegrado || tieneTouchExterno;
-    }
-
     public static void MostrarTeclado()
     {
-        // Solo mostrar teclado si hay pantalla táctil
-        if (!EsPantallaTactil())
-            return;
-
+        // Guardar ventana activa
         IntPtr ventanaActiva = GetForegroundWindow();
 
         try
         {
-            IntentarTabTip(ventanaActiva);
+            // Intentar TabTip primero
+            if (IntentarTabTip(ventanaActiva))
+                return;
+
+            // Fallback a OSK
+            IntentarOSK(ventanaActiva);
         }
         catch (Exception ex)
         {
@@ -70,7 +58,7 @@ public static class TecladoHelper
             {
                 if (File.Exists(ruta))
                 {
-                    // Cerrar procesos TabTip existentes
+                    // Tu método original que funciona
                     var procesos = Process.GetProcessesByName("TabTip");
                     foreach (var p in procesos)
                     {
@@ -84,8 +72,10 @@ public static class TecladoHelper
                         FileName = ruta,
                         UseShellExecute = true
                     };
+
                     Process.Start(startInfo);
 
+                    // NO restaurar focus inmediatamente - lo hará el timer en el form
                     return true;
                 }
             }
@@ -97,17 +87,47 @@ public static class TecladoHelper
         return false;
     }
 
+    private static void IntentarOSK(IntPtr ventanaActiva)
+    {
+        try
+        {
+            ProcessStartInfo startInfo = new ProcessStartInfo
+            {
+                FileName = "osk.exe",
+                UseShellExecute = true
+            };
+
+            Process.Start(startInfo);
+        }
+        catch (Exception ex)
+        {
+            MessageBox.Show($"No se pudo abrir ningún teclado virtual.\nError: {ex.Message}",
+                          "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+        }
+    }
+
     public static void CerrarTeclado()
     {
         try
         {
+            // Cerrar TabTip
             var procesosTabTip = Process.GetProcessesByName("TabTip");
             foreach (var p in procesosTabTip)
             {
                 try { p.Kill(); } catch { }
             }
+
+            // Cerrar OSK
+            var procesosOSK = Process.GetProcessesByName("osk");
+            foreach (var p in procesosOSK)
+            {
+                try { p.Kill(); } catch { }
+            }
         }
-        catch { }
+        catch
+        {
+            // Ignorar errores
+        }
     }
 
     public static bool HayTecladoVirtual()
@@ -115,11 +135,14 @@ public static class TecladoHelper
         try
         {
             var tabTip = Process.GetProcessesByName("TabTip");
-            return tabTip.Length > 0;
+            var osk = Process.GetProcessesByName("osk");
+            return tabTip.Length > 0 || osk.Length > 0;
         }
         catch
         {
             return false;
         }
     }
+
+
 }
