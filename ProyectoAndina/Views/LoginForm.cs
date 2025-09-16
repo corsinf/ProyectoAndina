@@ -7,7 +7,7 @@ using System.Linq;
 
 namespace ProyectoAndina.Views
 {
-    public partial class LoginForm : Form
+    public partial class LoginForm : KioskForm
     {
         private readonly LoginController _loginController;
         private readonly PersonaRolController _PersonaRolController;
@@ -27,28 +27,12 @@ namespace ProyectoAndina.Views
         private PictureBox pictureBoxLogo;
         private Label lblMensaje;
 
-        //Variables para el cerrado con clicks en el logo
-        private int _logoTapCount = 0;
-        private DateTime _lastLogoTap = DateTime.MinValue;
-        private const int LogoTapGoal = 7;
-        private static readonly TimeSpan LogoTapWindow = TimeSpan.FromSeconds(5); 
-        private bool _permitirCerrar = false;
-
 
         public LoginForm()
         {
             _loginController = new LoginController();
             _PersonaRolController = new PersonaRolController();
             InitializeComponent();
-
-            // --- Modo kiosko base ---
-            this.FormBorderStyle = FormBorderStyle.None;   // sin barra de título (oculta cerrar/min/max)
-            this.ControlBox = false;                       // deshabilita caja de control
-            this.ShowIcon = false;
-            this.ShowInTaskbar = false;                    // no mostrar en la barra de tareas
-            this.TopMost = true;                           // siempre encima
-            this.KeyPreview = true;                        // para capturar teclas (Alt+F4)
-            this.WindowState = FormWindowState.Maximized;  // pantalla completa
 
             ConfigurarEstilo();
         }
@@ -102,7 +86,7 @@ namespace ProyectoAndina.Views
             pictureBoxLogo.SizeMode = PictureBoxSizeMode.Zoom;
             pictureBoxLogo.TabIndex = 0;
             pictureBoxLogo.TabStop = false;
-            pictureBoxLogo.Click += pictureBoxLogo_Click;
+
             // 
             // panelLogin
             // 
@@ -290,9 +274,6 @@ namespace ProyectoAndina.Views
             pictureBoxLogo.SizeMode = PictureBoxSizeMode.Zoom;
             pictureBoxLogo.BackColor = Color.Transparent;
             pictureBoxLogo.Dock = DockStyle.Fill; // que ocupe todo el panel
-
-            //Para el cerrado con clicks
-            pictureBoxLogo.Click += pictureBoxLogo_Click;
         }
 
 
@@ -457,61 +438,19 @@ namespace ProyectoAndina.Views
          * Logica para el la barra de tareas y bloquear la pantalla
          * **/
 
-        private void pictureBoxLogo_Click(object sender, EventArgs e)
-        {
-            var now = DateTime.Now;
-
-            // Si pasó mucho tiempo desde el último tap, reinicia el conteo
-            if (now - _lastLogoTap > LogoTapWindow)
-                _logoTapCount = 0;
-
-            _logoTapCount++;
-            _lastLogoTap = now;
-
-            if (_logoTapCount >= LogoTapGoal)
-            {
-                // Restaurar barra de tareas y cerrar de forma controlada
-                try { ProyectoAndina.Utils.TaskbarHelper.ShowTaskbar(); } catch { /* no-op */ }
-                _permitirCerrar = true;
-
-                // Si estás en el LoginForm solamente:
-                Application.Exit();
-
-                // Alternativa si prefieres cerrar solo este form:
-                // this.Close();
-            }
-        }
-
         protected override void OnLoad(EventArgs e)
         {
             base.OnLoad(e);
-            // cubrir todos los monitores:
-            this.Bounds = Screen.AllScreens.Length > 1
-                ? Screen.AllScreens.Select(s => s.Bounds).Aggregate(Rectangle.Union)
-                : Screen.PrimaryScreen.Bounds;
-
-            TaskbarHelper.HideTaskbar();   // ocultar barra de tareas y botón inicio
+            // Activa el tap secreto sobre el logo
+            SetSecretExit(pictureBoxLogo, taps: 7, window: TimeSpan.FromSeconds(5));
             txtCorreo.Focus();
-        }
-
-        // Evitar Alt+F4
-        protected override bool ProcessCmdKey(ref Message msg, Keys keyData)
-        {
-            if (keyData == (Keys.Alt | Keys.F4))
-                return true; // consumir
-            return base.ProcessCmdKey(ref msg, keyData);
         }
 
         protected override void OnFormClosing(FormClosingEventArgs e)
         {
-            if (!_permitirCerrar)
-            {
-                e.Cancel = true;
-                return;
-            }
-
-            try { ProyectoAndina.Utils.TaskbarHelper.ShowTaskbar(); } catch { }
+            try { TaskbarHelper.ShowTaskbar(); } catch { }
             base.OnFormClosing(e);
         }
+
     }
 }
