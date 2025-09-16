@@ -8,10 +8,10 @@ using System.Linq;
 namespace ProyectoAndina.Views
 {
     /* Para habilitar el diseñador */
-    public partial class LoginForm : Form
+    //public partial class LoginForm : Form
 
     /* Para habilitar lo del kiosko */
-    //public partial class LoginForm : KioskForm
+    public partial class LoginForm : KioskForm
 
     {
         private readonly LoginController _loginController;
