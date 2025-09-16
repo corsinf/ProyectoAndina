@@ -278,33 +278,50 @@ namespace ProyectoAndina.Views
         {
             SessionArqueoCaja.estadoArqueo = "A";
 
-            SessionArqueoCaja.montoValidar = _FuncionesGenerales.ParseDecimalFromTextBoxNormalizado(textBox_valor_apertura.Text);
-            var denominacionesdinero = new BilletesMonedasForm();
-            denominacionesdinero.StartPosition = FormStartPosition.CenterParent;
-            if (denominacionesdinero.DialogResult == DialogResult.OK)
+            SessionArqueoCaja.montoValidar =
+                _FuncionesGenerales.ParseDecimalFromTextBoxNormalizado(textBox_valor_apertura.Text);
+
+            using (var denominacionesdinero = new BilletesMonedasForm())
             {
-                panel_cierre.Dock = DockStyle.Fill;
-                panel_apertura.Visible = false;
-                panel_valor_cierre.Dock = DockStyle.Fill;
-                panel_valor_cierre.Visible = true;
-                tableLayoutPanel_transacciones.Visible = true;
-                button_apertura_de_caja.Text = "Cerrar";
+                denominacionesdinero.StartPosition = FormStartPosition.CenterParent;
+
+                // 1) Abres el modal y capturas el resultado
+                var result = denominacionesdinero.ShowDialog(this);
+
+                // 2) Recién aquí revisas si devolvió OK
+                if (result == DialogResult.OK)
+                {
+                    panel_cierre.Dock = DockStyle.Fill;
+                    panel_apertura.Visible = false;
+                    panel_valor_cierre.Dock = DockStyle.Fill;
+                    panel_valor_cierre.Visible = true;
+                    tableLayoutPanel_transacciones.Visible = true;
+                    button_apertura_de_caja.Text = "Cerrar";
+                }
             }
-            denominacionesdinero.ShowDialog(this);
         }
+
 
         private void button_valor_cierre_Click(object sender, EventArgs e)
         {
             SessionArqueoCaja.estadoArqueo = "C";
-            SessionArqueoCaja.montoValidar = _FuncionesGenerales.ParseDecimalFromTextBoxNormalizado(textBox_total_en_caja.Text);
-            var denominacionesdinero = new BilletesMonedasForm();
-            denominacionesdinero.StartPosition = FormStartPosition.CenterParent;
-            if (denominacionesdinero.DialogResult == DialogResult.OK)
+            SessionArqueoCaja.montoValidar =
+                _FuncionesGenerales.ParseDecimalFromTextBoxNormalizado(textBox_total_en_caja.Text);
+
+            using (var denominacionesdinero = new BilletesMonedasForm())
             {
-                actulizarCamposCierreCaja();
-            };
-            denominacionesdinero.ShowDialog(this);
+                denominacionesdinero.StartPosition = FormStartPosition.CenterParent;
+                denominacionesdinero.TopMost = true;
+
+                var result = denominacionesdinero.ShowDialog(this); 
+
+                if (result == DialogResult.OK)                    
+                {
+                    actulizarCamposCierreCaja();
+                }
+            }
         }
+
 
         private void button_maniana_Click(object sender, EventArgs e)
         {
@@ -391,19 +408,23 @@ namespace ProyectoAndina.Views
                     SessionArqueoCaja.montoValidar = valor_apertura_normalizado;
                     SessionArqueoCaja.estadoArqueo = "A";
 
-                    var BilletesMonedasForm = new BilletesMonedasForm();
-                    BilletesMonedasForm.StartPosition = FormStartPosition.CenterParent;
-                    if (BilletesMonedasForm.DialogResult == DialogResult.OK)
+                    using (var frm = new BilletesMonedasForm())
                     {
-                        panel_cierre.Dock = DockStyle.Fill;
-                        panel_apertura.Visible = false;
-                        panel_valor_cierre.Dock = DockStyle.Fill;
-                        panel_valor_cierre.Visible = true;
-                        tableLayoutPanel_transacciones.Visible = true;
-                        button_apertura_de_caja.Text = "Cerrar";
+                        frm.StartPosition = FormStartPosition.CenterParent;
+
+                        var result = frm.ShowDialog(this); // 1) Abrir modal y esperar resultado
+
+                        if (result == DialogResult.OK)     // 2) Evaluar resultado después de ShowDialog
+                        {
+                            panel_cierre.Dock = DockStyle.Fill;
+                            panel_apertura.Visible = false;
+                            panel_valor_cierre.Dock = DockStyle.Fill;
+                            panel_valor_cierre.Visible = true;
+                            tableLayoutPanel_transacciones.Visible = true;
+                            button_apertura_de_caja.Text = "Cerrar";
+                        }
                     }
-                    ;
-                    BilletesMonedasForm.ShowDialog(this);
+
                 }
 
             }

@@ -193,6 +193,51 @@ namespace ProyectoAndina.Utils
 
             try { Environment.Exit(0); } catch { /* no-op */ }
         }
+
+        /// Muestra un hijo como MODAL, centrado sobre este KioskForm y siempre encima.
+        public DialogResult ShowModal(Form child)
+        {
+            if (child == null || child.IsDisposed) return DialogResult.None;
+
+            // Config visual típica de un diálogo
+            child.StartPosition = FormStartPosition.CenterParent;
+            child.ShowIcon = false;
+            child.ShowInTaskbar = false;
+            child.MinimizeBox = false;
+            child.MaximizeBox = false;
+            if (child.FormBorderStyle == FormBorderStyle.None)
+                child.FormBorderStyle = FormBorderStyle.FixedDialog;
+
+            // Trucos para asegurar que quede arriba
+            bool originalTopMost = this.TopMost;
+            try
+            {
+                // Si tu ventana padre es TopMost, fuerza también el hijo
+                child.TopMost = true;
+
+                // MUY IMPORTANTE: pasar "this" como owner asegura que el hijo
+                // se mantenga sobre el padre y con foco.
+                return child.ShowDialog(this);
+            }
+            finally
+            {
+                // Restaurar TopMost del padre (por si lo cambiaste en el futuro)
+                this.TopMost = originalTopMost;
+            }
+        }
+
+        /// MessageBox “propiedad” del KioskForm para que siempre salga arriba y centrado.
+        public DialogResult ShowInfo(string text, string caption = "Información")
+            => MessageBox.Show(this, text, caption, MessageBoxButtons.OK, MessageBoxIcon.Information);
+
+        public DialogResult ShowWarn(string text, string caption = "Atención")
+            => MessageBox.Show(this, text, caption, MessageBoxButtons.OK, MessageBoxIcon.Warning);
+
+        public DialogResult ShowError(string text, string caption = "Error")
+            => MessageBox.Show(this, text, caption, MessageBoxButtons.OK, MessageBoxIcon.Error);
+
+        public DialogResult ShowConfirm(string text, string caption = "Confirmar")
+            => MessageBox.Show(this, text, caption, MessageBoxButtons.YesNo, MessageBoxIcon.Question);
     }
 
     public static class TaskbarHelper

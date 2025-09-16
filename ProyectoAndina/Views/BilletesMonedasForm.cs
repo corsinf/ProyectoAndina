@@ -15,7 +15,7 @@ using static ProyectoAndina.Utils.StylesAlertas;
 
 namespace ProyectoAndina.Views
 {
-    public partial class BilletesMonedasForm : KioskForm
+    public partial class BilletesMonedasForm : Form
 
     {
         private readonly ArqueoBilletesController _ArqueoBilletesController;
@@ -25,6 +25,15 @@ namespace ProyectoAndina.Views
         public int total_contado;
         public BilletesMonedasForm()
         {
+            // Config típica de diálogo modal
+            this.FormBorderStyle = FormBorderStyle.FixedDialog;
+            this.StartPosition = FormStartPosition.CenterParent;
+            this.ShowInTaskbar = false;
+            this.MinimizeBox = false;
+            this.MaximizeBox = false;
+            this.TopMost = true;
+            this.KeyPreview = false;
+
             _ArqueoBilletesController = new ArqueoBilletesController();
             _ArqueoCajaController = new ArqueoCajaController();
             _FuncionesGenerales = new FuncionesGenerales();

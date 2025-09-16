@@ -1,51 +1,111 @@
 ﻿using ProyectoAndina.Utils;
 using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Data;
-using System.Drawing;
+using System.Diagnostics;
 using System.Drawing.Printing;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows.Forms;
 
 namespace ProyectoAndina.Views
 {
-    public partial class ImpresionComprobanteForm : KioskForm
+    public partial class ImpresionComprobanteForm : Form
     {
-        ReciboModel reciboActual;
+        private readonly ReciboModel reciboActual;
+
         public ImpresionComprobanteForm(ReciboModel reciboActual)
         {
             InitializeComponent();
             this.reciboActual = reciboActual;
+
+            // Config típica de diálogo modal
+            this.FormBorderStyle = FormBorderStyle.FixedDialog;
+            this.StartPosition = FormStartPosition.CenterParent;
+            this.ShowInTaskbar = false;
+            this.MinimizeBox = false;
+            this.MaximizeBox = false;
+            this.TopMost = true;
+            this.KeyPreview = false;
+
         }
 
-        private void button_imprimir_Click(object sender, EventArgs e)
+        private void ImpresionComprobanteForm_Load(object sender, EventArgs e)
         {
-            var impresor = new DatosImpresion();
-            impresor.ImprimirRecibo(reciboActual, ConfiguracionImpresora.ImpresoraSeleccionada);
+            try
+            {
+                comboBoxImpresoras.Items.Clear();
 
-            this.DialogResult = DialogResult.OK;
-            this.Close();
+                foreach (string impresora in PrinterSettings.InstalledPrinters)
+                    comboBoxImpresoras.Items.Add(impresora);
+
+                // Selecciona la predeterminada si existe
+                var predeterminada = new PrinterSettings().PrinterName;
+                if (!string.IsNullOrWhiteSpace(predeterminada) &&
+                    comboBoxImpresoras.Items.Cast<string>().Any(p => p.Equals(predeterminada, StringComparison.OrdinalIgnoreCase)))
+                {
+                    comboBoxImpresoras.SelectedItem = predeterminada;
+                }
+                else if (comboBoxImpresoras.Items.Count > 0)
+                {
+                    comboBoxImpresoras.SelectedIndex = 0;
+                }
+            }
+            catch (Exception ex)
+            {
+                // No cierres el form aquí; solo informa
+                Debug.WriteLine($"Error cargando impresoras: {ex}");
+                MessageBox.Show(this, "No se pudieron cargar las impresoras instaladas.",
+                    "Impresión", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+            }
         }
 
         private void comboBoxImpresoras_SelectedIndexChanged(object sender, EventArgs e)
         {
-            ConfiguracionImpresora.ImpresoraSeleccionada = comboBoxImpresoras.SelectedItem.ToString();
+            if (comboBoxImpresoras.SelectedItem is string impresora && !string.IsNullOrWhiteSpace(impresora))
+            {
+                ConfiguracionImpresora.ImpresoraSeleccionada = impresora;
+            }
         }
 
-
-
-        private void ImpresionComprobanteForm_Load(object sender, EventArgs e)
+        private async void button_imprimir_Click(object sender, EventArgs e)
         {
-            foreach (string impresora in PrinterSettings.InstalledPrinters)
+            // Evita doble clic
+            button_imprimir.Enabled = false;
+            try
             {
-                comboBoxImpresoras.Items.Add(impresora);
-            }
+                // Por si no hay selección (fallback)
+                if (string.IsNullOrWhiteSpace(ConfiguracionImpresora.ImpresoraSeleccionada) &&
+                    comboBoxImpresoras.SelectedItem is string impresoraSel)
+                {
+                    ConfiguracionImpresora.ImpresoraSeleccionada = impresoraSel;
+                }
 
-            // Selecciona la predeterminada
-            comboBoxImpresoras.SelectedItem = new PrinterSettings().PrinterName;
+                if (string.IsNullOrWhiteSpace(ConfiguracionImpresora.ImpresoraSeleccionada))
+                {
+                    MessageBox.Show(this, "Selecciona una impresora.", "Impresión",
+                        MessageBoxButtons.OK, MessageBoxIcon.Information);
+                    return;
+                }
+
+                // Si ImprimirRecibo es bloqueante, puedes envolverlo en Task.Run
+                // para no congelar el UI. Si ya es rápido/sincrónico, puedes llamarlo directo.
+                await Task.Run(() =>
+                {
+                    var impresor = new DatosImpresion();
+                    impresor.ImprimirRecibo(reciboActual, ConfiguracionImpresora.ImpresoraSeleccionada);
+                });
+
+                this.DialogResult = DialogResult.OK; // cierra ShowDialog con OK
+                this.Close();
+            }
+            catch (Exception ex)
+            {
+                // No cierres el form; muestra el error
+                Debug.WriteLine($"Error imprimiendo: {ex}");
+                MessageBox.Show(this, "Ocurrió un error al imprimir el comprobante.",
+                    "Impresión", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
+            finally
+            {
+                button_imprimir.Enabled = true;
+            }
         }
     }
 }

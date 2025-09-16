@@ -64,9 +64,11 @@ namespace ProyectoAndina.Utils
                 MaximizeBox = false,
                 MinimizeBox = false,
                 ShowInTaskbar = false,
-                Owner = owner,
-                BackColor = Color.FromArgb(240, 240, 240), // Color de fondo como Guna2
-                Font = new Font("Segoe UI", 9)
+                Owner = owner,                // Mantener dueño
+                BackColor = Color.FromArgb(240, 240, 240),
+                Font = new Font("Segoe UI", 9),
+                TopMost = true,               // 🔥 Siempre al frente
+                ShowIcon = false              // No mostrar icono en barra
             };
 
             // Panel principal con el estilo exacto de Guna2MessageDialog

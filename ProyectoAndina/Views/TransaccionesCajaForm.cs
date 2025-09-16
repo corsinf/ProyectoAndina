@@ -214,15 +214,23 @@ namespace ProyectoAndina.Views
                                     recibo.Cajero = persona.nombre_completo;
                                 }
 
-                                var ImpresionComprobanteForm = new ImpresionComprobanteForm(recibo);
-                                ImpresionComprobanteForm.StartPosition = FormStartPosition.CenterParent;
 
-                                DialogResult resultado = ImpresionComprobanteForm.ShowDialog(this);
 
-                                if (ImpresionComprobanteForm.DialogResult == DialogResult.OK)
+                                // 'this' aquí es tu form padre (por ejemplo, tu KioskForm)
+                                using (var frm = new ImpresionComprobanteForm(recibo))
                                 {
-                                    StylesAlertas.MostrarAlerta(this, "Impresión finalizada con éxito.", tipo: TipoAlerta.Success);
+                                    // Redundante si ya lo seteaste en el ctor; no hace daño:
+                                    frm.StartPosition = FormStartPosition.CenterParent;
+                                    frm.TopMost = true;
+
+                                    var resultado = frm.ShowDialog(this);  // ¡IMPORTANTE: owner!
+
+                                    if (resultado == DialogResult.OK)
+                                    {
+                                        StylesAlertas.MostrarAlerta(this, "Impresión finalizada con éxito.", tipo: TipoAlerta.Success);
+                                    }
                                 }
+
 
                             }
 
