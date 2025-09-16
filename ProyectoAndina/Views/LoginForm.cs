@@ -10,7 +10,7 @@ namespace ProyectoAndina.Views
     /* Para habilitar el diseñador */
     //public partial class LoginForm : Form
 
-    /* Para habilitar lo del kiosko */
+    /* Para habilitar lo del kiosko  */
     public partial class LoginForm : KioskForm
 
     {
