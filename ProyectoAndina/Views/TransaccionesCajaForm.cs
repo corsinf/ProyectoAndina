@@ -20,7 +20,7 @@ using static ProyectoAndina.Utils.StylesAlertas;
 namespace ProyectoAndina.Views
 {
 
-    public partial class TransaccionesCajaForm : Form
+    public partial class TransaccionesCajaForm : KioskForm
     {
         private readonly PersonaController _PersonaController;
         private readonly CajaController _CajaController;
@@ -657,6 +657,8 @@ namespace ProyectoAndina.Views
 
         private void iconButton_regresar_Click(object sender, EventArgs e)
         {
+            TecladoHelper.CerrarTeclado();
+
             var MenuPrincipalForm = new MenuPrincipalForm();
             this.Hide();                 // Opcional: ocultas la ventana actual
             MenuPrincipalForm.ShowDialog();  // Bloquea hasta que RegistroForm se cierre

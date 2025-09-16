@@ -1,128 +1,116 @@
 ﻿using System;
 using System.Diagnostics;
+using System.IO;
+using System.Linq;
 using System.Runtime.InteropServices;
 using System.Threading;
 using System.Windows.Forms;
-using System.Drawing;
 
 public static class TecladoHelper
 {
-
+    private const int WM_SYSCOMMAND = 0x0112;
+    private const int SC_CLOSE = 0xF060;
+    private const int SW_HIDE = 0;
+    private const int SW_SHOW = 5;
 
     [DllImport("user32.dll", SetLastError = true)]
     private static extern IntPtr FindWindow(string lpClassName, string lpWindowName);
 
-    [DllImport("user32.dll")]
+    [DllImport("user32.dll", SetLastError = true)]
+    private static extern IntPtr FindWindowEx(IntPtr hwndParent, IntPtr hwndChildAfter, string lpszClass, string lpszWindow);
+
+    [DllImport("user32.dll", SetLastError = true)]
+    private static extern bool PostMessage(IntPtr hWnd, int Msg, IntPtr wParam, IntPtr lParam);
+
+    [DllImport("user32.dll", SetLastError = true)]
     private static extern bool ShowWindow(IntPtr hWnd, int nCmdShow);
-
-    [DllImport("user32.dll")]
-    private static extern IntPtr GetForegroundWindow();
-
-    [DllImport("user32.dll")]
-    private static extern bool SetForegroundWindow(IntPtr hWnd);
-
-    private const int SW_SHOW = 5;
 
     public static void MostrarTeclado()
     {
-        // Guardar ventana activa
-        IntPtr ventanaActiva = GetForegroundWindow();
-
         try
         {
-            // Intentar TabTip primero
-            if (IntentarTabTip(ventanaActiva))
-                return;
-
-            // Fallback a OSK
-            IntentarOSK(ventanaActiva);
+            if (IntentarTabTip()) return;
+            IntentarOSK();
         }
         catch (Exception ex)
         {
             MessageBox.Show($"Error al mostrar teclado: {ex.Message}", "Error",
-                          MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                MessageBoxButtons.OK, MessageBoxIcon.Warning);
         }
     }
 
-    private static bool IntentarTabTip(IntPtr ventanaActiva)
+    private static bool IntentarTabTip()
     {
-        try
+        string[] rutasTabTip =
         {
-            string[] rutasTabTip = {
-                @"C:\Program Files\Common Files\Microsoft Shared\ink\TabTip.exe",
-                @"C:\Program Files (x86)\Common Files\Microsoft Shared\ink\TabTip.exe",
-                @"C:\Windows\System32\TabTip.exe"
-            };
+            @"C:\Program Files\Common Files\Microsoft Shared\ink\TabTip.exe",
+            @"C:\Program Files (x86)\Common Files\Microsoft Shared\ink\TabTip.exe",
+            @"C:\Windows\System32\TabTip.exe"
+        };
 
-            foreach (string ruta in rutasTabTip)
+        foreach (var ruta in rutasTabTip)
+        {
+            if (!File.Exists(ruta)) continue;
+
+            // Reiniciar para forzar aparición
+            CerrarTeclado(); // por si hay instancias flotantes
+            Thread.Sleep(150);
+
+            try
             {
-                if (File.Exists(ruta))
+                Process.Start(new ProcessStartInfo
                 {
-                    // Tu método original que funciona
-                    var procesos = Process.GetProcessesByName("TabTip");
-                    foreach (var p in procesos)
-                    {
-                        try { p.Kill(); } catch { }
-                    }
-
-                    Thread.Sleep(200);
-
-                    ProcessStartInfo startInfo = new ProcessStartInfo
-                    {
-                        FileName = ruta,
-                        UseShellExecute = true
-                    };
-
-                    Process.Start(startInfo);
-
-                    // NO restaurar focus inmediatamente - lo hará el timer en el form
-                    return true;
-                }
+                    FileName = ruta,
+                    UseShellExecute = true
+                });
+                return true;
             }
-        }
-        catch
-        {
-            return false;
+            catch { /* probar siguiente */ }
         }
         return false;
     }
 
-    private static void IntentarOSK(IntPtr ventanaActiva)
+    private static void IntentarOSK()
     {
-        try
+        Process.Start(new ProcessStartInfo
         {
-            ProcessStartInfo startInfo = new ProcessStartInfo
-            {
-                FileName = "osk.exe",
-                UseShellExecute = true
-            };
-
-            Process.Start(startInfo);
-        }
-        catch (Exception ex)
-        {
-            MessageBox.Show($"No se pudo abrir ningún teclado virtual.\nError: {ex.Message}",
-                          "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
-        }
+            FileName = "osk.exe",
+            UseShellExecute = true
+        });
     }
 
+    /// <summary>
+    /// Cierra el teclado virtual si está abierto (TabTip/TextInputHost/OSK).
+    /// </summary>
     public static void CerrarTeclado()
     {
         try
         {
-            // Cerrar TabTip
-            var procesosTabTip = Process.GetProcessesByName("TabTip");
-            foreach (var p in procesosTabTip)
+            // 1) Intento grácil: cerrar la ventana del Touch Keyboard
+            //   - Win10/11: clase "IPTip_Main_Window"
+            //   - OSK: clase "OSKMainClass"
+            IntPtr hTabTip = FindWindow("IPTip_Main_Window", null);
+            if (hTabTip != IntPtr.Zero)
             {
-                try { p.Kill(); } catch { }
+                // Primero intenta ocultar
+                ShowWindow(hTabTip, SW_HIDE);
+                // Luego envía un "close"
+                PostMessage(hTabTip, WM_SYSCOMMAND, (IntPtr)SC_CLOSE, IntPtr.Zero);
+                Thread.Sleep(150);
             }
 
-            // Cerrar OSK
-            var procesosOSK = Process.GetProcessesByName("osk");
-            foreach (var p in procesosOSK)
+            IntPtr hOSK = FindWindow("OSKMainClass", null);
+            if (hOSK != IntPtr.Zero)
             {
-                try { p.Kill(); } catch { }
+                ShowWindow(hOSK, SW_HIDE);
+                PostMessage(hOSK, WM_SYSCOMMAND, (IntPtr)SC_CLOSE, IntPtr.Zero);
+                Thread.Sleep(150);
             }
+
+            // 2) Si sigue vivo, matar procesos relacionados
+            CerrarProcesos("TabTip");          // teclado táctil
+            CerrarProcesos("TextInputHost");   // host UI Win11
+            CerrarProcesos("osk");             // on-screen keyboard
         }
         catch
         {
@@ -134,9 +122,11 @@ public static class TecladoHelper
     {
         try
         {
-            var tabTip = Process.GetProcessesByName("TabTip");
-            var osk = Process.GetProcessesByName("osk");
-            return tabTip.Length > 0 || osk.Length > 0;
+            return Process.GetProcessesByName("TabTip").Any()
+                || Process.GetProcessesByName("TextInputHost").Any()
+                || Process.GetProcessesByName("osk").Any()
+                || FindWindow("IPTip_Main_Window", null) != IntPtr.Zero
+                || FindWindow("OSKMainClass", null) != IntPtr.Zero;
         }
         catch
         {
@@ -144,5 +134,27 @@ public static class TecladoHelper
         }
     }
 
-
+    private static void CerrarProcesos(string processName)
+    {
+        foreach (var p in Process.GetProcessesByName(processName))
+        {
+            try
+            {
+                if (!p.HasExited)
+                {
+                    p.CloseMainWindow();
+                    if (!p.WaitForExit(300))
+                    {
+                        p.Kill();
+                        p.WaitForExit(300);
+                    }
+                }
+            }
+            catch { /* sin permisos o zombie */ }
+            finally
+            {
+                try { p.Dispose(); } catch { }
+            }
+        }
+    }
 }

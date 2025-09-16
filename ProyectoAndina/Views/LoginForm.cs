@@ -347,6 +347,10 @@ namespace ProyectoAndina.Views
 
         private void BtnLogin_Click(object sender, EventArgs e)
         {
+
+            //TecladoHelper.CerrarTeclado();
+            //return;
+
             StyleManager.OcultarMensaje(lblMensaje);
 
             // Validar que no sean placeholders
@@ -400,6 +404,8 @@ namespace ProyectoAndina.Views
                     timer.Tick += (s, args) =>
                     {
                         timer.Stop(); // detener el timer después de ejecutarse
+                        TecladoHelper.CerrarTeclado();
+
                         var menuPrincipalForm = new MenuPrincipalForm();
                         this.Hide();
                         menuPrincipalForm.ShowDialog();
@@ -448,11 +454,21 @@ namespace ProyectoAndina.Views
             // Activa el tap secreto sobre el logo
             SetSecretExit(pictureBoxLogo, taps: 7, window: TimeSpan.FromSeconds(5));
             txtCorreo.Focus();
+
+            //TecladoHelper.CerrarTeclado();
+        }
+        protected override void OnActivated(EventArgs e)
+        {
+            base.OnActivated(e);
+            //TecladoHelper.CerrarTeclado();
         }
 
         protected override void OnFormClosing(FormClosingEventArgs e)
         {
             try { TaskbarHelper.ShowTaskbar(); } catch { }
+
+            //TecladoHelper.CerrarTeclado();
+
             base.OnFormClosing(e);
         }
 

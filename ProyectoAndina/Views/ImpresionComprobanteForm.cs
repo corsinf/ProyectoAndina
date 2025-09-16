@@ -12,7 +12,7 @@ using System.Windows.Forms;
 
 namespace ProyectoAndina.Views
 {
-    public partial class ImpresionComprobanteForm : Form
+    public partial class ImpresionComprobanteForm : KioskForm
     {
         ReciboModel reciboActual;
         public ImpresionComprobanteForm(ReciboModel reciboActual)

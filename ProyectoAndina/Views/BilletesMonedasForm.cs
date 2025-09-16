@@ -15,7 +15,7 @@ using static ProyectoAndina.Utils.StylesAlertas;
 
 namespace ProyectoAndina.Views
 {
-    public partial class BilletesMonedasForm : Form
+    public partial class BilletesMonedasForm : KioskForm
 
     {
         private readonly ArqueoBilletesController _ArqueoBilletesController;
