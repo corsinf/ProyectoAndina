@@ -207,6 +207,32 @@ namespace ProyectoAndina.Controllers
             return null;
         }
 
+
+
+        public CajaM ObtenerPorcodigo(string codigo )
+        {
+            using (var connection = _dbConnection.GetConnection())
+            {
+                string query = "SELECT * FROM caja WHERE codigo = @codigo";
+
+                using (var cmd = new SqlCommand(query, connection))
+                {
+                    cmd.Parameters.AddWithValue("@codigo", codigo);
+                    connection.Open();
+
+                    using (var reader = cmd.ExecuteReader())
+                    {
+                        if (reader.Read())
+                        {
+                            return MapearCaja(reader);
+                        }
+                    }
+                }
+            }
+
+            return null;
+        }
+
         //Obtener cajas disponibles 
         public List<CajaM> obtener_cajas_cerradas()
         {

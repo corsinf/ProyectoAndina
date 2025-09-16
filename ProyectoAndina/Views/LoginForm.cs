@@ -7,7 +7,12 @@ using System.Linq;
 
 namespace ProyectoAndina.Views
 {
+    /* Para habilitar el diseñador */
     public partial class LoginForm : Form
+
+    /* Para habilitar lo del kiosko */
+    //public partial class LoginForm : KioskForm
+
     {
         private readonly LoginController _loginController;
         private readonly PersonaRolController _PersonaRolController;
@@ -27,11 +32,16 @@ namespace ProyectoAndina.Views
         private PictureBox pictureBoxLogo;
         private Label lblMensaje;
 
+
         public LoginForm()
         {
             _loginController = new LoginController();
             _PersonaRolController = new PersonaRolController();
             InitializeComponent();
+<<<<<<< HEAD
+=======
+
+>>>>>>> 1fbbfaa8fccc06aecd2a96cd1ee224c331cfbff2
             ConfigurarEstilo();
         }
 
@@ -84,6 +94,7 @@ namespace ProyectoAndina.Views
             pictureBoxLogo.SizeMode = PictureBoxSizeMode.Zoom;
             pictureBoxLogo.TabIndex = 0;
             pictureBoxLogo.TabStop = false;
+
             // 
             // panelLogin
             // 
@@ -140,7 +151,7 @@ namespace ProyectoAndina.Views
             // 
             txtCorreo.Location = new Point(94, 215);
             txtCorreo.Name = "txtCorreo";
-            txtCorreo.Size = new Size(300, 27);
+            txtCorreo.Size = new Size(300, 23);
             txtCorreo.TabIndex = 3;
             txtCorreo.Click += txtCorreo_Click;
             // 
@@ -157,7 +168,7 @@ namespace ProyectoAndina.Views
             txtPassword.Location = new Point(94, 306);
             txtPassword.Name = "txtPassword";
             txtPassword.PasswordChar = '●';
-            txtPassword.Size = new Size(300, 27);
+            txtPassword.Size = new Size(300, 23);
             txtPassword.TabIndex = 5;
             txtPassword.Click += txtPassword_Click;
             // 
@@ -182,12 +193,24 @@ namespace ProyectoAndina.Views
             // LoginForm
             // 
             ClientSize = new Size(1021, 668);
+            ControlBox = false;
             Controls.Add(panelPrincipal);
+<<<<<<< HEAD
             FormBorderStyle = FormBorderStyle.FixedDialog;
+=======
+            FormBorderStyle = FormBorderStyle.None;
+            MaximizeBox = false;
+>>>>>>> 1fbbfaa8fccc06aecd2a96cd1ee224c331cfbff2
             MinimizeBox = false;
             Name = "LoginForm";
+            ShowIcon = false;
+            ShowInTaskbar = false;
             StartPosition = FormStartPosition.CenterScreen;
             Text = "Sistema UASB - Iniciar Sesión";
+<<<<<<< HEAD
+=======
+            TopMost = true;
+>>>>>>> 1fbbfaa8fccc06aecd2a96cd1ee224c331cfbff2
             WindowState = FormWindowState.Maximized;
             panelPrincipal.ResumeLayout(false);
             panelLogo.ResumeLayout(false);
@@ -378,7 +401,11 @@ namespace ProyectoAndina.Views
                     SessionUser.Correo = Persona.correo;
 
                     StyleManager.MostrarExito(lblMensaje, "Inicio de sesión exitoso");
+<<<<<<< HEAD
                    
+=======
+
+>>>>>>> 1fbbfaa8fccc06aecd2a96cd1ee224c331cfbff2
 
                     // Pequeña pausa para mostrar mensaje de éxito
 
@@ -415,6 +442,7 @@ namespace ProyectoAndina.Views
             }
         }
 
+<<<<<<< HEAD
         
 
         protected override void OnLoad(EventArgs e)
@@ -423,6 +451,8 @@ namespace ProyectoAndina.Views
             txtCorreo.Focus();
         }
 
+=======
+>>>>>>> 1fbbfaa8fccc06aecd2a96cd1ee224c331cfbff2
         private void txtCorreo_Click(object sender, EventArgs e)
         {
             TecladoHelper.MostrarTeclado();
@@ -432,5 +462,25 @@ namespace ProyectoAndina.Views
         {
             TecladoHelper.MostrarTeclado();
         }
+
+
+        /*
+         * Logica para el la barra de tareas y bloquear la pantalla
+         * **/
+
+        protected override void OnLoad(EventArgs e)
+        {
+            base.OnLoad(e);
+            // Activa el tap secreto sobre el logo
+            SetSecretExit(pictureBoxLogo, taps: 7, window: TimeSpan.FromSeconds(5));
+            txtCorreo.Focus();
+        }
+
+        protected override void OnFormClosing(FormClosingEventArgs e)
+        {
+            try { TaskbarHelper.ShowTaskbar(); } catch { }
+            base.OnFormClosing(e);
+        }
+
     }
 }

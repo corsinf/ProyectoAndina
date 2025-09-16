@@ -488,6 +488,10 @@
             AutoScaleDimensions = new SizeF(8F, 20F);
             AutoScaleMode = AutoScaleMode.Font;
             ClientSize = new Size(1135, 571);
+<<<<<<< HEAD
+=======
+            ControlBox = false;
+>>>>>>> 1fbbfaa8fccc06aecd2a96cd1ee224c331cfbff2
             Controls.Add(tableLayoutPanel_contenido);
             Controls.Add(tableLayoutPanelLogin);
             Controls.Add(tableLayoutPanel_logueado);
