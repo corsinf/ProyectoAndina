@@ -217,6 +217,30 @@ namespace ProyectoAndina.Controllers
             return null;
         }
 
+        public arqueo_billetesM obtener_arqueo_billetes_apertura(int arqueo_id)
+        {
+            using (var connection = _dbConnection.GetConnection())
+            {
+                string query = "SELECT * FROM arqueo_billetes WHERE arqueo_id = @arqueo_id";
+
+                using (var cmd = new SqlCommand(query, connection))
+                {
+                    cmd.Parameters.AddWithValue("@arqueo_id", arqueo_id);
+                    connection.Open();
+
+                    using (var reader = cmd.ExecuteReader())
+                    {
+                        if (reader.Read())
+                        {
+                            return MapearBillete(reader);
+                        }
+                    }
+                }
+            }
+
+            return null;
+        }
+
         // MAPEAR LECTOR A MODELO
         private arqueo_billetesM MapearBillete(SqlDataReader reader)
         {

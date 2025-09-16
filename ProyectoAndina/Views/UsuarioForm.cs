@@ -1,9 +1,12 @@
-﻿using ProyectoAndina.Controllers;
+﻿using Newtonsoft.Json;
+using ProyectoAndina.Controllers;
 using ProyectoAndina.Models;
+using ProyectoAndina.Services;
 using ProyectoAndina.Utils;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Numerics;
 using System.Text;
 using System.Text.RegularExpressions;
 using System.Threading.Tasks;
@@ -16,13 +19,16 @@ namespace ProyectoAndina.Views
         private readonly PersonaController _PersonaController;
         private readonly PersonaRolController _PersonaRolController;
         private readonly RolController _RolController;
+        private readonly ApiService _apiService;
+        private Form _formularioPadre;
 
-
-        public UsuarioForm()
+        public UsuarioForm(Form formularioPadre)
         {
             _PersonaController = new PersonaController();
             _PersonaRolController = new PersonaRolController();
             _RolController = new RolController();
+            _apiService = new ApiService();
+            _formularioPadre = formularioPadre;
 
             this.Paint += UsuarioForm_Paint;
             this.DoubleBuffered = true;
@@ -239,7 +245,7 @@ namespace ProyectoAndina.Views
         private Label label_cedula;
         private Button button_agregar_usuario;
 
-        private void button_agregar_usuario_Click(object sender, EventArgs e)
+        private async void button_agregar_usuario_Click(object sender, EventArgs e)
         {
 
             if (!ValidarCamposPorNombre())
@@ -247,7 +253,7 @@ namespace ProyectoAndina.Views
             
             try
             {
-                var persona = new PersonaM
+                var persona = new PersonaApiM
                 {
                     primer_nombre = textBox_pri_nombre.Text.Trim(),
                     primer_apellido = textBox_pri_apellido.Text.Trim(),
@@ -255,19 +261,44 @@ namespace ProyectoAndina.Views
                     correo = textBox_correo.Text.Trim(),
                     telefono_1 = textBox_telefono?.Text.Trim() ?? "",
                     direccion = textBox_direccion?.Text.Trim() ?? "",
-                    estado = true,
-                    fecha_creacion = DateTime.Now,
                     observaciones = "Creado desde la aplicacion de escritorio"
                 };
 
-              
-                int id_persona = _PersonaController.Insertar_ReturnId(persona);
 
-                StylesAlertas.MostrarAlerta(this, "Registro actualizado correctamente", tipo: TipoAlerta.Success);
+                var personaToken = _PersonaController.ObtenerPorId(SessionUser.PerId);
 
-                this.DialogResult = DialogResult.OK;
+                if (persona != null)
+                {
+                    // Esperar el resultado del login
+                    string loginResponse = await _apiService.LoginAsync(personaToken.correo, personaToken.password);
 
-                this.Close();
+                    if (!string.IsNullOrEmpty(loginResponse) && !loginResponse.StartsWith("Error") && !loginResponse.StartsWith("Excepción"))
+                    {
+                        // Aquí normalmente viene un JSON con el token
+                        // Ejemplo: { "token": "eyJhbGciOi..." }
+                        var obj = JsonConvert.DeserializeObject<dynamic>(loginResponse);
+                        string token = obj?.token;
+
+
+                        if (!string.IsNullOrEmpty(token))
+                        {
+                            // ✅ Ya tienes el token. Ahora puedes usarlo para otra operación
+                            string respuesta = await _apiService.CrearPersonaAsync(persona, token);
+
+                            MessageBox.Show(respuesta);
+                            return;
+
+
+                            StylesAlertas.MostrarAlerta(this, "Registro actualizado correctamente", tipo: TipoAlerta.Success);
+
+                            this.DialogResult = DialogResult.OK;
+
+                            this.Close();
+                        }
+                    }
+                }
+
+                            
             }
             catch (Exception ex)
             {
@@ -343,32 +374,32 @@ namespace ProyectoAndina.Views
 
         private void textBox_cedula_Click(object sender, EventArgs e)
         {
-            TecladoDesplegable.MostrarTeclado(this, textBox_cedula, TipoTeclado.Numerico, soloNumerico: true);
+            TecladoDesplegable.MostrarTeclado(_formularioPadre, textBox_cedula, TipoTeclado.Numerico, soloNumerico: true);
         }
 
         private void textBox_pri_nombre_Click(object sender, EventArgs e)
         {
-            TecladoDesplegable.MostrarTeclado(this, textBox_pri_nombre);
+            TecladoDesplegable.MostrarTeclado(_formularioPadre, textBox_pri_nombre);
         }
 
         private void textBox_pri_apellido_Click(object sender, EventArgs e)
         {
-            TecladoDesplegable.MostrarTeclado(this, textBox_pri_apellido);
+            TecladoDesplegable.MostrarTeclado(_formularioPadre, textBox_pri_apellido);
         }
 
         private void textBox_correo_Click(object sender, EventArgs e)
         {
-            TecladoDesplegable.MostrarTeclado(this, textBox_correo);
+            TecladoDesplegable.MostrarTeclado(_formularioPadre, textBox_correo);
         }
 
         private void textBox_telefono_Click(object sender, EventArgs e)
         {
-            TecladoDesplegable.MostrarTeclado(this, textBox_telefono, TipoTeclado.Numerico, soloNumerico: true);
+            TecladoDesplegable.MostrarTeclado(_formularioPadre, textBox_telefono, TipoTeclado.Numerico, soloNumerico: true);
         }
 
         private void textBox_direccion_Click(object sender, EventArgs e)
         {
-            TecladoDesplegable.MostrarTeclado(this, textBox_direccion);
+            TecladoDesplegable.MostrarTeclado(_formularioPadre, textBox_direccion);
         }
     }
 }

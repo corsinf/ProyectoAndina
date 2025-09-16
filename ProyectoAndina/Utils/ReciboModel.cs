@@ -2,9 +2,9 @@
 {
     // Empresa (por defecto)
     public string RazonSocial { get; set; } = "UNIVERSIDAD ANDINA SIMON BOLIVAR";
-    public string RUC { get; set; } = "1791233417001";
+    public string RUC { get; set; } = "RUC 1791233417001";
     public string Telefono { get; set; } = "+593 86 307 2166";
-    public string Direccion { get; set; } = "Telefono Quito 1701143";
+    public string Direccion { get; set; } = "Toledo,Quito 170143,Ecuador";
     public string Ciudad { get; set; } = "Quito - Ecuador";
 
     // Factura / Documento

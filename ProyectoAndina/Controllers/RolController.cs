@@ -1,5 +1,6 @@
 ﻿using ProyectoAndina.Data;
 using ProyectoAndina.Models; // Asegúrate de tener el `using` correcto para el modelo Rol
+using ProyectoAndina.Utils;
 using System;
 using System.Collections.Generic;
 using System.Data.SqlClient;
@@ -65,6 +66,79 @@ namespace ProyectoAndina.Controllers
 
             return lista;
         }
+
+        //todas los roles
+
+        public ResultadoPaginado<RolM> ObtenerRolesPaginados(
+    int pagina = 1,
+    int registrosPorPagina = 20,
+    string filtro = "")
+        {
+            var resultado = new ResultadoPaginado<RolM>
+            {
+                PaginaActual = pagina,
+                RegistrosPorPagina = registrosPorPagina
+            };
+
+            using (var connection = _dbConnection.GetConnection())
+            {
+                connection.Open();
+
+                // --- 1. Contar total de registros ---
+                string countQuery = @"
+            SELECT COUNT(*) 
+            FROM roles
+            WHERE (@Filtro = '' OR 
+                   nombre LIKE '%' + @Filtro + '%' OR
+                   descripcion LIKE '%' + @Filtro + '%')";
+
+                using (var countCmd = new SqlCommand(countQuery, connection))
+                {
+                    countCmd.Parameters.AddWithValue("@Filtro", filtro ?? "");
+                    resultado.TotalRegistros = (int)countCmd.ExecuteScalar();
+                }
+
+                // --- 2. Consultar datos paginados ---
+                string dataQuery = @"
+            SELECT rol_id, nombre, descripcion, estado, fecha_creacion, fecha_modificacion
+            FROM roles
+            WHERE estado = 1
+            AND (@Filtro = '' OR 
+                   nombre LIKE '%' + @Filtro + '%' OR
+                   descripcion LIKE '%' + @Filtro + '%')
+            ORDER BY rol_id DESC
+            OFFSET @Offset ROWS 
+            FETCH NEXT @PageSize ROWS ONLY";
+
+                using (var dataCmd = new SqlCommand(dataQuery, connection))
+                {
+                    var offset = (pagina - 1) * registrosPorPagina;
+
+                    dataCmd.Parameters.AddWithValue("@Filtro", filtro ?? "");
+                    dataCmd.Parameters.AddWithValue("@Offset", offset);
+                    dataCmd.Parameters.AddWithValue("@PageSize", registrosPorPagina);
+
+                    using (var reader = dataCmd.ExecuteReader())
+                    {
+                        while (reader.Read())
+                        {
+                            resultado.Datos.Add(new RolM
+                            {
+                                RolId = (int)reader["rol_id"],
+                                Nombre = reader["nombre"].ToString(),
+                                Descripcion = reader["descripcion"].ToString(),
+                                Estado = Convert.ToInt32(reader["estado"]) == 1,
+                                FechaCreacion = reader["fecha_creacion"] as DateTime?,
+                                FechaModificacion = reader["fecha_modificacion"] as DateTime?
+                            });
+                        }
+                    }
+                }
+            }
+
+            return resultado;
+        }
+
 
 
         //sacar solo docentes y estudiantes 
@@ -164,9 +238,9 @@ namespace ProyectoAndina.Controllers
         }
 
         // ✅ Eliminar un rol por ID
-        public void EliminarRol(int idRol)
+        public bool EliminarRol(int idRol)
         {
-            string query = "DELETE FROM roles WHERE rol_id = @IdRol";
+            string query = "UPDATE roles SET estado = 0 WHERE rol_id = @IdRol";
 
             using (var connection = _dbConnection.GetConnection())
             using (var command = new SqlCommand(query, connection))
@@ -174,9 +248,12 @@ namespace ProyectoAndina.Controllers
                 command.Parameters.AddWithValue("@IdRol", idRol);
 
                 connection.Open();
-                command.ExecuteNonQuery();
+                int filasAfectadas = command.ExecuteNonQuery();
                 connection.Close();
+
+                return filasAfectadas > 0;
             }
         }
+
     }
 }

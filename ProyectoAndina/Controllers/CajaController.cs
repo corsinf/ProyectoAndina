@@ -1,5 +1,6 @@
 ﻿using ProyectoAndina.Data;
 using ProyectoAndina.Models;
+using ProyectoAndina.Utils;
 using System;
 using System.Collections.Generic;
 using System.Data.SqlClient;
@@ -113,6 +114,74 @@ namespace ProyectoAndina.Controllers
             return lista;
         }
 
+        public ResultadoPaginado<CajaM> ObtenerCajasPaginadas(
+    int pagina = 1,
+    int registrosPorPagina = 20,
+    string filtro = "")
+        {
+            var resultado = new ResultadoPaginado<CajaM>
+            {
+                PaginaActual = pagina,
+                RegistrosPorPagina = registrosPorPagina
+            };
+
+            using (var connection = _dbConnection.GetConnection())
+            {
+                connection.Open();
+
+                // 1. Contar total de registros
+                string countQuery = @"
+        SELECT COUNT(*)
+        FROM caja
+        WHERE estado = 1
+          AND (@Filtro = '' OR 
+               codigo LIKE '%' + @Filtro + '%' OR
+               nombre LIKE '%' + @Filtro + '%' OR
+               ubicacion LIKE '%' + @Filtro + '%' OR
+               ip_equipo LIKE '%' + @Filtro + '%')";
+
+                using (var countCmd = new SqlCommand(countQuery, connection))
+                {
+                    countCmd.Parameters.AddWithValue("@Filtro", filtro ?? "");
+                    resultado.TotalRegistros = (int)countCmd.ExecuteScalar();
+                }
+
+                // 2. Obtener datos paginados
+                string dataQuery = @"
+        SELECT caja_id, codigo, nombre, ubicacion, ip_equipo, estado, fecha_creacion
+        FROM caja
+        WHERE estado = 1
+          AND (@Filtro = '' OR 
+               codigo LIKE '%' + @Filtro + '%' OR
+               nombre LIKE '%' + @Filtro + '%' OR
+               ubicacion LIKE '%' + @Filtro + '%' OR
+               ip_equipo LIKE '%' + @Filtro + '%')
+        ORDER BY nombre
+        OFFSET @Offset ROWS
+        FETCH NEXT @PageSize ROWS ONLY";
+
+                using (var dataCmd = new SqlCommand(dataQuery, connection))
+                {
+                    var offset = (pagina - 1) * registrosPorPagina;
+
+                    dataCmd.Parameters.AddWithValue("@Filtro", filtro ?? "");
+                    dataCmd.Parameters.AddWithValue("@Offset", offset);
+                    dataCmd.Parameters.AddWithValue("@PageSize", registrosPorPagina);
+
+                    using (var reader = dataCmd.ExecuteReader())
+                    {
+                        while (reader.Read())
+                        {
+                            resultado.Datos.Add(MapearCaja(reader));
+                        }
+                    }
+                }
+            }
+
+            return resultado;
+        }
+
+
         // OBTENER POR ID
         public CajaM ObtenerPorId(int caja_id)
         {
@@ -150,7 +219,7 @@ namespace ProyectoAndina.Controllers
             FROM caja c
             LEFT JOIN arqueo_caja a 
                 ON c.caja_id = a.caja_id AND a.estado = 'A'
-            WHERE a.arqueo_id IS NULL"; // Solo cajas que NO tengan arqueo abierto
+            WHERE a.arqueo_id IS NULL AND c.estado = 1"; // Solo cajas que NO tengan arqueo abierto
 
                 using (var cmd = new SqlCommand(query, connection))
                 {

@@ -1,5 +1,6 @@
 ﻿using ProyectoAndina.Data;
 using ProyectoAndina.Models;
+using ProyectoAndina.Utils;
 using System;
 using System.Collections.Generic;
 using System.Data.SqlClient;
@@ -57,6 +58,92 @@ namespace ProyectoAndina.Controllers
 
             return lista;
         }
+
+        //paginado
+        public ResultadoPaginado<persona_rolM> ObtenerPersonaRolesPaginados(
+    int pagina = 1,
+    int registrosPorPagina = 20,
+    string filtro = "")
+        {
+            var resultado = new ResultadoPaginado<persona_rolM>
+            {
+                PaginaActual = pagina,
+                RegistrosPorPagina = registrosPorPagina
+            };
+
+            using (var connection = _dbConnection.GetConnection())
+            {
+                connection.Open();
+
+                // --- 1. Contar total de registros ---
+                string countQuery = @"
+            SELECT COUNT(*)
+            FROM personas_roles pr
+            INNER JOIN personas p ON pr.per_id = p.per_id
+            INNER JOIN roles r ON pr.rol_id = r.rol_id
+            WHERE pr.estado = 1 AND (@Filtro = '' OR
+                   p.primer_nombre LIKE '%' + @Filtro + '%' OR
+                   p.primer_apellido LIKE '%' + @Filtro + '%' OR
+                   p.cedula LIKE '%' + @Filtro + '%' OR
+                   r.nombre LIKE '%' + @Filtro + '%' OR
+                   r.descripcion LIKE '%' + @Filtro + '%')";
+
+                using (var countCmd = new SqlCommand(countQuery, connection))
+                {
+                    countCmd.Parameters.AddWithValue("@Filtro", filtro ?? "");
+                    resultado.TotalRegistros = (int)countCmd.ExecuteScalar();
+                }
+
+                // --- 2. Consultar registros paginados ---
+                string dataQuery = @"
+            SELECT pr.id_persona_rol, pr.per_id, pr.rol_id, pr.fecha_asignacion, pr.estado,
+                   p.primer_nombre, p.primer_apellido, p.cedula, 
+                   r.nombre, r.descripcion
+            FROM personas_roles pr
+            INNER JOIN personas p ON pr.per_id = p.per_id
+            INNER JOIN roles r ON pr.rol_id = r.rol_id
+            WHERE (@Filtro = '' OR
+                   p.primer_nombre LIKE '%' + @Filtro + '%' OR
+                   p.primer_apellido LIKE '%' + @Filtro + '%' OR
+                   p.cedula LIKE '%' + @Filtro + '%' OR
+                   r.nombre LIKE '%' + @Filtro + '%' OR
+                   r.descripcion LIKE '%' + @Filtro + '%')
+            ORDER BY pr.id_persona_rol DESC
+            OFFSET @Offset ROWS 
+            FETCH NEXT @PageSize ROWS ONLY";
+
+                using (var dataCmd = new SqlCommand(dataQuery, connection))
+                {
+                    var offset = (pagina - 1) * registrosPorPagina;
+
+                    dataCmd.Parameters.AddWithValue("@Filtro", filtro ?? "");
+                    dataCmd.Parameters.AddWithValue("@Offset", offset);
+                    dataCmd.Parameters.AddWithValue("@PageSize", registrosPorPagina);
+
+                    using (var reader = dataCmd.ExecuteReader())
+                    {
+                        while (reader.Read())
+                        {
+                            resultado.Datos.Add(new persona_rolM
+                            {
+                                IdPersonaRol = (int)reader["id_persona_rol"],
+                                PerId = (int)reader["per_id"],
+                                RolId = (int)reader["rol_id"],
+                                FechaAsignacion = reader["fecha_asignacion"] as DateTime?,
+                                Estado = Convert.ToBoolean(reader["estado"]),
+                                NombrePersona = $"{reader["primer_nombre"]} {reader["primer_apellido"]}",
+                                Cedula = reader["cedula"]?.ToString(),
+                                NombreRol = reader["nombre"]?.ToString(),
+                                DescripcionRol = reader["descripcion"]?.ToString()
+                            });
+                        }
+                    }
+                }
+            }
+
+            return resultado;
+        }
+
 
         public persona_rolM ObtenerPersonaRolId(int idPersonaRol)
         {

@@ -700,133 +700,10 @@ namespace ProyectoAndina.Utils
             lblMensaje.Visible = false;
         }
 
-        public static void ConfigurarBotonIconoEnPanel(
-    Panel contenedor,
-    Button boton,
-    FontAwesome.Sharp.IconChar icono,
-    Color colorFondo,
-    int radioBorde = 15,          // Radio más suave por defecto
-    EventHandler onClick = null,
-    int margenHorizontal = 4,     // Márgenes más generosos
-    int margenVertical = 4
-)
-        {
-            if (boton == null) return;
-
-            // 🌟 Aplicar estilo base mejorado
-            ConfigurarBotonIconoElegante(boton, icono, boton.Text, colorFondo, radioBorde, onClick);
-
-            void Ajustar()
-            {
-                if (contenedor != null && boton != null)
-                {
-                    int nuevoAncho = contenedor.ClientSize.Width - (margenHorizontal * 2);
-                    int nuevoAlto = contenedor.ClientSize.Height - (margenVertical * 2);
-                    nuevoAncho = Math.Max(60, nuevoAncho);  // Tamaño mínimo más grande
-                    nuevoAlto = Math.Max(45, nuevoAlto);
-
-                    boton.Size = new Size(nuevoAncho, nuevoAlto);
-
-                    // 📏 Escalar fuente e ícono proporcionalmente
-                    float escala = Math.Min(nuevoAncho / 180f, nuevoAlto / 70f);
-                    escala = Math.Max(0.7f, Math.Min(1.4f, escala)); // Límites de escala
-
-                    // 🔤 Fuente más elegante
-                    boton.Font = new Font("Segoe UI", Math.Max(9f, 11f * escala), FontStyle.Bold);
-
-                    if (nuevoAlto > 75) // Layout vertical para botones altos
-                    {
-                        boton.TextAlign = ContentAlignment.BottomCenter;
-                        boton.ImageAlign = ContentAlignment.TopCenter;
-                        boton.TextImageRelation = TextImageRelation.ImageAboveText;
-
-                        int paddingTop = Math.Max(10, (int)(nuevoAlto * 0.15f));
-                        int paddingBottom = Math.Max(10, (int)(nuevoAlto * 0.12f));
-                        boton.Padding = new Padding(8, paddingTop, 8, paddingBottom);
-
-                        int tamanoIcono = (int)(Math.Min(nuevoAncho, nuevoAlto) * 0.28f * escala);
-                        RedimensionarIcono(boton, icono, Math.Max(20, Math.Min(48, tamanoIcono)));
-                    }
-                    else // Layout horizontal para botones anchos
-                    {
-                        boton.TextAlign = ContentAlignment.MiddleCenter;
-                        boton.ImageAlign = ContentAlignment.MiddleLeft;
-                        boton.TextImageRelation = TextImageRelation.ImageBeforeText;
-
-                        int tamanoIcono = Math.Max(16, Math.Min(28, (int)(nuevoAlto * 0.55f * escala)));
-                        int paddingLeft = tamanoIcono + 12;
-                        int paddingRight = Math.Max(12, (int)(nuevoAncho * 0.06f));
-
-                        boton.Padding = new Padding(paddingLeft, 4, paddingRight, 4);
-                        RedimensionarIcono(boton, icono, tamanoIcono);
-                    }
-
-                    // 🎯 Región redondeada más suave
-                    int radioFinal = Math.Min(radioBorde, Math.Min(nuevoAncho, nuevoAlto) / 5);
-                    boton.Region = new Region(RoundedRect(boton.ClientRectangle, radioFinal));
-
-                    // 📍 Centrar en el contenedor
-                    int nuevoX = (contenedor.ClientSize.Width - boton.Width) / 2;
-                    int nuevoY = (contenedor.ClientSize.Height - boton.Height) / 2;
-                    boton.Location = new Point(Math.Max(0, nuevoX), Math.Max(0, nuevoY));
-                }
-            }
-
-            // 🔧 Eventos para ajuste responsivo
-            contenedor.HandleCreated += (s, e) => Ajustar();
-            contenedor.Resize += (s, e) => Ajustar();
-
-            // Ajustar inmediatamente si ya está creado
-            if (contenedor.IsHandleCreated)
-                Ajustar();
-        }
+        
 
         // 🌟 FUNCIÓN BASE MEJORADA PARA ESTILO ELEGANTE
-        private static void ConfigurarBotonIconoElegante(
-            Button boton,
-            FontAwesome.Sharp.IconChar icono,
-            string texto,
-            Color colorFondo,
-            int radioBorde,
-            EventHandler onClick = null)
-        {
-            if (boton == null) return;
-
-            // 🎨 Colores calculados para mejor contraste
-            Color colorTexto = EsBrillante(colorFondo) ? Color.White : Color.FromArgb(40, 40, 40);
-            Color colorHover = AjustarBrillo(colorFondo, 0.9f);
-            Color colorPress = AjustarBrillo(colorFondo, 0.8f);
-
-            boton.Text = texto;
-            boton.BackColor = colorFondo;
-            boton.ForeColor = colorTexto;
-            boton.FlatStyle = FlatStyle.Flat;
-            boton.FlatAppearance.BorderSize = 0;
-            boton.UseVisualStyleBackColor = false;
-            boton.Cursor = Cursors.Hand;
-
-            // 🎭 Efectos hover mejorados
-            boton.MouseEnter += (s, e) =>
-            {
-                boton.BackColor = colorHover;
-                boton.FlatAppearance.BorderSize = 1;
-                boton.FlatAppearance.BorderColor = Color.FromArgb(100, Color.White);
-            };
-
-            boton.MouseLeave += (s, e) =>
-            {
-                boton.BackColor = colorFondo;
-                boton.FlatAppearance.BorderSize = 0;
-            };
-
-            boton.MouseDown += (s, e) => boton.BackColor = colorPress;
-            boton.MouseUp += (s, e) => boton.BackColor = colorHover;
-
-            if (onClick != null)
-                boton.Click += onClick;
-
-            // También necesitarás esta función para actualizar el ícono según el estado:
-        }
+        
 
         // 🔧 MÉTODOS AUXILIARES MEJORADOS
         private static bool EsBrillante(Color color)
@@ -848,35 +725,7 @@ namespace ProyectoAndina.Utils
 
 
         // 🔹 Método auxiliar mejorado para redimensionar el ícono dinámicamente
-        private static void RedimensionarIcono(Button boton, FontAwesome.Sharp.IconChar icono, int nuevoTamano)
-        {
-            try
-            {
-                // Limitar el tamaño mínimo y máximo del ícono
-                nuevoTamano = Math.Max(12, Math.Min(48, nuevoTamano));
-
-                using (var ico = new FontAwesome.Sharp.IconPictureBox())
-                {
-                    ico.BackColor = Color.Transparent;
-                    ico.IconChar = icono;
-                    ico.IconColor = boton.Enabled ? Color.White : Color.LightGray;
-                    ico.IconFont = FontAwesome.Sharp.IconFont.Auto;
-                    ico.Size = new Size(nuevoTamano, nuevoTamano);
-
-                    Bitmap bmp = new Bitmap(ico.Width, ico.Height);
-                    ico.DrawToBitmap(bmp, new Rectangle(0, 0, ico.Width, ico.Height));
-                    bmp.MakeTransparent();
-
-                    // Liberar imagen anterior para evitar memory leaks
-                    boton.Image?.Dispose();
-                    boton.Image = bmp;
-                }
-            }
-            catch
-            {
-                // Si falla la redimensión, mantener imagen actual
-            }
-        }
+        
 
 
     }

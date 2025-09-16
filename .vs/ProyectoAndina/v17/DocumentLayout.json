@@ -1,48 +1,98 @@
 {
   "Version": 1,
-  "WorkspaceRootPath": "C:\\Users\\AdministradorElvis\\source\\repos\\ProyectoAndina\\",
+  "WorkspaceRootPath": "D:\\ProyectosCorsinf\\ProyectoAndina\\",
   "Documents": [
     {
-      "AbsoluteMoniker": "D:0:0:{F4597274-948D-468B-9B77-D4D1D0FBCF0B}|ProyectoAndina\\ProyectoAndina.csproj|c:\\users\\administradorelvis\\source\\repos\\proyectoandina\\proyectoandina\\views\\transaccionescajaform.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "AbsoluteMoniker": "D:0:0:{F4597274-948D-468B-9B77-D4D1D0FBCF0B}|ProyectoAndina\\ProyectoAndina.csproj|d:\\proyectoscorsinf\\proyectoandina\\proyectoandina\\views\\arqueocajaform.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{F4597274-948D-468B-9B77-D4D1D0FBCF0B}|ProyectoAndina\\ProyectoAndina.csproj|solutionrelative:proyectoandina\\views\\arqueocajaform.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{F4597274-948D-468B-9B77-D4D1D0FBCF0B}|ProyectoAndina\\ProyectoAndina.csproj|d:\\proyectoscorsinf\\proyectoandina\\proyectoandina\\views\\arqueocajaform.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}|Form",
+      "RelativeMoniker": "D:0:0:{F4597274-948D-468B-9B77-D4D1D0FBCF0B}|ProyectoAndina\\ProyectoAndina.csproj|solutionrelative:proyectoandina\\views\\arqueocajaform.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}|Form"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{F4597274-948D-468B-9B77-D4D1D0FBCF0B}|ProyectoAndina\\ProyectoAndina.csproj|d:\\proyectoscorsinf\\proyectoandina\\proyectoandina\\controllers\\transaccionescajacontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{F4597274-948D-468B-9B77-D4D1D0FBCF0B}|ProyectoAndina\\ProyectoAndina.csproj|solutionrelative:proyectoandina\\controllers\\transaccionescajacontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{F4597274-948D-468B-9B77-D4D1D0FBCF0B}|ProyectoAndina\\ProyectoAndina.csproj|d:\\proyectoscorsinf\\proyectoandina\\proyectoandina\\views\\transaccionescajaform.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
       "RelativeMoniker": "D:0:0:{F4597274-948D-468B-9B77-D4D1D0FBCF0B}|ProyectoAndina\\ProyectoAndina.csproj|solutionrelative:proyectoandina\\views\\transaccionescajaform.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{F4597274-948D-468B-9B77-D4D1D0FBCF0B}|ProyectoAndina\\ProyectoAndina.csproj|c:\\users\\administradorelvis\\source\\repos\\proyectoandina\\proyectoandina\\views\\transaccionescajaform.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}|Form",
+      "AbsoluteMoniker": "D:0:0:{F4597274-948D-468B-9B77-D4D1D0FBCF0B}|ProyectoAndina\\ProyectoAndina.csproj|d:\\proyectoscorsinf\\proyectoandina\\proyectoandina\\views\\transaccionescajaform.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}|Form",
       "RelativeMoniker": "D:0:0:{F4597274-948D-468B-9B77-D4D1D0FBCF0B}|ProyectoAndina\\ProyectoAndina.csproj|solutionrelative:proyectoandina\\views\\transaccionescajaform.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}|Form"
     }
   ],
   "DocumentGroupContainers": [
     {
       "Orientation": 0,
-      "VerticalTabListWidth": 195,
+      "VerticalTabListWidth": 189,
       "DocumentGroups": [
         {
           "DockedWidth": 200,
-          "SelectedChildIndex": 0,
+          "SelectedChildIndex": 1,
           "Children": [
             {
               "$type": "Document",
-              "DocumentIndex": 0,
-              "Title": "TransaccionesCajaForm.cs",
-              "DocumentMoniker": "C:\\Users\\AdministradorElvis\\source\\repos\\ProyectoAndina\\ProyectoAndina\\Views\\TransaccionesCajaForm.cs",
-              "RelativeDocumentMoniker": "ProyectoAndina\\Views\\TransaccionesCajaForm.cs",
-              "ToolTip": "C:\\Users\\AdministradorElvis\\source\\repos\\ProyectoAndina\\ProyectoAndina\\Views\\TransaccionesCajaForm.cs",
-              "RelativeToolTip": "ProyectoAndina\\Views\\TransaccionesCajaForm.cs",
-              "ViewState": "AgIAANUFAAAAAAAAAAAvwPAFAAA4AAAAAAAAAA==",
+              "DocumentIndex": 2,
+              "Title": "TransaccionesCajaController.cs",
+              "DocumentMoniker": "D:\\ProyectosCorsinf\\ProyectoAndina\\ProyectoAndina\\Controllers\\TransaccionesCajaController.cs",
+              "RelativeDocumentMoniker": "ProyectoAndina\\Controllers\\TransaccionesCajaController.cs",
+              "ToolTip": "D:\\ProyectosCorsinf\\ProyectoAndina\\ProyectoAndina\\Controllers\\TransaccionesCajaController.cs",
+              "RelativeToolTip": "ProyectoAndina\\Controllers\\TransaccionesCajaController.cs",
+              "ViewState": "AgIAAPMAAAAAAAAAAAApwAsBAAAJAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-09-08T22:35:06.112Z",
+              "WhenOpened": "2025-09-16T15:55:18.553Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 0,
+              "Title": "ArqueoCajaForm.cs",
+              "DocumentMoniker": "D:\\ProyectosCorsinf\\ProyectoAndina\\ProyectoAndina\\Views\\ArqueoCajaForm.cs",
+              "RelativeDocumentMoniker": "ProyectoAndina\\Views\\ArqueoCajaForm.cs",
+              "ToolTip": "D:\\ProyectosCorsinf\\ProyectoAndina\\ProyectoAndina\\Views\\ArqueoCajaForm.cs",
+              "RelativeToolTip": "ProyectoAndina\\Views\\ArqueoCajaForm.cs",
+              "ViewState": "AgIAAJIBAAAAAAAAAAAgwMgBAAAhAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-09-16T15:54:10.068Z",
               "EditorCaption": ""
             },
             {
               "$type": "Document",
               "DocumentIndex": 1,
-              "Title": "TransaccionesCajaForm.cs [Dise\u00F1o]",
-              "DocumentMoniker": "C:\\Users\\AdministradorElvis\\source\\repos\\ProyectoAndina\\ProyectoAndina\\Views\\TransaccionesCajaForm.cs",
+              "Title": "ArqueoCajaForm.cs [Dise\u00F1o]",
+              "DocumentMoniker": "D:\\ProyectosCorsinf\\ProyectoAndina\\ProyectoAndina\\Views\\ArqueoCajaForm.cs",
+              "RelativeDocumentMoniker": "ProyectoAndina\\Views\\ArqueoCajaForm.cs",
+              "ToolTip": "D:\\ProyectosCorsinf\\ProyectoAndina\\ProyectoAndina\\Views\\ArqueoCajaForm.cs [Dise\u00F1o]",
+              "RelativeToolTip": "ProyectoAndina\\Views\\ArqueoCajaForm.cs [Dise\u00F1o]",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-09-16T15:54:03.239Z",
+              "EditorCaption": " [Dise\u00F1o]"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 3,
+              "Title": "TransaccionesCajaForm.cs",
+              "DocumentMoniker": "D:\\ProyectosCorsinf\\ProyectoAndina\\ProyectoAndina\\Views\\TransaccionesCajaForm.cs",
               "RelativeDocumentMoniker": "ProyectoAndina\\Views\\TransaccionesCajaForm.cs",
-              "ToolTip": "C:\\Users\\AdministradorElvis\\source\\repos\\ProyectoAndina\\ProyectoAndina\\Views\\TransaccionesCajaForm.cs [Dise\u00F1o]",
+              "ToolTip": "D:\\ProyectosCorsinf\\ProyectoAndina\\ProyectoAndina\\Views\\TransaccionesCajaForm.cs",
+              "RelativeToolTip": "ProyectoAndina\\Views\\TransaccionesCajaForm.cs",
+              "ViewState": "AgIAAO8BAAAAAAAAAAAqwGMCAAAhAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-09-16T15:40:39.378Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 4,
+              "Title": "TransaccionesCajaForm.cs [Dise\u00F1o]",
+              "DocumentMoniker": "D:\\ProyectosCorsinf\\ProyectoAndina\\ProyectoAndina\\Views\\TransaccionesCajaForm.cs",
+              "RelativeDocumentMoniker": "ProyectoAndina\\Views\\TransaccionesCajaForm.cs",
+              "ToolTip": "D:\\ProyectosCorsinf\\ProyectoAndina\\ProyectoAndina\\Views\\TransaccionesCajaForm.cs [Dise\u00F1o]",
               "RelativeToolTip": "ProyectoAndina\\Views\\TransaccionesCajaForm.cs [Dise\u00F1o]",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-09-08T22:34:24.572Z",
+              "WhenOpened": "2025-09-16T15:40:28.92Z",
               "EditorCaption": " [Dise\u00F1o]"
             }
           ]

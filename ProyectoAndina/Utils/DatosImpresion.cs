@@ -49,6 +49,8 @@ namespace ProyectoAndina.Utils
             if (!string.IsNullOrEmpty(recibo.Caja)) ticket.AppendLine($"Caja: {recibo.Caja}");
             if (!string.IsNullOrEmpty(recibo.Cajero)) ticket.AppendLine($"Cajero: {recibo.Cajero}");
             ticket.AppendLine("------------------------------");
+            ticket.AppendLine(BOLD_ON + "Documento sin validez tributaria" + BOLD_OFF);
+            ticket.AppendLine("------------------------------");
 
             // 👤 Cliente (solo si aplica)
             if (recibo.SistemaPago == "ruc")

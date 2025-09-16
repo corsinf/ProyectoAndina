@@ -19,6 +19,12 @@
     <Compile Update="Views\CajaCrudForm.cs">
       <SubType>Form</SubType>
     </Compile>
+    <Compile Update="Views\CrearUsuario.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Update="Views\ImpresionComprobanteForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
     <Compile Update="Views\LoginForm.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -28,19 +34,16 @@
     <Compile Update="Views\PersonaForm.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Update="Views\PersonaRolCrudForm.cs">
-      <SubType>Form</SubType>
-    </Compile>
     <Compile Update="Views\PersonaRolForm.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Update="Views\Plantilla.cs">
-      <SubType>Form</SubType>
-    </Compile>
-    <Compile Update="Views\RecuperarPasswordForm.cs">
-      <SubType>Form</SubType>
-    </Compile>
     <Compile Update="Views\PersonaCrudForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Update="Views\PersonaRolCrudForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Update="Views\Prueba.cs">
       <SubType>Form</SubType>
     </Compile>
     <Compile Update="Views\RolCrudForm.cs">
@@ -49,16 +52,10 @@
     <Compile Update="Views\RolForm.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Update="Views\TemplateImpresionRecibo.cs">
-      <SubType>Form</SubType>
-    </Compile>
     <Compile Update="Views\TransaccionesCajaForm.cs">
       <SubType>Form</SubType>
     </Compile>
     <Compile Update="Views\TransaccionesForm.cs">
-      <SubType>Form</SubType>
-    </Compile>
-    <Compile Update="Views\UsuarioForm.cs">
       <SubType>Form</SubType>
     </Compile>
   </ItemGroup>

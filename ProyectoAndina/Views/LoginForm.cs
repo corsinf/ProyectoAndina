@@ -33,9 +33,6 @@ namespace ProyectoAndina.Views
             _PersonaRolController = new PersonaRolController();
             InitializeComponent();
             ConfigurarEstilo();
-
-            // se despliega en toda la pantalla
-            this.WindowState = FormWindowState.Maximized;
         }
 
         private void InitializeComponent()
@@ -187,11 +184,11 @@ namespace ProyectoAndina.Views
             ClientSize = new Size(1021, 668);
             Controls.Add(panelPrincipal);
             FormBorderStyle = FormBorderStyle.FixedDialog;
-            MaximizeBox = false;
             MinimizeBox = false;
             Name = "LoginForm";
             StartPosition = FormStartPosition.CenterScreen;
             Text = "Sistema UASB - Iniciar Sesión";
+            WindowState = FormWindowState.Maximized;
             panelPrincipal.ResumeLayout(false);
             panelLogo.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)pictureBoxLogo).EndInit();
@@ -381,7 +378,7 @@ namespace ProyectoAndina.Views
                     SessionUser.Correo = Persona.correo;
 
                     StyleManager.MostrarExito(lblMensaje, "Inicio de sesión exitoso");
-                    TecladoDesplegable.CerrarTeclado();
+                   
 
                     // Pequeña pausa para mostrar mensaje de éxito
 
@@ -418,13 +415,7 @@ namespace ProyectoAndina.Views
             }
         }
 
-        private void button_recuperar_pass_Click(object sender, EventArgs e)
-        {
-            var RecuperarPasswordForm = new RecuperarPasswordForm();
-            this.Hide();
-            RecuperarPasswordForm.ShowDialog();
-            this.Close();
-        }
+        
 
         protected override void OnLoad(EventArgs e)
         {
@@ -434,15 +425,12 @@ namespace ProyectoAndina.Views
 
         private void txtCorreo_Click(object sender, EventArgs e)
         {
-            TecladoDesplegable.MostrarTeclado(this, txtCorreo);
+            TecladoHelper.MostrarTeclado();
         }
 
         private void txtPassword_Click(object sender, EventArgs e)
         {
-            TecladoDesplegable.MostrarTeclado(this, txtPassword, TipoTeclado.Numerico, btnLogin);
-
-            
-
+            TecladoHelper.MostrarTeclado();
         }
     }
 }

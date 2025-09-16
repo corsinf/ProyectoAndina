@@ -1,5 +1,8 @@
-﻿using ProyectoAndina.Data;
+﻿using Newtonsoft.Json;
+using ProyectoAndina.Data;
 using ProyectoAndina.Models;
+using ProyectoAndina.Services;
+using ProyectoAndina.Utils;
 using System;
 using System.Collections.Generic;
 using System.Data.SqlClient;
@@ -9,10 +12,12 @@ namespace ProyectoAndina.Controllers
     public class TransaccionCajaController
     {
         private readonly DatabaseConnection _dbConnection;
+        private readonly ApiService _apiService;    
 
         public TransaccionCajaController()
         {
             _dbConnection = new DatabaseConnection();
+            _apiService = new ApiService();
         }
 
         // INSERTAR
@@ -123,6 +128,53 @@ namespace ProyectoAndina.Controllers
             return lista;
         }
 
+
+        public async Task<ResultadoPaginado<TransaccionCajaM>> ObtenerTransaccionesPaginadasApiAsync(
+    int pagina = 1, int registrosPorPagina = 20, string filtro = "", string token = null)
+        {
+            var resultado = new ResultadoPaginado<TransaccionCajaM>
+            {
+                PaginaActual = pagina,
+                RegistrosPorPagina = registrosPorPagina
+            };
+
+            try
+            {
+                // Obtener todas las transacciones desde la API
+                string json = await _apiService.GetTransaccionCajaAsync(token);
+
+                var listaCompleta = JsonConvert.DeserializeObject<List<TransaccionCajaM>>(json) ?? new List<TransaccionCajaM>();
+
+                // Filtrado simple
+                if (!string.IsNullOrEmpty(filtro))
+                {
+                    listaCompleta = listaCompleta
+                        .Where(t => t.trans_id.ToString().Contains(filtro) ||
+                                    t.per_id_cliente.ToString().Contains(filtro) ||
+                                    t.tipo_pago_id.ToString().Contains(filtro) ||
+                                    t.placa.Contains(filtro))
+                        .ToList();
+                }
+
+                resultado.TotalRegistros = listaCompleta.Count;
+
+                // Paginación
+                resultado.Datos = listaCompleta
+                    .OrderByDescending(t => t.trans_id)
+                    .Skip((pagina - 1) * registrosPorPagina)
+                    .Take(registrosPorPagina)
+                    .ToList();
+            }
+            catch (Exception ex)
+            {
+                // Puedes registrar la excepción o manejarla
+                Console.WriteLine("Error al obtener transacciones: " + ex.Message);
+            }
+
+            return resultado;
+        }
+
+
         // OBTENER POR ID
         public TransaccionCajaM ObtenerPorId(int trans_id)
         {
@@ -180,6 +232,41 @@ namespace ProyectoAndina.Controllers
 
             return (0, 0m);
         }
+
+        //sacar suma
+
+        public Dictionary<int, decimal> ObtenerSumaPorTipoPago(int arqueoId)
+        {
+            var resultado = new Dictionary<int, decimal>();
+
+            using (var connection = _dbConnection.GetConnection())
+            {
+                string query = @"
+            SELECT tipo_pago_id, SUM(valor_a_cobrar) AS total
+            FROM transaccion_caja
+            WHERE arqueo_id = @arqueoId
+            GROUP BY tipo_pago_id";
+
+                using (var cmd = new SqlCommand(query, connection))
+                {
+                    cmd.Parameters.AddWithValue("@arqueoId", arqueoId);
+
+                    connection.Open();
+                    using (var reader = cmd.ExecuteReader())
+                    {
+                        while (reader.Read())
+                        {
+                            int tipoPagoId = Convert.ToInt32(reader["tipo_pago_id"]);
+                            decimal total = Convert.ToDecimal(reader["total"]);
+                            resultado[tipoPagoId] = total;
+                        }
+                    }
+                }
+            }
+
+            return resultado;
+        }
+
 
         // MAPEAR LECTOR A MODELO
         private TransaccionCajaM MapearTransaccion(SqlDataReader reader)

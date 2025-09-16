@@ -169,12 +169,10 @@ D:\ProyectosCorsinf\ProyectoAndina\ProyectoAndina\obj\Debug\net8.0-windows\Proye
 D:\ProyectosCorsinf\ProyectoAndina\ProyectoAndina\obj\Debug\net8.0-windows\ProyectoAndina.Views.PersonaForm.resources
 D:\ProyectosCorsinf\ProyectoAndina\ProyectoAndina\obj\Debug\net8.0-windows\ProyectoAndina.Views.PersonaRolCrudForm.resources
 D:\ProyectosCorsinf\ProyectoAndina\ProyectoAndina\obj\Debug\net8.0-windows\ProyectoAndina.Views.PersonaRolForm.resources
-D:\ProyectosCorsinf\ProyectoAndina\ProyectoAndina\obj\Debug\net8.0-windows\ProyectoAndina.Views.Plantilla.resources
 D:\ProyectosCorsinf\ProyectoAndina\ProyectoAndina\obj\Debug\net8.0-windows\ProyectoAndina.Views.RolCrudForm.resources
 D:\ProyectosCorsinf\ProyectoAndina\ProyectoAndina\obj\Debug\net8.0-windows\ProyectoAndina.Views.RolForm.resources
 D:\ProyectosCorsinf\ProyectoAndina\ProyectoAndina\obj\Debug\net8.0-windows\ProyectoAndina.Views.TransaccionesCajaForm.resources
 D:\ProyectosCorsinf\ProyectoAndina\ProyectoAndina\obj\Debug\net8.0-windows\ProyectoAndina.Views.TransaccionesForm.resources
-D:\ProyectosCorsinf\ProyectoAndina\ProyectoAndina\obj\Debug\net8.0-windows\ProyectoAndina.Views.UsuarioForm.resources
 D:\ProyectosCorsinf\ProyectoAndina\ProyectoAndina\obj\Debug\net8.0-windows\ProyectoAndina.csproj.GenerateResource.cache
 D:\ProyectosCorsinf\ProyectoAndina\ProyectoAndina\obj\Debug\net8.0-windows\ProyectoAndina.GeneratedMSBuildEditorConfig.editorconfig
 D:\ProyectosCorsinf\ProyectoAndina\ProyectoAndina\obj\Debug\net8.0-windows\ProyectoAndina.AssemblyInfoInputs.cache
@@ -187,4 +185,11 @@ D:\ProyectosCorsinf\ProyectoAndina\ProyectoAndina\obj\Debug\net8.0-windows\refin
 D:\ProyectosCorsinf\ProyectoAndina\ProyectoAndina\obj\Debug\net8.0-windows\ProyectoAndina.pdb
 D:\ProyectosCorsinf\ProyectoAndina\ProyectoAndina\obj\Debug\net8.0-windows\ProyectoAndina.genruntimeconfig.cache
 D:\ProyectosCorsinf\ProyectoAndina\ProyectoAndina\obj\Debug\net8.0-windows\ref\ProyectoAndina.dll
-D:\ProyectosCorsinf\ProyectoAndina\ProyectoAndina\obj\Debug\net8.0-windows\ProyectoAndina.Views.TemplateImpresionRecibo.resources
+D:\ProyectosCorsinf\ProyectoAndina\ProyectoAndina\obj\Debug\net8.0-windows\ProyectoAndina.Views.ImpresionComprobanteForm.resources
+D:\ProyectosCorsinf\ProyectoAndina\ProyectoAndina\obj\Debug\net8.0-windows\ProyectoAndina.Views.CrearUsuario.resources
+D:\ProyectosCorsinf\ProyectoAndina\ProyectoAndina\obj\Debug\net8.0-windows\ProyectoAndina.Views.Prueba.resources
+D:\ProyectosCorsinf\ProyectoAndina\ProyectoAndina\bin\Debug\net8.0-windows\System.Diagnostics.EventLog.dll
+D:\ProyectosCorsinf\ProyectoAndina\ProyectoAndina\bin\Debug\net8.0-windows\System.ServiceProcess.ServiceController.dll
+D:\ProyectosCorsinf\ProyectoAndina\ProyectoAndina\bin\Debug\net8.0-windows\runtimes\win\lib\net8.0\System.Diagnostics.EventLog.Messages.dll
+D:\ProyectosCorsinf\ProyectoAndina\ProyectoAndina\bin\Debug\net8.0-windows\runtimes\win\lib\net8.0\System.Diagnostics.EventLog.dll
+D:\ProyectosCorsinf\ProyectoAndina\ProyectoAndina\bin\Debug\net8.0-windows\runtimes\win\lib\net8.0\System.ServiceProcess.ServiceController.dll

@@ -1,6 +1,6 @@
 {
   "version": 2,
-  "dgSpecHash": "hMmUOqEuwMI=",
+  "dgSpecHash": "kTcTVtANkHg=",
   "success": true,
   "projectFilePath": "D:\\ProyectosCorsinf\\ProyectoAndina\\ProyectoAndina\\ProyectoAndina.csproj",
   "expectedPackageFiles": [
@@ -21,7 +21,9 @@
     "C:\\Users\\AdministradorElvis\\.nuget\\packages\\runtime.win-x86.runtime.native.system.data.sqlclient.sni\\4.4.0\\runtime.win-x86.runtime.native.system.data.sqlclient.sni.4.4.0.nupkg.sha512",
     "C:\\Users\\AdministradorElvis\\.nuget\\packages\\system.codedom\\7.0.0\\system.codedom.7.0.0.nupkg.sha512",
     "C:\\Users\\AdministradorElvis\\.nuget\\packages\\system.data.sqlclient\\4.9.0\\system.data.sqlclient.4.9.0.nupkg.sha512",
+    "C:\\Users\\AdministradorElvis\\.nuget\\packages\\system.diagnostics.eventlog\\9.0.9\\system.diagnostics.eventlog.9.0.9.nupkg.sha512",
     "C:\\Users\\AdministradorElvis\\.nuget\\packages\\system.management\\7.0.0\\system.management.7.0.0.nupkg.sha512",
+    "C:\\Users\\AdministradorElvis\\.nuget\\packages\\system.serviceprocess.servicecontroller\\9.0.9\\system.serviceprocess.servicecontroller.9.0.9.nupkg.sha512",
     "C:\\Users\\AdministradorElvis\\.nuget\\packages\\tulpep.notificationwindow\\1.1.38\\tulpep.notificationwindow.1.1.38.nupkg.sha512"
   ],
   "logs": [
