@@ -182,7 +182,6 @@ namespace ProyectoAndina.Views
             // LoginForm
             // 
             ClientSize = new Size(1021, 668);
-            ControlBox = false;
             Controls.Add(panelPrincipal);
             FormBorderStyle = FormBorderStyle.None;
             MaximizeBox = false;
