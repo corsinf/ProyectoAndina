@@ -11,7 +11,7 @@ using System.Windows.Forms;
 
 namespace ProyectoAndina.Views
 {
-    public partial class AdministracionFrom : Form
+    public partial class AdministracionFrom : KioskForm
     {
         public AdministracionFrom()
         {

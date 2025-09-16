@@ -25,6 +25,7 @@ namespace ProyectoAndina.Views
         public int id;
         public RolCrudForm(int id_rol, Form formularioPadre = null)
         {
+
             InitializeComponent();
             _RolController = new RolController();
             _FuncionesGenerales = new FuncionesGenerales();
@@ -33,9 +34,14 @@ namespace ProyectoAndina.Views
             BuscarRol(id_rol);
             _formularioPadre = formularioPadre;
             this.Paint += RolCrudForm_Paint;
-            this.DoubleBuffered = true;
+            // Config típica de diálogo modal
+            this.FormBorderStyle = FormBorderStyle.FixedDialog;
+            this.StartPosition = FormStartPosition.CenterParent;
+            this.ShowInTaskbar = false;
             this.MinimizeBox = false;
             this.MaximizeBox = false;
+            this.TopMost = true;
+            this.KeyPreview = false;
         }
 
         private void ConfigurarValidacion()

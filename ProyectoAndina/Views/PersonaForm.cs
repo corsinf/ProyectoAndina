@@ -14,7 +14,7 @@ using static ProyectoAndina.Utils.StylesAlertas;
 
 namespace ProyectoAndina.Views
 {
-    public partial class PersonaForm : Form
+    public partial class PersonaForm : KioskForm
     {
         private readonly PersonaController _PersonaController;
         private readonly ControladorPaginacion _paginacion;

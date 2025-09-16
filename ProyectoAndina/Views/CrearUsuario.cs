@@ -29,6 +29,14 @@ namespace ProyectoAndina.Views
         private Form _formularioPadre;
         public CrearUsuario(Form formularioPadre)
         {
+            // Config típica de diálogo modal
+            this.FormBorderStyle = FormBorderStyle.FixedDialog;
+            this.StartPosition = FormStartPosition.CenterParent;
+            this.ShowInTaskbar = false;
+            this.MinimizeBox = false;
+            this.MaximizeBox = false;
+            this.TopMost = true;
+            this.KeyPreview = false;
             InitializeComponent();
             StyleButton.CrearBotonElegante(button_agregar_usuario, FontAwesome.Sharp.IconChar.PlusCircle);
 

@@ -19,7 +19,7 @@ using static ProyectoAndina.Utils.StylesAlertas;
 
 namespace ProyectoAndina.Views
 {
-    public partial class ArqueoCajaForm : KioskForm
+    public partial class ArqueoCajaForm : Form
     {
         private readonly ArqueoCajaController _AperturaCajaController;
         private readonly ArqueoBilletesController _ArqueoBilletesController;

@@ -58,7 +58,7 @@
             pictureBox_logo_tipo.Image = Properties.Resources.Logotipo_color;
             pictureBox_logo_tipo.Location = new Point(0, 0);
             pictureBox_logo_tipo.Name = "pictureBox_logo_tipo";
-            pictureBox_logo_tipo.Size = new Size(503, 69);
+            pictureBox_logo_tipo.Size = new Size(559, 69);
             pictureBox_logo_tipo.SizeMode = PictureBoxSizeMode.Zoom;
             pictureBox_logo_tipo.TabIndex = 82;
             pictureBox_logo_tipo.TabStop = false;
@@ -75,7 +75,7 @@
             tableLayoutPanel1.RowCount = 2;
             tableLayoutPanel1.RowStyles.Add(new RowStyle(SizeType.Percent, 68.82591F));
             tableLayoutPanel1.RowStyles.Add(new RowStyle(SizeType.Percent, 31.17409F));
-            tableLayoutPanel1.Size = new Size(503, 645);
+            tableLayoutPanel1.Size = new Size(559, 645);
             tableLayoutPanel1.TabIndex = 83;
             // 
             // panel_titulo
@@ -96,7 +96,7 @@
             panel_titulo.Dock = DockStyle.Fill;
             panel_titulo.Location = new Point(3, 3);
             panel_titulo.Name = "panel_titulo";
-            panel_titulo.Size = new Size(497, 437);
+            panel_titulo.Size = new Size(553, 437);
             panel_titulo.TabIndex = 81;
             // 
             // textBox_cedula
@@ -226,7 +226,7 @@
             tableLayoutPanel2.RowCount = 2;
             tableLayoutPanel2.RowStyles.Add(new RowStyle(SizeType.Percent, 100F));
             tableLayoutPanel2.RowStyles.Add(new RowStyle(SizeType.Absolute, 20F));
-            tableLayoutPanel2.Size = new Size(497, 196);
+            tableLayoutPanel2.Size = new Size(553, 196);
             tableLayoutPanel2.TabIndex = 82;
             // 
             // button_agregar_usuario
@@ -238,9 +238,9 @@
             button_agregar_usuario.FlatStyle = FlatStyle.Flat;
             button_agregar_usuario.Font = new Font("Segoe UI", 10F, FontStyle.Bold);
             button_agregar_usuario.ForeColor = Color.White;
-            button_agregar_usuario.Location = new Point(168, 3);
+            button_agregar_usuario.Location = new Point(187, 3);
             button_agregar_usuario.Name = "button_agregar_usuario";
-            button_agregar_usuario.Size = new Size(159, 170);
+            button_agregar_usuario.Size = new Size(178, 170);
             button_agregar_usuario.TabIndex = 27;
             button_agregar_usuario.Text = "Accion";
             button_agregar_usuario.UseVisualStyleBackColor = false;
@@ -250,7 +250,7 @@
             // 
             AutoScaleDimensions = new SizeF(8F, 20F);
             AutoScaleMode = AutoScaleMode.Font;
-            ClientSize = new Size(503, 714);
+            ClientSize = new Size(559, 714);
             Controls.Add(tableLayoutPanel1);
             Controls.Add(pictureBox_logo_tipo);
             FormBorderStyle = FormBorderStyle.FixedDialog;

@@ -27,7 +27,14 @@ namespace ProyectoAndina.Views
         private Form _formularioPadre;
         public PersonaCrudForm(int idPer, Form formularioPadre = null)
         {
-
+            // Config típica de diálogo modal
+            this.FormBorderStyle = FormBorderStyle.FixedDialog;
+            this.StartPosition = FormStartPosition.CenterParent;
+            this.ShowInTaskbar = false;
+            this.MinimizeBox = false;
+            this.MaximizeBox = false;
+            this.TopMost = true;
+            this.KeyPreview = false;
             InitializeComponent();
 
             _PersonaController = new PersonaController();

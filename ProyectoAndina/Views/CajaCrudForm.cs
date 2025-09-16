@@ -24,6 +24,15 @@ namespace ProyectoAndina.Views
         private Form _formularioPadre;
         public CajaCrudForm(int id, Form formularioPadre = null)
         {
+            // Config típica de diálogo modal
+            this.FormBorderStyle = FormBorderStyle.FixedDialog;
+            this.StartPosition = FormStartPosition.CenterParent;
+            this.ShowInTaskbar = false;
+            this.MinimizeBox = false;
+            this.MaximizeBox = false;
+            this.TopMost = true;
+            this.KeyPreview = false;
+
             InitializeComponent();
             _CajaController = new CajaController();
             validador = new ValidacionHelper(this);

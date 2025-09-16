@@ -14,7 +14,7 @@ using static ProyectoAndina.Utils.StylesAlertas;
 
 namespace ProyectoAndina.Views
 {
-    public partial class RolForm : Form
+    public partial class RolForm : KioskForm
     {
         private readonly RolController _RolController;
         private readonly ControladorPaginacion _paginacion;

@@ -20,7 +20,7 @@ using static ProyectoAndina.Utils.StylesAlertas;
 namespace ProyectoAndina.Views
 {
 
-    public partial class TransaccionesCajaForm : KioskForm
+    public partial class TransaccionesCajaForm : Form
     {
         private readonly PersonaController _PersonaController;
         private readonly CajaController _CajaController;
@@ -445,6 +445,7 @@ namespace ProyectoAndina.Views
             if (cedula == "")
             {
                 StylesAlertas.MostrarAlerta(this, "Ingrese el CI/RUC del usuario", "¡Error!", TipoAlerta.Error);
+                button_agregar_user.Enabled = true;
                 return;
             }
             else
