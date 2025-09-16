@@ -1,69 +1,63 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+using System.IO;
+using System.Runtime.InteropServices;
 
-namespace ProyectoAndina.Utils
+public class RawPrinterHelper
 {
-    using System;
-    using System.Runtime.InteropServices;
-    using System.Text;
-
-    public class RawPrinterHelper
+    [StructLayout(LayoutKind.Sequential, CharSet = CharSet.Ansi)]
+    public class DOCINFOA
     {
-        [DllImport("winspool.Drv", EntryPoint = "OpenPrinterA", SetLastError = true)]
-        public static extern bool OpenPrinter(string src, out IntPtr hPrinter, IntPtr pd);
+        [MarshalAs(UnmanagedType.LPStr)] public string pDocName;
+        [MarshalAs(UnmanagedType.LPStr)] public string pOutputFile;
+        [MarshalAs(UnmanagedType.LPStr)] public string pDataType;
+    }
 
-        [DllImport("winspool.Drv", EntryPoint = "StartDocPrinterA", SetLastError = true)]
-        public static extern bool StartDocPrinter(IntPtr hPrinter, int level, IntPtr di);
+    [DllImport("winspool.Drv", EntryPoint = "OpenPrinterA", SetLastError = true, CharSet = CharSet.Ansi, ExactSpelling = true, CallingConvention = CallingConvention.StdCall)]
+    public static extern bool OpenPrinter(string szPrinter, out IntPtr hPrinter, IntPtr pd);
 
-        [DllImport("winspool.Drv", EntryPoint = "StartPagePrinter", SetLastError = true)]
-        public static extern bool StartPagePrinter(IntPtr hPrinter);
+    [DllImport("winspool.Drv", EntryPoint = "ClosePrinter", SetLastError = true, ExactSpelling = true, CallingConvention = CallingConvention.StdCall)]
+    public static extern bool ClosePrinter(IntPtr hPrinter);
 
-        [DllImport("winspool.Drv", EntryPoint = "WritePrinter", SetLastError = true)]
-        public static extern bool WritePrinter(IntPtr hPrinter, byte[] bytes, int count, out int written);
+    [DllImport("winspool.Drv", EntryPoint = "StartDocPrinterA", SetLastError = true, CharSet = CharSet.Ansi, ExactSpelling = true, CallingConvention = CallingConvention.StdCall)]
+    public static extern bool StartDocPrinter(IntPtr hPrinter, int level, [In] DOCINFOA di);
 
-        [DllImport("winspool.Drv", EntryPoint = "EndPagePrinter", SetLastError = true)]
-        public static extern bool EndPagePrinter(IntPtr hPrinter);
+    [DllImport("winspool.Drv", EntryPoint = "EndDocPrinter", SetLastError = true, ExactSpelling = true, CallingConvention = CallingConvention.StdCall)]
+    public static extern bool EndDocPrinter(IntPtr hPrinter);
 
-        [DllImport("winspool.Drv", EntryPoint = "EndDocPrinter", SetLastError = true)]
-        public static extern bool EndDocPrinter(IntPtr hPrinter);
+    [DllImport("winspool.Drv", EntryPoint = "StartPagePrinter", SetLastError = true, ExactSpelling = true, CallingConvention = CallingConvention.StdCall)]
+    public static extern bool StartPagePrinter(IntPtr hPrinter);
 
-        [DllImport("winspool.Drv", EntryPoint = "ClosePrinter", SetLastError = true)]
-        public static extern bool ClosePrinter(IntPtr hPrinter);
+    [DllImport("winspool.Drv", EntryPoint = "EndPagePrinter", SetLastError = true, ExactSpelling = true, CallingConvention = CallingConvention.StdCall)]
+    public static extern bool EndPagePrinter(IntPtr hPrinter);
 
-        public static bool SendBytesToPrinter(string printerName, byte[] bytes)
+    [DllImport("winspool.Drv", EntryPoint = "WritePrinter", SetLastError = true, ExactSpelling = true, CallingConvention = CallingConvention.StdCall)]
+    public static extern bool WritePrinter(IntPtr hPrinter, IntPtr pBytes, int dwCount, out int dwWritten);
+
+    public static bool SendStringToPrinter(string szPrinterName, string szString)
+    {
+        IntPtr pBytes;
+        int dwCount = szString.Length;
+        pBytes = Marshal.StringToCoTaskMemAnsi(szString);
+        int dwWritten = 0;
+        IntPtr hPrinter;
+        DOCINFOA di = new DOCINFOA();
+        di.pDocName = "Ticket";
+        di.pDataType = "RAW";
+
+        if (OpenPrinter(szPrinterName, out hPrinter, IntPtr.Zero))
         {
-            IntPtr hPrinter = IntPtr.Zero;
-            try
+            if (StartDocPrinter(hPrinter, 1, di))
             {
-                if (OpenPrinter(printerName, out hPrinter, IntPtr.Zero))
+                if (StartPagePrinter(hPrinter))
                 {
-                    if (StartDocPrinter(hPrinter, 1, IntPtr.Zero))
-                    {
-                        if (StartPagePrinter(hPrinter))
-                        {
-                            WritePrinter(hPrinter, bytes, bytes.Length, out int written);
-                            EndPagePrinter(hPrinter);
-                        }
-                        EndDocPrinter(hPrinter);
-                    }
-                    return true;
+                    WritePrinter(hPrinter, pBytes, dwCount, out dwWritten);
+                    EndPagePrinter(hPrinter);
                 }
-                return false;
+                EndDocPrinter(hPrinter);
             }
-            finally
-            {
-                if (hPrinter != IntPtr.Zero)
-                    ClosePrinter(hPrinter);
-            }
+            ClosePrinter(hPrinter);
         }
-
-        public static bool SendStringToPrinter(string printerName, string texto)
-        {
-            byte[] bytes = Encoding.GetEncoding("CP850").GetBytes(texto); // Mejor codificación para impresoras térmicas
-            return SendBytesToPrinter(printerName, bytes);
-        }
+        Marshal.FreeCoTaskMem(pBytes);
+        return dwWritten == dwCount;
     }
 }

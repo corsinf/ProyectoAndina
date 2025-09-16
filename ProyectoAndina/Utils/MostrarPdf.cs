@@ -8,12 +8,11 @@ namespace ProyectoAndina.Utils
 {
     public static class MostrarPdf
     {
-
-
-        public static void GenerarPDFTicket()
+        public static void GenerarPDFTicket(ReciboModel recibo)
         {
-            string ruta = SessionFactura.EsConsumidorFinal ?
-                "ticket_consumidor_final.pdf" : "ticket_factura.pdf";
+            string ruta = recibo.Cliente == "CONSUMIDOR FINAL"
+                ? "ticket_consumidor_final.pdf"
+                : "ticket_factura.pdf";
 
             // 📏 80mm ticket (226 puntos)
             var pageSize = new iTextRectangle(226, 650);
@@ -22,63 +21,54 @@ namespace ProyectoAndina.Utils
             PdfWriter.GetInstance(doc, new FileStream(ruta, FileMode.Create));
             doc.Open();
 
-            // 🏫 Encabezado - Universidad
-            var universidad = new Paragraph("UNIVERSIDAD ANDINA SIMON BOLI",
+            // 🏫 Encabezado - Empresa
+            var universidad = new Paragraph(recibo.RazonSocial,
                 new iTextFont(iTextFont.FontFamily.HELVETICA, 8, iTextFont.BOLD));
             universidad.Alignment = Element.ALIGN_CENTER;
             doc.Add(universidad);
 
             // 📋 RUC y datos de contacto
-            doc.Add(new Paragraph("RUC 1791233417001",
+            doc.Add(new Paragraph($"RUC {recibo.RUC}",
                 new iTextFont(iTextFont.FontFamily.HELVETICA, 7))
             { Alignment = Element.ALIGN_CENTER });
-            doc.Add(new Paragraph("Telefono Quito 1701143 Ecuador",
+            doc.Add(new Paragraph(recibo.Direccion,
                 new iTextFont(iTextFont.FontFamily.HELVETICA, 7))
             { Alignment = Element.ALIGN_CENTER });
-            doc.Add(new Paragraph("+593 86 307 2166",
+            doc.Add(new Paragraph(recibo.Ciudad,
                 new iTextFont(iTextFont.FontFamily.HELVETICA, 7))
             { Alignment = Element.ALIGN_CENTER });
-            doc.Add(new Paragraph("Quito - Ecuador",
+            doc.Add(new Paragraph($"Tel: {recibo.Telefono}",
                 new iTextFont(iTextFont.FontFamily.HELVETICA, 7))
             { Alignment = Element.ALIGN_CENTER });
 
-            // 🎯 DINERS CLUB (título del servicio)
-            var dinersClub = new Paragraph("\nDINERS CLUB\n",
-                new iTextFont(iTextFont.FontFamily.HELVETICA, 10, iTextFont.BOLD));
-            dinersClub.Alignment = Element.ALIGN_CENTER;
-            doc.Add(dinersClub);
-
-            // 💳 Información de la tarjeta (si no es consumidor final)
-            if (!SessionFactura.EsConsumidorFinal && !string.IsNullOrEmpty(SessionFactura.NumeroTarjeta))
-            {
-                doc.Add(new Paragraph($"TARJETA    {SessionFactura.NumeroTarjeta}",
-                    new iTextFont(iTextFont.FontFamily.HELVETICA, 7)));
-                doc.Add(new Paragraph($"LOTE#      {SessionFactura.Lote}          REF {SessionFactura.Referencia}",
-                    new iTextFont(iTextFont.FontFamily.HELVETICA, 7)));
-                doc.Add(new Paragraph($"FECHA      {SessionFactura.FechaHora:dd/MM/yy}         HORA {SessionFactura.FechaHora:HH:mm}",
+           
+                doc.Add(new Paragraph($"FECHA      {recibo.Fecha:dd/MM/yy}   HORA {recibo.Hora:HH:mm}",
                     new iTextFont(iTextFont.FontFamily.HELVETICA, 7)));
                 doc.Add(new Paragraph("", new iTextFont(iTextFont.FontFamily.HELVETICA, 4))); // Espaciado
+
+            // 🏷️ Sistema de pago (si tienes campo para eso)
+            if (!string.IsNullOrEmpty(recibo.SistemaPago))
+            {
+                var datafast = new Paragraph($"{recibo.SistemaPago}\n",
+                    new iTextFont(iTextFont.FontFamily.HELVETICA, 9, iTextFont.BOLD));
+                datafast.Alignment = Element.ALIGN_CENTER;
+                doc.Add(datafast);
             }
 
-            // 🏷️ Sistema de pago
-            var datafast = new Paragraph($"{SessionFactura.SistemaPago}\n",
-                new iTextFont(iTextFont.FontFamily.HELVETICA, 9, iTextFont.BOLD));
-            datafast.Alignment = Element.ALIGN_CENTER;
-            doc.Add(datafast);
-
-            // 💰 Desglose de consumos (formato como en la imagen)
-            doc.Add(new Paragraph($"BASE CONSUMO TARIFA 15      US$    {SessionFactura.BaseConsumoTarifa15:F2}",
+            // 💰 Desglose de consumos
+            doc.Add(new Paragraph($"BASE CONSUMO TARIFA 15   US$ {recibo.Subtotal:F2}",
                 new iTextFont(iTextFont.FontFamily.HELVETICA, 7)));
-            doc.Add(new Paragraph($"BASE CONSUMO TARIFA 0       US$    {SessionFactura.BaseConsumoTarifa0:F2}",
+            doc.Add(new Paragraph($"BASE CONSUMO TARIFA 0    US$ {recibo.BaseConsumoTarifa0:F2}",
                 new iTextFont(iTextFont.FontFamily.HELVETICA, 7)));
-            doc.Add(new Paragraph($"SUBTOTAL CONSUMO            US$    {SessionFactura.SubtotalConsumo:F2}",
+            doc.Add(new Paragraph($"SUBTOTAL CONSUMO         US$ {recibo.Subtotal:F2}",
                 new iTextFont(iTextFont.FontFamily.HELVETICA, 7)));
-            doc.Add(new Paragraph($"IVA                         US$    {SessionFactura.IVA:F2}",
+            doc.Add(new Paragraph($"IVA                      US$ {recibo.IVA15:F2}",
                 new iTextFont(iTextFont.FontFamily.HELVETICA, 7)));
 
             // 📊 Total final
-            var totalFinal = new Paragraph($"VR TOTAL    US$                {SessionFactura.Total:F2}",
+            var totalFinal = new Paragraph($"VR TOTAL            US$ {recibo.Total:F2}",
                 new iTextFont(iTextFont.FontFamily.HELVETICA, 8, iTextFont.BOLD));
+            totalFinal.Alignment = Element.ALIGN_LEFT;
             doc.Add(totalFinal);
 
             // 🙏 Mensaje de agradecimiento
@@ -90,28 +80,33 @@ namespace ProyectoAndina.Utils
             doc.Close();
         }
 
-        // 🎯 MÉTODO ESPECÍFICO PARA CONSUMIDOR FINAL
+        // 🎯 Métodos específicos si quieres mantenerlos
         public static void GenerarPDFConsumidorFinal()
         {
-            // Configurar como consumidor final
-            SessionFactura.EsConsumidorFinal = true;
-            SessionFactura.ClienteNombre = "CONSUMIDOR FINAL";
-            SessionFactura.ClienteRuc = "9999999999";
+            var recibo = new ReciboModel
+            {
+                RazonSocial = "UNIVERSIDAD ANDINA SIMON BOLIVAR",
+                RUC = "1791233417001",
+                Direccion = "Telefono Quito 1701143",
+                Ciudad = "Quito - Ecuador",
+                Telefono = "+593 86 307 2166",
+                Cliente = "CONSUMIDOR FINAL",
+                CI_RUC = "9999999999",
+                Fecha = DateTime.Now,
+                Hora = DateTime.Now,
+                Subtotal = 1.00m,
+                IVA15 = 0.00m,
+                Total = 1.00m,
+                BaseConsumoTarifa0 = 0,
+                SistemaPago = "SISTEMA DE ESCRITORIO"
+            };
 
-            // Generar el ticket
-            GenerarPDFTicket();
+            GenerarPDFTicket(recibo);
         }
 
-        // 🎯 MÉTODO ESPECÍFICO PARA FACTURA CON DATOS
-        public static void GenerarPDFFactura()
+        public static void GenerarPDFFactura(ReciboModel recibo)
         {
-            // Configurar como factura normal
-            SessionFactura.EsConsumidorFinal = false;
-
-            // Generar el ticket
-            GenerarPDFTicket();
+            GenerarPDFTicket(recibo);
         }
-
     }
-
 }

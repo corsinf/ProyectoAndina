@@ -5,198 +5,110 @@ namespace ProyectoAndina.Utils
 {
     internal class DatosImpresion
     {
-        // 🎯 Comandos ESC/POS optimizados
+        // 🎯 Comandos ESC/POS
         private const string ESC = "\x1B";
         private const string GS = "\x1D";
 
-        // Comandos básicos
-        private readonly string INIT = ESC + "@";          // Inicializar impresora
-        private readonly string BOLD_ON = ESC + "E\x01";   // Negrita ON
-        private readonly string BOLD_OFF = ESC + "E\x00";  // Negrita OFF
-        private readonly string CENTER = ESC + "a\x01";    // Centrar
-        private readonly string LEFT = ESC + "a\x00";      // Alinear izquierda
+        private readonly string INIT = ESC + "@";           // Inicializar
+        private readonly string BOLD_ON = ESC + "E\x01";    // Negrita ON
+        private readonly string BOLD_OFF = ESC + "E\x00";   // Negrita OFF
+        private readonly string CENTER = ESC + "a\x01";     // Centrar
+        private readonly string LEFT = ESC + "a\x00";       // Izquierda
         private readonly string SMALL_FONT = ESC + "!\x00"; // Fuente normal
-        private readonly string NORMAL_FONT = ESC + "!\x00"; // Fuente normal
+        private readonly string NORMAL_FONT = ESC + "!\x00";
 
-        // 🔥 COMANDO OPTIMIZADO PARA CORTE SIN DESPERDICIO
-        private readonly string CUT_PARTIAL = GS + "V\x01"; // Corte parcial (más eficiente)
-        private readonly string FEED_MINIMAL = "\n\n";      // Solo 2 líneas en blanco mínimas
+        private readonly string CUT_PARTIAL = GS + "V\x01"; // Corte parcial
+        private readonly string FEED_MINIMAL = "\n\n";      // Salto mínimo
 
-        public void ImprimirConsumidorFinal()
+        public void ImprimirRecibo(ReciboModel recibo, string printerName = "SAT 22TUE")
         {
-            string printerName = "SAT 22TUE";
-
             StringBuilder ticket = new StringBuilder();
 
             // 🚀 Inicialización
             ticket.Append(INIT);
 
-            // 🏫 Encabezado
+            // 🏫 Encabezado empresa
             ticket.Append(CENTER + BOLD_ON);
-            ticket.AppendLine("UNIVERSIDAD ANDINA SIMON BOLIVAR");
+            ticket.AppendLine(recibo.RazonSocial);
             ticket.Append(BOLD_OFF);
 
-            // 📋 Datos de contacto (más compactos)
             ticket.Append(SMALL_FONT);
-            ticket.AppendLine("RUC 1791233417001");
-            ticket.AppendLine("Telefono Quito 1701143 Ecuador");
-            ticket.AppendLine("+593 86 307 2166");
-            ticket.AppendLine("Quito - Ecuador");
+            ticket.AppendLine($"RUC: {recibo.RUC}");
+            ticket.AppendLine($"Tel: {recibo.Telefono}");
+            ticket.AppendLine(recibo.Direccion);
+            ticket.AppendLine(recibo.Ciudad);
+            ticket.AppendLine("------------------------------");
 
-            // 🎯 DINERS CLUB
+            // 📄 Documento
             ticket.Append(NORMAL_FONT + BOLD_ON);
-            ticket.AppendLine("\nDINERS CLUB");
-            ticket.Append(BOLD_OFF);
-
-            // 🏷️ Sistema de pago
-            ticket.Append(CENTER + BOLD_ON);
-            ticket.AppendLine($"{SessionFactura.SistemaPago ?? "DATAFAST"}");
+            ticket.AppendLine($"{recibo.Documento} {recibo.Secuencial}");
             ticket.Append(BOLD_OFF + LEFT);
 
-            // 💰 Desglose financiero
-            ticket.Append(SMALL_FONT);
-            ticket.AppendLine($"BASE CONSUMO TARIFA 15    US$ {SessionFactura.BaseConsumoTarifa15:F2}");
-            ticket.AppendLine($"BASE CONSUMO TARIFA 0     US$ {SessionFactura.BaseConsumoTarifa0:F2}");
-            ticket.AppendLine($"SUBTOTAL CONSUMO          US$ {SessionFactura.SubtotalConsumo:F2}");
-            ticket.AppendLine($"IVA                       US$ {SessionFactura.IVA:F2}");
+            // 📅 Fecha y hora
+            ticket.AppendLine($"Fecha: {recibo.Fecha:dd/MM/yyyy}  Hora: {recibo.Hora:HH:mm}");
+            if (!string.IsNullOrEmpty(recibo.Caja)) ticket.AppendLine($"Caja: {recibo.Caja}");
+            if (!string.IsNullOrEmpty(recibo.Cajero)) ticket.AppendLine($"Cajero: {recibo.Cajero}");
+            ticket.AppendLine("------------------------------");
+            ticket.AppendLine(BOLD_ON + "Documento sin validez tributaria" + BOLD_OFF);
+            ticket.AppendLine("------------------------------");
 
-            // 📊 Total
+            // 👤 Cliente (solo si aplica)
+            if (recibo.SistemaPago == "ruc")
+            {
+                ticket.AppendLine($"Cliente: {recibo.Cliente}");
+                ticket.AppendLine($"CI/RUC: {recibo.CI_RUC}");
+                if (!string.IsNullOrEmpty(recibo.TelefonoCliente)) ticket.AppendLine($"Tel: {recibo.TelefonoCliente}");
+                if (!string.IsNullOrEmpty(recibo.Email)) ticket.AppendLine($"Email: {recibo.Email}");
+                if (!string.IsNullOrEmpty(recibo.DireccionCliente)) ticket.AppendLine($"Dir: {recibo.DireccionCliente}");
+                ticket.AppendLine("------------------------------");
+            }
+
+            // 🚗 Datos de parqueo
+            if (recibo.FechaEntrada.HasValue && recibo.FechaSalida.HasValue)
+            {
+                ticket.AppendLine($"Entrada: {recibo.FechaEntrada:dd/MM/yyyy HH:mm}");
+                ticket.AppendLine($"Salida : {recibo.FechaSalida:dd/MM/yyyy HH:mm}");
+                ticket.AppendLine($"Tiempo : {recibo.TiempoConsumido}");
+                ticket.AppendLine("------------------------------");
+            }
+
+            // 📊 Desglose financiero
+            ticket.AppendLine($"Neto              US$ {recibo.Neto:F2}");
+            ticket.AppendLine($"Descuento         US$ {recibo.Descuento:F2}");
+            ticket.AppendLine($"BASE TARIFA 15%   US$ {recibo.Subtotal:F2}");
+            ticket.AppendLine($"IVA 15%           US$ {recibo.IVA15:F2}");
+            ticket.AppendLine($"BASE TARIFA 0%    US$ {recibo.BaseConsumoTarifa0:F2}");
+            ticket.AppendLine($"SUBTOTAL          US$ {recibo.Subtotal:F2}");
+            ticket.AppendLine("------------------------------");
+
+            // 💰 Total
             ticket.Append(NORMAL_FONT + BOLD_ON);
-            ticket.AppendLine($"VR TOTAL    US$           {SessionFactura.Total:F2}");
+            ticket.AppendLine($"TOTAL             US$ {recibo.Total:F2}");
             ticket.Append(BOLD_OFF);
+            ticket.AppendLine("------------------------------");
+
+            // 💳 Forma de pago
+            if (!string.IsNullOrEmpty(recibo.SistemaPago))
+            {
+                ticket.AppendLine($"Forma de pago: {recibo.SistemaPago}");
+                ticket.AppendLine("------------------------------");
+            }
 
             // 🙏 Agradecimiento
             ticket.Append(CENTER + SMALL_FONT);
-            ticket.AppendLine("\n...Gracias por su compra!");
+            ticket.AppendLine("\n*** Gracias por su visita ***");
 
-            // ✂️ CORTE OPTIMIZADO - Solo las líneas necesarias
-            ticket.Append(FEED_MINIMAL);  // Mínimo espacio antes del corte
-            ticket.Append(CUT_PARTIAL);   // Corte parcial para ahorrar papel
-
-            RawPrinterHelper.SendStringToPrinter(printerName, ticket.ToString());
-        }
-
-        public void ImprimirFacturaCliente()
-        {
-            string printerName = "SAT 22TUE";
-
-            StringBuilder ticket = new StringBuilder();
-
-            // 🚀 Inicialización
-            ticket.Append(INIT);
-
-            // 🏫 Encabezado
-            ticket.Append(CENTER + BOLD_ON);
-            ticket.AppendLine("UNIVERSIDAD ANDINA SIMON BOLIVAR");
-            ticket.Append(BOLD_OFF);
-
-            // 📋 Datos de contacto
-            ticket.Append(SMALL_FONT);
-            ticket.AppendLine("RUC 1791233417001");
-            ticket.AppendLine("Telefono Quito 1701143 Ecuador");
-            ticket.AppendLine("+593 86 307 2166");
-            ticket.AppendLine("Quito - Ecuador");
-
-            // 🎯 DINERS CLUB
-            ticket.Append(NORMAL_FONT + BOLD_ON);
-            ticket.AppendLine("\nDINERS CLUB");
-            ticket.Append(BOLD_OFF + LEFT);
-
-            // 💳 Información de tarjeta (si existe)
-            if (!string.IsNullOrEmpty(SessionFactura.NumeroTarjeta))
-            {
-                ticket.Append(SMALL_FONT);
-                ticket.AppendLine($"TARJETA    {SessionFactura.NumeroTarjeta}");
-                ticket.AppendLine($"LOTE#      {SessionFactura.Lote}          REF {SessionFactura.Referencia}");
-                ticket.AppendLine($"FECHA      {SessionFactura.FechaHora:dd/MM/yy}         HORA {SessionFactura.FechaHora:HH:mm}");
-            }
-
-            // 🏷️ Sistema de pago
-            ticket.Append(CENTER + BOLD_ON);
-            ticket.AppendLine($"{SessionFactura.SistemaPago ?? "DATAFAST"}");
-            ticket.Append(BOLD_OFF + LEFT);
-
-            // 💰 Desglose financiero
-            ticket.Append(SMALL_FONT);
-            ticket.AppendLine($"BASE CONSUMO TARIFA 15    US$ {SessionFactura.BaseConsumoTarifa15:F2}");
-            ticket.AppendLine($"BASE CONSUMO TARIFA 0     US$ {SessionFactura.BaseConsumoTarifa0:F2}");
-            ticket.AppendLine($"SUBTOTAL CONSUMO          US$ {SessionFactura.SubtotalConsumo:F2}");
-            ticket.AppendLine($"IVA                       US$ {SessionFactura.IVA:F2}");
-
-            // 📊 Total
-            ticket.Append(NORMAL_FONT + BOLD_ON);
-            ticket.AppendLine($"VR TOTAL    US$           {SessionFactura.Total:F2}");
-            ticket.Append(BOLD_OFF);
-
-            // 🙏 Agradecimiento
+            // 📌 Firma
             ticket.Append(CENTER + SMALL_FONT);
-            ticket.AppendLine("\n...Gracias por su compra!");
+            ticket.AppendLine("\nSistema desarrollado por CORSINF");
 
-            // ✂️ CORTE OPTIMIZADO
+            // ✂️ Corte eficiente
             ticket.Append(FEED_MINIMAL);
             ticket.Append(CUT_PARTIAL);
 
+            // 📤 Enviar a la impresora
             RawPrinterHelper.SendStringToPrinter(printerName, ticket.ToString());
         }
 
-        // 🎯 MÉTODO UNIFICADO QUE REPLICA EL CONTENIDO DEL PDF
-        public void ImprimirTicketCompleto()
-        {
-            string printerName = "SAT 22TUE";
-            StringBuilder ticket = new StringBuilder();
-
-            // Inicialización
-            ticket.Append(INIT);
-
-            // Encabezado completo como en el PDF
-            ticket.Append(CENTER + BOLD_ON);
-            ticket.AppendLine("UNIVERSIDAD ANDINA SIMON BOLI"); // Como en el PDF original
-            ticket.Append(BOLD_OFF + SMALL_FONT);
-
-            // Datos de contacto exactos del PDF
-            ticket.AppendLine("RUC 1791233417001");
-            ticket.AppendLine("Telefono Quito 1701143 Ecuador");
-            ticket.AppendLine("+593 86 307 2166");
-            ticket.AppendLine("Quito - Ecuador");
-
-            // DINERS CLUB
-            ticket.Append(NORMAL_FONT + BOLD_ON);
-            ticket.AppendLine("\nDINERS CLUB");
-            ticket.Append(BOLD_OFF + LEFT + SMALL_FONT);
-
-            // Información de tarjeta solo si NO es consumidor final
-            if (!SessionFactura.EsConsumidorFinal && !string.IsNullOrEmpty(SessionFactura.NumeroTarjeta))
-            {
-                ticket.AppendLine($"TARJETA    {SessionFactura.NumeroTarjeta}");
-                ticket.AppendLine($"LOTE#      {SessionFactura.Lote}          REF {SessionFactura.Referencia}");
-                ticket.AppendLine($"FECHA      {SessionFactura.FechaHora:dd/MM/yy}         HORA {SessionFactura.FechaHora:HH:mm}");
-            }
-
-            // Sistema de pago centrado
-            ticket.Append(CENTER + NORMAL_FONT + BOLD_ON);
-            ticket.AppendLine($"{SessionFactura.SistemaPago ?? "DATAFAST"}");
-            ticket.Append(BOLD_OFF + LEFT + SMALL_FONT);
-
-            // Desglose exacto como en PDF
-            ticket.AppendLine($"BASE CONSUMO TARIFA 15      US$    {SessionFactura.BaseConsumoTarifa15:F2}");
-            ticket.AppendLine($"BASE CONSUMO TARIFA 0       US$    {SessionFactura.BaseConsumoTarifa0:F2}");
-            ticket.AppendLine($"SUBTOTAL CONSUMO            US$    {SessionFactura.SubtotalConsumo:F2}");
-            ticket.AppendLine($"IVA                         US$    {SessionFactura.IVA:F2}");
-
-            // Total final bold
-            ticket.Append(NORMAL_FONT + BOLD_ON);
-            ticket.AppendLine($"VR TOTAL    US$                {SessionFactura.Total:F2}");
-            ticket.Append(BOLD_OFF);
-
-            // Agradecimiento centrado
-            ticket.Append(CENTER + SMALL_FONT);
-            ticket.AppendLine("\n...Gracias por su compra!");
-
-            // Corte eficiente
-            ticket.Append(FEED_MINIMAL);
-            ticket.Append(CUT_PARTIAL);
-
-            RawPrinterHelper.SendStringToPrinter(printerName, ticket.ToString());
-        }
     }
 }

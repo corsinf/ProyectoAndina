@@ -1,9 +1,10 @@
 ﻿using ProyectoAndina.Data;
 using ProyectoAndina.Models;
+using ProyectoAndina.Utils;
 using System;
 using System.Collections.Generic;
-using System.Data.SqlClient;
 using System.Data;
+using System.Data.SqlClient;
 
 namespace ProyectoAndina.Controllers
 {
@@ -359,6 +360,111 @@ ORDER BY ac.arqueo_id DESC
             return lista;
         }
 
+        public ResultadoPaginado<arqueo_con_persona_rolM> ObtenerArqueosConRolesPaginados(
+    int pagina = 1,
+    int registrosPorPagina = 20,
+    string filtro = "")
+        {
+            var resultado = new ResultadoPaginado<arqueo_con_persona_rolM>
+            {
+                PaginaActual = pagina,
+                RegistrosPorPagina = registrosPorPagina
+            };
+
+            using (var connection = _dbConnection.GetConnection())
+            {
+                connection.Open();
+
+                // --- 1. Contar total de registros ---
+                string countQuery = @"
+            SELECT COUNT(*) 
+            FROM arqueo_caja ac
+            INNER JOIN personas_roles pr ON ac.id_persona_rol = pr.id_persona_rol
+            INNER JOIN personas p ON pr.per_id = p.per_id
+            INNER JOIN roles r ON pr.rol_id = r.rol_id
+            WHERE (@Filtro = '' OR 
+                   p.primer_nombre LIKE '%' + @Filtro + '%' OR
+                   p.primer_apellido LIKE '%' + @Filtro + '%' OR
+                   p.cedula LIKE '%' + @Filtro + '%' OR
+                   r.nombre LIKE '%' + @Filtro + '%')";
+
+                using (var countCmd = new SqlCommand(countQuery, connection))
+                {
+                    countCmd.Parameters.AddWithValue("@Filtro", filtro ?? "");
+                    resultado.TotalRegistros = (int)countCmd.ExecuteScalar();
+                }
+
+                // --- 2. Consultar datos paginados ---
+                string dataQuery = @"
+            SELECT 
+                ac.arqueo_id,
+                ac.caja_id,
+                ac.turno,
+                ac.fecha_apertura,
+                ac.valor_apertura,
+                ac.total_transacciones,
+                ac.total_efectivo,
+                ac.total_transferencia,
+                ac.total_tarjeta,
+                ac.total_en_caja,
+                ac.faltante,
+                ac.sobrante,
+                ac.estado,          
+                p.per_id,
+                p.primer_nombre,
+                p.segundo_nombre,
+                p.primer_apellido,
+                p.segundo_apellido,
+                p.cedula,
+                r.rol_id,
+                r.nombre AS nombre_rol
+            FROM arqueo_caja ac
+            INNER JOIN personas_roles pr ON ac.id_persona_rol = pr.id_persona_rol
+            INNER JOIN personas p ON pr.per_id = p.per_id
+            INNER JOIN roles r ON pr.rol_id = r.rol_id
+            WHERE (@Filtro = '' OR 
+                   p.primer_nombre LIKE '%' + @Filtro + '%' OR
+                   p.primer_apellido LIKE '%' + @Filtro + '%' OR
+                   p.cedula LIKE '%' + @Filtro + '%' OR
+                   r.nombre LIKE '%' + @Filtro + '%')
+            ORDER BY ac.arqueo_id DESC
+            OFFSET @Offset ROWS 
+            FETCH NEXT @PageSize ROWS ONLY";
+
+                using (var dataCmd = new SqlCommand(dataQuery, connection))
+                {
+                    var offset = (pagina - 1) * registrosPorPagina;
+
+                    dataCmd.Parameters.AddWithValue("@Filtro", filtro ?? "");
+                    dataCmd.Parameters.AddWithValue("@Offset", offset);
+                    dataCmd.Parameters.AddWithValue("@PageSize", registrosPorPagina);
+
+                    using (var reader = dataCmd.ExecuteReader())
+                    {
+                        while (reader.Read())
+                        {
+                            resultado.Datos.Add(new arqueo_con_persona_rolM
+                            {
+                                arqueo_id = Convert.ToInt32(reader["arqueo_id"]),
+                                monto_inicial = Convert.ToDecimal(reader["valor_apertura"]),
+                                monto_final = Convert.ToDecimal(reader["total_en_caja"]),
+                                estado = reader["estado"].ToString(),
+                                per_id = Convert.ToInt32(reader["per_id"]),
+                                primer_nombre = reader["primer_nombre"].ToString(),
+                                segundo_nombre = reader["segundo_nombre"].ToString(),
+                                primer_apellido = reader["primer_apellido"].ToString(),
+                                segundo_apellido = reader["segundo_apellido"].ToString(),
+                                cedula = reader["cedula"].ToString(),
+                                rol_id = reader["rol_id"] != DBNull.Value ? Convert.ToInt32(reader["rol_id"]) : 0,
+                                nombre_rol = reader["nombre_rol"].ToString()
+                            });
+                        }
+                    }
+                }
+            }
+
+            return resultado;
+        }
 
 
 
