@@ -194,6 +194,7 @@ namespace ProyectoAndina.Views
 
         private void button_regresar_Click(object sender, EventArgs e)
         {
+            TecladoHelper.CerrarTeclado();
             var AdministracionFrom = new AdministracionFrom();
             this.Hide();                 // Opcional: ocultas la ventana actual
             AdministracionFrom.ShowDialog();  // Bloquea hasta que RegistroForm se cierre

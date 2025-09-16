@@ -89,6 +89,7 @@ namespace ProyectoAndina.Views
 
         private void button_cerrar_session_Click(object sender, EventArgs e)
         {
+            TecladoHelper.CerrarTeclado();
             var LoginForm = new LoginForm();
             this.Hide();                 // Opcional: ocultas la ventana actual
             LoginForm.ShowDialog();  // Bloquea hasta que RegistroForm se cierre
@@ -109,6 +110,7 @@ namespace ProyectoAndina.Views
                 {
 
                     SessionArqueoCaja.id_arqueo_caja = buscarArqueo.arqueo_id;
+                    TecladoHelper.CerrarTeclado();
                     var TransaccionesCajaForm = new TransaccionesCajaForm();
                     this.Hide();                 // Opcional: ocultas la ventana actual
                     TransaccionesCajaForm.ShowDialog();  // Bloquea hasta que RegistroForm se cierre
@@ -135,11 +137,13 @@ namespace ProyectoAndina.Views
                 StylesAlertas.MostrarAlerta(this, "Tiene una arqueo de caja abierto", "Aviso", TipoAlerta.Info);
                 var ArqueoCajaForm = new ArqueoCajaForm(buscarArqueo.arqueo_id);
                 this.Hide();
+                TecladoHelper.CerrarTeclado();
                 ArqueoCajaForm.ShowDialog();
                 this.Close();
             }
             else
             {
+                TecladoHelper.CerrarTeclado();
                 var ArqueoCajaForm = new ArqueoCajaForm(0);
                 this.Hide();
                 ArqueoCajaForm.ShowDialog();
@@ -149,6 +153,7 @@ namespace ProyectoAndina.Views
 
         private void tableLayoutPanel_admin_Click(object sender, EventArgs e)
         {
+            TecladoHelper.CerrarTeclado();
             var AdministracionFrom = new AdministracionFrom();
             this.Hide();                 // Opcional: ocultas la ventana actual
             AdministracionFrom.ShowDialog();  // Bloquea hasta que RegistroForm se cierre

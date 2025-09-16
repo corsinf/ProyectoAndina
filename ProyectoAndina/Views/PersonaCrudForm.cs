@@ -208,6 +208,7 @@ namespace ProyectoAndina.Views
                     persona.per_id = idPersona;
                     _PersonaController.Actualizar(persona);
                     StylesAlertas.MostrarAlerta(this, "Registro creado correctamente", tipo: TipoAlerta.Success);
+                    TecladoHelper.CerrarTeclado();
                     this.DialogResult = DialogResult.OK; // opcional, útil si quieres saber desde el form padre que se creó
                     this.Close();
                 }
@@ -216,6 +217,7 @@ namespace ProyectoAndina.Views
                     _PersonaController.Insertar(persona);
 
                     StylesAlertas.MostrarAlerta(this, "Registro actualizado correctamente", tipo: TipoAlerta.Success);
+                    TecladoHelper.CerrarTeclado();
                     this.DialogResult = DialogResult.OK; // opcional, útil si quieres saber desde el form padre que se creó
                     this.Close();
 

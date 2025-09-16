@@ -32,6 +32,7 @@ namespace ProyectoAndina.Views
 
         private void iconButton_regresar_Click(object sender, EventArgs e)
         {
+            TecladoHelper.CerrarTeclado();
             var MenuPrincipalForm = new MenuPrincipalForm();
             this.Hide();
             MenuPrincipalForm.ShowDialog();
@@ -40,6 +41,7 @@ namespace ProyectoAndina.Views
 
         private void tableLayoutPanel_personas_Click(object sender, EventArgs e)
         {
+            TecladoHelper.CerrarTeclado();
             var PersonaForm = new PersonaForm();
             this.Hide();
             PersonaForm.ShowDialog();
@@ -48,6 +50,7 @@ namespace ProyectoAndina.Views
 
         private void tableLayoutPanel_rol_Click(object sender, EventArgs e)
         {
+            TecladoHelper.CerrarTeclado();
             var RolForm = new RolForm();
             this.Hide();
             RolForm.ShowDialog();
@@ -56,6 +59,7 @@ namespace ProyectoAndina.Views
 
         private void tableLayoutPanel_asignar_rol_Click(object sender, EventArgs e)
         {
+            TecladoHelper.CerrarTeclado();
             var PersonaRolForm = new PersonaRolForm();
             this.Hide();
             PersonaRolForm.ShowDialog();
@@ -64,6 +68,8 @@ namespace ProyectoAndina.Views
 
         private void tableLayoutPanel_cajas_Click(object sender, EventArgs e)
         {
+
+            TecladoHelper.CerrarTeclado();
             var CajaForm = new CajaForm();
             this.Hide();
             CajaForm.ShowDialog();
@@ -72,6 +78,7 @@ namespace ProyectoAndina.Views
 
         private void tableLayoutPanel_arqueo_cajas_Click(object sender, EventArgs e)
         {
+            TecladoHelper.CerrarTeclado();
             var ArqueosCajasForm = new ArqueosCajasForm();
             this.Hide();
             ArqueosCajasForm.ShowDialog();
@@ -80,6 +87,7 @@ namespace ProyectoAndina.Views
 
         private void tableLayoutPanel_transacciones_Click(object sender, EventArgs e)
         {
+            TecladoHelper.CerrarTeclado();
             var TransaccionesForm = new TransaccionesForm();
             this.Hide();
             TransaccionesForm.ShowDialog();

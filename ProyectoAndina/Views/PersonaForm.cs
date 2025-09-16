@@ -342,6 +342,7 @@ namespace ProyectoAndina.Views
 
         private void iconButton_regresar_Click(object sender, EventArgs e)
         {
+            TecladoHelper.CerrarTeclado();
             var AdministracionFrom = new AdministracionFrom();
             this.Hide();
             AdministracionFrom.ShowDialog();

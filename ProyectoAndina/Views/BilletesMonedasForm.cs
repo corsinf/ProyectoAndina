@@ -87,6 +87,7 @@ namespace ProyectoAndina.Views
 
         private void iconButton_regresar_Click(object sender, EventArgs e)
         {
+            TecladoHelper.CerrarTeclado();
             this.Close();
         }
 
@@ -245,6 +246,7 @@ namespace ProyectoAndina.Views
                 if (SessionArqueoCaja.estadoArqueo == "A")
                 {
                     StylesAlertas.MostrarAlerta(this, "Los valores son iguales ✅\nSe creó correctamente la apertura", tipo: TipoAlerta.Success);
+                    TecladoHelper.CerrarTeclado();
                     this.DialogResult = DialogResult.OK;
                     this.Close();
                 }
@@ -252,9 +254,11 @@ namespace ProyectoAndina.Views
                 {
                     _ArqueoCajaController.ActualizarTotalEnCaja(SessionArqueoCaja.id_arqueo_caja, SessionArqueoCaja.montoValidar);
                     StylesAlertas.MostrarAlerta(this, "Los valores son iguales ✅\nSe creó correctamente la apertura", tipo: TipoAlerta.Success);
+                    TecladoHelper.CerrarTeclado();
                     this.DialogResult = DialogResult.OK;
                     this.Close();
                 }
+
 
                
                

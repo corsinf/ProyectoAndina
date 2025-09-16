@@ -139,8 +139,8 @@ namespace ProyectoAndina.Views
                         _personaRolController.ActualizarPersonaRol(PersonaRol);
                         StylesAlertas.MostrarAlerta(this, "Registro actualizado correctamente", tipo: TipoAlerta.Success);
                     }
-
-                    this.DialogResult = DialogResult.OK;
+                TecladoHelper.CerrarTeclado();
+                this.DialogResult = DialogResult.OK;
                     this.Close();
 
             }
