@@ -90,11 +90,6 @@ namespace ProyectoAndina.Views
                 // Mostrar menú contextual
                 var contextMenu = new ContextMenuStrip();
                 contextMenu.Items.Add("Editar", null, (s, args) => AbrirFormularioEdicion(id_caja));
-<<<<<<< HEAD
-                contextMenu.Items.Add("Eliminar", null, (s, args) => ConfirmarEliminar(id_caja));
-
-=======
->>>>>>> 1fbbfaa8fccc06aecd2a96cd1ee224c331cfbff2
                 var mousePos = dgvDatos.PointToClient(Cursor.Position);
                 contextMenu.Show(dgvDatos, mousePos);
             }
@@ -234,11 +229,7 @@ namespace ProyectoAndina.Views
             dgvDatos.Columns.Add(new DataGridViewTextBoxColumn
             {
                 Name = "nombre",
-<<<<<<< HEAD
-                HeaderText = "Nombre Caja",
-=======
                 HeaderText = "Codigo",
->>>>>>> 1fbbfaa8fccc06aecd2a96cd1ee224c331cfbff2
                 FillWeight = 30
             });
 
@@ -246,11 +237,7 @@ namespace ProyectoAndina.Views
             dgvDatos.Columns.Add(new DataGridViewTextBoxColumn
             {
                 Name = "descripcion",
-<<<<<<< HEAD
-                HeaderText = "Descripción",
-=======
                 HeaderText = "Nombre",
->>>>>>> 1fbbfaa8fccc06aecd2a96cd1ee224c331cfbff2
                 FillWeight = 35
             });
 

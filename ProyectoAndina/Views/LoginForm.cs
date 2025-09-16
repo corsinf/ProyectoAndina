@@ -38,10 +38,7 @@ namespace ProyectoAndina.Views
             _loginController = new LoginController();
             _PersonaRolController = new PersonaRolController();
             InitializeComponent();
-<<<<<<< HEAD
-=======
 
->>>>>>> 1fbbfaa8fccc06aecd2a96cd1ee224c331cfbff2
             ConfigurarEstilo();
         }
 
@@ -195,22 +192,15 @@ namespace ProyectoAndina.Views
             ClientSize = new Size(1021, 668);
             ControlBox = false;
             Controls.Add(panelPrincipal);
-<<<<<<< HEAD
-            FormBorderStyle = FormBorderStyle.FixedDialog;
-=======
             FormBorderStyle = FormBorderStyle.None;
             MaximizeBox = false;
->>>>>>> 1fbbfaa8fccc06aecd2a96cd1ee224c331cfbff2
             MinimizeBox = false;
             Name = "LoginForm";
             ShowIcon = false;
             ShowInTaskbar = false;
             StartPosition = FormStartPosition.CenterScreen;
             Text = "Sistema UASB - Iniciar Sesión";
-<<<<<<< HEAD
-=======
             TopMost = true;
->>>>>>> 1fbbfaa8fccc06aecd2a96cd1ee224c331cfbff2
             WindowState = FormWindowState.Maximized;
             panelPrincipal.ResumeLayout(false);
             panelLogo.ResumeLayout(false);
@@ -401,11 +391,7 @@ namespace ProyectoAndina.Views
                     SessionUser.Correo = Persona.correo;
 
                     StyleManager.MostrarExito(lblMensaje, "Inicio de sesión exitoso");
-<<<<<<< HEAD
-                   
-=======
 
->>>>>>> 1fbbfaa8fccc06aecd2a96cd1ee224c331cfbff2
 
                     // Pequeña pausa para mostrar mensaje de éxito
 
@@ -442,17 +428,6 @@ namespace ProyectoAndina.Views
             }
         }
 
-<<<<<<< HEAD
-        
-
-        protected override void OnLoad(EventArgs e)
-        {
-            base.OnLoad(e);
-            txtCorreo.Focus();
-        }
-
-=======
->>>>>>> 1fbbfaa8fccc06aecd2a96cd1ee224c331cfbff2
         private void txtCorreo_Click(object sender, EventArgs e)
         {
             TecladoHelper.MostrarTeclado();
