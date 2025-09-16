@@ -182,12 +182,17 @@ namespace ProyectoAndina.Views
             // LoginForm
             // 
             ClientSize = new Size(1021, 668);
+            ControlBox = false;
             Controls.Add(panelPrincipal);
-            FormBorderStyle = FormBorderStyle.FixedDialog;
+            FormBorderStyle = FormBorderStyle.None;
+            MaximizeBox = false;
             MinimizeBox = false;
             Name = "LoginForm";
+            ShowIcon = false;
+            ShowInTaskbar = false;
             StartPosition = FormStartPosition.CenterScreen;
             Text = "Sistema UASB - Iniciar Sesión";
+            TopMost = true;
             WindowState = FormWindowState.Maximized;
             panelPrincipal.ResumeLayout(false);
             panelLogo.ResumeLayout(false);

@@ -1,14 +1,12 @@
 ﻿using System;
 using System.Diagnostics;
+using System.IO;
 using System.Runtime.InteropServices;
 using System.Threading;
 using System.Windows.Forms;
-using System.Drawing;
 
 public static class TecladoHelper
 {
-
-
     [DllImport("user32.dll", SetLastError = true)]
     private static extern IntPtr FindWindow(string lpClassName, string lpWindowName);
 
@@ -23,9 +21,28 @@ public static class TecladoHelper
 
     private const int SW_SHOW = 5;
 
+    // --- Constantes para detectar pantalla táctil ---
+    private const int SM_DIGITIZER = 94;
+    private const int NID_INTEGRATED_TOUCH = 0x01;
+    private const int NID_EXTERNAL_TOUCH = 0x02;
+
+    [DllImport("user32.dll")]
+    private static extern int GetSystemMetrics(int nIndex);
+
+    private static bool EsPantallaTactil()
+    {
+        int digitizerStatus = GetSystemMetrics(SM_DIGITIZER);
+        bool tieneTouchIntegrado = (digitizerStatus & NID_INTEGRATED_TOUCH) == NID_INTEGRATED_TOUCH;
+        bool tieneTouchExterno = (digitizerStatus & NID_EXTERNAL_TOUCH) == NID_EXTERNAL_TOUCH;
+        return tieneTouchIntegrado || tieneTouchExterno;
+    }
+
     public static void MostrarTeclado()
     {
-        // Guardar ventana activa
+        // Solo mostrar teclado si hay pantalla táctil
+        if (!EsPantallaTactil())
+            return;
+
         IntPtr ventanaActiva = GetForegroundWindow();
 
         try
@@ -44,10 +61,10 @@ public static class TecladoHelper
         try
         {
             string[] rutasTabTip = {
-            @"C:\Program Files\Common Files\Microsoft Shared\ink\TabTip.exe",
-            @"C:\Program Files (x86)\Common Files\Microsoft Shared\ink\TabTip.exe",
-            @"C:\Windows\System32\TabTip.exe"
-        };
+                @"C:\Program Files\Common Files\Microsoft Shared\ink\TabTip.exe",
+                @"C:\Program Files (x86)\Common Files\Microsoft Shared\ink\TabTip.exe",
+                @"C:\Windows\System32\TabTip.exe"
+            };
 
             foreach (string ruta in rutasTabTip)
             {
@@ -84,17 +101,13 @@ public static class TecladoHelper
     {
         try
         {
-            // Cerrar TabTip
             var procesosTabTip = Process.GetProcessesByName("TabTip");
             foreach (var p in procesosTabTip)
             {
                 try { p.Kill(); } catch { }
             }
         }
-        catch
-        {
-            // Ignorar errores
-        }
+        catch { }
     }
 
     public static bool HayTecladoVirtual()
@@ -109,6 +122,4 @@ public static class TecladoHelper
             return false;
         }
     }
-
-
 }

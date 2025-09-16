@@ -94,6 +94,13 @@ namespace ProyectoAndina.Views
             var ip_equipo = ObtenerIpLocal();
 
 
+            var cajaEncontrada = _CajaController.ObtenerPorcodigo(codigo);
+            if (cajaEncontrada != null) {
+                StylesAlertas.MostrarAlerta(this, "Ya existe el codigo", "¡Error!", TipoAlerta.Error);
+                return;
+            }
+
+
             var Caja = new CajaM
             {
                 codigo = codigo,
