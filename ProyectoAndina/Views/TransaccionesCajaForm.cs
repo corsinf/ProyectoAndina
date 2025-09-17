@@ -36,6 +36,24 @@ namespace ProyectoAndina.Views
         {
             InitializeComponent();
 
+
+            StyleButton.CrearBotonElegante(button_realizar_transaccion, FontAwesome.Sharp.IconChar.CashRegister);
+            // Métodos de pago
+            StyleButton.CrearBotonElegante(button_efectivo, FontAwesome.Sharp.IconChar.MoneyBillWave);
+            StyleButton.CrearBotonElegante(button_tarjeta, FontAwesome.Sharp.IconChar.CreditCard);
+            StyleButton.CrearBotonElegante(button_transferencia, FontAwesome.Sharp.IconChar.University); // o IconChar.MoneyCheckDollar
+
+            // Tipo de cliente
+            StyleButton.CrearBotonElegante(button_consumidor_final, FontAwesome.Sharp.IconChar.User);
+            StyleButton.CrearBotonElegante(button_con_datos, FontAwesome.Sharp.IconChar.UserTie);
+
+            StyleButton.CrearBotonElegante(button_buscar_usuario, FontAwesome.Sharp.IconChar.Search);
+            StyleButton.CrearBotonElegante(button_agregar_user, FontAwesome.Sharp.IconChar.PlusCircle);
+
+            StyleContenedores.EstilizarTableLayout(tableLayoutPanel_datos_placa, Color.FromArgb(0, 148, 144));
+            
+
+
             _PersonaController = new PersonaController();
             _CajaController = new CajaController();
             _ArqueoCajaController = new();
@@ -406,7 +424,7 @@ namespace ProyectoAndina.Views
 
                                 // Asignar a los TextBox
 
-                                StylesAlertas.MostrarAlerta(this, "Datos cargados correctamente", tipo: TipoAlerta.Success);
+
                             }
                             else
                             {
@@ -447,6 +465,11 @@ namespace ProyectoAndina.Views
             {
                 StylesAlertas.MostrarAlerta(this, "Ingrese el CI/RUC del usuario", "¡Error!", TipoAlerta.Error);
                 button_agregar_user.Enabled = true;
+                label_nombre.Text = "👤 Nombre: ";
+                label_correo.Text = "📧 Correo: ";
+                label_cedula.Text = "🆔 Cédula: ";
+                label_telefono.Text = "📞 Teléfono: ";
+                id_usuario = 1;
                 return;
             }
             else
@@ -513,9 +536,6 @@ namespace ProyectoAndina.Views
                                     DireccionCliente = objRespuesta.direccion,
                                 };
 
-
-
-                                StylesAlertas.MostrarAlerta(this, "Datos cargados correctamente", tipo: TipoAlerta.Success);
                                 button_con_datos.Enabled = false;
                                 button_consumidor_final.Enabled = true;
                                 tipo_factura = 2;
@@ -600,7 +620,6 @@ namespace ProyectoAndina.Views
             }
             // Mostrar el resultado con formato de moneda
             label_valor_de_cambio.Text = "💰" + valorCambio.ToString("0.00", cultura);
-            StylesAlertas.MostrarAlerta(this, "Valor Correcto", tipo: TipoAlerta.Success);
             button_realizar_transaccion.Enabled = true;
         }
 
@@ -652,6 +671,7 @@ namespace ProyectoAndina.Views
             button_consumidor_final.Enabled = false;
             button_con_datos.Enabled = true;
             tableLayoutPanel_usuario_encontrado.Visible = false;
+            tableLayoutPanel_datos_usuario.Visible = false;
             id_usuario = 1;
             tipo_factura = 1;
         }
@@ -662,6 +682,8 @@ namespace ProyectoAndina.Views
             button_consumidor_final.Enabled = true;
             button_con_datos.Enabled = false;
             tableLayoutPanel_usuario_encontrado.Visible = true;
+            tableLayoutPanel_datos_usuario.Visible = true;
+            tableLayoutPanel_usuario_encontrado.Dock = DockStyle.Fill;
             tipo_factura = 2;
         }
 
@@ -724,6 +746,16 @@ namespace ProyectoAndina.Views
                     e.Handled = true;
                 }
             }
+        }
+
+        private void label_titulo_usuario_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void tableLayoutPanel7_Paint(object sender, PaintEventArgs e)
+        {
+
         }
     }
 }

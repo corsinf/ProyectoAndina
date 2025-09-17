@@ -28,7 +28,6 @@
         /// </summary>
         private void InitializeComponent()
         {
-            pictureBox_logo_tipo = new PictureBox();
             tableLayoutPanel1 = new TableLayoutPanel();
             panel_titulo = new Panel();
             textBox_cedula = new TextBox();
@@ -43,23 +42,10 @@
             label_nombre = new Label();
             tableLayoutPanel2 = new TableLayoutPanel();
             button_agregar_usuario = new Button();
-            ((System.ComponentModel.ISupportInitialize)pictureBox_logo_tipo).BeginInit();
             tableLayoutPanel1.SuspendLayout();
             panel_titulo.SuspendLayout();
             tableLayoutPanel2.SuspendLayout();
             SuspendLayout();
-            // 
-            // pictureBox_logo_tipo
-            // 
-            pictureBox_logo_tipo.BackColor = Color.White;
-            pictureBox_logo_tipo.Dock = DockStyle.Top;
-            pictureBox_logo_tipo.Image = Properties.Resources.Logotipo_color;
-            pictureBox_logo_tipo.Location = new Point(0, 0);
-            pictureBox_logo_tipo.Name = "pictureBox_logo_tipo";
-            pictureBox_logo_tipo.Size = new Size(559, 69);
-            pictureBox_logo_tipo.SizeMode = PictureBoxSizeMode.Zoom;
-            pictureBox_logo_tipo.TabIndex = 82;
-            pictureBox_logo_tipo.TabStop = false;
             // 
             // tableLayoutPanel1
             // 
@@ -69,12 +55,12 @@
             tableLayoutPanel1.Controls.Add(panel_titulo, 0, 0);
             tableLayoutPanel1.Controls.Add(tableLayoutPanel2, 0, 1);
             tableLayoutPanel1.Dock = DockStyle.Fill;
-            tableLayoutPanel1.Location = new Point(0, 69);
+            tableLayoutPanel1.Location = new Point(0, 0);
             tableLayoutPanel1.Name = "tableLayoutPanel1";
             tableLayoutPanel1.RowCount = 2;
-            tableLayoutPanel1.RowStyles.Add(new RowStyle(SizeType.Percent, 74.2635651F));
-            tableLayoutPanel1.RowStyles.Add(new RowStyle(SizeType.Percent, 25.7364349F));
-            tableLayoutPanel1.Size = new Size(559, 645);
+            tableLayoutPanel1.RowStyles.Add(new RowStyle(SizeType.Percent, 68.76751F));
+            tableLayoutPanel1.RowStyles.Add(new RowStyle(SizeType.Percent, 31.2324924F));
+            tableLayoutPanel1.Size = new Size(559, 714);
             tableLayoutPanel1.TabIndex = 83;
             // 
             // panel_titulo
@@ -93,7 +79,7 @@
             panel_titulo.Dock = DockStyle.Fill;
             panel_titulo.Location = new Point(3, 3);
             panel_titulo.Name = "panel_titulo";
-            panel_titulo.Size = new Size(553, 473);
+            panel_titulo.Size = new Size(553, 485);
             panel_titulo.TabIndex = 81;
             // 
             // textBox_cedula
@@ -199,12 +185,12 @@
             tableLayoutPanel2.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 33.3333321F));
             tableLayoutPanel2.Controls.Add(button_agregar_usuario, 1, 0);
             tableLayoutPanel2.Dock = DockStyle.Fill;
-            tableLayoutPanel2.Location = new Point(3, 482);
+            tableLayoutPanel2.Location = new Point(3, 494);
             tableLayoutPanel2.Name = "tableLayoutPanel2";
             tableLayoutPanel2.RowCount = 2;
             tableLayoutPanel2.RowStyles.Add(new RowStyle(SizeType.Percent, 100F));
-            tableLayoutPanel2.RowStyles.Add(new RowStyle(SizeType.Absolute, 20F));
-            tableLayoutPanel2.Size = new Size(553, 160);
+            tableLayoutPanel2.RowStyles.Add(new RowStyle(SizeType.Absolute, 81F));
+            tableLayoutPanel2.Size = new Size(553, 217);
             tableLayoutPanel2.TabIndex = 82;
             // 
             // button_agregar_usuario
@@ -218,7 +204,7 @@
             button_agregar_usuario.ForeColor = Color.White;
             button_agregar_usuario.Location = new Point(187, 3);
             button_agregar_usuario.Name = "button_agregar_usuario";
-            button_agregar_usuario.Size = new Size(178, 134);
+            button_agregar_usuario.Size = new Size(178, 130);
             button_agregar_usuario.TabIndex = 27;
             button_agregar_usuario.Text = "Accion";
             button_agregar_usuario.UseVisualStyleBackColor = false;
@@ -230,13 +216,11 @@
             AutoScaleMode = AutoScaleMode.Font;
             ClientSize = new Size(559, 714);
             Controls.Add(tableLayoutPanel1);
-            Controls.Add(pictureBox_logo_tipo);
             FormBorderStyle = FormBorderStyle.FixedDialog;
             MaximizeBox = false;
             MinimizeBox = false;
             Name = "CrearUsuario";
             Text = "CrearUsuario";
-            ((System.ComponentModel.ISupportInitialize)pictureBox_logo_tipo).EndInit();
             tableLayoutPanel1.ResumeLayout(false);
             panel_titulo.ResumeLayout(false);
             panel_titulo.PerformLayout();
@@ -245,8 +229,6 @@
         }
 
         #endregion
-
-        private PictureBox pictureBox_logo_tipo;
         private TableLayoutPanel tableLayoutPanel1;
         private Panel panel_titulo;
         private TextBox textBox_cedula;
