@@ -58,9 +58,9 @@
             tableLayoutPanel1.Location = new Point(0, 0);
             tableLayoutPanel1.Name = "tableLayoutPanel1";
             tableLayoutPanel1.RowCount = 2;
-            tableLayoutPanel1.RowStyles.Add(new RowStyle(SizeType.Percent, 68.76751F));
-            tableLayoutPanel1.RowStyles.Add(new RowStyle(SizeType.Percent, 31.2324924F));
-            tableLayoutPanel1.Size = new Size(559, 714);
+            tableLayoutPanel1.RowStyles.Add(new RowStyle(SizeType.Percent, 72.8546448F));
+            tableLayoutPanel1.RowStyles.Add(new RowStyle(SizeType.Percent, 27.145359F));
+            tableLayoutPanel1.Size = new Size(786, 571);
             tableLayoutPanel1.TabIndex = 83;
             // 
             // panel_titulo
@@ -79,15 +79,15 @@
             panel_titulo.Dock = DockStyle.Fill;
             panel_titulo.Location = new Point(3, 3);
             panel_titulo.Name = "panel_titulo";
-            panel_titulo.Size = new Size(553, 485);
+            panel_titulo.Size = new Size(780, 410);
             panel_titulo.TabIndex = 81;
             // 
             // textBox_cedula
             // 
             textBox_cedula.Font = new Font("Segoe UI", 16.2F);
-            textBox_cedula.Location = new Point(13, 54);
+            textBox_cedula.Location = new Point(27, 208);
             textBox_cedula.Name = "textBox_cedula";
-            textBox_cedula.Size = new Size(475, 43);
+            textBox_cedula.Size = new Size(304, 43);
             textBox_cedula.TabIndex = 26;
             textBox_cedula.Click += textBox_cedula_Click;
             // 
@@ -95,7 +95,7 @@
             // 
             label_cedula.AutoSize = true;
             label_cedula.Font = new Font("Segoe UI", 16.2F, FontStyle.Bold);
-            label_cedula.Location = new Point(13, 12);
+            label_cedula.Location = new Point(26, 149);
             label_cedula.Name = "label_cedula";
             label_cedula.Size = new Size(114, 38);
             label_cedula.TabIndex = 25;
@@ -104,9 +104,9 @@
             // textBox_correo
             // 
             textBox_correo.Font = new Font("Segoe UI", 16.2F);
-            textBox_correo.Location = new Point(14, 232);
+            textBox_correo.Location = new Point(27, 331);
             textBox_correo.Name = "textBox_correo";
-            textBox_correo.Size = new Size(469, 43);
+            textBox_correo.Size = new Size(304, 43);
             textBox_correo.TabIndex = 24;
             textBox_correo.Click += textBox_correo_Click;
             // 
@@ -114,7 +114,7 @@
             // 
             label_gmail.AutoSize = true;
             label_gmail.Font = new Font("Segoe UI", 16.2F, FontStyle.Bold);
-            label_gmail.Location = new Point(14, 190);
+            label_gmail.Location = new Point(27, 272);
             label_gmail.Name = "label_gmail";
             label_gmail.Size = new Size(113, 38);
             label_gmail.TabIndex = 23;
@@ -123,9 +123,9 @@
             // textBox_direccion
             // 
             textBox_direccion.Font = new Font("Segoe UI", 16.2F);
-            textBox_direccion.Location = new Point(13, 427);
+            textBox_direccion.Location = new Point(390, 331);
             textBox_direccion.Name = "textBox_direccion";
-            textBox_direccion.Size = new Size(470, 43);
+            textBox_direccion.Size = new Size(304, 43);
             textBox_direccion.TabIndex = 22;
             textBox_direccion.Click += textBox_direccion_Click;
             // 
@@ -133,7 +133,7 @@
             // 
             label_direccion.AutoSize = true;
             label_direccion.Font = new Font("Segoe UI", 16.2F, FontStyle.Bold);
-            label_direccion.Location = new Point(13, 368);
+            label_direccion.Location = new Point(390, 272);
             label_direccion.Name = "label_direccion";
             label_direccion.Size = new Size(148, 38);
             label_direccion.TabIndex = 21;
@@ -142,9 +142,9 @@
             // textBox_telefono
             // 
             textBox_telefono.Font = new Font("Segoe UI", 16.2F);
-            textBox_telefono.Location = new Point(13, 321);
+            textBox_telefono.Location = new Point(390, 208);
             textBox_telefono.Name = "textBox_telefono";
-            textBox_telefono.Size = new Size(470, 43);
+            textBox_telefono.Size = new Size(304, 43);
             textBox_telefono.TabIndex = 20;
             textBox_telefono.Click += textBox_telefono_Click;
             // 
@@ -152,7 +152,7 @@
             // 
             label_telefono.AutoSize = true;
             label_telefono.Font = new Font("Segoe UI", 16.2F, FontStyle.Bold);
-            label_telefono.Location = new Point(13, 279);
+            label_telefono.Location = new Point(390, 149);
             label_telefono.Name = "label_telefono";
             label_telefono.Size = new Size(138, 38);
             label_telefono.TabIndex = 19;
@@ -161,9 +161,9 @@
             // textBox_nombre_completo
             // 
             textBox_nombre_completo.Font = new Font("Segoe UI", 16.2F);
-            textBox_nombre_completo.Location = new Point(13, 143);
+            textBox_nombre_completo.Location = new Point(27, 83);
             textBox_nombre_completo.Name = "textBox_nombre_completo";
-            textBox_nombre_completo.Size = new Size(475, 43);
+            textBox_nombre_completo.Size = new Size(667, 43);
             textBox_nombre_completo.TabIndex = 10;
             textBox_nombre_completo.Click += textBox_pri_nombre_Click;
             // 
@@ -171,7 +171,7 @@
             // 
             label_nombre.AutoSize = true;
             label_nombre.Font = new Font("Segoe UI", 16.2F, FontStyle.Bold);
-            label_nombre.Location = new Point(13, 101);
+            label_nombre.Location = new Point(27, 26);
             label_nombre.Name = "label_nombre";
             label_nombre.Size = new Size(269, 38);
             label_nombre.TabIndex = 8;
@@ -185,12 +185,12 @@
             tableLayoutPanel2.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 33.3333321F));
             tableLayoutPanel2.Controls.Add(button_agregar_usuario, 1, 0);
             tableLayoutPanel2.Dock = DockStyle.Fill;
-            tableLayoutPanel2.Location = new Point(3, 494);
+            tableLayoutPanel2.Location = new Point(3, 419);
             tableLayoutPanel2.Name = "tableLayoutPanel2";
             tableLayoutPanel2.RowCount = 2;
             tableLayoutPanel2.RowStyles.Add(new RowStyle(SizeType.Percent, 100F));
-            tableLayoutPanel2.RowStyles.Add(new RowStyle(SizeType.Absolute, 81F));
-            tableLayoutPanel2.Size = new Size(553, 217);
+            tableLayoutPanel2.RowStyles.Add(new RowStyle(SizeType.Absolute, 22F));
+            tableLayoutPanel2.Size = new Size(780, 149);
             tableLayoutPanel2.TabIndex = 82;
             // 
             // button_agregar_usuario
@@ -202,9 +202,9 @@
             button_agregar_usuario.FlatStyle = FlatStyle.Flat;
             button_agregar_usuario.Font = new Font("Segoe UI", 10F, FontStyle.Bold);
             button_agregar_usuario.ForeColor = Color.White;
-            button_agregar_usuario.Location = new Point(187, 3);
+            button_agregar_usuario.Location = new Point(262, 3);
             button_agregar_usuario.Name = "button_agregar_usuario";
-            button_agregar_usuario.Size = new Size(178, 130);
+            button_agregar_usuario.Size = new Size(253, 121);
             button_agregar_usuario.TabIndex = 27;
             button_agregar_usuario.Text = "Accion";
             button_agregar_usuario.UseVisualStyleBackColor = false;
@@ -214,7 +214,7 @@
             // 
             AutoScaleDimensions = new SizeF(8F, 20F);
             AutoScaleMode = AutoScaleMode.Font;
-            ClientSize = new Size(559, 714);
+            ClientSize = new Size(786, 571);
             Controls.Add(tableLayoutPanel1);
             FormBorderStyle = FormBorderStyle.FixedDialog;
             MaximizeBox = false;

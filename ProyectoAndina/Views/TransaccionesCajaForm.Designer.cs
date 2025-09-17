@@ -80,6 +80,7 @@
             tableLayoutPanel6 = new TableLayoutPanel();
             label_placa = new Label();
             textBox_buscar_placa = new TextBox();
+            iconPictureBox_search = new FontAwesome.Sharp.IconPictureBox();
             iconSplitButton1 = new FontAwesome.Sharp.IconSplitButton();
             tableLayoutPanel_logueado.SuspendLayout();
             panel1.SuspendLayout();
@@ -103,6 +104,7 @@
             tableLayoutPanel15.SuspendLayout();
             tableLayoutPanel9.SuspendLayout();
             tableLayoutPanel6.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)iconPictureBox_search).BeginInit();
             SuspendLayout();
             // 
             // tableLayoutPanel_logueado
@@ -346,20 +348,21 @@
             tableLayoutPanel3.Margin = new Padding(3, 4, 3, 4);
             tableLayoutPanel3.Name = "tableLayoutPanel3";
             tableLayoutPanel3.RowCount = 5;
-            tableLayoutPanel3.RowStyles.Add(new RowStyle(SizeType.Percent, 8.276798F));
-            tableLayoutPanel3.RowStyles.Add(new RowStyle(SizeType.Percent, 17.2320213F));
-            tableLayoutPanel3.RowStyles.Add(new RowStyle(SizeType.Percent, 16.9606514F));
-            tableLayoutPanel3.RowStyles.Add(new RowStyle(SizeType.Percent, 23.8805962F));
-            tableLayoutPanel3.RowStyles.Add(new RowStyle(SizeType.Percent, 33.5142479F));
+            tableLayoutPanel3.RowStyles.Add(new RowStyle(SizeType.Percent, 0F));
+            tableLayoutPanel3.RowStyles.Add(new RowStyle(SizeType.Percent, 13.541667F));
+            tableLayoutPanel3.RowStyles.Add(new RowStyle(SizeType.Percent, 13.541667F));
+            tableLayoutPanel3.RowStyles.Add(new RowStyle(SizeType.Percent, 31.25F));
+            tableLayoutPanel3.RowStyles.Add(new RowStyle(SizeType.Percent, 41.6666679F));
             tableLayoutPanel3.Size = new Size(374, 737);
             tableLayoutPanel3.TabIndex = 1;
+            tableLayoutPanel3.Paint += tableLayoutPanel3_Paint;
             // 
             // tableLayoutPanel_usuario_encontrado
             // 
             tableLayoutPanel_usuario_encontrado.ColumnCount = 1;
             tableLayoutPanel_usuario_encontrado.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 100F));
             tableLayoutPanel_usuario_encontrado.Controls.Add(tableLayoutPanel5, 0, 0);
-            tableLayoutPanel_usuario_encontrado.Location = new Point(3, 316);
+            tableLayoutPanel_usuario_encontrado.Location = new Point(3, 201);
             tableLayoutPanel_usuario_encontrado.Name = "tableLayoutPanel_usuario_encontrado";
             tableLayoutPanel_usuario_encontrado.RowCount = 1;
             tableLayoutPanel_usuario_encontrado.RowStyles.Add(new RowStyle(SizeType.Percent, 100F));
@@ -378,8 +381,8 @@
             tableLayoutPanel5.Location = new Point(3, 3);
             tableLayoutPanel5.Name = "tableLayoutPanel5";
             tableLayoutPanel5.RowCount = 2;
-            tableLayoutPanel5.RowStyles.Add(new RowStyle(SizeType.Percent, 52.3076935F));
-            tableLayoutPanel5.RowStyles.Add(new RowStyle(SizeType.Percent, 47.6923065F));
+            tableLayoutPanel5.RowStyles.Add(new RowStyle(SizeType.Percent, 50F));
+            tableLayoutPanel5.RowStyles.Add(new RowStyle(SizeType.Percent, 50F));
             tableLayoutPanel5.Size = new Size(362, 164);
             tableLayoutPanel5.TabIndex = 80;
             // 
@@ -387,8 +390,8 @@
             // 
             tableLayoutPanel7.BackColor = Color.Transparent;
             tableLayoutPanel7.ColumnCount = 3;
-            tableLayoutPanel7.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 33.3333321F));
-            tableLayoutPanel7.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 33.3333321F));
+            tableLayoutPanel7.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 31.1797752F));
+            tableLayoutPanel7.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 35.11236F));
             tableLayoutPanel7.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 33.3333321F));
             tableLayoutPanel7.Controls.Add(button_buscar_usuario, 2, 0);
             tableLayoutPanel7.Controls.Add(textBox_usuario_encontrar, 1, 0);
@@ -398,7 +401,7 @@
             tableLayoutPanel7.Name = "tableLayoutPanel7";
             tableLayoutPanel7.RowCount = 1;
             tableLayoutPanel7.RowStyles.Add(new RowStyle(SizeType.Percent, 100F));
-            tableLayoutPanel7.Size = new Size(356, 79);
+            tableLayoutPanel7.Size = new Size(356, 76);
             tableLayoutPanel7.TabIndex = 101;
             // 
             // button_buscar_usuario
@@ -412,7 +415,7 @@
             button_buscar_usuario.ForeColor = Color.White;
             button_buscar_usuario.Location = new Point(239, 3);
             button_buscar_usuario.Name = "button_buscar_usuario";
-            button_buscar_usuario.Size = new Size(114, 73);
+            button_buscar_usuario.Size = new Size(114, 70);
             button_buscar_usuario.TabIndex = 122;
             button_buscar_usuario.Text = "Buscar";
             button_buscar_usuario.UseVisualStyleBackColor = false;
@@ -421,10 +424,10 @@
             // textBox_usuario_encontrar
             // 
             textBox_usuario_encontrar.Anchor = AnchorStyles.Left | AnchorStyles.Right;
-            textBox_usuario_encontrar.Font = new Font("Microsoft Sans Serif", 13.8F);
-            textBox_usuario_encontrar.Location = new Point(121, 22);
+            textBox_usuario_encontrar.Font = new Font("Microsoft Sans Serif", 16.2F);
+            textBox_usuario_encontrar.Location = new Point(114, 19);
             textBox_usuario_encontrar.Name = "textBox_usuario_encontrar";
-            textBox_usuario_encontrar.Size = new Size(112, 34);
+            textBox_usuario_encontrar.Size = new Size(119, 38);
             textBox_usuario_encontrar.TabIndex = 121;
             textBox_usuario_encontrar.Click += textBox_usuario_encontrar_Click;
             // 
@@ -432,10 +435,10 @@
             // 
             label_titulo_usuario.Anchor = AnchorStyles.Left | AnchorStyles.Right;
             label_titulo_usuario.AutoSize = true;
-            label_titulo_usuario.Font = new Font("Microsoft Sans Serif", 13.8F, FontStyle.Bold, GraphicsUnit.Point, 0);
-            label_titulo_usuario.Location = new Point(3, 25);
+            label_titulo_usuario.Font = new Font("Microsoft Sans Serif", 16.2F);
+            label_titulo_usuario.Location = new Point(3, 22);
             label_titulo_usuario.Name = "label_titulo_usuario";
-            label_titulo_usuario.Size = new Size(112, 29);
+            label_titulo_usuario.Size = new Size(105, 32);
             label_titulo_usuario.TabIndex = 119;
             label_titulo_usuario.Text = "Cédula";
             label_titulo_usuario.TextAlign = ContentAlignment.MiddleCenter;
@@ -450,11 +453,11 @@
             tableLayoutPanel13.ColumnStyles.Add(new ColumnStyle(SizeType.Absolute, 20F));
             tableLayoutPanel13.Controls.Add(button_agregar_user, 1, 0);
             tableLayoutPanel13.Dock = DockStyle.Fill;
-            tableLayoutPanel13.Location = new Point(3, 88);
+            tableLayoutPanel13.Location = new Point(3, 85);
             tableLayoutPanel13.Name = "tableLayoutPanel13";
             tableLayoutPanel13.RowCount = 1;
             tableLayoutPanel13.RowStyles.Add(new RowStyle(SizeType.Percent, 100F));
-            tableLayoutPanel13.Size = new Size(356, 73);
+            tableLayoutPanel13.Size = new Size(356, 76);
             tableLayoutPanel13.TabIndex = 102;
             // 
             // button_agregar_user
@@ -469,7 +472,7 @@
             button_agregar_user.ForeColor = Color.White;
             button_agregar_user.Location = new Point(97, 3);
             button_agregar_user.Name = "button_agregar_user";
-            button_agregar_user.Size = new Size(161, 67);
+            button_agregar_user.Size = new Size(161, 70);
             button_agregar_user.TabIndex = 99;
             button_agregar_user.Text = "Agregar";
             button_agregar_user.UseVisualStyleBackColor = false;
@@ -480,9 +483,9 @@
             label_tipo_de_pago.Anchor = AnchorStyles.None;
             label_tipo_de_pago.AutoSize = true;
             label_tipo_de_pago.Font = new Font("Segoe UI", 20F, FontStyle.Bold);
-            label_tipo_de_pago.Location = new Point(67, 7);
+            label_tipo_de_pago.Location = new Point(67, 0);
             label_tipo_de_pago.Name = "label_tipo_de_pago";
-            label_tipo_de_pago.Size = new Size(239, 46);
+            label_tipo_de_pago.Size = new Size(239, 1);
             label_tipo_de_pago.TabIndex = 66;
             label_tipo_de_pago.Text = "Tipo de pago:";
             label_tipo_de_pago.TextAlign = ContentAlignment.MiddleCenter;
@@ -499,11 +502,11 @@
             tableLayoutPanel11.Controls.Add(button_transferencia, 4, 0);
             tableLayoutPanel11.Controls.Add(button_tarjeta, 2, 0);
             tableLayoutPanel11.Dock = DockStyle.Fill;
-            tableLayoutPanel11.Location = new Point(3, 64);
+            tableLayoutPanel11.Location = new Point(3, 3);
             tableLayoutPanel11.Name = "tableLayoutPanel11";
             tableLayoutPanel11.RowCount = 1;
             tableLayoutPanel11.RowStyles.Add(new RowStyle(SizeType.Percent, 100F));
-            tableLayoutPanel11.Size = new Size(368, 121);
+            tableLayoutPanel11.Size = new Size(368, 93);
             tableLayoutPanel11.TabIndex = 96;
             // 
             // button_efectivo
@@ -518,7 +521,7 @@
             button_efectivo.ForeColor = Color.White;
             button_efectivo.Location = new Point(3, 3);
             button_efectivo.Name = "button_efectivo";
-            button_efectivo.Size = new Size(115, 115);
+            button_efectivo.Size = new Size(115, 87);
             button_efectivo.TabIndex = 80;
             button_efectivo.Text = "Efectivo";
             button_efectivo.UseVisualStyleBackColor = false;
@@ -535,7 +538,7 @@
             button_transferencia.ForeColor = Color.White;
             button_transferencia.Location = new Point(249, 3);
             button_transferencia.Name = "button_transferencia";
-            button_transferencia.Size = new Size(116, 115);
+            button_transferencia.Size = new Size(116, 87);
             button_transferencia.TabIndex = 82;
             button_transferencia.Text = "Transferencia";
             button_transferencia.UseVisualStyleBackColor = false;
@@ -552,7 +555,7 @@
             button_tarjeta.ForeColor = Color.White;
             button_tarjeta.Location = new Point(126, 3);
             button_tarjeta.Name = "button_tarjeta";
-            button_tarjeta.Size = new Size(115, 115);
+            button_tarjeta.Size = new Size(115, 87);
             button_tarjeta.TabIndex = 81;
             button_tarjeta.Text = "Tarjeta";
             button_tarjeta.UseVisualStyleBackColor = false;
@@ -569,13 +572,13 @@
             tableLayoutPanel12.Controls.Add(button_consumidor_final, 1, 1);
             tableLayoutPanel12.Controls.Add(button_con_datos, 3, 1);
             tableLayoutPanel12.Dock = DockStyle.Fill;
-            tableLayoutPanel12.Location = new Point(3, 191);
+            tableLayoutPanel12.Location = new Point(3, 102);
             tableLayoutPanel12.Name = "tableLayoutPanel12";
             tableLayoutPanel12.RowCount = 3;
             tableLayoutPanel12.RowStyles.Add(new RowStyle(SizeType.Percent, 1.08999443F));
             tableLayoutPanel12.RowStyles.Add(new RowStyle(SizeType.Percent, 97.820015F));
             tableLayoutPanel12.RowStyles.Add(new RowStyle(SizeType.Percent, 1.08999443F));
-            tableLayoutPanel12.Size = new Size(368, 119);
+            tableLayoutPanel12.Size = new Size(368, 93);
             tableLayoutPanel12.TabIndex = 97;
             // 
             // button_consumidor_final
@@ -589,7 +592,7 @@
             button_consumidor_final.ForeColor = Color.White;
             button_consumidor_final.Location = new Point(9, 4);
             button_consumidor_final.Name = "button_consumidor_final";
-            button_consumidor_final.Size = new Size(167, 110);
+            button_consumidor_final.Size = new Size(167, 84);
             button_consumidor_final.TabIndex = 57;
             button_consumidor_final.Text = "Consumidor Final";
             button_consumidor_final.UseVisualStyleBackColor = false;
@@ -606,7 +609,7 @@
             button_con_datos.ForeColor = Color.White;
             button_con_datos.Location = new Point(188, 4);
             button_con_datos.Name = "button_con_datos";
-            button_con_datos.Size = new Size(167, 110);
+            button_con_datos.Size = new Size(167, 84);
             button_con_datos.TabIndex = 58;
             button_con_datos.Text = "Con Datos";
             button_con_datos.UseVisualStyleBackColor = false;
@@ -691,11 +694,11 @@
             // 
             // textBox_val_entregado
             // 
-            textBox_val_entregado.Anchor = AnchorStyles.None;
+            textBox_val_entregado.Anchor = AnchorStyles.Right;
             textBox_val_entregado.Font = new Font("Microsoft Sans Serif", 13.8F);
-            textBox_val_entregado.Location = new Point(166, 15);
+            textBox_val_entregado.Location = new Point(238, 15);
             textBox_val_entregado.Name = "textBox_val_entregado";
-            textBox_val_entregado.Size = new Size(178, 34);
+            textBox_val_entregado.Size = new Size(121, 34);
             textBox_val_entregado.TabIndex = 99;
             textBox_val_entregado.TextAlign = HorizontalAlignment.Right;
             textBox_val_entregado.KeyPress += textBox_val_entregado_KeyPress;
@@ -855,14 +858,14 @@
             // tableLayoutPanel6
             // 
             tableLayoutPanel6.BackColor = Color.Transparent;
-            tableLayoutPanel6.ColumnCount = 5;
-            tableLayoutPanel6.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 5.882353F));
-            tableLayoutPanel6.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 29.4117641F));
-            tableLayoutPanel6.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 29.4117641F));
-            tableLayoutPanel6.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 29.4117641F));
-            tableLayoutPanel6.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 5.882353F));
+            tableLayoutPanel6.ColumnCount = 4;
+            tableLayoutPanel6.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 15.0518475F));
+            tableLayoutPanel6.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 20.06913F));
+            tableLayoutPanel6.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 35.5220261F));
+            tableLayoutPanel6.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 29.35699F));
             tableLayoutPanel6.Controls.Add(label_placa, 1, 0);
             tableLayoutPanel6.Controls.Add(textBox_buscar_placa, 2, 0);
+            tableLayoutPanel6.Controls.Add(iconPictureBox_search, 3, 0);
             tableLayoutPanel6.Dock = DockStyle.Fill;
             tableLayoutPanel6.Location = new Point(3, 3);
             tableLayoutPanel6.Name = "tableLayoutPanel6";
@@ -873,26 +876,42 @@
             // 
             // label_placa
             // 
-            label_placa.Anchor = AnchorStyles.Right;
+            label_placa.Anchor = AnchorStyles.Top | AnchorStyles.Bottom | AnchorStyles.Left | AnchorStyles.Right;
             label_placa.AutoSize = true;
             label_placa.Font = new Font("Segoe UI", 25F, FontStyle.Bold);
-            label_placa.Location = new Point(140, 29);
+            label_placa.Location = new Point(187, 0);
             label_placa.Name = "label_placa";
-            label_placa.Size = new Size(289, 57);
+            label_placa.Size = new Size(240, 115);
             label_placa.TabIndex = 70;
             label_placa.Text = "Digitar placa:";
-            label_placa.TextAlign = ContentAlignment.MiddleCenter;
+            label_placa.TextAlign = ContentAlignment.MiddleRight;
             // 
             // textBox_buscar_placa
             // 
             textBox_buscar_placa.Anchor = AnchorStyles.Left | AnchorStyles.Right;
             textBox_buscar_placa.Font = new Font("Segoe UI", 34.2F, FontStyle.Regular, GraphicsUnit.Point, 0);
-            textBox_buscar_placa.Location = new Point(435, 16);
+            textBox_buscar_placa.Location = new Point(433, 16);
             textBox_buscar_placa.Name = "textBox_buscar_placa";
-            textBox_buscar_placa.Size = new Size(354, 83);
+            textBox_buscar_placa.Size = new Size(429, 83);
             textBox_buscar_placa.TabIndex = 67;
             textBox_buscar_placa.Click += textBox_buscar_placa_Click;
             textBox_buscar_placa.Leave += button_buscar_placa_Click;
+            // 
+            // iconPictureBox_search
+            // 
+            iconPictureBox_search.Anchor = AnchorStyles.Left;
+            iconPictureBox_search.BackColor = Color.Transparent;
+            iconPictureBox_search.ForeColor = SystemColors.ControlText;
+            iconPictureBox_search.IconChar = FontAwesome.Sharp.IconChar.Search;
+            iconPictureBox_search.IconColor = SystemColors.ControlText;
+            iconPictureBox_search.IconFont = FontAwesome.Sharp.IconFont.Auto;
+            iconPictureBox_search.IconSize = 72;
+            iconPictureBox_search.Location = new Point(868, 21);
+            iconPictureBox_search.Name = "iconPictureBox_search";
+            iconPictureBox_search.Size = new Size(110, 72);
+            iconPictureBox_search.TabIndex = 75;
+            iconPictureBox_search.TabStop = false;
+            iconPictureBox_search.Click += button_buscar_placa_Click;
             // 
             // iconSplitButton1
             // 
@@ -952,6 +971,7 @@
             tableLayoutPanel9.ResumeLayout(false);
             tableLayoutPanel6.ResumeLayout(false);
             tableLayoutPanel6.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)iconPictureBox_search).EndInit();
             ResumeLayout(false);
         }
 
@@ -1010,5 +1030,6 @@
         private Button button_agregar_user;
         private TableLayoutPanel tableLayoutPanel17;
         private TableLayoutPanel tableLayoutPanel2;
+        private FontAwesome.Sharp.IconPictureBox iconPictureBox_search;
     }
 }

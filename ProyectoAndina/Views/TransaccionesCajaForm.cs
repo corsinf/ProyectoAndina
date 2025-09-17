@@ -51,7 +51,7 @@ namespace ProyectoAndina.Views
             StyleButton.CrearBotonElegante(button_agregar_user, FontAwesome.Sharp.IconChar.PlusCircle);
 
             StyleContenedores.EstilizarTableLayout(tableLayoutPanel_datos_placa, Color.FromArgb(0, 148, 144));
-            
+
 
 
             _PersonaController = new PersonaController();
@@ -288,7 +288,8 @@ namespace ProyectoAndina.Views
 
         private void button_agregar_user_Click(object sender, EventArgs e)
         {
-            var CrearUsuario = new CrearUsuario(this);
+            String cedula = textBox_usuario_encontrar.Text;
+            var CrearUsuario = new CrearUsuario(this,cedula);
             CrearUsuario.StartPosition = FormStartPosition.CenterParent;
             CrearUsuario.FormClosed += (s, args) =>
             {
@@ -672,6 +673,7 @@ namespace ProyectoAndina.Views
             button_con_datos.Enabled = true;
             tableLayoutPanel_usuario_encontrado.Visible = false;
             tableLayoutPanel_datos_usuario.Visible = false;
+            button_agregar_user.Enabled = false;
             id_usuario = 1;
             tipo_factura = 1;
         }
@@ -754,6 +756,11 @@ namespace ProyectoAndina.Views
         }
 
         private void tableLayoutPanel7_Paint(object sender, PaintEventArgs e)
+        {
+
+        }
+
+        private void tableLayoutPanel3_Paint(object sender, PaintEventArgs e)
         {
 
         }

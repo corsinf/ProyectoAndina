@@ -45,11 +45,11 @@ namespace ProyectoAndina.Utils
 
 
         public static void CrearBotonElegante(
-    Button boton,
-    IconChar icono,
-    EventHandler onClick = null,
-    int radioBorde = 20
-)
+     Button boton,
+     IconChar icono,
+     EventHandler onClick = null,
+     int radioBorde = 20
+ )
         {
             if (boton == null) return;
 
@@ -68,8 +68,42 @@ namespace ProyectoAndina.Utils
 
             Color colorOriginal = boton.BackColor;
 
+            // Manejador de cambio de estado Enabled con mejor diseño
+            void ActualizarEstadoVisual()
+            {
+                if (!boton.Enabled)
+                {
+                    // Estado deshabilitado - diseño más elegante y visible
+                    boton.BackColor = Color.FromArgb(240, 240, 240); // Gris claro pero con más presencia
+                    boton.ForeColor = Color.FromArgb(100, 100, 100); // Gris oscuro visible
+                    boton.Cursor = Cursors.No;
+                    boton.FlatAppearance.BorderSize = 2; // Borde más grueso
+                    boton.FlatAppearance.BorderColor = Color.FromArgb(200, 200, 200); // Borde gris medio
+
+                    // Aplicar un patrón sutil de líneas diagonales
+                    AplicarPatronDeshabilitado(boton);
+                }
+                else
+                {
+                    // Estado habilitado - colores normales
+                    boton.BackColor = colorOriginal;
+                    boton.ForeColor = colorTexto;
+                    boton.Cursor = Cursors.Hand;
+                    boton.FlatAppearance.BorderSize = 0;
+
+                    // Quitar cualquier patrón
+                    boton.BackgroundImage?.Dispose();
+                    boton.BackgroundImage = null;
+                }
+
+                // Actualizar el icono con el nuevo estado
+                AjustarContenido();
+            }
+
+            // Eventos de mouse solo cuando está habilitado
             boton.MouseEnter += (s, e) =>
             {
+                if (!boton.Enabled) return;
                 boton.BackColor = AjustarBrillo(colorOriginal, 0.85f);
                 boton.FlatAppearance.BorderSize = 1;
                 boton.FlatAppearance.BorderColor = Color.FromArgb(100, Color.White);
@@ -77,85 +111,132 @@ namespace ProyectoAndina.Utils
 
             boton.MouseLeave += (s, e) =>
             {
+                if (!boton.Enabled) return;
                 boton.BackColor = colorOriginal;
+                boton.FlatAppearance.BorderSize = 0;
             };
 
             boton.MouseDown += (s, e) =>
             {
+                if (!boton.Enabled) return;
                 boton.BackColor = AjustarBrillo(colorOriginal, 0.7f);
             };
 
             boton.MouseUp += (s, e) =>
             {
+                if (!boton.Enabled) return;
                 boton.BackColor = AjustarBrillo(colorOriginal, 0.85f);
             };
 
-            // Ajuste de contenido mejorado - SIEMPRE layout vertical
+            // Detectar cambios en la propiedad Enabled
+            boton.EnabledChanged += (s, e) => ActualizarEstadoVisual();
+
+            // Ajuste de contenido mejorado
             void AjustarContenido()
             {
                 if (boton.Width <= 0 || boton.Height <= 0) return;
 
-                // Siempre usar layout vertical (icono arriba, texto abajo)
                 boton.TextAlign = ContentAlignment.BottomCenter;
                 boton.ImageAlign = ContentAlignment.TopCenter;
                 boton.TextImageRelation = TextImageRelation.ImageAboveText;
 
-                // Escala basada en las dimensiones del botón
                 float escalaAncho = boton.Width / 120f;
                 float escalaAlto = boton.Height / 80f;
                 float escala = Math.Min(escalaAncho, escalaAlto);
                 escala = Math.Max(0.6f, Math.Min(2.0f, escala));
 
-                // Calcular tamaño de icono proporcional al botón
                 int tamanoIcono = (int)(Math.Min(boton.Width * 0.4f, boton.Height * 0.35f) * escala);
                 tamanoIcono = Math.Max(12, Math.Min(48, tamanoIcono));
 
-                // Tamaño de fuente proporcional
                 float tamanoFuente = Math.Max(7f, Math.Min(14f, 9f * escala));
-                boton.Font = new Font("Segoe UI", tamanoFuente, FontStyle.Bold);
 
-                // Calcular padding para centrado perfecto
+                if (!boton.Enabled)
+                {
+                    boton.Font = new Font("Segoe UI", tamanoFuente, FontStyle.Bold); // Mantener negrita para mejor legibilidad
+                }
+                else
+                {
+                    boton.Font = new Font("Segoe UI", tamanoFuente, FontStyle.Bold);
+                }
+
                 try
                 {
                     using (var g = boton.CreateGraphics())
                     {
                         var tamanoTexto = g.MeasureString(boton.Text ?? "", boton.Font);
-
-                        // Espacio total disponible para distribución
                         float espacioTotal = boton.Height;
                         float espacioContenido = tamanoIcono + tamanoTexto.Height;
                         float espacioLibre = espacioTotal - espacioContenido;
 
-                        // Distribución del espacio libre
                         int espacioSuperior = Math.Max(4, (int)(espacioLibre * 0.4f));
                         int espacioInferior = Math.Max(4, (int)(espacioLibre * 0.4f));
-                        int espacioMedio = Math.Max(2, (int)(espacioLibre * 0.2f));
 
-                        // Aplicar padding calculado
                         boton.Padding = new Padding(6, espacioSuperior, 6, espacioInferior);
                     }
                 }
                 catch
                 {
-                    // Fallback si hay error con Graphics
                     int paddingVertical = Math.Max(4, boton.Height / 8);
                     boton.Padding = new Padding(6, paddingVertical, 6, paddingVertical);
                 }
 
                 RedimensionarIcono(boton, icono, tamanoIcono);
 
-                // Bordes redondeados
                 int radioFinal = Math.Min(radioBorde, Math.Min(boton.Width, boton.Height) / 4);
                 boton.Region = new Region(RoundedRect(boton.ClientRectangle, radioFinal));
             }
 
-            boton.HandleCreated += (s, e) => AjustarContenido();
+            boton.HandleCreated += (s, e) => { AjustarContenido(); ActualizarEstadoVisual(); };
             boton.Resize += (s, e) => AjustarContenido();
-            boton.SizeChanged += (s, e) => AjustarContenido(); // Agregado para mejor respuesta
-            if (boton.IsHandleCreated) AjustarContenido();
+            boton.SizeChanged += (s, e) => AjustarContenido();
+
+            if (boton.IsHandleCreated)
+            {
+                AjustarContenido();
+                ActualizarEstadoVisual();
+            }
         }
 
-        // ------------------- FUNCIONES AUXILIARES MEJORADAS -------------------
+        // Método para aplicar un patrón sutil a botones deshabilitados
+        private static void AplicarPatronDeshabilitado(Button boton)
+        {
+            try
+            {
+                if (boton.Width <= 0 || boton.Height <= 0) return;
+
+                Bitmap patron = new Bitmap(boton.Width, boton.Height);
+                using (Graphics g = Graphics.FromImage(patron))
+                {
+                    // Fondo base
+                    g.Clear(Color.FromArgb(240, 240, 240));
+
+                    // Patrón sutil de líneas diagonales
+                    using (Pen pen = new Pen(Color.FromArgb(30, 220, 220, 220), 1))
+                    {
+                        for (int i = -boton.Height; i < boton.Width + boton.Height; i += 8)
+                        {
+                            g.DrawLine(pen, i, 0, i + boton.Height, boton.Height);
+                        }
+                    }
+
+                    // Overlay semi-transparente para suavizar
+                    using (SolidBrush brush = new SolidBrush(Color.FromArgb(20, Color.White)))
+                    {
+                        g.FillRectangle(brush, 0, 0, boton.Width, boton.Height);
+                    }
+                }
+
+                boton.BackgroundImage?.Dispose();
+                boton.BackgroundImage = patron;
+                boton.BackgroundImageLayout = ImageLayout.None;
+            }
+            catch
+            {
+                // Si falla, usar color sólido
+                boton.BackgroundImage?.Dispose();
+                boton.BackgroundImage = null;
+            }
+        }
 
         private static void RedimensionarIcono(Button boton, IconChar icono, int nuevoTamano)
         {
@@ -167,14 +248,14 @@ namespace ProyectoAndina.Utils
                     ico.BackColor = Color.Transparent;
                     ico.IconChar = icono;
 
-                    // Color del icono según el estado del botón
                     if (boton.Enabled)
                     {
                         ico.IconColor = boton.ForeColor;
                     }
                     else
                     {
-                        ico.IconColor = Color.FromArgb(120, boton.ForeColor); // Más sutil cuando está deshabilitado
+                        // Icono más visible para botones deshabilitados
+                        ico.IconColor = Color.FromArgb(120, 120, 120); // Gris medio, más visible
                     }
 
                     ico.IconFont = IconFont.Auto;
@@ -189,14 +270,12 @@ namespace ProyectoAndina.Utils
                     }
                     bmp.MakeTransparent();
 
-                    // Liberar imagen anterior
                     boton.Image?.Dispose();
                     boton.Image = bmp;
                 }
             }
             catch (Exception ex)
             {
-                // Log del error si es necesario
                 System.Diagnostics.Debug.WriteLine($"Error redimensionando icono: {ex.Message}");
             }
         }

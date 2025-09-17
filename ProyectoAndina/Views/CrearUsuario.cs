@@ -27,7 +27,7 @@ namespace ProyectoAndina.Views
         private readonly ApiService _apiService;
         private ValidacionHelper validador;
         private Form _formularioPadre;
-        public CrearUsuario(Form formularioPadre)
+        public CrearUsuario(Form formularioPadre, String cedula)
         {
             // Config típica de diálogo modal
             this.FormBorderStyle = FormBorderStyle.FixedDialog;
@@ -47,7 +47,7 @@ namespace ProyectoAndina.Views
             _formularioPadre = formularioPadre;
             validador = new ValidacionHelper(this);
             ConfigurarValidacion();
-
+            textBox_cedula.Text = cedula;
             this.Paint += CrearUsuarioForm_Paint;
         }
         private void ConfigurarValidacion()
