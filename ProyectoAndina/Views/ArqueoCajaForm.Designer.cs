@@ -609,18 +609,18 @@
             comboBox_cajas.Anchor = AnchorStyles.None;
             comboBox_cajas.Font = new Font("Segoe UI", 16.2F, FontStyle.Regular, GraphicsUnit.Point, 0);
             comboBox_cajas.FormattingEnabled = true;
-            comboBox_cajas.Location = new Point(96, 49);
+            comboBox_cajas.Location = new Point(36, 49);
             comboBox_cajas.Name = "comboBox_cajas";
-            comboBox_cajas.Size = new Size(178, 45);
+            comboBox_cajas.Size = new Size(298, 45);
             comboBox_cajas.TabIndex = 82;
             // 
             // textBox_descripcion
             // 
             textBox_descripcion.Anchor = AnchorStyles.None;
             textBox_descripcion.Font = new Font("Segoe UI", 16.2F);
-            textBox_descripcion.Location = new Point(96, 141);
+            textBox_descripcion.Location = new Point(36, 141);
             textBox_descripcion.Name = "textBox_descripcion";
-            textBox_descripcion.Size = new Size(178, 43);
+            textBox_descripcion.Size = new Size(298, 43);
             textBox_descripcion.TabIndex = 102;
             textBox_descripcion.Click += textBox_descripcion_Click;
             // 
@@ -813,6 +813,7 @@
             textBox_total_en_caja.TabIndex = 80;
             textBox_total_en_caja.Click += textBox_total_en_caja_Click;
             textBox_total_en_caja.TextChanged += textBox_total_en_caja_Leave;
+            textBox_total_en_caja.KeyPress += textBox_saldo_inicial_KeyPress;
             textBox_total_en_caja.Leave += textBox_total_en_caja_Leave;
             // 
             // panel_valor_apertura
@@ -844,11 +845,12 @@
             // 
             textBox_valor_apertura.Anchor = AnchorStyles.Bottom;
             textBox_valor_apertura.Font = new Font("Segoe UI", 16.2F);
-            textBox_valor_apertura.Location = new Point(85, 58);
+            textBox_valor_apertura.Location = new Point(76, 58);
             textBox_valor_apertura.Name = "textBox_valor_apertura";
-            textBox_valor_apertura.Size = new Size(207, 43);
+            textBox_valor_apertura.Size = new Size(224, 43);
             textBox_valor_apertura.TabIndex = 84;
             textBox_valor_apertura.Click += textBox_valor_apertura_Click;
+            textBox_valor_apertura.KeyPress += textBox_saldo_inicial_KeyPress;
             // 
             // label_valor_apertura
             // 

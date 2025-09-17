@@ -115,11 +115,11 @@
             // 
             label_titulo_modulos.Anchor = AnchorStyles.Left | AnchorStyles.Right;
             label_titulo_modulos.AutoSize = true;
-            label_titulo_modulos.Font = new Font("Segoe UI", 16F, FontStyle.Bold);
+            label_titulo_modulos.Font = new Font("Segoe UI", 28.2F, FontStyle.Bold, GraphicsUnit.Point, 0);
             label_titulo_modulos.ForeColor = Color.FromArgb(30, 60, 120);
-            label_titulo_modulos.Location = new Point(286, 27);
+            label_titulo_modulos.Location = new Point(286, 14);
             label_titulo_modulos.Name = "label_titulo_modulos";
-            label_titulo_modulos.Size = new Size(561, 37);
+            label_titulo_modulos.Size = new Size(561, 62);
             label_titulo_modulos.TabIndex = 13;
             label_titulo_modulos.Text = "Módulos del sistema";
             label_titulo_modulos.TextAlign = ContentAlignment.MiddleCenter;
@@ -178,9 +178,10 @@
             // 
             label_rol.Anchor = AnchorStyles.None;
             label_rol.AutoSize = true;
-            label_rol.Location = new Point(96, 25);
+            label_rol.Font = new Font("Segoe UI", 13.8F);
+            label_rol.Location = new Point(105, 21);
             label_rol.Name = "label_rol";
-            label_rol.Size = new Size(34, 20);
+            label_rol.Size = new Size(51, 31);
             label_rol.TabIndex = 20;
             label_rol.Text = "Rol:";
             // 
@@ -193,10 +194,10 @@
             iconPictureBox_rol.IconChar = FontAwesome.Sharp.IconChar.UserShield;
             iconPictureBox_rol.IconColor = SystemColors.ControlText;
             iconPictureBox_rol.IconFont = FontAwesome.Sharp.IconFont.Auto;
-            iconPictureBox_rol.IconSize = 38;
-            iconPictureBox_rol.Location = new Point(40, 16);
+            iconPictureBox_rol.IconSize = 64;
+            iconPictureBox_rol.Location = new Point(12, 3);
             iconPictureBox_rol.Name = "iconPictureBox_rol";
-            iconPictureBox_rol.Size = new Size(39, 38);
+            iconPictureBox_rol.Size = new Size(64, 64);
             iconPictureBox_rol.TabIndex = 74;
             iconPictureBox_rol.TabStop = false;
             // 
@@ -215,11 +216,13 @@
             // 
             label_persona_logueada.Anchor = AnchorStyles.None;
             label_persona_logueada.AutoSize = true;
-            label_persona_logueada.Location = new Point(114, 25);
+            label_persona_logueada.Font = new Font("Segoe UI", 13.8F);
+            label_persona_logueada.Location = new Point(185, 21);
             label_persona_logueada.Name = "label_persona_logueada";
-            label_persona_logueada.Size = new Size(86, 20);
+            label_persona_logueada.Size = new Size(132, 31);
             label_persona_logueada.TabIndex = 16;
             label_persona_logueada.Text = "Bienvenido:";
+            label_persona_logueada.Click += label_persona_logueada_Click;
             // 
             // iconPictureBox_usuario
             // 
@@ -230,10 +233,10 @@
             iconPictureBox_usuario.IconChar = FontAwesome.Sharp.IconChar.UserCircle;
             iconPictureBox_usuario.IconColor = SystemColors.ControlText;
             iconPictureBox_usuario.IconFont = FontAwesome.Sharp.IconFont.Auto;
-            iconPictureBox_usuario.IconSize = 38;
-            iconPictureBox_usuario.Location = new Point(42, 16);
+            iconPictureBox_usuario.IconSize = 70;
+            iconPictureBox_usuario.Location = new Point(81, -3);
             iconPictureBox_usuario.Name = "iconPictureBox_usuario";
-            iconPictureBox_usuario.Size = new Size(39, 38);
+            iconPictureBox_usuario.Size = new Size(84, 70);
             iconPictureBox_usuario.TabIndex = 73;
             iconPictureBox_usuario.TabStop = false;
             // 

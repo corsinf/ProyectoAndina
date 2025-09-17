@@ -53,8 +53,8 @@ namespace ProyectoAndina.Views
         private void ConfigurarValidacion()
         {
             validador = new ValidacionHelper(this);
-            validador.AgregarControlRequerido(textBox_pri_nombre, "El campo nombre es requerido");
-            validador.AgregarControlRequerido(textBox_pri_apellido, "El campo epllido es requerido");
+            validador.AgregarControlRequerido(textBox_cedula, "El campo cédula es requerido");
+            validador.AgregarControlRequerido(textBox_nombre_completo, "El campo nombre es requerido");
             validador.AgregarControlRequerido(textBox_telefono, "El campo telefono es requerido");
             validador.AgregarControlRequerido(textBox_correo, "El campo correo es requerido");
             validador.AgregarControlRequerido(textBox_direccion, "El campo dirección es requerido");
@@ -79,8 +79,7 @@ namespace ProyectoAndina.Views
             {
                 var persona = new PersonaApiM
                 {
-                    primer_nombre = textBox_pri_nombre.Text.Trim(),
-                    primer_apellido = textBox_pri_apellido.Text.Trim(),
+                    primer_nombre = textBox_nombre_completo.Text.Trim(),
                     cedula = textBox_cedula.Text.Trim(),
                     correo = textBox_correo.Text.Trim(),
                     telefono_1 = textBox_telefono?.Text.Trim() ?? "",
@@ -202,10 +201,7 @@ namespace ProyectoAndina.Views
             TecladoHelper.MostrarTeclado();
         }
 
-        private void textBox_pri_apellido_Click(object sender, EventArgs e)
-        {
-            TecladoHelper.MostrarTeclado();
-        }
+       
 
         private void textBox_correo_Click(object sender, EventArgs e)
         {

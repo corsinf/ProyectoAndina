@@ -47,12 +47,13 @@ namespace ProyectoAndina.Views
 
         private async void button_realizar_transaccion_Click(object sender, EventArgs e)
         {
-            if (sacarTipoPago() == 0) {
+            if (sacarTipoPago() == 0)
+            {
                 StylesAlertas.MostrarAlerta(this, "Seleccionar tipo de pago", "¡Error!", TipoAlerta.Error);
                 return;
 
             }
-            
+
             string valorEntregadoEncerado = textBox_val_entregado.Text.Trim();
             string valorCambioEncerado = label_valor_a_cobrar.Text.Trim();
 
@@ -687,6 +688,42 @@ namespace ProyectoAndina.Views
         private void tableLayoutPanel1_Paint(object sender, PaintEventArgs e)
         {
 
+        }
+
+        private void textBox_val_entregado_KeyPress(object sender, KeyPressEventArgs e)
+        {
+            TextBox txt = sender as TextBox;
+
+            // Permitir control (borrar, enter, etc.)
+            if (char.IsControl(e.KeyChar))
+                return;
+
+            // Permitir solo dígitos y un punto
+            if (!char.IsDigit(e.KeyChar) && e.KeyChar != '.')
+            {
+                e.Handled = true;
+                return;
+            }
+
+            // Solo un punto decimal
+            if (e.KeyChar == '.' && txt.Text.Contains('.'))
+            {
+                e.Handled = true;
+                return;
+            }
+
+            // Validar máximo 2 decimales
+            if (char.IsDigit(e.KeyChar) && txt.Text.Contains("."))
+            {
+                int indexPunto = txt.Text.IndexOf('.');
+                string decimales = txt.Text.Substring(indexPunto + 1);
+
+                // Si ya tiene 2 decimales, bloquear más
+                if (decimales.Length >= 2 && txt.SelectionStart > indexPunto)
+                {
+                    e.Handled = true;
+                }
+            }
         }
     }
 }

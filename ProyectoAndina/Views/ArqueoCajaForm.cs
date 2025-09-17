@@ -46,7 +46,6 @@ namespace ProyectoAndina.Views
             StyleContenedores.EstilizarTableLayout(tableLayoutPanel_faltante, Color.Red);
             StyleContenedores.EstilizarTableLayout(tableLayoutPanel_sobrante, Color.Orange);
             StyleContenedores.EstilizarTableLayout(tableLayoutPanel_transacciones, Color.FromArgb(0, 148, 144));
-            StyleContenedores.EstilizarTableLayout(tableLayoutPanel_configuracion_complementaria, Color.FromArgb(0, 148, 144));
 
 
             _AperturaCajaController = new ArqueoCajaController();
@@ -314,10 +313,11 @@ namespace ProyectoAndina.Views
                 denominacionesdinero.StartPosition = FormStartPosition.CenterParent;
                 denominacionesdinero.TopMost = true;
 
-                var result = denominacionesdinero.ShowDialog(this); 
+                var result = denominacionesdinero.ShowDialog(this);
 
-                if (result == DialogResult.OK)                    
+                if (result == DialogResult.OK)
                 {
+                    textBox_total_en_caja.Enabled = false;
                     actulizarCamposCierreCaja();
                 }
             }
@@ -417,12 +417,11 @@ namespace ProyectoAndina.Views
 
                         if (result == DialogResult.OK)     // 2) Evaluar resultado después de ShowDialog
                         {
-                            panel_cierre.Dock = DockStyle.Fill;
-                            panel_apertura.Visible = false;
-                            panel_valor_cierre.Dock = DockStyle.Fill;
-                            panel_valor_cierre.Visible = true;
-                            tableLayoutPanel_transacciones.Visible = true;
-                            button_apertura_de_caja.Text = "Cerrar";
+                            TecladoHelper.CerrarTeclado();
+                            var MenuPrincipalForm = new MenuPrincipalForm();
+                            this.Hide();                 // Opcional: ocultas la ventana actual
+                            MenuPrincipalForm.ShowDialog();  // Bloquea hasta que RegistroForm se cierre
+                            this.Close();
                         }
                     }
 
@@ -557,16 +556,37 @@ namespace ProyectoAndina.Views
         }
         private void textBox_saldo_inicial_KeyPress(object sender, KeyPressEventArgs e)
         {
-            // Permite dígitos, retroceso y punto decimal
-            if (!char.IsControl(e.KeyChar) && !char.IsDigit(e.KeyChar) && e.KeyChar != '.')
+            TextBox txt = sender as TextBox;
+
+            // Permitir control (borrar, enter, etc.)
+            if (char.IsControl(e.KeyChar))
+                return;
+
+            // Permitir solo dígitos y un punto
+            if (!char.IsDigit(e.KeyChar) && e.KeyChar != '.')
             {
                 e.Handled = true;
+                return;
             }
 
             // Solo un punto decimal
-            if (e.KeyChar == '.' && (sender as TextBox).Text.Contains('.'))
+            if (e.KeyChar == '.' && txt.Text.Contains('.'))
             {
                 e.Handled = true;
+                return;
+            }
+
+            // Validar máximo 2 decimales
+            if (char.IsDigit(e.KeyChar) && txt.Text.Contains("."))
+            {
+                int indexPunto = txt.Text.IndexOf('.');
+                string decimales = txt.Text.Substring(indexPunto + 1);
+
+                // Si ya tiene 2 decimales, bloquear más
+                if (decimales.Length >= 2 && txt.SelectionStart > indexPunto)
+                {
+                    e.Handled = true;
+                }
             }
         }
 

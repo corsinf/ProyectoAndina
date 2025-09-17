@@ -13,7 +13,7 @@ using static ProyectoAndina.Utils.StylesAlertas;
 
 namespace ProyectoAndina.Views
 {
-    public partial class MenuPrincipalForm : KioskForm
+    public partial class MenuPrincipalForm : Form
     {
         private readonly ArqueoCajaController _ArqueoCajaController;
         private readonly ArqueoBilletesController _ArqueoBilletesController;
@@ -96,7 +96,7 @@ namespace ProyectoAndina.Views
             this.Close();
         }
 
-       
+
 
         private void tableLayoutPanel_transacciones_Click(object sender, EventArgs e)
         {
@@ -153,11 +153,35 @@ namespace ProyectoAndina.Views
 
         private void tableLayoutPanel_admin_Click(object sender, EventArgs e)
         {
-            TecladoHelper.CerrarTeclado();
-            var AdministracionFrom = new AdministracionFrom();
-            this.Hide();                 // Opcional: ocultas la ventana actual
-            AdministracionFrom.ShowDialog();  // Bloquea hasta que RegistroForm se cierre
-            this.Close();
+            var rolPersonaList = _PersonaRolController.ObtenerPersonaRolId(SessionUser.id_persona_rol);
+            if (rolPersonaList != null)
+            {
+                var rolPersona = rolPersonaList; // Tomamos el primero
+                var rol = _RolController.ObtenerRolPorId(rolPersona.RolId);
+
+                if (rol != null)
+                {
+                    if (rol.Nombre == "admin" || rol.RolId == 1)
+                    {
+                        TecladoHelper.CerrarTeclado();
+                        var AdministracionFrom = new AdministracionFrom();
+                        this.Hide();                 // Opcional: ocultas la ventana actual
+                        AdministracionFrom.ShowDialog();  // Bloquea hasta que RegistroForm se cierre
+                        this.Close();
+                    }
+
+                    if (rol.Nombre == "cajero" || rol.RolId == 2)
+                    {
+                        StylesAlertas.MostrarAlerta(this, "No puede acceder a este módulo", "¡Error!", TipoAlerta.Error);
+                    }
+                }
+            }
+                 
+        }
+
+        private void label_persona_logueada_Click(object sender, EventArgs e)
+        {
+
         }
     }
 }
