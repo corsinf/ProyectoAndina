@@ -66,7 +66,13 @@ namespace ProyectoAndina.Views
         }
         private async void button_agregar_usuario_Click(object sender, EventArgs e)
         {
+            string cedula = textBox_cedula.Text.Trim();
+            var usuarioEncontrado = _PersonaController.ObtenerPorCedula(cedula);
 
+            if (usuarioEncontrado != null)
+            {
+                StylesAlertas.MostrarAlerta(this, "Usuario ya registrado con esa cédula", "¡Error!", TipoAlerta.Error);
+            }
             //revisar sobre persona y rol
             if (!validador.ValidarTodosLosControles())
             {

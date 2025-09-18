@@ -88,7 +88,7 @@
             textBox_cedula.Location = new Point(27, 208);
             textBox_cedula.Name = "textBox_cedula";
             textBox_cedula.Size = new Size(304, 43);
-            textBox_cedula.TabIndex = 26;
+            textBox_cedula.TabIndex = 1;
             textBox_cedula.Click += textBox_cedula_Click;
             // 
             // label_cedula
@@ -107,7 +107,7 @@
             textBox_correo.Location = new Point(27, 331);
             textBox_correo.Name = "textBox_correo";
             textBox_correo.Size = new Size(304, 43);
-            textBox_correo.TabIndex = 24;
+            textBox_correo.TabIndex = 3;
             textBox_correo.Click += textBox_correo_Click;
             // 
             // label_gmail
@@ -126,7 +126,7 @@
             textBox_direccion.Location = new Point(390, 331);
             textBox_direccion.Name = "textBox_direccion";
             textBox_direccion.Size = new Size(304, 43);
-            textBox_direccion.TabIndex = 22;
+            textBox_direccion.TabIndex = 4;
             textBox_direccion.Click += textBox_direccion_Click;
             // 
             // label_direccion
@@ -145,7 +145,7 @@
             textBox_telefono.Location = new Point(390, 208);
             textBox_telefono.Name = "textBox_telefono";
             textBox_telefono.Size = new Size(304, 43);
-            textBox_telefono.TabIndex = 20;
+            textBox_telefono.TabIndex = 2;
             textBox_telefono.Click += textBox_telefono_Click;
             // 
             // label_telefono
@@ -164,7 +164,7 @@
             textBox_nombre_completo.Location = new Point(27, 83);
             textBox_nombre_completo.Name = "textBox_nombre_completo";
             textBox_nombre_completo.Size = new Size(667, 43);
-            textBox_nombre_completo.TabIndex = 10;
+            textBox_nombre_completo.TabIndex = 0;
             textBox_nombre_completo.Click += textBox_pri_nombre_Click;
             // 
             // label_nombre
@@ -205,7 +205,7 @@
             button_agregar_usuario.Location = new Point(262, 3);
             button_agregar_usuario.Name = "button_agregar_usuario";
             button_agregar_usuario.Size = new Size(253, 121);
-            button_agregar_usuario.TabIndex = 27;
+            button_agregar_usuario.TabIndex = 5;
             button_agregar_usuario.Text = "Accion";
             button_agregar_usuario.UseVisualStyleBackColor = false;
             button_agregar_usuario.Click += button_agregar_usuario_Click;

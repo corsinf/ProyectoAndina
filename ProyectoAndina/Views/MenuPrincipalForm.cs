@@ -13,7 +13,7 @@ using static ProyectoAndina.Utils.StylesAlertas;
 
 namespace ProyectoAndina.Views
 {
-    public partial class MenuPrincipalForm : Form
+    public partial class MenuPrincipalForm : KioskForm
     {
         private readonly ArqueoCajaController _ArqueoCajaController;
         private readonly ArqueoBilletesController _ArqueoBilletesController;
@@ -90,9 +90,9 @@ namespace ProyectoAndina.Views
         private void button_cerrar_session_Click(object sender, EventArgs e)
         {
             TecladoHelper.CerrarTeclado();
-            var LoginForm = new LoginForm();
+            var NuevoLoginForm = new NuevoLoginForm();
             this.Hide();                 // Opcional: ocultas la ventana actual
-            LoginForm.ShowDialog();  // Bloquea hasta que RegistroForm se cierre
+            NuevoLoginForm.ShowDialog();  // Bloquea hasta que RegistroForm se cierre
             this.Close();
         }
 

@@ -298,7 +298,7 @@
             // pictureBox_asignar_rol
             // 
             pictureBox_asignar_rol.Anchor = AnchorStyles.None;
-            pictureBox_asignar_rol.Image = Properties.Resources.logo_persona_rol;
+            pictureBox_asignar_rol.Image = Properties.Resources.authentication;
             pictureBox_asignar_rol.Location = new Point(37, 33);
             pictureBox_asignar_rol.Name = "pictureBox_asignar_rol";
             pictureBox_asignar_rol.Size = new Size(191, 168);
@@ -349,7 +349,7 @@
             // pictureBox_roles
             // 
             pictureBox_roles.Anchor = AnchorStyles.None;
-            pictureBox_roles.Image = Properties.Resources.logo_rol;
+            pictureBox_roles.Image = Properties.Resources.identity_card;
             pictureBox_roles.Location = new Point(40, 32);
             pictureBox_roles.Name = "pictureBox_roles";
             pictureBox_roles.Size = new Size(191, 168);
@@ -387,7 +387,7 @@
             // pictureBox_personas
             // 
             pictureBox_personas.Anchor = AnchorStyles.None;
-            pictureBox_personas.Image = Properties.Resources.logo_persona;
+            pictureBox_personas.Image = Properties.Resources.team;
             pictureBox_personas.Location = new Point(40, 35);
             pictureBox_personas.Name = "pictureBox_personas";
             pictureBox_personas.Size = new Size(191, 168);

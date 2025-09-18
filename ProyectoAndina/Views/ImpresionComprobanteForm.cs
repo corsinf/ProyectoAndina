@@ -90,6 +90,7 @@ namespace ProyectoAndina.Views
                 {
                     var impresor = new DatosImpresion();
                     impresor.ImprimirRecibo(reciboActual, ConfiguracionImpresora.ImpresoraSeleccionada);
+                    AbrirCajon(ConfiguracionImpresora.ImpresoraSeleccionada);
                 });
 
                 this.DialogResult = DialogResult.OK; // cierra ShowDialog con OK
@@ -107,5 +108,32 @@ namespace ProyectoAndina.Views
                 button_imprimir.Enabled = true;
             }
         }
+
+        private void AbrirCajon(string nombreImpresora)
+        {
+            try
+            {
+                // Comando ESC/POS abrir cajón
+                byte[] abrirCajon = new byte[] { 0x1B, 0x70, 0x00, 0x40, 0x50 };
+
+                using (var print = new System.Drawing.Printing.PrintDocument())
+                {
+                    print.PrinterSettings.PrinterName = nombreImpresora;
+                    print.PrintPage += (s, e) =>
+                    {
+                        e.Graphics.DrawString("", new Font("Arial", 1), Brushes.Black, new PointF(0, 0));
+                        e.Graphics.DrawString("", new Font("Arial", 1), Brushes.Black, new PointF(0, 0));
+                    };
+
+                    // Enviar comando directo a la impresora
+                    RawPrinterHelper.SendBytesToPrinter(nombreImpresora, abrirCajon, abrirCajon.Length);
+                }
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show($"Error al abrir cajón: {ex.Message}");
+            }
+        }
+
     }
 }

@@ -125,6 +125,9 @@
     <value>..\Resources\arqueo_caja.gif;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
     <comment>arqueo_caja</comment>
   </data>
+  <data name="authentication" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\authentication.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
   <data name="caja_registradora" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\caja_registradora.gif;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
     <comment>caja_registradora</comment>
@@ -132,6 +135,9 @@
   <data name="dolares_monedas" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\dolares_monedas.jpg;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
     <comment>dolares_monedas</comment>
+  </data>
+  <data name="identity-card" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\identity-card.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
   <data name="Logotipo_blanco_negro" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\Logotipo_blanco_negro.gif;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
@@ -175,5 +181,8 @@
   </data>
   <data name="registration" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\registration.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="team" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\team.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
 </root>

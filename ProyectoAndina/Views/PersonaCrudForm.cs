@@ -109,11 +109,9 @@ namespace ProyectoAndina.Views
                 textBox_correo.Text = persona.correo ?? "";
                 textBox_telefono.Text = persona.telefono_1 ?? "";
                 textBox_direccion.Text = persona.direccion ?? "";
-                textBox_fecha_nacimiento.Text = persona.fecha_nacimiento.ToString() ?? "";
                 textBox_contrasenia.Text = persona.password ?? "";
 
                 // Fecha de nacimiento
-                textBox_fecha_nacimiento.Text = persona.fecha_nacimiento?.ToString("yyyy-MM-dd") ?? "";
 
                 if (comboBox_sexo.Items.Contains(persona.sexo))
                     comboBox_sexo.SelectedItem = persona.sexo;
@@ -171,6 +169,13 @@ namespace ProyectoAndina.Views
 
         private void button_agregar_persona_Click(object? sender, EventArgs e)
         {
+
+            string cedula = textBox_cedula.Text.Trim();
+            var usuarioEncontrado = _PersonaController.ObtenerPorCedula(cedula);
+
+            if (usuarioEncontrado != null) {
+                StylesAlertas.MostrarAlerta(this, "Usuario ya registrado con esa cédula", "¡Error!", TipoAlerta.Error);
+            }
             if (!validador.ValidarTodosLosControles())
             {
                 validador.MostrarMensajeValidacion();
@@ -194,7 +199,7 @@ namespace ProyectoAndina.Views
                 sexo = comboBox_sexo?.Text ?? "",
                 estado_civil = comboBox_estado_civil?.Text ?? "",
                 nacionalidad = comboBox_nacionalidad?.Text ?? "",
-                fecha_nacimiento = DateTime.TryParse(textBox_fecha_nacimiento?.Text.Trim(), out var fecha) ? fecha : (DateTime?)null,
+                fecha_nacimiento = DateTime.Now,
                 estado = true,
                 fecha_creacion = DateTime.Now,
                 observaciones = "Creado desde la aplicacion de escritorio"

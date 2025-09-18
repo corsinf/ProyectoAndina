@@ -128,7 +128,7 @@
             // iconButton_regresar
             // 
             iconButton_regresar.Anchor = AnchorStyles.Top | AnchorStyles.Bottom;
-            iconButton_regresar.BackColor = Color.FromArgb(41, 128, 185);
+            iconButton_regresar.BackColor = Color.FromArgb(255, 128, 128);
             iconButton_regresar.Cursor = Cursors.Hand;
             iconButton_regresar.FlatAppearance.BorderSize = 0;
             iconButton_regresar.FlatStyle = FlatStyle.Flat;

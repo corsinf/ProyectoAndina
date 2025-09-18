@@ -11,26 +11,26 @@ namespace ProyectoAndina.Views
     //public partial class LoginForm : Form
 
     /* Para habilitar lo del kiosko  */
-    public partial class LoginForm : KioskForm
+    public partial class LoginForm : Form
 
     {
         private readonly LoginController _loginController;
         private readonly PersonaRolController _PersonaRolController;
-
-        // Controles
-        private Panel panelPrincipal;
         private Panel panelLogo;
+        private PictureBox pictureBoxLogo;
         private Panel panelLogin;
         private Panel panelFormulario;
         private Label lblTitulo;
         private Label lblSubtitulo;
         private Label lblCedula;
-        private Label lblPassword;
         private TextBox txtCorreo;
+        private Label lblPassword;
         private TextBox txtPassword;
         private Button btnLogin;
-        private PictureBox pictureBoxLogo;
         private Label lblMensaje;
+
+        // Controles
+        private Panel panelPrincipal;
 
 
         public LoginForm()
@@ -68,19 +68,19 @@ namespace ProyectoAndina.Views
             // 
             panelPrincipal.Controls.Add(panelLogo);
             panelPrincipal.Controls.Add(panelLogin);
-            panelPrincipal.Location = new Point(15, 15);
+            panelPrincipal.Location = new Point(0, 0);
             panelPrincipal.Name = "panelPrincipal";
-            panelPrincipal.Size = new Size(987, 627);
+            panelPrincipal.Size = new Size(1021, 668);
             panelPrincipal.TabIndex = 0;
             // 
             // panelLogo
             // 
             panelLogo.BackColor = Color.FromArgb(0, 71, 80);
             panelLogo.Controls.Add(pictureBoxLogo);
-            panelLogo.Location = new Point(0, 0);
+            panelLogo.Location = new Point(17, 21);
             panelLogo.Name = "panelLogo";
             panelLogo.Size = new Size(500, 627);
-            panelLogo.TabIndex = 0;
+            panelLogo.TabIndex = 2;
             // 
             // pictureBoxLogo
             // 
@@ -91,16 +91,15 @@ namespace ProyectoAndina.Views
             pictureBoxLogo.SizeMode = PictureBoxSizeMode.Zoom;
             pictureBoxLogo.TabIndex = 0;
             pictureBoxLogo.TabStop = false;
-
             // 
             // panelLogin
             // 
             panelLogin.BackColor = Color.FromArgb(248, 249, 250);
             panelLogin.Controls.Add(panelFormulario);
-            panelLogin.Location = new Point(500, 0);
+            panelLogin.Location = new Point(517, 21);
             panelLogin.Name = "panelLogin";
             panelLogin.Size = new Size(487, 627);
-            panelLogin.TabIndex = 1;
+            panelLogin.TabIndex = 3;
             // 
             // panelFormulario
             // 
@@ -115,7 +114,7 @@ namespace ProyectoAndina.Views
             panelFormulario.Controls.Add(lblMensaje);
             panelFormulario.Location = new Point(0, 0);
             panelFormulario.Name = "panelFormulario";
-            panelFormulario.Size = new Size(484, 624);
+            panelFormulario.Size = new Size(487, 627);
             panelFormulario.TabIndex = 0;
             // 
             // lblTitulo
@@ -148,9 +147,8 @@ namespace ProyectoAndina.Views
             // 
             txtCorreo.Location = new Point(94, 215);
             txtCorreo.Name = "txtCorreo";
-            txtCorreo.Size = new Size(300, 23);
+            txtCorreo.Size = new Size(300, 27);
             txtCorreo.TabIndex = 3;
-            txtCorreo.Click += txtCorreo_Click;
             // 
             // lblPassword
             // 
@@ -165,9 +163,8 @@ namespace ProyectoAndina.Views
             txtPassword.Location = new Point(94, 306);
             txtPassword.Name = "txtPassword";
             txtPassword.PasswordChar = '●';
-            txtPassword.Size = new Size(300, 23);
+            txtPassword.Size = new Size(300, 27);
             txtPassword.TabIndex = 5;
-            txtPassword.Click += txtPassword_Click;
             // 
             // btnLogin
             // 
@@ -176,7 +173,6 @@ namespace ProyectoAndina.Views
             btnLogin.Size = new Size(300, 59);
             btnLogin.TabIndex = 6;
             btnLogin.Text = "INICIAR SESIÓN";
-            btnLogin.Click += BtnLogin_Click;
             // 
             // lblMensaje
             // 
@@ -216,7 +212,10 @@ namespace ProyectoAndina.Views
             StyleManager.ConfigurarFormPrincipal(this, "Sistema Andina - Iniciar Sesión");
             this.BackColor = StyleManager.Colors.GrisClaro;
 
-            // Configurar panel principal con sombra
+            // Configurar panel principal con sombra y borde
+            panelPrincipal.Paint += PanelPrincipal_Paint;
+
+            // Configurar panel principal (sombra extra opcional)
             StyleManager.ConfigurarPanel(panelFormulario, true);
 
             // Configurar labels con estilos UASB
@@ -224,7 +223,6 @@ namespace ProyectoAndina.Views
             StyleManager.ConfigurarLabel(lblSubtitulo, TipoLabel.CuerpoSmall);
             StyleManager.ConfigurarLabel(lblCedula, TipoLabel.Subtitulo);
             StyleManager.ConfigurarLabel(lblPassword, TipoLabel.Subtitulo);
-
 
             // Configurar TextBoxes con estilo UASB
             StyleManager.ConfigurarTextBox(txtCorreo, "ejemplo@correo.com");
@@ -236,26 +234,23 @@ namespace ProyectoAndina.Views
             // Configurar el panel con logo
             ConfigurarPanelLogo();
 
-            // Hacer responsive
+            // Eventos
             this.Resize += LoginForm_Resize;
-
-            // Configurar eventos adicionales
             ConfigurarEventos();
+        }
 
-            // Sombra para panel principal (mantener tu estilo original mejorado)
-            panelPrincipal.Paint += (s, e) =>
+        private void PanelPrincipal_Paint(object sender, PaintEventArgs e)
+        {
+            // Sombra suave
+            using (var shadowBrush = new SolidBrush(Color.FromArgb(50, 0, 0, 0)))
             {
-                // Sombra más suave
-                using (var shadowBrush = new SolidBrush(Color.FromArgb(50, 0, 0, 0)))
-                {
-                    e.Graphics.FillRectangle(shadowBrush, 3, 3, panelPrincipal.Width, panelPrincipal.Height);
-                }
-                // Borde
-                using (var borderPen = new Pen(StyleManager.Colors.GrisMedio, 1))
-                {
-                    e.Graphics.DrawRectangle(borderPen, 0, 0, panelPrincipal.Width - 1, panelPrincipal.Height - 1);
-                }
-            };
+                e.Graphics.FillRectangle(shadowBrush, 3, 3, panelPrincipal.Width, panelPrincipal.Height);
+            }
+            // Borde
+            using (var borderPen = new Pen(StyleManager.Colors.GrisMedio, 1))
+            {
+                e.Graphics.DrawRectangle(borderPen, 0, 0, panelPrincipal.Width - 1, panelPrincipal.Height - 1);
+            }
         }
 
         private void ConfigurarPanelLogo()
@@ -277,9 +272,8 @@ namespace ProyectoAndina.Views
             pictureBoxLogo.Image = Properties.Resources.Logotipo_un_color; // 👈 tu logo aquí
             pictureBoxLogo.SizeMode = PictureBoxSizeMode.Zoom;
             pictureBoxLogo.BackColor = Color.Transparent;
-            pictureBoxLogo.Dock = DockStyle.Fill; // que ocupe todo el panel
+            pictureBoxLogo.Dock = DockStyle.Fill;
         }
-
 
         private void CentrarLogo()
         {
@@ -300,14 +294,16 @@ namespace ProyectoAndina.Views
                 if (e.KeyCode == Keys.Enter)
                 {
                     txtPassword.Focus();
+                    e.SuppressKeyPress = true; // evita el beep
                 }
             };
 
-            txtPassword.KeyPress += (s, e) =>
+            txtPassword.KeyDown += (s, e) =>
             {
-                if (e.KeyChar == (char)Keys.Enter)
+                if (e.KeyCode == Keys.Enter)
                 {
                     BtnLogin_Click(btnLogin, EventArgs.Empty);
+                    e.SuppressKeyPress = true;
                 }
             };
 
@@ -318,20 +314,24 @@ namespace ProyectoAndina.Views
 
         private void LoginForm_Resize(object sender, EventArgs e)
         {
-            // Mantener proporciones responsive
             if (panelPrincipal != null)
             {
-                int totalWidth = this.ClientSize.Width - 30; // Margen de 15 px cada lado
-                int totalHeight = this.ClientSize.Height - 30;
+                int margen = 15;
+                int totalWidth = this.ClientSize.Width - (margen * 2);
+                int totalHeight = this.ClientSize.Height - (margen * 2);
 
+                // Ajustar panel principal
                 panelPrincipal.Size = new Size(totalWidth, totalHeight);
+                panelPrincipal.Location = new Point(margen, margen);
 
-                // Ajustar paneles internos
+                // Paneles internos
                 panelLogo.Size = new Size(totalWidth / 2, totalHeight);
-                panelLogin.Location = new Point(totalWidth / 2, 0);
-                panelLogin.Size = new Size(totalWidth / 2, totalHeight);
+                panelLogo.Location = new Point(0, 0);
 
-                // Centrar panel de formulario
+                panelLogin.Size = new Size(totalWidth / 2, totalHeight);
+                panelLogin.Location = new Point(totalWidth / 2, 0);
+
+                // Centrar formulario dentro de panelLogin
                 if (panelFormulario != null)
                 {
                     panelFormulario.Location = new Point(
@@ -344,6 +344,7 @@ namespace ProyectoAndina.Views
                 CentrarLogo();
             }
         }
+
 
         private void BtnLogin_Click(object sender, EventArgs e)
         {
@@ -452,7 +453,7 @@ namespace ProyectoAndina.Views
         {
             base.OnLoad(e);
             // Activa el tap secreto sobre el logo
-            SetSecretExit(pictureBoxLogo, taps: 7, window: TimeSpan.FromSeconds(5));
+            //SetSecretExit(pictureBoxLogo, taps: 7, window: TimeSpan.FromSeconds(5));
             txtCorreo.Focus();
 
             //TecladoHelper.CerrarTeclado();

@@ -60,17 +60,17 @@
             label1 = new Label();
             panel_apertura = new Panel();
             tableLayoutPanel_configuracion_complementaria = new TableLayoutPanel();
-            tableLayoutPanel_campos = new TableLayoutPanel();
-            label_descripcion = new Label();
-            label_caja = new Label();
-            comboBox_cajas = new ComboBox();
-            textBox_descripcion = new TextBox();
             tableLayoutPanel3 = new TableLayoutPanel();
             tableLayoutPanel_config_turnos = new TableLayoutPanel();
             button_maniana = new Button();
             button_noche = new Button();
             button_tarde = new Button();
             label_turno = new Label();
+            tableLayoutPanel12 = new TableLayoutPanel();
+            label_descripcion = new Label();
+            textBox_descripcion = new TextBox();
+            label_caja = new Label();
+            comboBox_cajas = new ComboBox();
             panel2 = new Panel();
             panel_valor_cierre = new Panel();
             tableLayoutPanel9 = new TableLayoutPanel();
@@ -104,9 +104,9 @@
             ((System.ComponentModel.ISupportInitialize)iconPictureBox_sobrante).BeginInit();
             panel_apertura.SuspendLayout();
             tableLayoutPanel_configuracion_complementaria.SuspendLayout();
-            tableLayoutPanel_campos.SuspendLayout();
             tableLayoutPanel3.SuspendLayout();
             tableLayoutPanel_config_turnos.SuspendLayout();
+            tableLayoutPanel12.SuspendLayout();
             panel2.SuspendLayout();
             panel_valor_cierre.SuspendLayout();
             tableLayoutPanel9.SuspendLayout();
@@ -169,7 +169,8 @@
             // 
             // iconButton_regresar
             // 
-            iconButton_regresar.BackColor = Color.FromArgb(41, 128, 185);
+            iconButton_regresar.Anchor = AnchorStyles.None;
+            iconButton_regresar.BackColor = Color.FromArgb(255, 128, 128);
             iconButton_regresar.Cursor = Cursors.Hand;
             iconButton_regresar.FlatAppearance.BorderSize = 0;
             iconButton_regresar.FlatStyle = FlatStyle.Flat;
@@ -179,7 +180,7 @@
             iconButton_regresar.IconColor = Color.White;
             iconButton_regresar.IconFont = FontAwesome.Sharp.IconFont.Auto;
             iconButton_regresar.IconSize = 24;
-            iconButton_regresar.Location = new Point(3, 3);
+            iconButton_regresar.Location = new Point(60, 8);
             iconButton_regresar.Name = "iconButton_regresar";
             iconButton_regresar.Size = new Size(181, 61);
             iconButton_regresar.TabIndex = 50;
@@ -247,8 +248,8 @@
             tableLayoutPanel1.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 16F));
             tableLayoutPanel1.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 32F));
             tableLayoutPanel1.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 4F));
-            tableLayoutPanel1.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 32F));
-            tableLayoutPanel1.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 16F));
+            tableLayoutPanel1.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 32.67163F));
+            tableLayoutPanel1.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 15.4673281F));
             tableLayoutPanel1.Controls.Add(panel_contenedor, 3, 0);
             tableLayoutPanel1.Controls.Add(panel2, 1, 0);
             tableLayoutPanel1.Dock = DockStyle.Fill;
@@ -266,7 +267,7 @@
             panel_contenedor.Dock = DockStyle.Fill;
             panel_contenedor.Location = new Point(630, 3);
             panel_contenedor.Name = "panel_contenedor";
-            panel_contenedor.Size = new Size(380, 756);
+            panel_contenedor.Size = new Size(388, 756);
             panel_contenedor.TabIndex = 2;
             // 
             // panel_cierre
@@ -550,79 +551,17 @@
             // 
             tableLayoutPanel_configuracion_complementaria.ColumnCount = 1;
             tableLayoutPanel_configuracion_complementaria.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 100F));
-            tableLayoutPanel_configuracion_complementaria.Controls.Add(tableLayoutPanel_campos, 0, 1);
             tableLayoutPanel_configuracion_complementaria.Controls.Add(tableLayoutPanel3, 0, 0);
+            tableLayoutPanel_configuracion_complementaria.Controls.Add(tableLayoutPanel12, 0, 1);
             tableLayoutPanel_configuracion_complementaria.Dock = DockStyle.Fill;
             tableLayoutPanel_configuracion_complementaria.Location = new Point(0, 0);
             tableLayoutPanel_configuracion_complementaria.Name = "tableLayoutPanel_configuracion_complementaria";
-            tableLayoutPanel_configuracion_complementaria.RowCount = 2;
-            tableLayoutPanel_configuracion_complementaria.RowStyles.Add(new RowStyle(SizeType.Percent, 40.3812828F));
-            tableLayoutPanel_configuracion_complementaria.RowStyles.Add(new RowStyle(SizeType.Percent, 59.6187172F));
+            tableLayoutPanel_configuracion_complementaria.RowCount = 3;
+            tableLayoutPanel_configuracion_complementaria.RowStyles.Add(new RowStyle(SizeType.Percent, 33.3333321F));
+            tableLayoutPanel_configuracion_complementaria.RowStyles.Add(new RowStyle(SizeType.Percent, 33.3333321F));
+            tableLayoutPanel_configuracion_complementaria.RowStyles.Add(new RowStyle(SizeType.Percent, 33.3333321F));
             tableLayoutPanel_configuracion_complementaria.Size = new Size(377, 320);
             tableLayoutPanel_configuracion_complementaria.TabIndex = 7;
-            // 
-            // tableLayoutPanel_campos
-            // 
-            tableLayoutPanel_campos.Anchor = AnchorStyles.Top | AnchorStyles.Bottom | AnchorStyles.Left | AnchorStyles.Right;
-            tableLayoutPanel_campos.ColumnCount = 1;
-            tableLayoutPanel_campos.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 100F));
-            tableLayoutPanel_campos.Controls.Add(label_descripcion, 0, 2);
-            tableLayoutPanel_campos.Controls.Add(label_caja, 0, 0);
-            tableLayoutPanel_campos.Controls.Add(comboBox_cajas, 0, 1);
-            tableLayoutPanel_campos.Controls.Add(textBox_descripcion, 0, 3);
-            tableLayoutPanel_campos.Location = new Point(3, 132);
-            tableLayoutPanel_campos.Name = "tableLayoutPanel_campos";
-            tableLayoutPanel_campos.RowCount = 4;
-            tableLayoutPanel_campos.RowStyles.Add(new RowStyle(SizeType.Percent, 25F));
-            tableLayoutPanel_campos.RowStyles.Add(new RowStyle(SizeType.Percent, 25F));
-            tableLayoutPanel_campos.RowStyles.Add(new RowStyle(SizeType.Percent, 25F));
-            tableLayoutPanel_campos.RowStyles.Add(new RowStyle(SizeType.Percent, 25F));
-            tableLayoutPanel_campos.Size = new Size(371, 185);
-            tableLayoutPanel_campos.TabIndex = 86;
-            // 
-            // label_descripcion
-            // 
-            label_descripcion.Anchor = AnchorStyles.Left | AnchorStyles.Right;
-            label_descripcion.AutoSize = true;
-            label_descripcion.Font = new Font("Segoe UI", 16.2F, FontStyle.Bold, GraphicsUnit.Point, 0);
-            label_descripcion.Location = new Point(3, 96);
-            label_descripcion.Name = "label_descripcion";
-            label_descripcion.Size = new Size(365, 38);
-            label_descripcion.TabIndex = 103;
-            label_descripcion.Text = "Descripción:";
-            label_descripcion.TextAlign = ContentAlignment.MiddleCenter;
-            // 
-            // label_caja
-            // 
-            label_caja.Anchor = AnchorStyles.Left | AnchorStyles.Right;
-            label_caja.AutoSize = true;
-            label_caja.Font = new Font("Segoe UI", 16.2F, FontStyle.Bold);
-            label_caja.Location = new Point(3, 4);
-            label_caja.Name = "label_caja";
-            label_caja.Size = new Size(365, 38);
-            label_caja.TabIndex = 81;
-            label_caja.Text = "Caja: ";
-            label_caja.TextAlign = ContentAlignment.MiddleCenter;
-            // 
-            // comboBox_cajas
-            // 
-            comboBox_cajas.Anchor = AnchorStyles.None;
-            comboBox_cajas.Font = new Font("Segoe UI", 16.2F, FontStyle.Regular, GraphicsUnit.Point, 0);
-            comboBox_cajas.FormattingEnabled = true;
-            comboBox_cajas.Location = new Point(36, 49);
-            comboBox_cajas.Name = "comboBox_cajas";
-            comboBox_cajas.Size = new Size(298, 45);
-            comboBox_cajas.TabIndex = 82;
-            // 
-            // textBox_descripcion
-            // 
-            textBox_descripcion.Anchor = AnchorStyles.None;
-            textBox_descripcion.Font = new Font("Segoe UI", 16.2F);
-            textBox_descripcion.Location = new Point(36, 141);
-            textBox_descripcion.Name = "textBox_descripcion";
-            textBox_descripcion.Size = new Size(298, 43);
-            textBox_descripcion.TabIndex = 102;
-            textBox_descripcion.Click += textBox_descripcion_Click;
             // 
             // tableLayoutPanel3
             // 
@@ -636,7 +575,7 @@
             tableLayoutPanel3.RowCount = 2;
             tableLayoutPanel3.RowStyles.Add(new RowStyle(SizeType.Percent, 50F));
             tableLayoutPanel3.RowStyles.Add(new RowStyle(SizeType.Absolute, 143F));
-            tableLayoutPanel3.Size = new Size(371, 123);
+            tableLayoutPanel3.Size = new Size(371, 100);
             tableLayoutPanel3.TabIndex = 87;
             // 
             // tableLayoutPanel_config_turnos
@@ -651,7 +590,7 @@
             tableLayoutPanel_config_turnos.Controls.Add(button_noche, 4, 0);
             tableLayoutPanel_config_turnos.Controls.Add(button_tarde, 2, 0);
             tableLayoutPanel_config_turnos.Dock = DockStyle.Top;
-            tableLayoutPanel_config_turnos.Location = new Point(3, -17);
+            tableLayoutPanel_config_turnos.Location = new Point(3, -40);
             tableLayoutPanel_config_turnos.Name = "tableLayoutPanel_config_turnos";
             tableLayoutPanel_config_turnos.RowCount = 1;
             tableLayoutPanel_config_turnos.RowStyles.Add(new RowStyle(SizeType.Percent, 100F));
@@ -720,6 +659,68 @@
             label_turno.TabIndex = 102;
             label_turno.Text = "Turnos:";
             label_turno.TextAlign = ContentAlignment.MiddleCenter;
+            // 
+            // tableLayoutPanel12
+            // 
+            tableLayoutPanel12.ColumnCount = 2;
+            tableLayoutPanel12.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 50F));
+            tableLayoutPanel12.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 50F));
+            tableLayoutPanel12.Controls.Add(label_descripcion, 1, 0);
+            tableLayoutPanel12.Controls.Add(textBox_descripcion, 1, 1);
+            tableLayoutPanel12.Controls.Add(label_caja, 0, 0);
+            tableLayoutPanel12.Controls.Add(comboBox_cajas, 0, 1);
+            tableLayoutPanel12.Dock = DockStyle.Fill;
+            tableLayoutPanel12.Location = new Point(3, 109);
+            tableLayoutPanel12.Name = "tableLayoutPanel12";
+            tableLayoutPanel12.RowCount = 2;
+            tableLayoutPanel12.RowStyles.Add(new RowStyle(SizeType.Percent, 50F));
+            tableLayoutPanel12.RowStyles.Add(new RowStyle(SizeType.Absolute, 89F));
+            tableLayoutPanel12.Size = new Size(371, 100);
+            tableLayoutPanel12.TabIndex = 88;
+            // 
+            // label_descripcion
+            // 
+            label_descripcion.Anchor = AnchorStyles.Left | AnchorStyles.Right;
+            label_descripcion.AutoSize = true;
+            label_descripcion.Font = new Font("Segoe UI", 16.2F, FontStyle.Bold, GraphicsUnit.Point, 0);
+            label_descripcion.Location = new Point(188, 0);
+            label_descripcion.Name = "label_descripcion";
+            label_descripcion.Size = new Size(180, 11);
+            label_descripcion.TabIndex = 105;
+            label_descripcion.Text = "Descripción:";
+            label_descripcion.TextAlign = ContentAlignment.MiddleCenter;
+            // 
+            // textBox_descripcion
+            // 
+            textBox_descripcion.Anchor = AnchorStyles.None;
+            textBox_descripcion.Font = new Font("Segoe UI", 16.2F);
+            textBox_descripcion.Location = new Point(188, 34);
+            textBox_descripcion.Name = "textBox_descripcion";
+            textBox_descripcion.Size = new Size(180, 43);
+            textBox_descripcion.TabIndex = 104;
+            textBox_descripcion.Click += textBox_descripcion_Click;
+            // 
+            // label_caja
+            // 
+            label_caja.Anchor = AnchorStyles.Left | AnchorStyles.Right;
+            label_caja.AutoSize = true;
+            label_caja.Font = new Font("Segoe UI", 16.2F, FontStyle.Bold);
+            label_caja.Location = new Point(3, 0);
+            label_caja.Name = "label_caja";
+            label_caja.Size = new Size(179, 11);
+            label_caja.TabIndex = 83;
+            label_caja.Text = "Caja: ";
+            label_caja.TextAlign = ContentAlignment.MiddleCenter;
+            // 
+            // comboBox_cajas
+            // 
+            comboBox_cajas.Anchor = AnchorStyles.None;
+            comboBox_cajas.Font = new Font("Segoe UI", 16.2F, FontStyle.Regular, GraphicsUnit.Point, 0);
+            comboBox_cajas.FormattingEnabled = true;
+            comboBox_cajas.Location = new Point(3, 33);
+            comboBox_cajas.Name = "comboBox_cajas";
+            comboBox_cajas.Size = new Size(179, 45);
+            comboBox_cajas.TabIndex = 84;
             // 
             // panel2
             // 
@@ -938,11 +939,11 @@
             ((System.ComponentModel.ISupportInitialize)iconPictureBox_sobrante).EndInit();
             panel_apertura.ResumeLayout(false);
             tableLayoutPanel_configuracion_complementaria.ResumeLayout(false);
-            tableLayoutPanel_campos.ResumeLayout(false);
-            tableLayoutPanel_campos.PerformLayout();
             tableLayoutPanel3.ResumeLayout(false);
             tableLayoutPanel3.PerformLayout();
             tableLayoutPanel_config_turnos.ResumeLayout(false);
+            tableLayoutPanel12.ResumeLayout(false);
+            tableLayoutPanel12.PerformLayout();
             panel2.ResumeLayout(false);
             panel_valor_cierre.ResumeLayout(false);
             tableLayoutPanel9.ResumeLayout(false);
@@ -990,11 +991,6 @@
         private TableLayoutPanel tableLayoutPanel4;
         private Button button_valor_cierre;
         private TableLayoutPanel tableLayoutPanel_configuracion_complementaria;
-        private TableLayoutPanel tableLayoutPanel_campos;
-        private Label label_descripcion;
-        private Label label_caja;
-        private ComboBox comboBox_cajas;
-        private TextBox textBox_descripcion;
         private TableLayoutPanel tableLayoutPanel3;
         private TableLayoutPanel tableLayoutPanel_config_turnos;
         private Button button_maniana;
@@ -1018,5 +1014,10 @@
         private Label label2;
         private TableLayoutPanel tableLayoutPanel10;
         private Label label1;
+        private TableLayoutPanel tableLayoutPanel12;
+        private Label label_descripcion;
+        private TextBox textBox_descripcion;
+        private Label label_caja;
+        private ComboBox comboBox_cajas;
     }
 }

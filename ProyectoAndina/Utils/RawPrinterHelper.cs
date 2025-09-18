@@ -60,4 +60,34 @@ public class RawPrinterHelper
         Marshal.FreeCoTaskMem(pBytes);
         return dwWritten == dwCount;
     }
+    // 👇 Método que te faltaba bien declarado
+    public static bool SendBytesToPrinter(string printerName, byte[] pBytes, int dwCount)
+    {
+        IntPtr hPrinter;
+        DOCINFOA di = new DOCINFOA();
+        Int32 dwWritten;
+        IntPtr pUnmanagedBytes;
+
+        di.pDocName = "AbrirCajon";
+        di.pDataType = "RAW";
+
+        if (OpenPrinter(printerName.Normalize(), out hPrinter, IntPtr.Zero))
+        {
+            if (StartDocPrinter(hPrinter, 1, di))
+            {
+                if (StartPagePrinter(hPrinter))
+                {
+                    pUnmanagedBytes = Marshal.AllocCoTaskMem(dwCount);
+                    Marshal.Copy(pBytes, 0, pUnmanagedBytes, dwCount);
+                    WritePrinter(hPrinter, pUnmanagedBytes, dwCount, out dwWritten);
+                    Marshal.FreeCoTaskMem(pUnmanagedBytes);
+                    EndPagePrinter(hPrinter);
+                }
+                EndDocPrinter(hPrinter);
+            }
+            ClosePrinter(hPrinter);
+            return true;
+        }
+        return false;
+    }
 }
