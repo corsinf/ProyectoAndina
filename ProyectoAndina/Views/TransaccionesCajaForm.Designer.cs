@@ -39,8 +39,8 @@
             tableLayoutPanel_datos_usuario = new TableLayoutPanel();
             label_telefono = new Label();
             label_correo = new Label();
-            label_cedula = new Label();
             label_nombre = new Label();
+            label_cedula = new Label();
             tableLayoutPanel10 = new TableLayoutPanel();
             button_realizar_transaccion = new Button();
             tableLayoutPanel3 = new TableLayoutPanel();
@@ -244,10 +244,10 @@
             // 
             tableLayoutPanel_datos_usuario.ColumnCount = 1;
             tableLayoutPanel_datos_usuario.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 100F));
-            tableLayoutPanel_datos_usuario.Controls.Add(label_telefono, 0, 0);
-            tableLayoutPanel_datos_usuario.Controls.Add(label_correo, 0, 1);
-            tableLayoutPanel_datos_usuario.Controls.Add(label_cedula, 0, 2);
-            tableLayoutPanel_datos_usuario.Controls.Add(label_nombre, 0, 3);
+            tableLayoutPanel_datos_usuario.Controls.Add(label_telefono, 0, 3);
+            tableLayoutPanel_datos_usuario.Controls.Add(label_correo, 0, 2);
+            tableLayoutPanel_datos_usuario.Controls.Add(label_nombre, 0, 1);
+            tableLayoutPanel_datos_usuario.Controls.Add(label_cedula, 0, 0);
             tableLayoutPanel_datos_usuario.Dock = DockStyle.Fill;
             tableLayoutPanel_datos_usuario.Location = new Point(3, 3);
             tableLayoutPanel_datos_usuario.Name = "tableLayoutPanel_datos_usuario";
@@ -265,10 +265,10 @@
             label_telefono.Anchor = AnchorStyles.Left | AnchorStyles.Right;
             label_telefono.AutoSize = true;
             label_telefono.Font = new Font("Segoe UI", 13.8F, FontStyle.Bold);
-            label_telefono.Location = new Point(3, 5);
+            label_telefono.Location = new Point(3, 128);
             label_telefono.Name = "label_telefono";
             label_telefono.Size = new Size(362, 31);
-            label_telefono.TabIndex = 83;
+            label_telefono.TabIndex = 86;
             label_telefono.Text = "telefono";
             // 
             // label_correo
@@ -276,33 +276,33 @@
             label_correo.Anchor = AnchorStyles.Left | AnchorStyles.Right;
             label_correo.AutoSize = true;
             label_correo.Font = new Font("Segoe UI", 13.8F, FontStyle.Bold);
-            label_correo.Location = new Point(3, 46);
+            label_correo.Location = new Point(3, 87);
             label_correo.Name = "label_correo";
             label_correo.Size = new Size(362, 31);
-            label_correo.TabIndex = 82;
+            label_correo.TabIndex = 85;
             label_correo.Text = "correo";
-            // 
-            // label_cedula
-            // 
-            label_cedula.Anchor = AnchorStyles.Left | AnchorStyles.Right;
-            label_cedula.AutoSize = true;
-            label_cedula.Font = new Font("Segoe UI", 13.8F, FontStyle.Bold);
-            label_cedula.Location = new Point(3, 87);
-            label_cedula.Name = "label_cedula";
-            label_cedula.Size = new Size(362, 31);
-            label_cedula.TabIndex = 81;
-            label_cedula.Text = "cedula";
             // 
             // label_nombre
             // 
             label_nombre.Anchor = AnchorStyles.Left | AnchorStyles.Right;
             label_nombre.AutoSize = true;
             label_nombre.Font = new Font("Segoe UI", 13.8F, FontStyle.Bold);
-            label_nombre.Location = new Point(3, 128);
+            label_nombre.Location = new Point(3, 46);
             label_nombre.Name = "label_nombre";
             label_nombre.Size = new Size(362, 31);
-            label_nombre.TabIndex = 80;
+            label_nombre.TabIndex = 83;
             label_nombre.Text = "Nombre";
+            // 
+            // label_cedula
+            // 
+            label_cedula.Anchor = AnchorStyles.Left | AnchorStyles.Right;
+            label_cedula.AutoSize = true;
+            label_cedula.Font = new Font("Segoe UI", 13.8F, FontStyle.Bold);
+            label_cedula.Location = new Point(3, 5);
+            label_cedula.Name = "label_cedula";
+            label_cedula.Size = new Size(362, 31);
+            label_cedula.TabIndex = 82;
+            label_cedula.Text = "cedula";
             // 
             // tableLayoutPanel10
             // 
@@ -1016,10 +1016,6 @@
         private Label label_hora_estacionamiento;
         private Label label_valor_hora_ingreso;
         private TableLayoutPanel tableLayoutPanel_datos_usuario;
-        private Label label_telefono;
-        private Label label_correo;
-        private Label label_cedula;
-        private Label label_nombre;
         private TableLayoutPanel tableLayoutPanel10;
         private Button button_realizar_transaccion;
         private TableLayoutPanel tableLayoutPanel_usuario_encontrado;
@@ -1033,5 +1029,9 @@
         private TableLayoutPanel tableLayoutPanel2;
         private FontAwesome.Sharp.IconPictureBox iconPictureBox_search;
         private FontAwesome.Sharp.IconPictureBox iconPictureBox_buscar_usuario;
+        private Label label_telefono;
+        private Label label_correo;
+        private Label label_nombre;
+        private Label label_cedula;
     }
 }
