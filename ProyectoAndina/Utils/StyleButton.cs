@@ -320,7 +320,39 @@ namespace ProyectoAndina.Utils
                 Math.Max(0, Math.Min(255, (int)(color.B * factor)))
             );
         }
+        public static void AplicarEstiloBotonBusqueda(IconPictureBox icon, TextBox textBox, int radio = 12)
+        {
+            // Ancho mayor para que se vea más cómodo
+            int anchoBoton = 60; // ajusta a gusto
 
+            // Tamaño igual al TextBox en altura
+            icon.Size = new Size(anchoBoton, textBox.Height);
+
+            // Fondo gris claro estilo Bootstrap input-group
+            icon.BackColor = Color.FromArgb(233, 236, 239); // #e9ecef
+            icon.IconColor = Color.Black;
+            icon.IconSize = 28; // icono más grande
+            icon.SizeMode = PictureBoxSizeMode.CenterImage;
+
+            // Bordes redondeados en el lado derecho
+            using (GraphicsPath path = new GraphicsPath())
+            {
+                Rectangle rect = new Rectangle(0, 0, icon.Width, icon.Height);
+                int d = radio * 2;
+
+                path.AddLine(rect.Left, rect.Top, rect.Right - radio, rect.Top);
+                path.AddArc(rect.Right - d, rect.Top, d, d, 270, 90);    // arriba derecha
+                path.AddLine(rect.Right, rect.Top + radio, rect.Right, rect.Bottom - radio);
+                path.AddArc(rect.Right - d, rect.Bottom - d, d, d, 0, 90); // abajo derecha
+                path.AddLine(rect.Right - radio, rect.Bottom, rect.Left, rect.Bottom);
+                path.CloseFigure();
+
+                icon.Region = new Region(path);
+            }
+
+            // Colocar el icono a la derecha del TextBox
+            icon.Location = new Point(textBox.Right, textBox.Top);
+        }
 
 
     }

@@ -20,7 +20,7 @@ using static ProyectoAndina.Utils.StylesAlertas;
 namespace ProyectoAndina.Views
 {
 
-    public partial class TransaccionesCajaForm : KioskForm
+    public partial class TransaccionesCajaForm : Form
     {
         private readonly PersonaController _PersonaController;
         private readonly CajaController _CajaController;
@@ -47,8 +47,10 @@ namespace ProyectoAndina.Views
             StyleButton.CrearBotonElegante(button_consumidor_final, FontAwesome.Sharp.IconChar.User);
             StyleButton.CrearBotonElegante(button_con_datos, FontAwesome.Sharp.IconChar.UserTie);
 
-            StyleButton.CrearBotonElegante(button_buscar_usuario, FontAwesome.Sharp.IconChar.Search);
             StyleButton.CrearBotonElegante(button_agregar_user, FontAwesome.Sharp.IconChar.PlusCircle);
+
+            StyleButton.AplicarEstiloBotonBusqueda(iconPictureBox_search,textBox_buscar_placa);
+            StyleButton.AplicarEstiloBotonBusqueda(iconPictureBox_buscar_usuario,textBox_usuario_encontrar);
 
             StyleContenedores.EstilizarTableLayout(tableLayoutPanel_datos_placa, Color.FromArgb(0, 148, 144));
 
@@ -462,10 +464,11 @@ namespace ProyectoAndina.Views
         {
             string cedula = textBox_usuario_encontrar.Text.Trim();
 
+
+
             if (cedula == "")
             {
                 StylesAlertas.MostrarAlerta(this, "Ingrese el CI/RUC del usuario", "¡Error!", TipoAlerta.Error);
-                button_agregar_user.Enabled = true;
                 label_nombre.Text = "👤 Nombre: ";
                 label_correo.Text = "📧 Correo: ";
                 label_cedula.Text = "🆔 Cédula: ";
@@ -507,7 +510,9 @@ namespace ProyectoAndina.Views
                                     TipoAlerta.Error,
                                     4000
                                 );
+                                button_agregar_user.Visible = true;
                                 button_agregar_user.Enabled = true;
+
                                 return;
                             }
 
@@ -520,6 +525,7 @@ namespace ProyectoAndina.Views
 
                             if (objRespuesta != null)
                             {
+                                button_agregar_user.Visible = false;
                                 label_nombre.Text = "👤 Nombre: " + objRespuesta.nombre_completo;
                                 label_correo.Text = "📧 Correo: " + objRespuesta.correo;
                                 label_cedula.Text = "🆔 Cédula: " + objRespuesta.cedula;
@@ -673,14 +679,13 @@ namespace ProyectoAndina.Views
             button_con_datos.Enabled = true;
             tableLayoutPanel_usuario_encontrado.Visible = false;
             tableLayoutPanel_datos_usuario.Visible = false;
-            button_agregar_user.Enabled = false;
+            button_agregar_user.Visible = false;
             id_usuario = 1;
             tipo_factura = 1;
         }
 
         private void button_con_datos_Click(object sender, EventArgs e)
         {
-
             button_consumidor_final.Enabled = true;
             button_con_datos.Enabled = false;
             tableLayoutPanel_usuario_encontrado.Visible = true;

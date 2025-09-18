@@ -41,8 +41,6 @@ namespace ProyectoAndina.Views
             _FuncionesGenerales = new FuncionesGenerales();
             validador = new ValidacionHelper(this);
             ConfigurarValidacion();
-
-            CargarComboBox();
             this.Paint += PersonaCrudForm_Paint;
             
 
@@ -63,19 +61,11 @@ namespace ProyectoAndina.Views
         private void ConfigurarValidacion()
         {
             validador = new ValidacionHelper(this);
-            validador.AgregarControlRequerido(textBox_cedula, "El cedula es requerido");
             validador.AgregarControlRequerido(textBox_pri_apellido, "El primer apellido es requerido");
             validador.AgregarControlRequerido(textBox_pri_nombre, "El primer nombre es requerido");
             validador.AgregarControlRequerido(textBox_seg_apellido, "El segundo apellido es requerido");
             validador.AgregarControlRequerido(textBox_seg_nombre, "El segundo nombre es requerido");
-            validador.AgregarControlRequerido(textBox_direccion, "El campo direccion es requerido");
-            validador.AgregarControlRequerido(textBox_telefono, "El campo telefono es requerido");
             validador.AgregarControlRequerido(textBox_contrasenia, "El campo contraseña es requerido");
-            validador.AgregarControlRequerido(comboBox_estado_civil, "El campo estado civil es requerido");
-            validador.AgregarControlRequerido(comboBox_nacionalidad, "El campo nacionalidad es requerido");
-            validador.AgregarControlRequerido(comboBox_sexo, "El campo sexo es requerido");
-
-
         }
 
         private void PersonaCrudForm_Paint(object sender, PaintEventArgs e)
@@ -89,10 +79,6 @@ namespace ProyectoAndina.Views
             _FuncionesGenerales.LimpiarCampos(this);
             label_titulo_persona.Text = "Crear usuario";
             button_agregar_persona.Text = "Crear";
-
-            comboBox_sexo.SelectedIndex = -1;
-            comboBox_estado_civil.SelectedIndex = -1;
-            comboBox_nacionalidad.SelectedIndex = -1;
         }
         public void cargarDatosPersona(int id)
         {
@@ -105,23 +91,8 @@ namespace ProyectoAndina.Views
                 textBox_seg_nombre.Text = persona.segundo_nombre ?? "";
                 textBox_pri_apellido.Text = persona.primer_apellido ?? "";
                 textBox_seg_apellido.Text = persona.segundo_apellido ?? "";
-                textBox_cedula.Text = persona.cedula ?? "";
                 textBox_correo.Text = persona.correo ?? "";
-                textBox_telefono.Text = persona.telefono_1 ?? "";
-                textBox_direccion.Text = persona.direccion ?? "";
                 textBox_contrasenia.Text = persona.password ?? "";
-
-                // Fecha de nacimiento
-
-                if (comboBox_sexo.Items.Contains(persona.sexo))
-                    comboBox_sexo.SelectedItem = persona.sexo;
-
-                if (comboBox_estado_civil.Items.Contains(persona.estado_civil))
-                    comboBox_estado_civil.SelectedItem = persona.estado_civil;
-
-                if (comboBox_nacionalidad.Items.Contains(persona.nacionalidad))
-                    comboBox_nacionalidad.SelectedItem = persona.nacionalidad;
-
                 label_titulo_persona.Text = "Actualizar los datos";
                 button_agregar_persona.Text = "Actualizar";
 
@@ -134,49 +105,11 @@ namespace ProyectoAndina.Views
 
 
         }
-        public void CargarComboBox()
-        {
-            // Limpiar los items actuales
-            comboBox_sexo.Items.Clear();
-            comboBox_estado_civil.Items.Clear();
-            comboBox_nacionalidad.Items.Clear();
-
-            // Agregar opciones al ComboBox de Sexo
-            comboBox_sexo.Items.Add("Masculino");
-            comboBox_sexo.Items.Add("Femenino");
-            comboBox_sexo.Items.Add("Otro");
-
-            // Agregar opciones al ComboBox de Estado Civil
-            comboBox_estado_civil.Items.Add("Soltero");
-            comboBox_estado_civil.Items.Add("Casado");
-            comboBox_estado_civil.Items.Add("Divorciado");
-            comboBox_estado_civil.Items.Add("Viudo");
-            comboBox_estado_civil.Items.Add("Unión libre");
-
-            // Agregar opciones al ComboBox de Nacionalidad
-            comboBox_nacionalidad.Items.Add("Ecuatoriana");
-            comboBox_nacionalidad.Items.Add("Peruana");
-            comboBox_nacionalidad.Items.Add("Colombiana");
-            comboBox_nacionalidad.Items.Add("Venezolana");
-            comboBox_nacionalidad.Items.Add("Chilena");
-            comboBox_nacionalidad.Items.Add("Otro");
-
-            // Opcional: Seleccionar el primer ítem por defecto
-            comboBox_sexo.SelectedIndex = 0;
-            comboBox_estado_civil.SelectedIndex = 0;
-            comboBox_nacionalidad.SelectedIndex = 0;
-        }
+       
 
         private void button_agregar_persona_Click(object? sender, EventArgs e)
         {
-
-            string cedula = textBox_cedula.Text.Trim();
-            var usuarioEncontrado = _PersonaController.ObtenerPorCedula(cedula);
-
-            if (usuarioEncontrado != null) {
-                StylesAlertas.MostrarAlerta(this, "Usuario ya registrado con esa cédula", "¡Error!", TipoAlerta.Error);
-                return;
-            }
+         
             if (!validador.ValidarTodosLosControles())
             {
                 validador.MostrarMensajeValidacion();
@@ -192,14 +125,8 @@ namespace ProyectoAndina.Views
                 segundo_nombre = textBox_seg_nombre?.Text.Trim() ?? "",
                 primer_apellido = textBox_pri_apellido.Text.Trim(),
                 segundo_apellido = textBox_seg_apellido?.Text.Trim() ?? "",
-                cedula = textBox_cedula.Text.Trim(),
                 correo = textBox_correo.Text.Trim(),
                 password = textBox_contrasenia.Text.Trim(),
-                telefono_1 = textBox_telefono?.Text.Trim() ?? "",
-                direccion = textBox_direccion?.Text.Trim() ?? "",
-                sexo = comboBox_sexo?.Text ?? "",
-                estado_civil = comboBox_estado_civil?.Text ?? "",
-                nacionalidad = comboBox_nacionalidad?.Text ?? "",
                 fecha_nacimiento = DateTime.Now,
                 estado = true,
                 fecha_creacion = DateTime.Now,

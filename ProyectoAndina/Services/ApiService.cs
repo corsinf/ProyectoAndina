@@ -1,9 +1,10 @@
-﻿using System;
+﻿using Newtonsoft.Json;
+using ProyectoAndina.Utils;
+using System;
 using System.Net.Http;
 using System.Net.Http.Headers;
 using System.Text;
 using System.Threading.Tasks;
-using Newtonsoft.Json;
 
 namespace ProyectoAndina.Services
 {
@@ -12,12 +13,36 @@ namespace ProyectoAndina.Services
         private readonly HttpClient _httpClient;
         private readonly string _baseUrl;
 
-        public ApiService(string baseUrl = "http://corsinf.com:5590")
+        public ApiService(AppConfig? config = null)
         {
             _httpClient = new HttpClient();
-            _baseUrl = baseUrl;
+
+            // Si no se pasa config, lo cargamos desde appsettings.json
+            if (config == null)
+            {
+                config = CargarConfiguracion();
+            }
+
+            _baseUrl = $"http://{config.Url}:{config.Puerto}";
         }
 
+
+        public static AppConfig CargarConfiguracion()
+        {
+            string rutaArchivo = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "Config", "appsettings.json");
+            var json = File.ReadAllText(rutaArchivo);
+            return JsonConvert.DeserializeObject<AppConfig>(json)
+                   ?? throw new Exception("No se pudo cargar la configuración del JSON");
+        }
+
+        // Ejemplo de método GET
+        public async Task<T> GetAsync<T>(string endpoint)
+        {
+            var response = await _httpClient.GetAsync($"{_baseUrl}/{endpoint}");
+            response.EnsureSuccessStatusCode();
+            var json = await response.Content.ReadAsStringAsync();
+            return JsonConvert.DeserializeObject<T>(json)!;
+        }
         private void SetAuthorizationHeader(string token)
         {
             if (!string.IsNullOrEmpty(token))

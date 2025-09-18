@@ -47,7 +47,7 @@
             tableLayoutPanel_usuario_encontrado = new TableLayoutPanel();
             tableLayoutPanel5 = new TableLayoutPanel();
             tableLayoutPanel7 = new TableLayoutPanel();
-            button_buscar_usuario = new Button();
+            iconPictureBox_buscar_usuario = new FontAwesome.Sharp.IconPictureBox();
             textBox_usuario_encontrar = new TextBox();
             label_titulo_usuario = new Label();
             tableLayoutPanel13 = new TableLayoutPanel();
@@ -93,6 +93,7 @@
             tableLayoutPanel_usuario_encontrado.SuspendLayout();
             tableLayoutPanel5.SuspendLayout();
             tableLayoutPanel7.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)iconPictureBox_buscar_usuario).BeginInit();
             tableLayoutPanel13.SuspendLayout();
             tableLayoutPanel11.SuspendLayout();
             tableLayoutPanel12.SuspendLayout();
@@ -393,7 +394,7 @@
             tableLayoutPanel7.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 31.1797752F));
             tableLayoutPanel7.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 35.11236F));
             tableLayoutPanel7.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 33.3333321F));
-            tableLayoutPanel7.Controls.Add(button_buscar_usuario, 2, 0);
+            tableLayoutPanel7.Controls.Add(iconPictureBox_buscar_usuario, 2, 0);
             tableLayoutPanel7.Controls.Add(textBox_usuario_encontrar, 1, 0);
             tableLayoutPanel7.Controls.Add(label_titulo_usuario, 0, 0);
             tableLayoutPanel7.Dock = DockStyle.Fill;
@@ -404,22 +405,21 @@
             tableLayoutPanel7.Size = new Size(356, 76);
             tableLayoutPanel7.TabIndex = 101;
             // 
-            // button_buscar_usuario
+            // iconPictureBox_buscar_usuario
             // 
-            button_buscar_usuario.BackColor = Color.FromArgb(52, 152, 219);
-            button_buscar_usuario.Cursor = Cursors.Hand;
-            button_buscar_usuario.Dock = DockStyle.Fill;
-            button_buscar_usuario.FlatAppearance.BorderSize = 0;
-            button_buscar_usuario.FlatStyle = FlatStyle.Flat;
-            button_buscar_usuario.Font = new Font("Segoe UI", 10F, FontStyle.Bold);
-            button_buscar_usuario.ForeColor = Color.White;
-            button_buscar_usuario.Location = new Point(239, 3);
-            button_buscar_usuario.Name = "button_buscar_usuario";
-            button_buscar_usuario.Size = new Size(114, 70);
-            button_buscar_usuario.TabIndex = 122;
-            button_buscar_usuario.Text = "Buscar";
-            button_buscar_usuario.UseVisualStyleBackColor = false;
-            button_buscar_usuario.Click += button_buscar_usuario_Click;
+            iconPictureBox_buscar_usuario.Anchor = AnchorStyles.Left;
+            iconPictureBox_buscar_usuario.BackColor = Color.Transparent;
+            iconPictureBox_buscar_usuario.ForeColor = SystemColors.ControlText;
+            iconPictureBox_buscar_usuario.IconChar = FontAwesome.Sharp.IconChar.Search;
+            iconPictureBox_buscar_usuario.IconColor = SystemColors.ControlText;
+            iconPictureBox_buscar_usuario.IconFont = FontAwesome.Sharp.IconFont.Auto;
+            iconPictureBox_buscar_usuario.IconSize = 70;
+            iconPictureBox_buscar_usuario.Location = new Point(239, 3);
+            iconPictureBox_buscar_usuario.Name = "iconPictureBox_buscar_usuario";
+            iconPictureBox_buscar_usuario.Size = new Size(110, 70);
+            iconPictureBox_buscar_usuario.TabIndex = 122;
+            iconPictureBox_buscar_usuario.TabStop = false;
+            iconPictureBox_buscar_usuario.Click += button_buscar_usuario_Click;
             // 
             // textBox_usuario_encontrar
             // 
@@ -476,6 +476,7 @@
             button_agregar_user.TabIndex = 99;
             button_agregar_user.Text = "Agregar";
             button_agregar_user.UseVisualStyleBackColor = false;
+            button_agregar_user.Visible = false;
             button_agregar_user.Click += button_agregar_user_Click;
             // 
             // label_tipo_de_pago
@@ -954,6 +955,7 @@
             tableLayoutPanel5.ResumeLayout(false);
             tableLayoutPanel7.ResumeLayout(false);
             tableLayoutPanel7.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)iconPictureBox_buscar_usuario).EndInit();
             tableLayoutPanel13.ResumeLayout(false);
             tableLayoutPanel11.ResumeLayout(false);
             tableLayoutPanel12.ResumeLayout(false);
@@ -1023,7 +1025,6 @@
         private TableLayoutPanel tableLayoutPanel_usuario_encontrado;
         private TableLayoutPanel tableLayoutPanel5;
         private TableLayoutPanel tableLayoutPanel7;
-        private Button button_buscar_usuario;
         private TextBox textBox_usuario_encontrar;
         private Label label_titulo_usuario;
         private TableLayoutPanel tableLayoutPanel13;
@@ -1031,5 +1032,6 @@
         private TableLayoutPanel tableLayoutPanel17;
         private TableLayoutPanel tableLayoutPanel2;
         private FontAwesome.Sharp.IconPictureBox iconPictureBox_search;
+        private FontAwesome.Sharp.IconPictureBox iconPictureBox_buscar_usuario;
     }
 }

@@ -96,7 +96,7 @@ namespace ProyectoAndina.Views
             dgvDatos.Columns.Add(new DataGridViewTextBoxColumn
             {
                 Name = "cedula",
-                HeaderText = "Cédula",
+                HeaderText = "Seg Apellido",
                 FillWeight = 20
             });
 
@@ -214,7 +214,7 @@ namespace ProyectoAndina.Views
                         persona.per_id,
                         persona.primer_nombre ?? "N/A",
                         persona.primer_apellido ?? "N/A",
-                        persona.cedula ?? "N/A",
+                        persona.segundo_apellido ?? "N/A",
                         persona.correo ?? "N/A",
                         "•••"
                     );
