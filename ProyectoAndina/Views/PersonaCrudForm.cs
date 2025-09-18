@@ -175,6 +175,7 @@ namespace ProyectoAndina.Views
 
             if (usuarioEncontrado != null) {
                 StylesAlertas.MostrarAlerta(this, "Usuario ya registrado con esa cédula", "¡Error!", TipoAlerta.Error);
+                return;
             }
             if (!validador.ValidarTodosLosControles())
             {

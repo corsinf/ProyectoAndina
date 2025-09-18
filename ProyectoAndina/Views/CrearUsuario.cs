@@ -72,6 +72,7 @@ namespace ProyectoAndina.Views
             if (usuarioEncontrado != null)
             {
                 StylesAlertas.MostrarAlerta(this, "Usuario ya registrado con esa cédula", "¡Error!", TipoAlerta.Error);
+                return;
             }
             //revisar sobre persona y rol
             if (!validador.ValidarTodosLosControles())
@@ -113,6 +114,13 @@ namespace ProyectoAndina.Views
                         {
                             // ✅ Ya tienes el token. Ahora puedes usarlo para otra operación
                             string respuesta = await _apiService.CrearPersonaAsync(persona, token);
+
+                            if (respuesta.Contains("\"status\":500") || respuesta.Contains("\"title\":\"Not Found\""))
+                            {
+                                StylesAlertas.MostrarAlerta(this, "Cédula invalida", "¡Error!", TipoAlerta.Error);
+                                return;
+                            }
+
 
                             StylesAlertas.MostrarAlerta(this, "Registro actualizado correctamente", tipo: TipoAlerta.Success);
 
