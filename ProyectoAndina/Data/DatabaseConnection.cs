@@ -1,8 +1,10 @@
 ﻿// Data/DatabaseConnection.cs
+using Newtonsoft.Json;
 using ProyectoAndina.Models;
+using ProyectoAndina.Utils;
+using System.Collections.Generic;
 using System.Configuration;
 using System.Data.SqlClient;
-using System.Collections.Generic;
 
 namespace ProyectoAndina.Data
 {
@@ -10,18 +12,31 @@ namespace ProyectoAndina.Data
     {
         private readonly string _connectionString;
 
-        public DatabaseConnection()
+        public DatabaseConnection(AppConfig? config = null)
         {
-            // Cambia esta cadena de conexión por la tuya
-            _connectionString = @"Server=186.4.219.172,1487;Database=DB_ANDINA;User Id=sa;Password=Tango456;";
-            // Para SQL Server Authentication:
-            // _connectionString = @"Server=tu_servidor;Database=DB_ANDINA;User Id=tu_usuario;Password=tu_password;";
+            if (config == null)
+                config = CargarConfiguracion();
+
+            _connectionString = config.GetConnectionString();
         }
 
         public SqlConnection GetConnection()
         {
             return new SqlConnection(_connectionString);
         }
+
+        public static AppConfig CargarConfiguracion(string rutaArchivo = "Config/appsettings.json")
+        {
+            string rutaCompleta = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, rutaArchivo);
+
+            if (!File.Exists(rutaCompleta))
+                throw new FileNotFoundException($"No se encontró el archivo de configuración en {rutaCompleta}");
+
+            var json = File.ReadAllText(rutaCompleta);
+            return JsonConvert.DeserializeObject<AppConfig>(json)
+                   ?? throw new Exception("No se pudo cargar la configuración del JSON");
+        }
+       
     }
 }
 

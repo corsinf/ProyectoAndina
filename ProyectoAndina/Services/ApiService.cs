@@ -23,7 +23,7 @@ namespace ProyectoAndina.Services
                 config = CargarConfiguracion();
             }
 
-            _baseUrl = $"http://{config.Url}:{config.Puerto}";
+            _baseUrl = $"{config.Url}:{config.Puerto}";
         }
 
 
