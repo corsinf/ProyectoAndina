@@ -25,7 +25,7 @@ namespace ProyectoAndina.Utils
         // Método helper para obtener la cadena de conexión completa
         public string GetConnectionString()
         {
-            return $"Server={Server},{Port};Database={Database};User Id={User};Password={Password};";
+            return $"Server={Server};Database={Database};User Id={User};Password={Password};TrustServerCertificate=True;";
         }
     }
 }
