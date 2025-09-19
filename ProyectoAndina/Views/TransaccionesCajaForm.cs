@@ -20,7 +20,7 @@ using static ProyectoAndina.Utils.StylesAlertas;
 namespace ProyectoAndina.Views
 {
 
-    public partial class TransaccionesCajaForm : KioskForm
+    public partial class TransaccionesCajaForm : Form
     {
         private readonly PersonaController _PersonaController;
         private readonly CajaController _CajaController;
@@ -48,9 +48,11 @@ namespace ProyectoAndina.Views
             StyleButton.CrearBotonElegante(button_con_datos, FontAwesome.Sharp.IconChar.UserTie);
 
             StyleButton.CrearBotonElegante(button_agregar_user, FontAwesome.Sharp.IconChar.PlusCircle);
+            StyleButton.CrearBotonElegante(button_actualizar_usuario, FontAwesome.Sharp.IconChar.Rotate);
 
-            StyleButton.AplicarEstiloBotonBusqueda(iconPictureBox_search,textBox_buscar_placa);
-            StyleButton.AplicarEstiloBotonBusqueda(iconPictureBox_buscar_usuario,textBox_usuario_encontrar);
+
+            StyleButton.AplicarEstiloBotonBusqueda(iconPictureBox_search, textBox_buscar_placa);
+            StyleButton.AplicarEstiloBotonBusqueda(iconPictureBox_buscar_usuario, textBox_usuario_encontrar);
 
             StyleContenedores.EstilizarTableLayout(tableLayoutPanel_datos_placa, Color.FromArgb(0, 148, 144));
 
@@ -197,7 +199,7 @@ namespace ProyectoAndina.Views
                                 // MessageBox.Show("✅ Transacción registrada con ID: " + objTransaccion.arqueo_id,
                                 //                "Éxito", MessageBoxButtons.OK, MessageBoxIcon.Information);
 
-                                StylesAlertas.MostrarAlerta(this, "Transacción realizada correctamente ID:" + objTransaccion.arqueo_id, tipo: TipoAlerta.Success);
+                                StylesAlertas.MostrarAlerta(this, "Transacción realizada correctamente", tipo: TipoAlerta.Success);
 
                                 decimal porcentaje = 0.15m; // 15%
                                 decimal montoDescuento = transaccionCaja.valor_a_cobrar * porcentaje; // 15% del valor a cobrar
@@ -291,11 +293,8 @@ namespace ProyectoAndina.Views
         private void button_agregar_user_Click(object sender, EventArgs e)
         {
             String cedula = textBox_usuario_encontrar.Text;
-            var CrearUsuario = new CrearUsuario(this,cedula);
+            var CrearUsuario = new CrearUsuario(this, cedula, 1);
             CrearUsuario.StartPosition = FormStartPosition.CenterParent;
-            CrearUsuario.FormClosed += (s, args) =>
-            {
-            };
             var result = CrearUsuario.ShowDialog(this);
 
             if (result == DialogResult.OK)
@@ -767,6 +766,21 @@ namespace ProyectoAndina.Views
 
         private void tableLayoutPanel3_Paint(object sender, PaintEventArgs e)
         {
+
+        }
+
+        private void button_actualizar_usuario_Click(object sender, EventArgs e)
+        {
+            String cedula = textBox_usuario_encontrar.Text;
+            var CrearUsuario = new CrearUsuario(this, cedula, 2);
+            CrearUsuario.StartPosition = FormStartPosition.CenterParent;
+            var result = CrearUsuario.ShowDialog(this);
+
+            if (result == DialogResult.OK)
+            {
+
+            }
+
 
         }
     }

@@ -1,4 +1,5 @@
-﻿using Newtonsoft.Json;
+﻿using Krypton.Toolkit;
+using Newtonsoft.Json;
 using ProyectoAndina.Controllers;
 using ProyectoAndina.Models;
 using ProyectoAndina.Services;
@@ -18,7 +19,7 @@ using static ProyectoAndina.Utils.StylesAlertas;
 
 namespace ProyectoAndina.Views
 {
-   
+
     public partial class CrearUsuario : Form
     {
         private readonly PersonaController _PersonaController;
@@ -27,7 +28,8 @@ namespace ProyectoAndina.Views
         private readonly ApiService _apiService;
         private ValidacionHelper validador;
         private Form _formularioPadre;
-        public CrearUsuario(Form formularioPadre, String cedula)
+        private int per_id;
+        public CrearUsuario(Form formularioPadre, String cedula, int accion)
         {
             // Config típica de diálogo modal
             this.FormBorderStyle = FormBorderStyle.FixedDialog;
@@ -49,6 +51,16 @@ namespace ProyectoAndina.Views
             ConfigurarValidacion();
             textBox_cedula.Text = cedula;
             this.Paint += CrearUsuarioForm_Paint;
+
+
+            if (accion == 1)
+            {
+                textBox_cedula.Enabled = true;
+            }
+            else if (accion == 2) {
+                CargarDatos();
+                textBox_cedula.Enabled = false;
+            }
         }
         private void ConfigurarValidacion()
         {
@@ -67,76 +79,96 @@ namespace ProyectoAndina.Views
         private async void button_agregar_usuario_Click(object sender, EventArgs e)
         {
             string cedula = textBox_cedula.Text.Trim();
-            var usuarioEncontrado = _PersonaController.ObtenerPorCedula(cedula);
 
-            if (usuarioEncontrado != null)
-            {
-                StylesAlertas.MostrarAlerta(this, "Usuario ya registrado con esa cédula", "¡Error!", TipoAlerta.Error);
-                return;
-            }
             //revisar sobre persona y rol
             if (!validador.ValidarTodosLosControles())
             {
                 validador.MostrarMensajeValidacion();
                 return;
             }
-
-
-            try
+            var persona = new PersonaApiM
             {
-                var persona = new PersonaApiM
+                primer_nombre = textBox_nombre_completo.Text.Trim(),
+                cedula = textBox_cedula.Text.Trim(),
+                correo = textBox_correo.Text.Trim(),
+                telefono_1 = textBox_telefono?.Text.Trim() ?? "",
+                direccion = textBox_direccion?.Text.Trim() ?? "",
+                observaciones = "Creado desde la aplicacion de escritorio"
+            };
+
+            var personaToken = _PersonaController.ObtenerPorId(SessionUser.PerId);
+
+            if (persona != null)
+            {
+                // Esperar el resultado del login
+                string loginResponse = await _apiService.LoginAsync(personaToken.correo, personaToken.password);
+
+                if (!string.IsNullOrEmpty(loginResponse) && !loginResponse.StartsWith("Error") && !loginResponse.StartsWith("Excepción"))
                 {
-                    primer_nombre = textBox_nombre_completo.Text.Trim(),
-                    cedula = textBox_cedula.Text.Trim(),
-                    correo = textBox_correo.Text.Trim(),
-                    telefono_1 = textBox_telefono?.Text.Trim() ?? "",
-                    direccion = textBox_direccion?.Text.Trim() ?? "",
-                    observaciones = "Creado desde la aplicacion de escritorio"
-                };
+                    // Aquí normalmente viene un JSON con el token
+                    // Ejemplo: { "token": "eyJhbGciOi..." }
+                    var obj = JsonConvert.DeserializeObject<dynamic>(loginResponse);
+                    string token = obj?.token;
 
 
-                var personaToken = _PersonaController.ObtenerPorId(SessionUser.PerId);
-
-                if (persona != null)
-                {
-                    // Esperar el resultado del login
-                    string loginResponse = await _apiService.LoginAsync(personaToken.correo, personaToken.password);
-
-                    if (!string.IsNullOrEmpty(loginResponse) && !loginResponse.StartsWith("Error") && !loginResponse.StartsWith("Excepción"))
+                    if (!string.IsNullOrEmpty(token))
                     {
-                        // Aquí normalmente viene un JSON con el token
-                        // Ejemplo: { "token": "eyJhbGciOi..." }
-                        var obj = JsonConvert.DeserializeObject<dynamic>(loginResponse);
-                        string token = obj?.token;
-
-
-                        if (!string.IsNullOrEmpty(token))
+                        if (button_agregar_usuario.Text == "Actualizar")
                         {
-                            // ✅ Ya tienes el token. Ahora puedes usarlo para otra operación
-                            string respuesta = await _apiService.CrearPersonaAsync(persona, token);
 
-                            if (respuesta.Contains("\"status\":500") || respuesta.Contains("\"title\":\"Not Found\""))
+                            string respuestaActualizar = await _apiService.ActualizarPersonaAsync(per_id, persona, token);
+                            var objRespuesta = JsonConvert.DeserializeObject<dynamic>(respuestaActualizar);
+                            MessageBox.Show(respuestaActualizar);
+
+                        }
+                        else
+                        {
+                            try
                             {
-                                StylesAlertas.MostrarAlerta(this, "Cédula invalida", "¡Error!", TipoAlerta.Error);
-                                return;
+                                
+                                // ✅ Ya tienes el token. Ahora puedes usarlo para otra operación
+                                string respuestaEncontrado = await _apiService.GetPersonaPorCedulaAsync(cedula, token);
+
+                                string respuesta = await _apiService.CrearPersonaAsync(persona, token);
+                                var objRespuesta = JsonConvert.DeserializeObject<dynamic>(respuestaEncontrado);
+
+                                if (objRespuesta != null)
+                                {
+                                    StylesAlertas.MostrarAlerta(this, "Cédula ya registrada", "¡Error!", TipoAlerta.Error);
+                                    return;
+                                }
+
+                                if (respuesta.Contains("\"status\":500") || respuesta.Contains("\"title\":\"Not Found\""))
+                                {
+                                    StylesAlertas.MostrarAlerta(this, "Cédula invalida", "¡Error!", TipoAlerta.Error);
+                                    return;
+                                }
+
+
+                                StylesAlertas.MostrarAlerta(this, "Registro actualizado correctamente", tipo: TipoAlerta.Success);
+
+                                this.DialogResult = DialogResult.OK;
+
+                                this.Close();
+
+                            }
+                            catch (Exception ex)
+                            {
+                                MessageBox.Show("Error al agregar usuario: " + ex.Message);
                             }
 
 
-                            StylesAlertas.MostrarAlerta(this, "Registro actualizado correctamente", tipo: TipoAlerta.Success);
-
-                            this.DialogResult = DialogResult.OK;
-
-                            this.Close();
                         }
+
                     }
                 }
 
 
+
             }
-            catch (Exception ex)
-            {
-                MessageBox.Show("Error al agregar usuario: " + ex.Message);
-            }
+
+
+
         }
 
 
@@ -215,7 +247,7 @@ namespace ProyectoAndina.Views
             TecladoHelper.MostrarTeclado();
         }
 
-       
+
 
         private void textBox_correo_Click(object sender, EventArgs e)
         {
@@ -230,6 +262,71 @@ namespace ProyectoAndina.Views
         private void textBox_direccion_Click(object sender, EventArgs e)
         {
             TecladoHelper.MostrarTeclado();
+        }
+
+        private async void CargarDatos()
+        {
+            string cedula = textBox_cedula.Text.Trim();
+
+            if (cedula == "")
+            {
+                StylesAlertas.MostrarAlerta(this, "Ingrese el CI/RUC del usuario", "¡Error!", TipoAlerta.Error);
+            }
+
+            var persona = _PersonaController.ObtenerPorId(SessionUser.PerId);
+
+            if (persona != null)
+            {
+                // Esperar el resultado del login
+                string loginResponse = await _apiService.LoginAsync(persona.correo, persona.password);
+
+                if (!string.IsNullOrEmpty(loginResponse) && !loginResponse.StartsWith("Error") && !loginResponse.StartsWith("Excepción"))
+                {
+                    // Aquí normalmente viene un JSON con el token
+                    // Ejemplo: { "token": "eyJhbGciOi..." }
+                    var obj = JsonConvert.DeserializeObject<dynamic>(loginResponse);
+                    string token = obj?.token;
+
+
+                    if (!string.IsNullOrEmpty(token))
+                    {
+                        // ✅ Ya tienes el token. Ahora puedes usarlo para otra operación
+                        string respuesta = await _apiService.GetPersonaPorCedulaAsync(cedula, token);
+
+                        // Validar si la API devolvió vacío o lista vacía
+                        if (string.IsNullOrWhiteSpace(respuesta) || respuesta == "[]" || respuesta == "null")
+                        {
+                            StylesAlertas.MostrarAlerta(
+                                this,
+                                "No se encontró el usuario",
+                                "¡Error!",
+                                TipoAlerta.Error,
+                                4000
+                            );
+                            
+                            return;
+                        }
+
+                        if (respuesta.Contains("\"status\":404") || respuesta.Contains("\"title\":\"Not Found\""))
+                        {
+                            StylesAlertas.MostrarAlerta(this, "No se encontro el usuario", "¡Error!", TipoAlerta.Error);
+                            return;
+                        }
+                        var objRespuesta = JsonConvert.DeserializeObject<dynamic>(respuesta);
+
+                        if (objRespuesta != null)
+                        {
+                            textBox_nombre_completo.Text =  objRespuesta.nombre_completo;
+                            textBox_correo.Text = objRespuesta.correo;
+                            textBox_cedula.Text =  objRespuesta.cedula;
+                            textBox_telefono.Text =  objRespuesta.telefono_1;
+                            per_id = objRespuesta.per_id;
+                            button_agregar_usuario.Text = "Actualizar";
+                            StyleButton.CrearBotonElegante(button_agregar_usuario, FontAwesome.Sharp.IconChar.Rotate);
+                        }
+                    }
+                }
+            }
         }
     }
 }

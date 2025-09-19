@@ -82,6 +82,7 @@
             textBox_buscar_placa = new TextBox();
             iconPictureBox_search = new FontAwesome.Sharp.IconPictureBox();
             iconSplitButton1 = new FontAwesome.Sharp.IconSplitButton();
+            button_actualizar_usuario = new Button();
             tableLayoutPanel_logueado.SuspendLayout();
             panel1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)pictureBox1).BeginInit();
@@ -269,7 +270,7 @@
             label_telefono.Name = "label_telefono";
             label_telefono.Size = new Size(362, 31);
             label_telefono.TabIndex = 86;
-            label_telefono.Text = "telefono";
+            label_telefono.Text = "Teléfono";
             // 
             // label_correo
             // 
@@ -280,7 +281,7 @@
             label_correo.Name = "label_correo";
             label_correo.Size = new Size(362, 31);
             label_correo.TabIndex = 85;
-            label_correo.Text = "correo";
+            label_correo.Text = "Correo";
             // 
             // label_nombre
             // 
@@ -302,7 +303,7 @@
             label_cedula.Name = "label_cedula";
             label_cedula.Size = new Size(362, 31);
             label_cedula.TabIndex = 82;
-            label_cedula.Text = "cedula";
+            label_cedula.Text = "Cédula";
             // 
             // tableLayoutPanel10
             // 
@@ -445,12 +446,13 @@
             // 
             // tableLayoutPanel13
             // 
-            tableLayoutPanel13.ColumnCount = 3;
-            tableLayoutPanel13.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 26.4150963F));
-            tableLayoutPanel13.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 47.16981F));
-            tableLayoutPanel13.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 26.4150963F));
-            tableLayoutPanel13.ColumnStyles.Add(new ColumnStyle(SizeType.Absolute, 20F));
-            tableLayoutPanel13.ColumnStyles.Add(new ColumnStyle(SizeType.Absolute, 20F));
+            tableLayoutPanel13.ColumnCount = 5;
+            tableLayoutPanel13.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 4.457527F));
+            tableLayoutPanel13.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 42.0521431F));
+            tableLayoutPanel13.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 4.457527F));
+            tableLayoutPanel13.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 44.57527F));
+            tableLayoutPanel13.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 4.457527F));
+            tableLayoutPanel13.Controls.Add(button_actualizar_usuario, 3, 0);
             tableLayoutPanel13.Controls.Add(button_agregar_user, 1, 0);
             tableLayoutPanel13.Dock = DockStyle.Fill;
             tableLayoutPanel13.Location = new Point(3, 85);
@@ -470,9 +472,9 @@
             button_agregar_user.FlatStyle = FlatStyle.Flat;
             button_agregar_user.Font = new Font("Segoe UI", 10F, FontStyle.Bold);
             button_agregar_user.ForeColor = Color.White;
-            button_agregar_user.Location = new Point(97, 3);
+            button_agregar_user.Location = new Point(18, 3);
             button_agregar_user.Name = "button_agregar_user";
-            button_agregar_user.Size = new Size(161, 70);
+            button_agregar_user.Size = new Size(143, 70);
             button_agregar_user.TabIndex = 99;
             button_agregar_user.Text = "Agregar";
             button_agregar_user.UseVisualStyleBackColor = false;
@@ -926,6 +928,23 @@
             iconSplitButton1.Size = new Size(23, 23);
             iconSplitButton1.Text = "iconSplitButton1";
             // 
+            // button_actualizar_usuario
+            // 
+            button_actualizar_usuario.BackColor = Color.FromArgb(52, 152, 219);
+            button_actualizar_usuario.Cursor = Cursors.Hand;
+            button_actualizar_usuario.FlatAppearance.BorderSize = 0;
+            button_actualizar_usuario.FlatStyle = FlatStyle.Flat;
+            button_actualizar_usuario.Font = new Font("Segoe UI", 10F, FontStyle.Bold);
+            button_actualizar_usuario.ForeColor = Color.White;
+            button_actualizar_usuario.Location = new Point(182, 3);
+            button_actualizar_usuario.Name = "button_actualizar_usuario";
+            button_actualizar_usuario.Size = new Size(152, 70);
+            button_actualizar_usuario.TabIndex = 99;
+            button_actualizar_usuario.Text = "Editar";
+            button_actualizar_usuario.UseVisualStyleBackColor = false;
+            button_actualizar_usuario.Visible = false;
+            button_actualizar_usuario.Click += button_actualizar_usuario_Click;
+            // 
             // TransaccionesCajaForm
             // 
             AutoScaleDimensions = new SizeF(8F, 20F);
@@ -1033,5 +1052,6 @@
         private Label label_correo;
         private Label label_nombre;
         private Label label_cedula;
+        private Button button_actualizar_usuario;
     }
 }

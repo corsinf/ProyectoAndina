@@ -268,7 +268,7 @@ namespace ProyectoAndina.Views
             {
                 var resultado = StylesAlertas.MostrarConfirmacion(
                     this,
-                    $"¿Estás seguro de que quieres eliminar el rol {id_rol}?",
+                    $"¿Estás seguro de que quieres eliminar el rol?",
                     "Confirmar Eliminación",
                     TipoAlerta.Info);
 

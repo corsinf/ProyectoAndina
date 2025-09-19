@@ -302,7 +302,7 @@ namespace ProyectoAndina.Views
             {
                 var resultado = StylesAlertas.MostrarConfirmacion(
                     this,
-                    $"¿Estás seguro de que quieres eliminar la persona con ID {idPersona}?",
+                    $"¿Estás seguro de que quieres eliminar a la persona ?",
                     "Confirmar Eliminación",
                     TipoAlerta.Info);
 

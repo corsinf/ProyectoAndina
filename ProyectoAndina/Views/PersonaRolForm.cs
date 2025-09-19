@@ -326,7 +326,7 @@ namespace ProyectoAndina.Views
             try
             {
                 var resultado = MessageBox.Show(
-                    $"¿Estás seguro de que quieres eliminar el rol de la persona con ID {idPerRol}?",
+                    $"¿Estás seguro de que quieres eliminar el rol de la persona?",
                     "Confirmar Eliminación",
                     MessageBoxButtons.YesNo,
                     MessageBoxIcon.Question
