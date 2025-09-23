@@ -1,5 +1,6 @@
 ﻿using ProyectoAndina.Controllers;
 using ProyectoAndina.Funciones_Generales;
+using ProyectoAndina.Models;
 using ProyectoAndina.Utils;
 using System;
 using System.Collections.Generic;
@@ -70,7 +71,6 @@ namespace ProyectoAndina.Views
         private void ConfigurarColumnasPersona()
         {
             dgvDatos.Columns.Clear();
-
             // Agregar columnas específicas para PersonaM
             dgvDatos.Columns.Add(new DataGridViewTextBoxColumn
             {
@@ -81,22 +81,22 @@ namespace ProyectoAndina.Views
 
             dgvDatos.Columns.Add(new DataGridViewTextBoxColumn
             {
-                Name = "primer_nombre",
-                HeaderText = "Nombre",
+                Name = "nombre_completo",
+                HeaderText = "Nombre Completo",
                 FillWeight = 25
             });
 
             dgvDatos.Columns.Add(new DataGridViewTextBoxColumn
             {
-                Name = "primer_apellido",
-                HeaderText = "Apellido",
+                Name = "telefono_1",
+                HeaderText = "Telefono",
                 FillWeight = 25
             });
 
             dgvDatos.Columns.Add(new DataGridViewTextBoxColumn
             {
-                Name = "cedula",
-                HeaderText = "Seg Apellido",
+                Name = "direccion",
+                HeaderText = "Dirección",
                 FillWeight = 20
             });
 
@@ -213,8 +213,8 @@ namespace ProyectoAndina.Views
                     dgvDatos.Rows.Add(
                         persona.per_id,
                         persona.primer_nombre ?? "N/A",
-                        persona.primer_apellido ?? "N/A",
-                        persona.segundo_apellido ?? "N/A",
+                        persona.telefono_1 ?? "N/A",
+                        persona.direccion ?? "N/A",
                         persona.correo ?? "N/A",
                         "•••"
                     );

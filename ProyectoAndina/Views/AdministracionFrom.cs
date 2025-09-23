@@ -15,6 +15,8 @@ namespace ProyectoAndina.Views
     {
         public AdministracionFrom()
         {
+
+
             InitializeComponent();
             StyleContenedores.EstilizarTableLayout(tableLayoutPanel_arqueo_cajas, Color.FromArgb(0, 148, 144));
             StyleContenedores.EstilizarTableLayout(tableLayoutPanel_personas, Color.FromArgb(0, 148, 144));

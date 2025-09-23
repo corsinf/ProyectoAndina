@@ -288,6 +288,36 @@ namespace ProyectoAndina.Controllers
             return null;
         }
         //Obtener arqueos con personas
+        public arqueo_cajaM ArqueoCajaAbierta(int caja_id)
+        {
+            using (var connection = _dbConnection.GetConnection())
+            {
+                string query = @"
+            SELECT * 
+            FROM arqueo_caja 
+            WHERE caja_id = @caja_id
+              AND estado = 'A'";
+
+                using (var cmd = new SqlCommand(query, connection))
+                {
+                    cmd.Parameters.AddWithValue("@caja_id", caja_id);
+
+                    connection.Open();
+
+                    using (var reader = cmd.ExecuteReader())
+                    {
+                        if (reader.Read())
+                        {
+                            return MapearArqueo(reader);
+                        }
+                    }
+                }
+            }
+
+            return null;
+        }
+
+
 
         public List<arqueo_con_persona_rolM> ObtenerArqueosConRoles()
         {

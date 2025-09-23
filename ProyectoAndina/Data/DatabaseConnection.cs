@@ -17,7 +17,7 @@ namespace ProyectoAndina.Data
             if (config == null)
                 config = CargarConfiguracion();
 
-            _connectionString = config.GetConnectionString();
+            _connectionString = config.DatabaseConfig.GetConnectionString();
         }
 
         public SqlConnection GetConnection()
@@ -36,7 +36,9 @@ namespace ProyectoAndina.Data
             return JsonConvert.DeserializeObject<AppConfig>(json)
                    ?? throw new Exception("No se pudo cargar la configuración del JSON");
         }
+
        
+
     }
 }
 

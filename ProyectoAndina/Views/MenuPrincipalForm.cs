@@ -19,9 +19,7 @@ namespace ProyectoAndina.Views
         private readonly ArqueoBilletesController _ArqueoBilletesController;
         private readonly RolController _RolController;
         private readonly PersonaRolController _PersonaRolController;
-        public bool estado_admin;
-        public bool estado_arqueo;
-        public bool estado_transacciones;
+        private readonly FuncionesJson _FuncionesJson;
         public MenuPrincipalForm()
         {
             InitializeComponent();
@@ -34,6 +32,7 @@ namespace ProyectoAndina.Views
             _ArqueoBilletesController = new ArqueoBilletesController();
             _RolController = new RolController();
             _PersonaRolController = new PersonaRolController();
+            _FuncionesJson = new FuncionesJson();
             CargarUsuarioLogueado();
 
             this.Paint += LoginForm_Paint;
@@ -48,43 +47,16 @@ namespace ProyectoAndina.Views
         public void CargarUsuarioLogueado()
         {
             label_persona_logueada.Text = "Bienvenido : " + SessionUser.Correo;
+            label_rol.Text = "Rol : " + SessionUser.Rol;
 
-            var rolPersonaList = _PersonaRolController.ObtenerPersonaRolId(SessionUser.id_persona_rol);
-            if (rolPersonaList != null)
-            {
-                var rolPersona = rolPersonaList; // Tomamos el primero
-                var rol = _RolController.ObtenerRolPorId(rolPersona.RolId);
-
-                if (rol != null)
-                {
-                    label_rol.Text = "Rol : " + rol.Nombre.ToString();
-
-                    if (rol.Nombre == "admin" || rol.RolId == 1)
-                    {
-                        estado_admin = true;
-                        estado_arqueo = true;
-                        estado_transacciones = true;
-                    }
-
-                    if (rol.Nombre == "cajero" || rol.RolId == 2)
-                    {
-                        estado_admin = false;
-                        estado_arqueo = true;
-                        estado_transacciones = true;
-                    }
-
-                }
-
+            if (SessionUser.Rol == "cajero") {
+                tableLayoutPanel_admin.Visible = false;
+                tableLayoutPanel_contenido.ColumnStyles[0].Width = 10;
+                tableLayoutPanel_contenido.ColumnStyles[1].Width = 0;
+                tableLayoutPanel_contenido.ColumnStyles[2].Width = 40;
+                tableLayoutPanel_contenido.ColumnStyles[3].Width = 40;
+                tableLayoutPanel_contenido.ColumnStyles[4].Width = 10;
             }
-            else
-            {
-                label_rol.Text = "Rol : Sin rol";
-                estado_admin = false;
-                estado_arqueo = false;
-                estado_transacciones = false;
-
-            }
-
         }
 
         private void button_cerrar_session_Click(object sender, EventArgs e)
@@ -101,6 +73,7 @@ namespace ProyectoAndina.Views
         private void tableLayoutPanel_transacciones_Click(object sender, EventArgs e)
         {
             var buscarArqueo = _ArqueoCajaController.ObtenerPorArqueoCajaPendiente(SessionUser.id_persona_rol);
+            
 
             if (buscarArqueo != null)
             {
@@ -130,53 +103,62 @@ namespace ProyectoAndina.Views
         private void tableLayoutPanel_arqueo_Click(object sender, EventArgs e)
         {
             var buscarArqueo = _ArqueoCajaController.ObtenerPorArqueoCajaPendiente(SessionUser.id_persona_rol);
+            int cajaConfig = _FuncionesJson.CargarCajaDesdeConfig();
+            var arqueoAbierto = _ArqueoCajaController.ArqueoCajaAbierta(cajaConfig);
+
+            if (arqueoAbierto != null)
+            {
+                if (arqueoAbierto.id_persona_rol != SessionUser.id_persona_rol)
+                {
+                    // La caja está abierta por otra persona
+                    StylesAlertas.MostrarAlerta(this, "La caja ya está abierta por otra persona", "¡Error!", TipoAlerta.Error);
+                    return;
+                }
+                // Si es la misma persona, puede continuar
+            }
 
             if (buscarArqueo != null)
             {
                 SessionArqueoCaja.id_arqueo_caja = buscarArqueo.arqueo_id;
                 StylesAlertas.MostrarAlerta(this, "Tiene una arqueo de caja abierto", "Aviso", TipoAlerta.Info);
-                var ArqueoCajaForm = new ArqueoCajaForm(buscarArqueo.arqueo_id);
-                this.Hide();
                 TecladoHelper.CerrarTeclado();
-                ArqueoCajaForm.ShowDialog();
+                var nuevoForm = new ArqueoCajaForm(buscarArqueo.arqueo_id);
+                nuevoForm.StartPosition = FormStartPosition.Manual;
+                nuevoForm.Location = this.Location;
+                nuevoForm.Size = this.Size;
+
+                this.Visible = false;  // MÁS RÁPIDO que Hide()
+                nuevoForm.ShowDialog();
                 this.Close();
             }
             else
             {
                 TecladoHelper.CerrarTeclado();
-                var ArqueoCajaForm = new ArqueoCajaForm(0);
-                this.Hide();
-                ArqueoCajaForm.ShowDialog();
+                var nuevoForm = new ArqueoCajaForm(0);
+                nuevoForm.StartPosition = FormStartPosition.Manual;
+                nuevoForm.Location = this.Location;
+                nuevoForm.Size = this.Size;
+
+                this.Visible = false;  // MÁS RÁPIDO que Hide()
+                nuevoForm.ShowDialog();
                 this.Close();
             }
         }
 
         private void tableLayoutPanel_admin_Click(object sender, EventArgs e)
         {
-            var rolPersonaList = _PersonaRolController.ObtenerPersonaRolId(SessionUser.id_persona_rol);
-            if (rolPersonaList != null)
+           if(SessionUser.Rol == "admin")
             {
-                var rolPersona = rolPersonaList; // Tomamos el primero
-                var rol = _RolController.ObtenerRolPorId(rolPersona.RolId);
+                TecladoHelper.CerrarTeclado();
+                var AdministracionFrom = new AdministracionFrom();
+                AdministracionFrom.Show(); 
 
-                if (rol != null)
-                {
-                    if (rol.Nombre == "admin" || rol.RolId == 1)
-                    {
-                        TecladoHelper.CerrarTeclado();
-                        var AdministracionFrom = new AdministracionFrom();
-                        this.Hide();                 // Opcional: ocultas la ventana actual
-                        AdministracionFrom.ShowDialog();  // Bloquea hasta que RegistroForm se cierre
-                        this.Close();
-                    }
-
-                    if (rol.Nombre == "cajero" || rol.RolId == 2)
-                    {
-                        StylesAlertas.MostrarAlerta(this, "No puede acceder a este módulo", "¡Error!", TipoAlerta.Error);
-                    }
-                }
             }
-                 
+            if (SessionUser.Rol == "cajero")
+            {
+                StylesAlertas.MostrarAlerta(this, "No puede acceder a este módulo", "¡Error!", TipoAlerta.Error);
+            }
+
         }
 
         private void label_persona_logueada_Click(object sender, EventArgs e)
