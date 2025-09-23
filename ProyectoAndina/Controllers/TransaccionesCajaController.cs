@@ -268,6 +268,30 @@ namespace ProyectoAndina.Controllers
         }
 
 
+        public decimal ObtenerTotalEfectivoPorArqueo(int arqueoId)
+        {
+            using (var connection = _dbConnection.GetConnection())
+            {
+                string query = @"
+        SELECT 
+            ISNULL(SUM(valor_a_cobrar), 0) AS total_efectivo
+        FROM transaccion_caja
+        WHERE arqueo_id = @arqueo_id
+          AND tipo_pago_id = 1";   // Solo efectivo
+
+                using (var cmd = new SqlCommand(query, connection))
+                {
+                    cmd.Parameters.AddWithValue("@arqueo_id", arqueoId);
+                    connection.Open();
+
+                    object result = cmd.ExecuteScalar();
+                    return (result != DBNull.Value) ? Convert.ToDecimal(result) : 0m;
+                }
+            }
+        }
+
+
+
         // MAPEAR LECTOR A MODELO
         private TransaccionCajaM MapearTransaccion(SqlDataReader reader)
         {

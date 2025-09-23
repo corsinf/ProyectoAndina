@@ -4,7 +4,9 @@ using System;
 using System.Net.Http;
 using System.Net.Http.Headers;
 using System.Text;
+using System.Text.Json;
 using System.Threading.Tasks;
+
 
 namespace ProyectoAndina.Services
 {
@@ -23,7 +25,7 @@ namespace ProyectoAndina.Services
                 config = CargarConfiguracion();
             }
 
-            _baseUrl = $"{config.Url}:{config.Puerto}";
+            _baseUrl = $"{config.ApiConfig.Url}:{config.ApiConfig.Puerto}";
         }
 
 
@@ -42,6 +44,34 @@ namespace ProyectoAndina.Services
             response.EnsureSuccessStatusCode();
             var json = await response.Content.ReadAsStringAsync();
             return JsonConvert.DeserializeObject<T>(json)!;
+        }
+
+        public static string DecodeJwtPayload(string token)
+        {
+            var parts = token.Split('.');
+            if (parts.Length < 2)
+                throw new ArgumentException("Token JWT inválido");
+
+            string payload = parts[1];
+
+            // Base64Url → Base64
+            payload = payload.Replace('-', '+').Replace('_', '/');
+            switch (payload.Length % 4)
+            {
+                case 2: payload += "=="; break;
+                case 3: payload += "="; break;
+            }
+
+            // Decodificar
+            var bytes = Convert.FromBase64String(payload);
+            string json = Encoding.UTF8.GetString(bytes);
+
+            // Usamos System.Text.Json explícitamente
+            using var doc = JsonDocument.Parse(json);
+            return System.Text.Json.JsonSerializer.Serialize(doc, new System.Text.Json.JsonSerializerOptions
+            {
+                WriteIndented = true
+            });
         }
         private void SetAuthorizationHeader(string token)
         {

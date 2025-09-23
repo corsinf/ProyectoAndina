@@ -1,6 +1,4 @@
 ﻿using FontAwesome.Sharp;
-using System.Diagnostics;
-using System.Linq;
 using ProyectoAndina.Controllers;
 using ProyectoAndina.Helper;
 using ProyectoAndina.Models;
@@ -9,12 +7,15 @@ using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
+using System.Diagnostics;
 using System.Drawing;
 using System.Globalization;
+using System.Linq;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using static Org.BouncyCastle.Math.EC.ECCurve;
 using static ProyectoAndina.Utils.StylesAlertas;
 
 namespace ProyectoAndina.Views
@@ -26,17 +27,20 @@ namespace ProyectoAndina.Views
         private readonly CajaController _CajaController;
         private readonly TransaccionCajaController _TransaccionesCaja;
         private readonly FuncionesGenerales _FuncionesGenerales;
+        private readonly FuncionesJson _FuncionesJson;
         private ValidacionHelper validador;
         public int arqueo_caja_id;
         public string tipo_arqueo;
+        
+
         public ArqueoCajaForm(int id_arqueo_caja)
         {
+
             InitializeComponent();
+           
 
             StyleButton.CrearBotonElegante(button_valor_apertura, IconChar.CashRegister);
             StyleButton.CrearBotonElegante(button_valor_cierre, IconChar.CashRegister);
-
-            StyleButton.CrearBotonElegante(button_apertura_de_caja, IconChar.PlusCircle);
 
             StyleButton.CrearBotonElegante(button_maniana, IconChar.Sun);
             StyleButton.CrearBotonElegante(button_tarde, IconChar.MountainSun);
@@ -53,12 +57,9 @@ namespace ProyectoAndina.Views
             _TransaccionesCaja = new TransaccionCajaController();
             _FuncionesGenerales = new FuncionesGenerales();
             _ArqueoBilletesController = new ArqueoBilletesController();
+            _FuncionesJson = new FuncionesJson();
             validador = new ValidacionHelper(this);
             ConfigurarValidacion();
-            CargarListaCajas();
-            
-
-
 
             this.Paint += ArqueoCajaForm_Paint;
             this.DoubleBuffered = true;
@@ -86,15 +87,17 @@ namespace ProyectoAndina.Views
             {
                 enabled_apertura_caja();
                 tipo_arqueo = "apertura";
+                StyleButton.CrearBotonElegante(button_apertura_de_caja, IconChar.LockOpen);
             }
         }
+
+       
 
         private void ConfigurarValidacion()
         {
             validador = new ValidacionHelper(this);
             validador.AgregarControlRequerido(textBox_valor_apertura, "El nombre es requerido");
             validador.AgregarControlRequerido(textBox_descripcion, "El nombre es requerido");
-            validador.AgregarControlRequerido(comboBox_cajas, "Debe seleccionar una categoría");
         }
 
         private void ArqueoCajaForm_Paint(object sender, PaintEventArgs e)
@@ -113,7 +116,7 @@ namespace ProyectoAndina.Views
             panel_valor_apertura.Dock = DockStyle.Fill;
             panel_valor_cierre.Visible = false;
 
-            button_apertura_de_caja.Text = "Crear";
+            button_apertura_de_caja.Text = "Crear Caja";
 
         }
 
@@ -158,53 +161,12 @@ namespace ProyectoAndina.Views
             }
 
         }
-        private void CargarListaCajas(int cajaIdSeleccionada = 0)
-        {
-            var cajas = _CajaController.obtener_cajas_cerradas();
-
-            // Si cajaIdSeleccionada = 0 → mostrar todas
-            if (cajaIdSeleccionada == 0)
-            {
-                comboBox_cajas.DataSource = cajas
-                    .Select(c => new KeyValuePair<int, string>(c.caja_id, c.nombre))
-                    .ToList();
-
-                comboBox_cajas.DisplayMember = "Value";
-                comboBox_cajas.ValueMember = "Key";
-                comboBox_cajas.SelectedIndex = -1;
-                comboBox_cajas.Enabled = true;
-            }
-            else
-            {
-                // Buscar la caja
-                var cajaEncontrada = _CajaController.ObtenerPorId(cajaIdSeleccionada);
-
-                if (cajaEncontrada != null)
-                {
-                    // Solo un item con esa caja
-                    comboBox_cajas.DataSource = new List<KeyValuePair<int, string>>()
-            {
-                new KeyValuePair<int, string>(cajaEncontrada.caja_id, cajaEncontrada.nombre)
-            };
-
-                    comboBox_cajas.DisplayMember = "Value";
-                    comboBox_cajas.ValueMember = "Key";
-                    comboBox_cajas.SelectedIndex = 0;
-                    comboBox_cajas.Enabled = false; // bloqueado en esa caja
-                }
-                else
-                {
-                    // Si no existe, dejarlo vacío
-                    comboBox_cajas.DataSource = null;
-                }
-            }
-        }
-
-
+       
         public void cargar_datos_caja_abierta(int id_arqueo_caja)
         {
 
             var cajaAbierta = _AperturaCajaController.ObtenerPorId(id_arqueo_caja);
+            var cajaEncontrada = _CajaController.ObtenerPorId(cajaAbierta.caja_id);
 
             if (tipo_arqueo == "cierre") {
                 panel_cierre.Dock = DockStyle.Fill;
@@ -212,7 +174,9 @@ namespace ProyectoAndina.Views
                 panel_valor_cierre.Dock = DockStyle.Fill;
                 panel_valor_cierre.Visible = true;
                 tableLayoutPanel_transacciones.Visible = true;
-                button_apertura_de_caja.Text = "Cerrar";
+                StyleButton.CrearBotonElegante(button_apertura_de_caja, IconChar.Lock);
+                button_apertura_de_caja.Text = "Cerrar Caja";
+
             }
 
             if (tipo_arqueo == "apertura") {
@@ -222,23 +186,23 @@ namespace ProyectoAndina.Views
                 panel_cierre.Visible = false;
                 panel_valor_apertura.Dock = DockStyle.Fill;
                 panel_valor_cierre.Visible = false;
+                StyleButton.CrearBotonElegante(button_apertura_de_caja, IconChar.LockOpen);
 
             }
 
 
-            CargarListaCajas(cajaAbierta.caja_id);
+         
 
 
             if (cajaAbierta != null)
             {
-
+                label_titulo_arqueo.Text = "Cierre de caja - " + cajaEncontrada.nombre; 
                 textBox_valor_apertura.Enabled = false;
                 button_valor_apertura.Enabled = true;
                 button_maniana.Enabled = false;
                 button_tarde.Enabled = false;
                 button_noche.Enabled = false;
                 textBox_descripcion.Text = cajaAbierta.observaciones;
-                comboBox_cajas.SelectedValue = cajaAbierta.caja_id;
                 textBox_valor_apertura.Text = cajaAbierta.valor_apertura.ToString();
                 textBox_total_transacciones.Text = cajaAbierta.total_transacciones.ToString();
                 textBox_faltante.Text = cajaAbierta.faltante.ToString() ?? "0";
@@ -296,7 +260,7 @@ namespace ProyectoAndina.Views
                     panel_valor_cierre.Dock = DockStyle.Fill;
                     panel_valor_cierre.Visible = true;
                     tableLayoutPanel_transacciones.Visible = true;
-                    button_apertura_de_caja.Text = "Cerrar";
+                    button_apertura_de_caja.Enabled = true;
                 }
             }
         }
@@ -374,30 +338,41 @@ namespace ProyectoAndina.Views
                     return;
                 }
                 decimal valor_apertura_normalizado = _FuncionesGenerales.ParseDecimalFromTextBoxNormalizado(textBox_valor_apertura.Text);
-                decimal total_en_caja = _FuncionesGenerales.ParseDecimalFromTextBoxNormalizado(textBox_total_en_caja.Text);
+
+                int cajaConfig = _FuncionesJson.CargarCajaDesdeConfig();
 
 
-                var arqueo = new arqueo_cajaM
+                var caja = _CajaController.ObtenerPorId(cajaConfig);
+
+                if (caja == null)
                 {
-                    caja_id = Convert.ToInt32(comboBox_cajas.SelectedValue), // el ID real de la caja
-                    id_persona_rol = SessionUser.id_persona_rol,            // del login o sesión
-                    turno = buscarTurnoDisponible(),
-                    fecha_apertura = DateTime.Now,                           // apertura actual
-                    hora_cierre = DateTime.Now,
-                    valor_apertura = valor_apertura_normalizado,
-                    total_en_caja = total_en_caja,
-                    faltante = 0,
-                    sobrante = 0,
-                    observaciones = textBox_descripcion.Text.Trim(),
-                    estado = "A",
-                    pinpad_lote = "",        // si luego implementas
-                    pinpad_referencia = ""   // idem
-                };
+                    StylesAlertas.MostrarAlerta(this, "No existe esa caja", "¡Error!", TipoAlerta.Error);
+                    return;
+                }
+
+
+                    var arqueo = new arqueo_cajaM
+                    {
+                        caja_id = cajaConfig, // el ID real de la caja
+                        id_persona_rol = SessionUser.id_persona_rol,            // del login o sesión
+                        turno = buscarTurnoDisponible(),
+                        fecha_apertura = DateTime.Now,                           // apertura actual
+                        hora_cierre = DateTime.Now,
+                        valor_apertura = valor_apertura_normalizado,
+                        total_en_caja = 0,
+                        faltante = 0,
+                        sobrante = 0,
+                        observaciones = textBox_descripcion.Text.Trim(),
+                        estado = "A",
+                        pinpad_lote = "",        // si luego implementas
+                        pinpad_referencia = ""   // idem
+                    };
 
                 if (arqueo != null)
                 {
                     arqueo_caja_id = _AperturaCajaController.Insertar_ReturnId(arqueo);
                     StylesAlertas.MostrarAlerta(this, "Arqueo de Caja Creado Correctamente", tipo: TipoAlerta.Success);
+                    button_apertura_de_caja.Enabled = false;
 
                     //estado controles
                     textBox_total_en_caja.Enabled = true;
@@ -409,14 +384,16 @@ namespace ProyectoAndina.Views
                     SessionArqueoCaja.montoValidar = valor_apertura_normalizado;
                     SessionArqueoCaja.estadoArqueo = "A";
 
-                    using (var frm = new BilletesMonedasForm())
+                    using (var denominacionesdinero = new BilletesMonedasForm())
                     {
-                        frm.StartPosition = FormStartPosition.CenterParent;
+                        denominacionesdinero.StartPosition = FormStartPosition.CenterParent;
 
-                        var result = frm.ShowDialog(this); // 1) Abrir modal y esperar resultado
+                        // 1) Abres el modal y capturas el resultado
+                        var result = denominacionesdinero.ShowDialog(this);
 
                         if (result == DialogResult.OK)     // 2) Evaluar resultado después de ShowDialog
                         {
+                            button_apertura_de_caja.Enabled = true;
                             TecladoHelper.CerrarTeclado();
                             var MenuPrincipalForm = new MenuPrincipalForm();
                             this.Hide();                 // Opcional: ocultas la ventana actual
@@ -424,7 +401,6 @@ namespace ProyectoAndina.Views
                             this.Close();
                         }
                     }
-
                 }
 
             }
@@ -582,10 +558,29 @@ namespace ProyectoAndina.Views
                 int indexPunto = txt.Text.IndexOf('.');
                 string decimales = txt.Text.Substring(indexPunto + 1);
 
-                // Si ya tiene 2 decimales, bloquear más
                 if (decimales.Length >= 2 && txt.SelectionStart > indexPunto)
                 {
                     e.Handled = true;
+                    return;
+                }
+            }
+
+            // ---- Validar que no supere 10,000.00 ----
+            string nuevoTexto;
+
+            // Insertar el nuevo carácter en la posición actual del cursor
+            if (txt.SelectionLength > 0)
+                nuevoTexto = txt.Text.Remove(txt.SelectionStart, txt.SelectionLength)
+                                      .Insert(txt.SelectionStart, e.KeyChar.ToString());
+            else
+                nuevoTexto = txt.Text.Insert(txt.SelectionStart, e.KeyChar.ToString());
+
+            if (decimal.TryParse(nuevoTexto, out decimal valor))
+            {
+                if (valor > 10000)
+                {
+                    e.Handled = true; // Bloquear si supera 10,000.00
+                    return;
                 }
             }
         }
@@ -593,6 +588,12 @@ namespace ProyectoAndina.Views
 
         private void textBox_valor_apertura_Click(object sender, EventArgs e)
         {
+            TextBox txt = sender as TextBox;
+            if (txt.Text == "Ingrese el valor..." && txt.ForeColor == Color.FromArgb(180, 180, 180))
+            {
+                txt.Text = "";
+                txt.ForeColor = Color.Black;
+            }
             TecladoHelper.MostrarTeclado();
         }
 
@@ -600,12 +601,29 @@ namespace ProyectoAndina.Views
         private void textBox_total_en_caja_Click(object sender, EventArgs e)
         {
             TecladoHelper.MostrarTeclado();
+            TextBox txt = sender as TextBox;
+            if (txt.Text == "Ingrese el total..." && txt.ForeColor == Color.FromArgb(180, 180, 180))
+            {
+                txt.Text = "";
+                txt.ForeColor = Color.Black;
+            }
         }
 
         private void textBox_descripcion_Click(object sender, EventArgs e)
         {
             TecladoHelper.MostrarTeclado();
+            TextBox txt = sender as TextBox;
+
+            if (txt != null && txt.Text == "Observaciones sobre la apertura de caja...")
+            {
+                txt.Text = "";
+                txt.ForeColor = Color.Black;
+            }
+
+            
         }
+
+
 
         private void textBox_total_en_caja_Leave(object sender, EventArgs e)
         {

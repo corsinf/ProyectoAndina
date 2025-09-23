@@ -28,6 +28,7 @@ namespace ProyectoAndina.Views
         private readonly TransaccionCajaController _TransaccionCajaController;
         private readonly ApiService _apiService;
         private readonly FuncionesGenerales _funcionesGenerales = new FuncionesGenerales();
+        private ValidacionHelper validador;
         public int tipo_factura = 0;
         private ReciboModel recibo;
         private int id_usuario;
@@ -53,6 +54,7 @@ namespace ProyectoAndina.Views
 
             StyleButton.AplicarEstiloBotonBusqueda(iconPictureBox_search, textBox_buscar_placa);
             StyleButton.AplicarEstiloBotonBusqueda(iconPictureBox_buscar_usuario, textBox_usuario_encontrar);
+            //StyleButton.AplicarEstiloBotonBusqueda(iconPictureBox_dollar_entregado, textBox_val_entregado);
 
             StyleContenedores.EstilizarTableLayout(tableLayoutPanel_datos_placa, Color.FromArgb(0, 148, 144));
 
@@ -63,12 +65,25 @@ namespace ProyectoAndina.Views
             _ArqueoCajaController = new();
             _apiService = new ApiService();
             _TransaccionCajaController = new TransaccionCajaController();
+            validador = new ValidacionHelper(this);
+            ConfigurarValidacion();
             this.Paint += TransaccionesCajaForm_Paint;
         }
-
+        private void ConfigurarValidacion()
+        {
+            validador = new ValidacionHelper(this);
+            validador.AgregarControlRequerido(textBox_val_entregado, "El campo nombre es requerido");
+        }
 
         private async void button_realizar_transaccion_Click(object sender, EventArgs e)
         {
+            if (!validador.ValidarTodosLosControles())
+            {
+                validador.MostrarMensajeValidacion();
+                return;
+
+            }
+
             if (sacarTipoPago() == 0)
             {
                 StylesAlertas.MostrarAlerta(this, "Seleccionar tipo de pago", "¡Error!", TipoAlerta.Error);
@@ -93,6 +108,7 @@ namespace ProyectoAndina.Views
                 if (valorEntregado > 49)
                 {
                     StylesAlertas.MostrarAlerta(this, "El consumidor final no puede realizar pagos mayor a 50 dolares", "¡Error!", TipoAlerta.Error);
+                    return;
                 }
             }
             else if (tipo_factura == 2)
@@ -336,6 +352,7 @@ namespace ProyectoAndina.Views
 
         private async void button_buscar_placa_Click(object sender, EventArgs e)
         {
+
             try
             {
                 string placa = textBox_buscar_placa.Text.Trim();
@@ -408,7 +425,7 @@ namespace ProyectoAndina.Views
                                 {
                                     label_valor_hora_ingreso.Text = "⏰" + HoraIngreso;
                                     label_valor_tiempo.Text = "⌛" + TiempoEstacionamiento;
-                                    label_valor_a_cobrar.Text = "💰 " + MontoPagar;
+                                    label_valor_a_cobrar.Text = "" + MontoPagar;
                                     button_realizar_transaccion.Enabled = false;
                                     textBox_val_entregado.Enabled = false;
 
@@ -417,7 +434,7 @@ namespace ProyectoAndina.Views
                                 {
                                     label_valor_hora_ingreso.Text = "⏰" + HoraIngreso;
                                     label_valor_tiempo.Text = "⌛" + TiempoEstacionamiento;
-                                    label_valor_a_cobrar.Text = "💰 " + MontoPagar;
+                                    label_valor_a_cobrar.Text = "" + MontoPagar;
                                     button_realizar_transaccion.Enabled = true;
                                     textBox_val_entregado.Enabled = true;
 
@@ -511,6 +528,7 @@ namespace ProyectoAndina.Views
                                 );
                                 button_agregar_user.Visible = true;
                                 button_agregar_user.Enabled = true;
+                                button_realizar_transaccion.Enabled = false;
 
                                 return;
                             }
@@ -518,6 +536,7 @@ namespace ProyectoAndina.Views
                             if (respuesta.Contains("\"status\":404") || respuesta.Contains("\"title\":\"Not Found\""))
                             {
                                 StylesAlertas.MostrarAlerta(this, "No se encontro el usuario", "¡Error!", TipoAlerta.Error);
+                                button_realizar_transaccion.Enabled = false;
                                 return;
                             }
                             var objRespuesta = JsonConvert.DeserializeObject<dynamic>(respuesta);
@@ -530,6 +549,7 @@ namespace ProyectoAndina.Views
                                 label_cedula.Text = "🆔 Cédula: " + objRespuesta.cedula;
                                 label_telefono.Text = "📞 Teléfono: " + objRespuesta.telefono_1;
                                 id_usuario = objRespuesta.per_id;
+                                button_realizar_transaccion.Enabled = true;
 
                                 recibo = new ReciboModel
                                 {
@@ -563,6 +583,15 @@ namespace ProyectoAndina.Views
 
         private void textBox_val_entregado_Leave(object sender, EventArgs e)
         {
+            decimal total_transacciones = _TransaccionCajaController.ObtenerTotalEfectivoPorArqueo(SessionArqueoCaja.id_arqueo_caja);
+
+            var arqueoCaja = _ArqueoCajaController.ObtenerPorId(SessionArqueoCaja.id_arqueo_caja);
+
+            decimal total_arqueo = arqueoCaja.valor_apertura;
+
+            decimal total_dinero = total_transacciones + total_arqueo;
+
+
 
             if (string.IsNullOrWhiteSpace(textBox_val_entregado.Text))
             {
@@ -577,6 +606,8 @@ namespace ProyectoAndina.Views
             string textoEntregado = textBox_val_entregado.Text.Trim();
             decimal valorEntregado;
 
+
+
             // Intentar parsear el valor entregado
             if (!decimal.TryParse(textoEntregado, NumberStyles.Number, cultura, out valorEntregado))
             {
@@ -587,6 +618,8 @@ namespace ProyectoAndina.Views
 
                 return;
             }
+
+
 
             // Procesar valor a cobrar
             string texto = label_valor_a_cobrar.Text.Replace("💰", "").Trim();
@@ -612,8 +645,17 @@ namespace ProyectoAndina.Views
                 return;
             }
 
+
+
             // Calcular el cambio
             decimal valorCambio = valorEntregado - valorCobrar;
+
+            if (valorCambio > total_dinero)
+            {
+                StylesAlertas.MostrarAlerta(this, "No se tiene esa cantiad de dinero en caja", "¡Error!", TipoAlerta.Error);
+                button_realizar_transaccion.Enabled = false;
+                return;
+            }
 
             // Validar que el valor entregado sea suficiente
             if (valorCambio < 0)
@@ -625,7 +667,7 @@ namespace ProyectoAndina.Views
                 return;
             }
             // Mostrar el resultado con formato de moneda
-            label_valor_de_cambio.Text = "💰" + valorCambio.ToString("0.00", cultura);
+            label_valor_de_cambio.Text = valorCambio.ToString("0.00", cultura);
             button_realizar_transaccion.Enabled = true;
         }
 
@@ -689,6 +731,7 @@ namespace ProyectoAndina.Views
             button_con_datos.Enabled = false;
             tableLayoutPanel_usuario_encontrado.Visible = true;
             tableLayoutPanel_datos_usuario.Visible = true;
+            button_realizar_transaccion.Enabled = false;
             tableLayoutPanel_usuario_encontrado.Dock = DockStyle.Fill;
             tipo_factura = 2;
         }
@@ -781,7 +824,21 @@ namespace ProyectoAndina.Views
 
             }
 
+        }
 
+        private void textBox_val_entregado_Click(object sender, EventArgs e)
+        {
+            TecladoHelper.MostrarTeclado();
+            TextBox txt = sender as TextBox;
+            if (txt != null)
+            {
+                // Quitamos espacios por seguridad
+                if (txt.Text.Trim() == "Monto entregado...")
+                {
+                    txt.Text = "";
+                    txt.ForeColor = Color.Black;
+                }
+            }
         }
     }
 }

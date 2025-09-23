@@ -427,7 +427,7 @@ namespace ProyectoAndina.Controllers
 
                 // Obtener datos paginados
                 string dataQuery = @"
-            SELECT per_id, primer_nombre, primer_apellido, cedula, correo
+            SELECT per_id, primer_nombre,telefono_1, correo,direccion
             FROM personas
             WHERE estado = 1 AND (@Filtro = '' OR 
                    primer_nombre LIKE '%' + @Filtro + '%' OR 
@@ -453,9 +453,10 @@ namespace ProyectoAndina.Controllers
                             {
                                 per_id = Convert.ToInt32(reader["per_id"]),
                                 primer_nombre = reader["primer_nombre"]?.ToString(),
-                                primer_apellido = reader["primer_apellido"]?.ToString(),
-                                cedula = reader["cedula"]?.ToString(),
-                                correo = reader["correo"]?.ToString()
+                                telefono_1 = reader["telefono_1"].ToString(),
+                                correo = reader["correo"]?.ToString(),
+                                direccion = reader["direccion"].ToString()
+
                             });
                         }
                     }

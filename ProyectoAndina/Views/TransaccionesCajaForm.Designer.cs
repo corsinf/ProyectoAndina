@@ -51,6 +51,7 @@
             textBox_usuario_encontrar = new TextBox();
             label_titulo_usuario = new Label();
             tableLayoutPanel13 = new TableLayoutPanel();
+            button_actualizar_usuario = new Button();
             button_agregar_user = new Button();
             label_tipo_de_pago = new Label();
             tableLayoutPanel11 = new TableLayoutPanel();
@@ -62,14 +63,20 @@
             button_con_datos = new Button();
             tableLayoutPanel_datos_placa = new TableLayoutPanel();
             tableLayoutPanel17 = new TableLayoutPanel();
+            tableLayoutPanel19 = new TableLayoutPanel();
             label_valor_de_cambio = new Label();
+            iconPictureBox2 = new FontAwesome.Sharp.IconPictureBox();
             label_valor_cambio = new Label();
             tableLayoutPanel2 = new TableLayoutPanel();
+            tableLayoutPanel8 = new TableLayoutPanel();
+            iconPictureBox3 = new FontAwesome.Sharp.IconPictureBox();
             textBox_val_entregado = new TextBox();
             label_val_entregado = new Label();
             tableLayoutPanel16 = new TableLayoutPanel();
-            label_valor_cobrar = new Label();
+            tableLayoutPanel18 = new TableLayoutPanel();
             label_valor_a_cobrar = new Label();
+            iconPictureBox1 = new FontAwesome.Sharp.IconPictureBox();
+            label_valor_cobrar = new Label();
             tableLayoutPanel14 = new TableLayoutPanel();
             label_hora_ingreso = new Label();
             label_valor_tiempo = new Label();
@@ -82,7 +89,6 @@
             textBox_buscar_placa = new TextBox();
             iconPictureBox_search = new FontAwesome.Sharp.IconPictureBox();
             iconSplitButton1 = new FontAwesome.Sharp.IconSplitButton();
-            button_actualizar_usuario = new Button();
             tableLayoutPanel_logueado.SuspendLayout();
             panel1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)pictureBox1).BeginInit();
@@ -100,8 +106,14 @@
             tableLayoutPanel12.SuspendLayout();
             tableLayoutPanel_datos_placa.SuspendLayout();
             tableLayoutPanel17.SuspendLayout();
+            tableLayoutPanel19.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)iconPictureBox2).BeginInit();
             tableLayoutPanel2.SuspendLayout();
+            tableLayoutPanel8.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)iconPictureBox3).BeginInit();
             tableLayoutPanel16.SuspendLayout();
+            tableLayoutPanel18.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)iconPictureBox1).BeginInit();
             tableLayoutPanel14.SuspendLayout();
             tableLayoutPanel15.SuspendLayout();
             tableLayoutPanel9.SuspendLayout();
@@ -392,9 +404,9 @@
             // 
             tableLayoutPanel7.BackColor = Color.Transparent;
             tableLayoutPanel7.ColumnCount = 3;
-            tableLayoutPanel7.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 31.1797752F));
-            tableLayoutPanel7.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 35.11236F));
-            tableLayoutPanel7.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 33.3333321F));
+            tableLayoutPanel7.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 30F));
+            tableLayoutPanel7.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 55F));
+            tableLayoutPanel7.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 15F));
             tableLayoutPanel7.Controls.Add(iconPictureBox_buscar_usuario, 2, 0);
             tableLayoutPanel7.Controls.Add(textBox_usuario_encontrar, 1, 0);
             tableLayoutPanel7.Controls.Add(label_titulo_usuario, 0, 0);
@@ -414,10 +426,10 @@
             iconPictureBox_buscar_usuario.IconChar = FontAwesome.Sharp.IconChar.Search;
             iconPictureBox_buscar_usuario.IconColor = SystemColors.ControlText;
             iconPictureBox_buscar_usuario.IconFont = FontAwesome.Sharp.IconFont.Auto;
-            iconPictureBox_buscar_usuario.IconSize = 70;
-            iconPictureBox_buscar_usuario.Location = new Point(239, 3);
+            iconPictureBox_buscar_usuario.IconSize = 42;
+            iconPictureBox_buscar_usuario.Location = new Point(304, 3);
             iconPictureBox_buscar_usuario.Name = "iconPictureBox_buscar_usuario";
-            iconPictureBox_buscar_usuario.Size = new Size(110, 70);
+            iconPictureBox_buscar_usuario.Size = new Size(42, 70);
             iconPictureBox_buscar_usuario.TabIndex = 122;
             iconPictureBox_buscar_usuario.TabStop = false;
             iconPictureBox_buscar_usuario.Click += button_buscar_usuario_Click;
@@ -426,9 +438,9 @@
             // 
             textBox_usuario_encontrar.Anchor = AnchorStyles.Left | AnchorStyles.Right;
             textBox_usuario_encontrar.Font = new Font("Microsoft Sans Serif", 16.2F);
-            textBox_usuario_encontrar.Location = new Point(114, 19);
+            textBox_usuario_encontrar.Location = new Point(109, 19);
             textBox_usuario_encontrar.Name = "textBox_usuario_encontrar";
-            textBox_usuario_encontrar.Size = new Size(119, 38);
+            textBox_usuario_encontrar.Size = new Size(189, 38);
             textBox_usuario_encontrar.TabIndex = 121;
             textBox_usuario_encontrar.Click += textBox_usuario_encontrar_Click;
             // 
@@ -437,9 +449,9 @@
             label_titulo_usuario.Anchor = AnchorStyles.Left | AnchorStyles.Right;
             label_titulo_usuario.AutoSize = true;
             label_titulo_usuario.Font = new Font("Microsoft Sans Serif", 16.2F);
-            label_titulo_usuario.Location = new Point(3, 22);
+            label_titulo_usuario.Location = new Point(3, 6);
             label_titulo_usuario.Name = "label_titulo_usuario";
-            label_titulo_usuario.Size = new Size(105, 32);
+            label_titulo_usuario.Size = new Size(100, 64);
             label_titulo_usuario.TabIndex = 119;
             label_titulo_usuario.Text = "Cédula";
             label_titulo_usuario.TextAlign = ContentAlignment.MiddleCenter;
@@ -461,6 +473,23 @@
             tableLayoutPanel13.RowStyles.Add(new RowStyle(SizeType.Percent, 100F));
             tableLayoutPanel13.Size = new Size(356, 76);
             tableLayoutPanel13.TabIndex = 102;
+            // 
+            // button_actualizar_usuario
+            // 
+            button_actualizar_usuario.BackColor = Color.FromArgb(52, 152, 219);
+            button_actualizar_usuario.Cursor = Cursors.Hand;
+            button_actualizar_usuario.FlatAppearance.BorderSize = 0;
+            button_actualizar_usuario.FlatStyle = FlatStyle.Flat;
+            button_actualizar_usuario.Font = new Font("Segoe UI", 10F, FontStyle.Bold);
+            button_actualizar_usuario.ForeColor = Color.White;
+            button_actualizar_usuario.Location = new Point(182, 3);
+            button_actualizar_usuario.Name = "button_actualizar_usuario";
+            button_actualizar_usuario.Size = new Size(152, 70);
+            button_actualizar_usuario.TabIndex = 99;
+            button_actualizar_usuario.Text = "Editar";
+            button_actualizar_usuario.UseVisualStyleBackColor = false;
+            button_actualizar_usuario.Visible = false;
+            button_actualizar_usuario.Click += button_actualizar_usuario_Click;
             // 
             // button_agregar_user
             // 
@@ -644,7 +673,7 @@
             tableLayoutPanel17.ColumnCount = 2;
             tableLayoutPanel17.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 41.4364624F));
             tableLayoutPanel17.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 58.5635376F));
-            tableLayoutPanel17.Controls.Add(label_valor_de_cambio, 1, 0);
+            tableLayoutPanel17.Controls.Add(tableLayoutPanel19, 1, 0);
             tableLayoutPanel17.Controls.Add(label_valor_cambio, 0, 0);
             tableLayoutPanel17.Dock = DockStyle.Fill;
             tableLayoutPanel17.Location = new Point(3, 283);
@@ -654,18 +683,47 @@
             tableLayoutPanel17.Size = new Size(362, 66);
             tableLayoutPanel17.TabIndex = 100;
             // 
+            // tableLayoutPanel19
+            // 
+            tableLayoutPanel19.ColumnCount = 2;
+            tableLayoutPanel19.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 32.8502426F));
+            tableLayoutPanel19.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 67.14976F));
+            tableLayoutPanel19.Controls.Add(label_valor_de_cambio, 1, 0);
+            tableLayoutPanel19.Controls.Add(iconPictureBox2, 0, 0);
+            tableLayoutPanel19.Location = new Point(152, 3);
+            tableLayoutPanel19.Name = "tableLayoutPanel19";
+            tableLayoutPanel19.RowCount = 1;
+            tableLayoutPanel19.RowStyles.Add(new RowStyle(SizeType.Percent, 50F));
+            tableLayoutPanel19.Size = new Size(207, 58);
+            tableLayoutPanel19.TabIndex = 100;
+            // 
             // label_valor_de_cambio
             // 
             label_valor_de_cambio.Anchor = AnchorStyles.Left | AnchorStyles.Right;
             label_valor_de_cambio.AutoSize = true;
             label_valor_de_cambio.Font = new Font("Microsoft Sans Serif", 13.8F);
             label_valor_de_cambio.ForeColor = Color.LightSeaGreen;
-            label_valor_de_cambio.Location = new Point(152, 18);
+            label_valor_de_cambio.Location = new Point(71, 14);
             label_valor_de_cambio.Name = "label_valor_de_cambio";
-            label_valor_de_cambio.Size = new Size(207, 29);
-            label_valor_de_cambio.TabIndex = 96;
+            label_valor_de_cambio.Size = new Size(133, 29);
+            label_valor_de_cambio.TabIndex = 126;
             label_valor_de_cambio.Text = "0";
             label_valor_de_cambio.TextAlign = ContentAlignment.MiddleRight;
+            // 
+            // iconPictureBox2
+            // 
+            iconPictureBox2.Anchor = AnchorStyles.Right;
+            iconPictureBox2.BackColor = Color.Transparent;
+            iconPictureBox2.ForeColor = Color.Green;
+            iconPictureBox2.IconChar = FontAwesome.Sharp.IconChar.Usd;
+            iconPictureBox2.IconColor = Color.Green;
+            iconPictureBox2.IconFont = FontAwesome.Sharp.IconFont.Auto;
+            iconPictureBox2.IconSize = 38;
+            iconPictureBox2.Location = new Point(26, 10);
+            iconPictureBox2.Name = "iconPictureBox2";
+            iconPictureBox2.Size = new Size(39, 38);
+            iconPictureBox2.TabIndex = 125;
+            iconPictureBox2.TabStop = false;
             // 
             // label_valor_cambio
             // 
@@ -685,7 +743,7 @@
             tableLayoutPanel2.ColumnCount = 2;
             tableLayoutPanel2.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 41.4364624F));
             tableLayoutPanel2.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 58.5635376F));
-            tableLayoutPanel2.Controls.Add(textBox_val_entregado, 1, 0);
+            tableLayoutPanel2.Controls.Add(tableLayoutPanel8, 1, 0);
             tableLayoutPanel2.Controls.Add(label_val_entregado, 0, 0);
             tableLayoutPanel2.Dock = DockStyle.Fill;
             tableLayoutPanel2.Location = new Point(3, 213);
@@ -695,15 +753,51 @@
             tableLayoutPanel2.Size = new Size(362, 64);
             tableLayoutPanel2.TabIndex = 99;
             // 
+            // tableLayoutPanel8
+            // 
+            tableLayoutPanel8.BackColor = Color.Transparent;
+            tableLayoutPanel8.ColumnCount = 2;
+            tableLayoutPanel8.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 32.3170738F));
+            tableLayoutPanel8.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 67.68293F));
+            tableLayoutPanel8.Controls.Add(iconPictureBox3, 0, 0);
+            tableLayoutPanel8.Controls.Add(textBox_val_entregado, 1, 0);
+            tableLayoutPanel8.Dock = DockStyle.Fill;
+            tableLayoutPanel8.Location = new Point(149, 0);
+            tableLayoutPanel8.Margin = new Padding(0);
+            tableLayoutPanel8.Name = "tableLayoutPanel8";
+            tableLayoutPanel8.Padding = new Padding(8, 5, 8, 5);
+            tableLayoutPanel8.RowCount = 1;
+            tableLayoutPanel8.RowStyles.Add(new RowStyle(SizeType.Percent, 100F));
+            tableLayoutPanel8.Size = new Size(213, 64);
+            tableLayoutPanel8.TabIndex = 112;
+            // 
+            // iconPictureBox3
+            // 
+            iconPictureBox3.Anchor = AnchorStyles.Right;
+            iconPictureBox3.BackColor = Color.Transparent;
+            iconPictureBox3.ForeColor = Color.Green;
+            iconPictureBox3.IconChar = FontAwesome.Sharp.IconChar.Usd;
+            iconPictureBox3.IconColor = Color.Green;
+            iconPictureBox3.IconFont = FontAwesome.Sharp.IconFont.Auto;
+            iconPictureBox3.IconSize = 38;
+            iconPictureBox3.Location = new Point(29, 13);
+            iconPictureBox3.Name = "iconPictureBox3";
+            iconPictureBox3.Size = new Size(39, 38);
+            iconPictureBox3.TabIndex = 129;
+            iconPictureBox3.TabStop = false;
+            // 
             // textBox_val_entregado
             // 
-            textBox_val_entregado.Anchor = AnchorStyles.Right;
+            textBox_val_entregado.Anchor = AnchorStyles.Left | AnchorStyles.Right;
+            textBox_val_entregado.Enabled = false;
             textBox_val_entregado.Font = new Font("Microsoft Sans Serif", 13.8F);
-            textBox_val_entregado.Location = new Point(238, 15);
+            textBox_val_entregado.Location = new Point(74, 15);
             textBox_val_entregado.Name = "textBox_val_entregado";
-            textBox_val_entregado.Size = new Size(121, 34);
-            textBox_val_entregado.TabIndex = 99;
+            textBox_val_entregado.Size = new Size(128, 34);
+            textBox_val_entregado.TabIndex = 128;
+            textBox_val_entregado.Text = "Monto entregado...";
             textBox_val_entregado.TextAlign = HorizontalAlignment.Right;
+            textBox_val_entregado.Click += textBox_val_entregado_Click;
             textBox_val_entregado.KeyPress += textBox_val_entregado_KeyPress;
             textBox_val_entregado.Leave += textBox_val_entregado_Leave;
             // 
@@ -725,8 +819,8 @@
             tableLayoutPanel16.ColumnCount = 2;
             tableLayoutPanel16.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 41.4364624F));
             tableLayoutPanel16.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 58.5635376F));
+            tableLayoutPanel16.Controls.Add(tableLayoutPanel18, 1, 0);
             tableLayoutPanel16.Controls.Add(label_valor_cobrar, 0, 0);
-            tableLayoutPanel16.Controls.Add(label_valor_a_cobrar, 1, 0);
             tableLayoutPanel16.Dock = DockStyle.Fill;
             tableLayoutPanel16.Location = new Point(3, 143);
             tableLayoutPanel16.Name = "tableLayoutPanel16";
@@ -734,6 +828,48 @@
             tableLayoutPanel16.RowStyles.Add(new RowStyle(SizeType.Percent, 50F));
             tableLayoutPanel16.Size = new Size(362, 64);
             tableLayoutPanel16.TabIndex = 98;
+            // 
+            // tableLayoutPanel18
+            // 
+            tableLayoutPanel18.ColumnCount = 2;
+            tableLayoutPanel18.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 33.8164253F));
+            tableLayoutPanel18.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 66.18358F));
+            tableLayoutPanel18.Controls.Add(label_valor_a_cobrar, 1, 0);
+            tableLayoutPanel18.Controls.Add(iconPictureBox1, 0, 0);
+            tableLayoutPanel18.Location = new Point(152, 3);
+            tableLayoutPanel18.Name = "tableLayoutPanel18";
+            tableLayoutPanel18.RowCount = 1;
+            tableLayoutPanel18.RowStyles.Add(new RowStyle(SizeType.Percent, 50F));
+            tableLayoutPanel18.Size = new Size(207, 58);
+            tableLayoutPanel18.TabIndex = 100;
+            // 
+            // label_valor_a_cobrar
+            // 
+            label_valor_a_cobrar.Anchor = AnchorStyles.Left | AnchorStyles.Right;
+            label_valor_a_cobrar.AutoSize = true;
+            label_valor_a_cobrar.Font = new Font("Microsoft Sans Serif", 13.8F);
+            label_valor_a_cobrar.ForeColor = Color.LightSeaGreen;
+            label_valor_a_cobrar.Location = new Point(73, 14);
+            label_valor_a_cobrar.Name = "label_valor_a_cobrar";
+            label_valor_a_cobrar.Size = new Size(131, 29);
+            label_valor_a_cobrar.TabIndex = 126;
+            label_valor_a_cobrar.Text = "0";
+            label_valor_a_cobrar.TextAlign = ContentAlignment.MiddleRight;
+            // 
+            // iconPictureBox1
+            // 
+            iconPictureBox1.Anchor = AnchorStyles.Right;
+            iconPictureBox1.BackColor = Color.Transparent;
+            iconPictureBox1.ForeColor = Color.Green;
+            iconPictureBox1.IconChar = FontAwesome.Sharp.IconChar.Usd;
+            iconPictureBox1.IconColor = Color.Green;
+            iconPictureBox1.IconFont = FontAwesome.Sharp.IconFont.Auto;
+            iconPictureBox1.IconSize = 38;
+            iconPictureBox1.Location = new Point(28, 10);
+            iconPictureBox1.Name = "iconPictureBox1";
+            iconPictureBox1.Size = new Size(39, 38);
+            iconPictureBox1.TabIndex = 125;
+            iconPictureBox1.TabStop = false;
             // 
             // label_valor_cobrar
             // 
@@ -747,19 +883,6 @@
             label_valor_cobrar.TabIndex = 95;
             label_valor_cobrar.Text = "Cobrar:";
             label_valor_cobrar.TextAlign = ContentAlignment.MiddleLeft;
-            // 
-            // label_valor_a_cobrar
-            // 
-            label_valor_a_cobrar.Anchor = AnchorStyles.Left | AnchorStyles.Right;
-            label_valor_a_cobrar.AutoSize = true;
-            label_valor_a_cobrar.Font = new Font("Microsoft Sans Serif", 13.8F);
-            label_valor_a_cobrar.ForeColor = Color.LightSeaGreen;
-            label_valor_a_cobrar.Location = new Point(152, 17);
-            label_valor_a_cobrar.Name = "label_valor_a_cobrar";
-            label_valor_a_cobrar.Size = new Size(207, 29);
-            label_valor_a_cobrar.TabIndex = 89;
-            label_valor_a_cobrar.Text = "0";
-            label_valor_a_cobrar.TextAlign = ContentAlignment.MiddleRight;
             // 
             // tableLayoutPanel14
             // 
@@ -928,23 +1051,6 @@
             iconSplitButton1.Size = new Size(23, 23);
             iconSplitButton1.Text = "iconSplitButton1";
             // 
-            // button_actualizar_usuario
-            // 
-            button_actualizar_usuario.BackColor = Color.FromArgb(52, 152, 219);
-            button_actualizar_usuario.Cursor = Cursors.Hand;
-            button_actualizar_usuario.FlatAppearance.BorderSize = 0;
-            button_actualizar_usuario.FlatStyle = FlatStyle.Flat;
-            button_actualizar_usuario.Font = new Font("Segoe UI", 10F, FontStyle.Bold);
-            button_actualizar_usuario.ForeColor = Color.White;
-            button_actualizar_usuario.Location = new Point(182, 3);
-            button_actualizar_usuario.Name = "button_actualizar_usuario";
-            button_actualizar_usuario.Size = new Size(152, 70);
-            button_actualizar_usuario.TabIndex = 99;
-            button_actualizar_usuario.Text = "Editar";
-            button_actualizar_usuario.UseVisualStyleBackColor = false;
-            button_actualizar_usuario.Visible = false;
-            button_actualizar_usuario.Click += button_actualizar_usuario_Click;
-            // 
             // TransaccionesCajaForm
             // 
             AutoScaleDimensions = new SizeF(8F, 20F);
@@ -981,10 +1087,19 @@
             tableLayoutPanel_datos_placa.ResumeLayout(false);
             tableLayoutPanel17.ResumeLayout(false);
             tableLayoutPanel17.PerformLayout();
+            tableLayoutPanel19.ResumeLayout(false);
+            tableLayoutPanel19.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)iconPictureBox2).EndInit();
             tableLayoutPanel2.ResumeLayout(false);
             tableLayoutPanel2.PerformLayout();
+            tableLayoutPanel8.ResumeLayout(false);
+            tableLayoutPanel8.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)iconPictureBox3).EndInit();
             tableLayoutPanel16.ResumeLayout(false);
             tableLayoutPanel16.PerformLayout();
+            tableLayoutPanel18.ResumeLayout(false);
+            tableLayoutPanel18.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)iconPictureBox1).EndInit();
             tableLayoutPanel14.ResumeLayout(false);
             tableLayoutPanel14.PerformLayout();
             tableLayoutPanel15.ResumeLayout(false);
@@ -1015,7 +1130,6 @@
         private TableLayoutPanel tableLayoutPanel4;
         private Label label_val_entregado;
         private Label label_valor_cambio;
-        private Label label_valor_de_cambio;
         private TableLayoutPanel tableLayoutPanel11;
         private TableLayoutPanel tableLayoutPanel12;
         private Button button_consumidor_final;
@@ -1023,11 +1137,9 @@
         private Button button_efectivo;
         private Button button_transferencia;
         private Button button_tarjeta;
-        private TextBox textBox_val_entregado;
         private TableLayoutPanel tableLayoutPanel_datos_placa;
         private TableLayoutPanel tableLayoutPanel16;
         private Label label_valor_cobrar;
-        private Label label_valor_a_cobrar;
         private TableLayoutPanel tableLayoutPanel14;
         private Label label_hora_ingreso;
         private Label label_valor_tiempo;
@@ -1053,5 +1165,14 @@
         private Label label_nombre;
         private Label label_cedula;
         private Button button_actualizar_usuario;
+        private TableLayoutPanel tableLayoutPanel19;
+        private Label label_valor_de_cambio;
+        private FontAwesome.Sharp.IconPictureBox iconPictureBox2;
+        private TableLayoutPanel tableLayoutPanel18;
+        private Label label_valor_a_cobrar;
+        private TableLayoutPanel tableLayoutPanel8;
+        private FontAwesome.Sharp.IconPictureBox iconPictureBox3;
+        private TextBox textBox_val_entregado;
+        private FontAwesome.Sharp.IconPictureBox iconPictureBox1;
     }
 }
