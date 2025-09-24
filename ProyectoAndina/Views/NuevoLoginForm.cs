@@ -86,11 +86,14 @@ namespace ProyectoAndina.Views
                 // Esperar el resultado del login
                 string loginResponse = await _apiService.LoginAsync(correo, password, MacAdrres);
 
-                MessageBox.Show(loginResponse);
-
                 if (loginResponse.StartsWith("Error") || loginResponse.StartsWith("Excepción"))
                 {
                     StylesAlertas.MostrarAlerta(this, "El usuario no existe", "¡Error!", TipoAlerta.Error);
+                    return;
+                }
+                else if (loginResponse.Contains("Número de máquinas superado"))
+                {
+                    StylesAlertas.MostrarAlerta(this, "Se ha superado el número máximo de máquinas permitidas", "¡Error!", TipoAlerta.Error);
                     return;
                 }
 

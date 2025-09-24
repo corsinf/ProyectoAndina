@@ -73,12 +73,16 @@ namespace ProyectoAndina.Views
                     tipo_arqueo = "cierre";
                     cargar_datos_caja_abierta(id_arqueo_caja);
 
+                    tabControl1.SelectedTab = tabPage2;
+
                 }
                 else
                 {
                     tipo_arqueo = "apertura";
                     cargar_datos_caja_abierta(id_arqueo_caja);
                     StylesAlertas.MostrarAlerta(this, "Complete el arqueo de caja para continuar", "¡Error!", TipoAlerta.Error);
+
+                    tabControl1.SelectedTab = tabPage1;
                 }
 
             }
@@ -152,12 +156,16 @@ namespace ProyectoAndina.Views
                 textBox_total_en_caja.Enabled = false;
                 button_cerrar_arqueo.Enabled = false;
                 button_apertura_de_caja.Enabled = false;
+
+                tabControl1.SelectedTab = tabPage1;
             }
             else {
                 textBox_total_en_caja.Enabled = true;
                 button_apertura_de_caja.Enabled = false;
                 button_cerrar_arqueo.Enabled = true;
                 button_valor_cierre.Enabled = true;
+
+                tabControl1.SelectedTab = tabPage2;
             }
             var cajaAbierta = _AperturaCajaController.ObtenerPorId(id_arqueo_caja);
             var cajaEncontrada = _CajaController.ObtenerPorId(cajaAbierta.caja_id);

@@ -49,7 +49,7 @@ namespace ProyectoAndina.Views
             StyleButton.CrearBotonElegante(button_con_datos, FontAwesome.Sharp.IconChar.UserTie);
 
             StyleButton.CrearBotonElegante(button_agregar_user, FontAwesome.Sharp.IconChar.PlusCircle);
-            StyleButton.CrearBotonElegante(button_actualizar_usuario, FontAwesome.Sharp.IconChar.Rotate);
+            //StyleButton.CrearBotonElegante(button_actualizar_usuario, FontAwesome.Sharp.IconChar.Rotate);
 
 
             StyleButton.AplicarEstiloBotonBusqueda(iconPictureBox_search, textBox_buscar_placa);
