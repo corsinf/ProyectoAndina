@@ -124,16 +124,18 @@
             // txtPassword
             // 
             txtPassword.Anchor = AnchorStyles.None;
-            txtPassword.Location = new Point(11, 57);
+            txtPassword.Font = new Font("Segoe UI", 13.8F);
+            txtPassword.Location = new Point(11, 52);
             txtPassword.Name = "txtPassword";
             txtPassword.PasswordChar = '●';
-            txtPassword.Size = new Size(300, 27);
+            txtPassword.Size = new Size(300, 38);
             txtPassword.TabIndex = 8;
             txtPassword.Click += txtPassword_Click;
             // 
             // lblPassword
             // 
             lblPassword.Anchor = AnchorStyles.Left | AnchorStyles.Right;
+            lblPassword.Font = new Font("Segoe UI", 13.8F);
             lblPassword.Location = new Point(3, 8);
             lblPassword.Name = "lblPassword";
             lblPassword.Size = new Size(316, 30);
@@ -144,6 +146,7 @@
             // lblMensaje
             // 
             lblMensaje.Anchor = AnchorStyles.None;
+            lblMensaje.Font = new Font("Segoe UI", 13.8F, FontStyle.Regular, GraphicsUnit.Point, 0);
             lblMensaje.Location = new Point(94, 481);
             lblMensaje.Name = "lblMensaje";
             lblMensaje.Size = new Size(300, 67);
@@ -169,7 +172,7 @@
             // lblSubtitulo
             // 
             lblSubtitulo.Anchor = AnchorStyles.Left | AnchorStyles.Right;
-            lblSubtitulo.Font = new Font("Segoe UI", 10.8F, FontStyle.Regular, GraphicsUnit.Point, 0);
+            lblSubtitulo.Font = new Font("Segoe UI", 12F, FontStyle.Regular, GraphicsUnit.Point, 0);
             lblSubtitulo.Location = new Point(3, 11);
             lblSubtitulo.Name = "lblSubtitulo";
             lblSubtitulo.Size = new Size(316, 25);
@@ -180,7 +183,7 @@
             // lblTitulo
             // 
             lblTitulo.Anchor = AnchorStyles.Left | AnchorStyles.Right;
-            lblTitulo.Font = new Font("Segoe UI", 13.8F, FontStyle.Bold);
+            lblTitulo.Font = new Font("Segoe UI", 16.2F, FontStyle.Bold, GraphicsUnit.Point, 0);
             lblTitulo.Location = new Point(3, 51);
             lblTitulo.Name = "lblTitulo";
             lblTitulo.Size = new Size(316, 40);
@@ -206,15 +209,17 @@
             // txtCorreo
             // 
             txtCorreo.Anchor = AnchorStyles.None;
-            txtCorreo.Location = new Point(11, 57);
+            txtCorreo.Font = new Font("Segoe UI", 13.8F);
+            txtCorreo.Location = new Point(11, 52);
             txtCorreo.Name = "txtCorreo";
-            txtCorreo.Size = new Size(300, 27);
+            txtCorreo.Size = new Size(300, 38);
             txtCorreo.TabIndex = 6;
             txtCorreo.Click += txtCorreo_Click;
             // 
             // lblCedula
             // 
             lblCedula.Anchor = AnchorStyles.Left | AnchorStyles.Right;
+            lblCedula.Font = new Font("Segoe UI", 13.8F);
             lblCedula.Location = new Point(3, 5);
             lblCedula.Name = "lblCedula";
             lblCedula.Size = new Size(316, 37);
@@ -225,6 +230,7 @@
             // btnLogin
             // 
             btnLogin.Anchor = AnchorStyles.None;
+            btnLogin.Font = new Font("Segoe UI", 12F, FontStyle.Regular, GraphicsUnit.Point, 0);
             btnLogin.Location = new Point(94, 384);
             btnLogin.Name = "btnLogin";
             btnLogin.Size = new Size(300, 59);

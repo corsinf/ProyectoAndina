@@ -125,6 +125,7 @@
             tableLayoutPanel5.RowStyles.Add(new RowStyle(SizeType.Percent, 100F));
             tableLayoutPanel5.Size = new Size(247, 68);
             tableLayoutPanel5.TabIndex = 85;
+            tableLayoutPanel5.Click += iconPictureBox_cerrar_session_Click;
             // 
             // label_cerrar_session
             // 
@@ -172,6 +173,7 @@
             tableLayoutPanel_transaccion.RowStyles.Add(new RowStyle(SizeType.Percent, 100F));
             tableLayoutPanel_transaccion.Size = new Size(247, 82);
             tableLayoutPanel_transaccion.TabIndex = 84;
+            tableLayoutPanel_transaccion.Click += iconPictureBox_transacciones_Click;
             // 
             // label_titulo_transacciones
             // 
@@ -228,6 +230,7 @@
             tableLayoutPanel_arqueo.RowStyles.Add(new RowStyle(SizeType.Percent, 100F));
             tableLayoutPanel_arqueo.Size = new Size(247, 82);
             tableLayoutPanel_arqueo.TabIndex = 82;
+            tableLayoutPanel_arqueo.Click += iconPictureBox_arqueo_caja_Click;
             // 
             // label_titulo_arqueo
             // 
@@ -284,6 +287,7 @@
             tableLayoutPanel_admin.RowStyles.Add(new RowStyle(SizeType.Percent, 100F));
             tableLayoutPanel_admin.Size = new Size(247, 82);
             tableLayoutPanel_admin.TabIndex = 86;
+            tableLayoutPanel_admin.Click += iconPictureBox_administracion_Click;
             // 
             // label_administracion
             // 

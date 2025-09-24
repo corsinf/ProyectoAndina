@@ -355,7 +355,7 @@ namespace ProyectoAndina.Views
         private void verificar_monto_arqueo_caja()
         {
 
-            label_total_monto_arqueo_valor.Text = SessionArqueoCaja.montoValidar.ToString();
+            label_total_monto_arqueo_valor.Text = SessionArqueoCaja.montoValidar.ToString("N2");
 
         }
 

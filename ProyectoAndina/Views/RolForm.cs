@@ -83,7 +83,7 @@ namespace ProyectoAndina.Views
         private void AbrirFormularioEdicion(int idRol)
         {
 
-            var RolCrudForm = new RolCrudForm(idRol, this);
+            var RolCrudForm = new RolesCrudForm(idRol, this);
             RolCrudForm.StartPosition = FormStartPosition.CenterParent;
 
             DialogResult resultado = RolCrudForm.ShowDialog(this);
@@ -113,7 +113,7 @@ namespace ProyectoAndina.Views
 
         private void button_agregar_rol_Click(object sender, EventArgs e)
         {
-            var RolCrudForm = new RolCrudForm(0, this);
+            var RolCrudForm = new RolesCrudForm(0, this);
             RolCrudForm.StartPosition = FormStartPosition.CenterParent;
 
             DialogResult resultado = RolCrudForm.ShowDialog(this);

@@ -1,6 +1,6 @@
 ﻿namespace ProyectoAndina.Views
 {
-    partial class RolCrudForm
+    partial class RolesCrudForm
     {
         /// <summary>
         /// Required designer variable.
@@ -171,7 +171,7 @@
             button_accion.UseVisualStyleBackColor = false;
             button_accion.Click += button_accion_Click;
             // 
-            // RolCrudForm
+            // RolesCrudForm
             // 
             AutoScaleDimensions = new SizeF(8F, 20F);
             AutoScaleMode = AutoScaleMode.Font;
@@ -181,8 +181,7 @@
             FormBorderStyle = FormBorderStyle.FixedDialog;
             MaximizeBox = false;
             MinimizeBox = false;
-            Name = "RolCrudForm";
-            Text = "RolesCrudForm";
+            Name = "RolesCrudForm";
             tableLayoutPanel1.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)pictureBox_logo_tipo).EndInit();
             tableLayoutPanel2.ResumeLayout(false);

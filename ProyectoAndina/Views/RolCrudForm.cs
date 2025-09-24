@@ -16,14 +16,14 @@ using static ProyectoAndina.Utils.StylesAlertas;
 
 namespace ProyectoAndina.Views
 {
-    public partial class RolCrudForm : Form
+    public partial class RolesCrudForm : Form
     {
         private readonly RolController _RolController;
         private readonly FuncionesGenerales _FuncionesGenerales;
         private Form _formularioPadre;
         private ValidacionHelper validador;
         public int id;
-        public RolCrudForm(int id_rol, Form formularioPadre = null)
+        public RolesCrudForm(int id_rol, Form formularioPadre = null)
         {
 
             InitializeComponent();

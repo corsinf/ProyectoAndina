@@ -216,7 +216,6 @@
             MaximizeBox = false;
             MinimizeBox = false;
             Name = "CajaCrudForm";
-            Text = "CajasCrudForm";
             tableLayoutPanel1.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)pictureBox_logo_tipo).EndInit();
             tableLayoutPanel2.ResumeLayout(false);

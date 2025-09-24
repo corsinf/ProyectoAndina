@@ -136,10 +136,6 @@ namespace ProyectoAndina.Utils
             {
                 if (boton.Width <= 0 || boton.Height <= 0) return;
 
-                boton.TextAlign = ContentAlignment.BottomCenter;
-                boton.ImageAlign = ContentAlignment.TopCenter;
-                boton.TextImageRelation = TextImageRelation.ImageAboveText;
-
                 float escalaAncho = boton.Width / 120f;
                 float escalaAlto = boton.Height / 80f;
                 float escala = Math.Min(escalaAncho, escalaAlto);
@@ -159,25 +155,79 @@ namespace ProyectoAndina.Utils
                     boton.Font = new Font("Segoe UI", tamanoFuente, FontStyle.Bold);
                 }
 
+                // Determinar si usar layout horizontal o vertical
+                bool debeUsarLayoutHorizontal = false;
+                SizeF tamanoTexto = SizeF.Empty;
+
                 try
                 {
                     using (var g = boton.CreateGraphics())
                     {
-                        var tamanoTexto = g.MeasureString(boton.Text ?? "", boton.Font);
-                        float espacioTotal = boton.Height;
-                        float espacioContenido = tamanoIcono + tamanoTexto.Height;
-                        float espacioLibre = espacioTotal - espacioContenido;
+                        tamanoTexto = g.MeasureString(boton.Text ?? "", boton.Font);
 
-                        int espacioSuperior = Math.Max(4, (int)(espacioLibre * 0.4f));
-                        int espacioInferior = Math.Max(4, (int)(espacioLibre * 0.4f));
+                        // Verificar si el layout vertical causaría superposición
+                        float espacioNecesarioVertical = tamanoIcono + tamanoTexto.Height + 12; // 12px de separación mínima
+                        float espacioNecesarioHorizontal = tamanoIcono + tamanoTexto.Width + 16; // 16px de separación mínima
 
-                        boton.Padding = new Padding(6, espacioSuperior, 6, espacioInferior);
+                        // Solo usar horizontal si:
+                        // 1. El contenido vertical definitivamente no cabe (con margen de seguridad)
+                        // 2. Y el contenido horizontal sí cabe bien
+                        // 3. Y el botón es claramente más ancho que alto
+                        if (espacioNecesarioVertical > boton.Height - 4 && // No cabe verticalmente (margen pequeño)
+                            espacioNecesarioHorizontal <= boton.Width - 8 && // Sí cabe horizontalmente
+                            boton.Width > boton.Height * 2.2f) // Solo si es muy ancho
+                        {
+                            debeUsarLayoutHorizontal = true;
+                        }
                     }
                 }
                 catch
                 {
-                    int paddingVertical = Math.Max(4, boton.Height / 8);
-                    boton.Padding = new Padding(6, paddingVertical, 6, paddingVertical);
+                    tamanoTexto = new SizeF(boton.Text?.Length * tamanoFuente * 0.6f ?? 0, tamanoFuente * 1.2f);
+                }
+
+                if (debeUsarLayoutHorizontal)
+                {
+                    // Layout horizontal: ícono a la izquierda, texto a la derecha
+                    boton.TextAlign = ContentAlignment.MiddleCenter;
+                    boton.ImageAlign = ContentAlignment.MiddleLeft;
+                    boton.TextImageRelation = TextImageRelation.ImageBeforeText;
+
+                    // Calcular padding para centrar el contenido
+                    int espacioTotal = boton.Width;
+                    int espacioContenido = tamanoIcono + (int)tamanoTexto.Width + 8; // 8px de separación
+                    int espacioLibre = Math.Max(0, espacioTotal - espacioContenido);
+                    int paddingLateral = espacioLibre / 2;
+
+                    boton.Padding = new Padding(Math.Max(4, paddingLateral), 4, Math.Max(4, paddingLateral), 4);
+                }
+                else
+                {
+                    // Layout vertical original: ícono arriba, texto abajo
+                    boton.TextAlign = ContentAlignment.BottomCenter;
+                    boton.ImageAlign = ContentAlignment.TopCenter;
+                    boton.TextImageRelation = TextImageRelation.ImageAboveText;
+
+                    try
+                    {
+                        using (var g = boton.CreateGraphics())
+                        {
+                            var tamanoTextoMedido = g.MeasureString(boton.Text ?? "", boton.Font);
+                            float espacioTotal = boton.Height;
+                            float espacioContenido = tamanoIcono + tamanoTextoMedido.Height;
+                            float espacioLibre = espacioTotal - espacioContenido;
+
+                            int espacioSuperior = Math.Max(4, (int)(espacioLibre * 0.4f));
+                            int espacioInferior = Math.Max(4, (int)(espacioLibre * 0.4f));
+
+                            boton.Padding = new Padding(6, espacioSuperior, 6, espacioInferior);
+                        }
+                    }
+                    catch
+                    {
+                        int paddingVertical = Math.Max(4, boton.Height / 8);
+                        boton.Padding = new Padding(6, paddingVertical, 6, paddingVertical);
+                    }
                 }
 
                 RedimensionarIcono(boton, icono, tamanoIcono);

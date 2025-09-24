@@ -36,7 +36,7 @@ using System.Threading.Tasks;
 
             public string GetConnectionString()
             {
-                return $"Server={Server},{Port};Database={Database};User Id={User};Password={Password};TrustServerCertificate=True;";
+                return $"Server={Server};Database={Database};User Id={User};Password={Password};TrustServerCertificate=True;";
             }
         }
 

@@ -84,24 +84,20 @@ namespace ProyectoAndina.Helper
             if (string.IsNullOrWhiteSpace(input))
                 return 0m;
 
-            // 1. Limpiar espacios y caracteres no permitidos (solo dígitos, . o ,)
-            string limpio = Regex.Replace(input.Trim(), @"[^0-9\.,]", "");
+            string limpio = input.Trim();
 
-            if (string.IsNullOrWhiteSpace(limpio))
-                throw new FormatException("El valor ingresado no contiene números válidos.");
+            // Quitar separadores de miles (puntos o comas que estén en grupos de miles)
+            limpio = Regex.Replace(limpio, @"(?<=\d)[.,](?=\d{3}(\D|$))", "");
 
-            // 2. Normalizar: cambiar coma por punto
+            // Reemplazar coma decimal por punto
             limpio = limpio.Replace(",", ".");
 
-            // 3. Validar formato decimal correcto (máx 1 punto decimal)
+            // Validar que no haya más de un punto decimal
             if (Regex.Matches(limpio, @"\.").Count > 1)
                 throw new FormatException("Formato decimal inválido. Solo un separador decimal permitido.");
 
-            // 4. Intentar parsear con cultura invariante
             if (decimal.TryParse(limpio, NumberStyles.AllowDecimalPoint, CultureInfo.InvariantCulture, out decimal valor))
-            {
                 return valor;
-            }
 
             throw new FormatException("No se pudo convertir el valor a número válido.");
         }

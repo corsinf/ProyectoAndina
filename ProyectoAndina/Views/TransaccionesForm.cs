@@ -180,6 +180,12 @@ namespace ProyectoAndina.Views
         {
             dgvDatos.Columns.Clear();
 
+            dgvDatos.Columns.Add(new DataGridViewTextBoxColumn
+            {
+                Name = "trans_id",
+                HeaderText = "ID",
+                Visible = false
+            });
 
             dgvDatos.Columns.Add(new DataGridViewTextBoxColumn
             {

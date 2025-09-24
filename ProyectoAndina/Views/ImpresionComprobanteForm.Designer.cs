@@ -139,7 +139,6 @@
             MaximizeBox = false;
             MinimizeBox = false;
             Name = "ImpresionComprobanteForm";
-            Text = "ImpresionComprobanteForm";
             Load += ImpresionComprobanteForm_Load;
             tableLayoutPanel1.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)pictureBox_logo_tipo).EndInit();

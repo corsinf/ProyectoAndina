@@ -84,16 +84,26 @@ namespace ProyectoAndina.Views
             {
 
                 // Esperar el resultado del login
+
                 string loginResponse = await _apiService.LoginAsync(correo, password, MacAdrres);
 
-                if (loginResponse.StartsWith("Error") || loginResponse.StartsWith("Excepción"))
+                if (loginResponse.StartsWith("Error"))
                 {
-                    StylesAlertas.MostrarAlerta(this, "El usuario no existe", "¡Error!", TipoAlerta.Error);
-                    return;
-                }
-                else if (loginResponse.Contains("Número de máquinas superado"))
-                {
-                    StylesAlertas.MostrarAlerta(this, "Se ha superado el número máximo de máquinas permitidas", "¡Error!", TipoAlerta.Error);
+                    string mensajeError = "Error desconocido";
+
+                    // Buscar el mensaje entre "error":" y "}
+                    int inicioError = loginResponse.IndexOf("\"error\":\"");
+                    if (inicioError != -1)
+                    {
+                        inicioError += 9; // Saltar "error":"
+                        int finError = loginResponse.IndexOf("\"", inicioError);
+                        if (finError != -1)
+                        {
+                            mensajeError = loginResponse.Substring(inicioError, finError - inicioError);
+                        }
+                    }
+
+                    StylesAlertas.MostrarAlerta(this, mensajeError, "¡Error!", TipoAlerta.Error);
                     return;
                 }
 

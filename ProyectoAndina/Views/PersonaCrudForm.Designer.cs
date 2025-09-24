@@ -329,7 +329,6 @@
             MaximizeBox = false;
             MinimizeBox = false;
             Name = "PersonaCrudForm";
-            Text = "PersonasCrudForm";
             tableLayoutPanel_logueado.ResumeLayout(false);
             tableLayoutPanel_logueado.PerformLayout();
             panel1.ResumeLayout(false);

@@ -111,7 +111,13 @@ namespace ProyectoAndina.Views
         {
             dgvDatos.Columns.Clear();
 
-            
+            dgvDatos.Columns.Add(new DataGridViewTextBoxColumn
+            {
+                Name = "arqueo_id",
+                HeaderText = "ID",
+                Visible = false
+            });
+
             dgvDatos.Columns.Add(new DataGridViewTextBoxColumn
             {
                 Name = "monto_inicial",

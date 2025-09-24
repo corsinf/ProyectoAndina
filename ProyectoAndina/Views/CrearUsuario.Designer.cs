@@ -220,7 +220,6 @@
             MaximizeBox = false;
             MinimizeBox = false;
             Name = "CrearUsuario";
-            Text = "Crear Usuario";
             tableLayoutPanel1.ResumeLayout(false);
             panel_titulo.ResumeLayout(false);
             panel_titulo.PerformLayout();

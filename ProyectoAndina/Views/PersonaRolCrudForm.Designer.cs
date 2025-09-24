@@ -32,6 +32,7 @@
             pictureBox_logo_tipo = new PictureBox();
             tableLayoutPanel2 = new TableLayoutPanel();
             panel_formulario = new Panel();
+            textBox_id_persona = new TextBox();
             textBox_nombre_persona = new TextBox();
             label_personas = new Label();
             comboBox_personas = new ComboBox();
@@ -39,7 +40,6 @@
             comboBox_roles = new ComboBox();
             tableLayoutPanel3 = new TableLayoutPanel();
             button_accion = new Button();
-            textBox_id_persona = new TextBox();
             tableLayoutPanel1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)pictureBox_logo_tipo).BeginInit();
             tableLayoutPanel2.SuspendLayout();
@@ -104,6 +104,16 @@
             panel_formulario.Size = new Size(431, 236);
             panel_formulario.TabIndex = 92;
             // 
+            // textBox_id_persona
+            // 
+            textBox_id_persona.Enabled = false;
+            textBox_id_persona.Font = new Font("Segoe UI", 16.2F, FontStyle.Regular, GraphicsUnit.Point, 0);
+            textBox_id_persona.Location = new Point(177, 83);
+            textBox_id_persona.Name = "textBox_id_persona";
+            textBox_id_persona.Size = new Size(69, 43);
+            textBox_id_persona.TabIndex = 78;
+            textBox_id_persona.Visible = false;
+            // 
             // textBox_nombre_persona
             // 
             textBox_nombre_persona.Enabled = false;
@@ -126,17 +136,16 @@
             // 
             // comboBox_personas
             // 
+            comboBox_personas.DropDownHeight = 300;
+            comboBox_personas.DropDownStyle = ComboBoxStyle.DropDownList;
             comboBox_personas.Font = new Font("Segoe UI", 16.2F);
             comboBox_personas.FormattingEnabled = true;
+            comboBox_personas.IntegralHeight = false;
             comboBox_personas.Location = new Point(177, 32);
+            comboBox_personas.MaxDropDownItems = 10;
             comboBox_personas.Name = "comboBox_personas";
             comboBox_personas.Size = new Size(195, 45);
             comboBox_personas.TabIndex = 73;
-            comboBox_personas.DropDownStyle = ComboBoxStyle.DropDownList; // opcional
-            comboBox_personas.MaxDropDownItems = 10;  // máximo de ítems visibles
-            comboBox_personas.IntegralHeight = false; // evita que Windows ajuste automáticamente
-            comboBox_personas.MaxDropDownItems = 10;  // máximo de ítems visibles
-            comboBox_personas.DropDownHeight = 300;   // altura máxima
             // 
             // label_roles
             // 
@@ -150,17 +159,16 @@
             // 
             // comboBox_roles
             // 
+            comboBox_roles.DropDownHeight = 300;
+            comboBox_roles.DropDownStyle = ComboBoxStyle.DropDownList;
             comboBox_roles.Font = new Font("Segoe UI", 16.2F);
             comboBox_roles.FormattingEnabled = true;
+            comboBox_roles.IntegralHeight = false;
             comboBox_roles.Location = new Point(177, 137);
+            comboBox_roles.MaxDropDownItems = 10;
             comboBox_roles.Name = "comboBox_roles";
             comboBox_roles.Size = new Size(195, 45);
             comboBox_roles.TabIndex = 74;
-            comboBox_roles.DropDownStyle = ComboBoxStyle.DropDownList; // opcional
-            comboBox_roles.MaxDropDownItems = 10;  // máximo de ítems visibles
-            comboBox_roles.IntegralHeight = false; // evita que Windows ajuste automáticamente
-            comboBox_roles.MaxDropDownItems = 10;  // máximo de ítems visibles
-            comboBox_roles.DropDownHeight = 300;   // altura máxima
             // 
             // tableLayoutPanel3
             // 
@@ -195,16 +203,6 @@
             button_accion.UseVisualStyleBackColor = false;
             button_accion.Click += button_accion_Click;
             // 
-            // textBox_id_persona
-            // 
-            textBox_id_persona.Enabled = false;
-            textBox_id_persona.Font = new Font("Segoe UI", 16.2F, FontStyle.Regular, GraphicsUnit.Point, 0);
-            textBox_id_persona.Location = new Point(177, 83);
-            textBox_id_persona.Name = "textBox_id_persona";
-            textBox_id_persona.Size = new Size(69, 43);
-            textBox_id_persona.TabIndex = 78;
-            textBox_id_persona.Visible = false;
-            // 
             // PersonaRolCrudForm
             // 
             AutoScaleDimensions = new SizeF(8F, 20F);
@@ -216,7 +214,6 @@
             MaximizeBox = false;
             MinimizeBox = false;
             Name = "PersonaRolCrudForm";
-            Text = "PersonasRolForm";
             tableLayoutPanel1.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)pictureBox_logo_tipo).EndInit();
             tableLayoutPanel2.ResumeLayout(false);
