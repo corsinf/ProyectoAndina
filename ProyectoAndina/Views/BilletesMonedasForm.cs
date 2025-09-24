@@ -407,7 +407,7 @@ namespace ProyectoAndina.Views
             total += ToInt(textBox_1_ctvs.Text) * 0.01m;
 
             // Mostrar el total (ejemplo en un Label)
-            label_total_monto_valor.Text = $"{total:C2}"; // ejemplo → $123.45
+            label_total_monto_valor.Text = total.ToString("N2");
         }
     }
 

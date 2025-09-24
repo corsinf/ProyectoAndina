@@ -541,7 +541,7 @@ namespace ProyectoAndina.Services
         #region AUTENTICACION
 
         // Login - obtener token de autenticación
-        public async Task<string> LoginAsync(string usuario, string clave)
+        public async Task<string> LoginAsync(string usuario, string clave, string MAC)
         {
             try
             {
@@ -552,7 +552,8 @@ namespace ProyectoAndina.Services
                 var loginData = new
                 {
                     usuario = usuario,
-                    clave = clave
+                    clave = clave,
+                    MAC = MAC
                 };
 
                 string jsonContent = JsonConvert.SerializeObject(loginData);

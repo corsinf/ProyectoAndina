@@ -29,9 +29,7 @@
         private void InitializeComponent()
         {
             tableLayoutPanel_logueado = new TableLayoutPanel();
-            pictureBox1 = new PictureBox();
             label_titulo_usuarios = new Label();
-            iconButton_regresar = new FontAwesome.Sharp.IconButton();
             tableLayoutPanel1 = new TableLayoutPanel();
             tableLayoutPanel2 = new TableLayoutPanel();
             label_titulo_acciones = new Label();
@@ -47,7 +45,6 @@
             txtBuscar = new TextBox();
             cmbRegistrosPorPagina = new ComboBox();
             tableLayoutPanel_logueado.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)pictureBox1).BeginInit();
             tableLayoutPanel1.SuspendLayout();
             tableLayoutPanel2.SuspendLayout();
             tableLayoutPanel3.SuspendLayout();
@@ -62,9 +59,7 @@
             tableLayoutPanel_logueado.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 25F));
             tableLayoutPanel_logueado.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 50F));
             tableLayoutPanel_logueado.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 25F));
-            tableLayoutPanel_logueado.Controls.Add(pictureBox1, 2, 0);
             tableLayoutPanel_logueado.Controls.Add(label_titulo_usuarios, 1, 0);
-            tableLayoutPanel_logueado.Controls.Add(iconButton_regresar, 0, 0);
             tableLayoutPanel_logueado.Dock = DockStyle.Top;
             tableLayoutPanel_logueado.Location = new Point(0, 0);
             tableLayoutPanel_logueado.Name = "tableLayoutPanel_logueado";
@@ -73,52 +68,18 @@
             tableLayoutPanel_logueado.Size = new Size(1113, 77);
             tableLayoutPanel_logueado.TabIndex = 110;
             // 
-            // pictureBox1
-            // 
-            pictureBox1.Dock = DockStyle.Fill;
-            pictureBox1.Image = Properties.Resources.Logotipo_color;
-            pictureBox1.Location = new Point(837, 3);
-            pictureBox1.Name = "pictureBox1";
-            pictureBox1.Size = new Size(273, 71);
-            pictureBox1.SizeMode = PictureBoxSizeMode.Zoom;
-            pictureBox1.TabIndex = 80;
-            pictureBox1.TabStop = false;
-            // 
             // label_titulo_usuarios
             // 
             label_titulo_usuarios.Anchor = AnchorStyles.Left | AnchorStyles.Right;
             label_titulo_usuarios.AutoSize = true;
-            label_titulo_usuarios.Font = new Font("Segoe UI", 16F, FontStyle.Bold);
+            label_titulo_usuarios.Font = new Font("Segoe UI", 28.2F, FontStyle.Bold, GraphicsUnit.Point, 0);
             label_titulo_usuarios.ForeColor = Color.FromArgb(30, 60, 120);
-            label_titulo_usuarios.Location = new Point(281, 20);
+            label_titulo_usuarios.Location = new Point(281, 7);
             label_titulo_usuarios.Name = "label_titulo_usuarios";
-            label_titulo_usuarios.Size = new Size(550, 37);
+            label_titulo_usuarios.Size = new Size(550, 62);
             label_titulo_usuarios.TabIndex = 79;
-            label_titulo_usuarios.Text = "Lista de usuarios";
+            label_titulo_usuarios.Text = "Usuarios";
             label_titulo_usuarios.TextAlign = ContentAlignment.MiddleCenter;
-            // 
-            // iconButton_regresar
-            // 
-            iconButton_regresar.Anchor = AnchorStyles.None;
-            iconButton_regresar.BackColor = Color.FromArgb(255, 128, 128);
-            iconButton_regresar.Cursor = Cursors.Hand;
-            iconButton_regresar.FlatAppearance.BorderSize = 0;
-            iconButton_regresar.FlatStyle = FlatStyle.Flat;
-            iconButton_regresar.Font = new Font("Segoe UI", 10F, FontStyle.Bold);
-            iconButton_regresar.ForeColor = Color.White;
-            iconButton_regresar.IconChar = FontAwesome.Sharp.IconChar.ArrowLeft;
-            iconButton_regresar.IconColor = Color.White;
-            iconButton_regresar.IconFont = FontAwesome.Sharp.IconFont.Auto;
-            iconButton_regresar.IconSize = 24;
-            iconButton_regresar.Location = new Point(23, 7);
-            iconButton_regresar.Name = "iconButton_regresar";
-            iconButton_regresar.Size = new Size(232, 63);
-            iconButton_regresar.TabIndex = 29;
-            iconButton_regresar.Text = "  Regresar";
-            iconButton_regresar.TextAlign = ContentAlignment.MiddleRight;
-            iconButton_regresar.TextImageRelation = TextImageRelation.ImageBeforeText;
-            iconButton_regresar.UseVisualStyleBackColor = false;
-            iconButton_regresar.Click += iconButton_regresar_Click;
             // 
             // tableLayoutPanel1
             // 
@@ -315,17 +276,17 @@
             // 
             AutoScaleDimensions = new SizeF(8F, 20F);
             AutoScaleMode = AutoScaleMode.Font;
+            BackColor = Color.White;
             ClientSize = new Size(1113, 559);
             Controls.Add(tableLayoutPanel1);
             Controls.Add(tableLayoutPanel_logueado);
-            FormBorderStyle = FormBorderStyle.FixedDialog;
+            FormBorderStyle = FormBorderStyle.None;
             MinimizeBox = false;
             Name = "PersonaForm";
             Text = "PersonasForm";
             WindowState = FormWindowState.Maximized;
             tableLayoutPanel_logueado.ResumeLayout(false);
             tableLayoutPanel_logueado.PerformLayout();
-            ((System.ComponentModel.ISupportInitialize)pictureBox1).EndInit();
             tableLayoutPanel1.ResumeLayout(false);
             tableLayoutPanel2.ResumeLayout(false);
             tableLayoutPanel2.PerformLayout();
@@ -343,7 +304,6 @@
         private TableLayoutPanel tableLayoutPanel1;
         private TableLayoutPanel tableLayoutPanel2;
         private Label label_titulo_acciones;
-        private PictureBox pictureBox1;
         private Button button_agregar_persona;
         private TableLayoutPanel tableLayoutPanel3;
         private Button btnUltima;
@@ -355,6 +315,5 @@
         private TextBox txtBuscar;
         private ComboBox cmbRegistrosPorPagina;
         private TableLayoutPanel tableLayoutPanel4;
-        private FontAwesome.Sharp.IconButton iconButton_regresar;
     }
 }

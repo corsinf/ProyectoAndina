@@ -29,9 +29,7 @@
         private void InitializeComponent()
         {
             tableLayoutPanel_logueado = new TableLayoutPanel();
-            pictureBox1 = new PictureBox();
             label_titulo_persona_rol = new Label();
-            button_regresar = new FontAwesome.Sharp.IconButton();
             tableLayoutPanel1 = new TableLayoutPanel();
             tableLayoutPanel2 = new TableLayoutPanel();
             label_titulo_acciones = new Label();
@@ -47,7 +45,6 @@
             cmbRegistrosPorPagina = new ComboBox();
             label_info = new Label();
             tableLayoutPanel_logueado.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)pictureBox1).BeginInit();
             tableLayoutPanel1.SuspendLayout();
             tableLayoutPanel2.SuspendLayout();
             tableLayoutPanel3.SuspendLayout();
@@ -62,9 +59,7 @@
             tableLayoutPanel_logueado.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 25F));
             tableLayoutPanel_logueado.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 50F));
             tableLayoutPanel_logueado.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 25F));
-            tableLayoutPanel_logueado.Controls.Add(pictureBox1, 2, 0);
             tableLayoutPanel_logueado.Controls.Add(label_titulo_persona_rol, 1, 0);
-            tableLayoutPanel_logueado.Controls.Add(button_regresar, 0, 0);
             tableLayoutPanel_logueado.Dock = DockStyle.Top;
             tableLayoutPanel_logueado.Location = new Point(0, 0);
             tableLayoutPanel_logueado.Name = "tableLayoutPanel_logueado";
@@ -74,52 +69,18 @@
             tableLayoutPanel_logueado.Size = new Size(1067, 77);
             tableLayoutPanel_logueado.TabIndex = 110;
             // 
-            // pictureBox1
-            // 
-            pictureBox1.Dock = DockStyle.Fill;
-            pictureBox1.Image = Properties.Resources.Logotipo_color;
-            pictureBox1.Location = new Point(802, 3);
-            pictureBox1.Name = "pictureBox1";
-            pictureBox1.Size = new Size(262, 71);
-            pictureBox1.SizeMode = PictureBoxSizeMode.Zoom;
-            pictureBox1.TabIndex = 80;
-            pictureBox1.TabStop = false;
-            // 
             // label_titulo_persona_rol
             // 
             label_titulo_persona_rol.Anchor = AnchorStyles.Left | AnchorStyles.Right;
             label_titulo_persona_rol.AutoSize = true;
-            label_titulo_persona_rol.Font = new Font("Segoe UI", 16F, FontStyle.Bold);
+            label_titulo_persona_rol.Font = new Font("Segoe UI", 28.2F, FontStyle.Bold, GraphicsUnit.Point, 0);
             label_titulo_persona_rol.ForeColor = Color.FromArgb(30, 60, 120);
-            label_titulo_persona_rol.Location = new Point(269, 20);
+            label_titulo_persona_rol.Location = new Point(269, 7);
             label_titulo_persona_rol.Name = "label_titulo_persona_rol";
-            label_titulo_persona_rol.Size = new Size(527, 37);
+            label_titulo_persona_rol.Size = new Size(527, 62);
             label_titulo_persona_rol.TabIndex = 79;
-            label_titulo_persona_rol.Text = "Lista de persona con rol";
+            label_titulo_persona_rol.Text = "Asignación de rol";
             label_titulo_persona_rol.TextAlign = ContentAlignment.MiddleCenter;
-            // 
-            // button_regresar
-            // 
-            button_regresar.Anchor = AnchorStyles.None;
-            button_regresar.BackColor = Color.FromArgb(255, 128, 128);
-            button_regresar.Cursor = Cursors.Hand;
-            button_regresar.FlatAppearance.BorderSize = 0;
-            button_regresar.FlatStyle = FlatStyle.Flat;
-            button_regresar.Font = new Font("Segoe UI", 10F, FontStyle.Bold);
-            button_regresar.ForeColor = Color.White;
-            button_regresar.IconChar = FontAwesome.Sharp.IconChar.ArrowLeft;
-            button_regresar.IconColor = Color.White;
-            button_regresar.IconFont = FontAwesome.Sharp.IconFont.Auto;
-            button_regresar.IconSize = 24;
-            button_regresar.Location = new Point(17, 7);
-            button_regresar.Name = "button_regresar";
-            button_regresar.Size = new Size(232, 63);
-            button_regresar.TabIndex = 29;
-            button_regresar.Text = "  Regresar";
-            button_regresar.TextAlign = ContentAlignment.MiddleRight;
-            button_regresar.TextImageRelation = TextImageRelation.ImageBeforeText;
-            button_regresar.UseVisualStyleBackColor = false;
-            button_regresar.Click += button_regresar_Click;
             // 
             // tableLayoutPanel1
             // 
@@ -319,7 +280,7 @@
             ClientSize = new Size(1067, 526);
             Controls.Add(tableLayoutPanel1);
             Controls.Add(tableLayoutPanel_logueado);
-            FormBorderStyle = FormBorderStyle.FixedDialog;
+            FormBorderStyle = FormBorderStyle.None;
             MaximizeBox = false;
             MinimizeBox = false;
             Name = "PersonaRolForm";
@@ -327,7 +288,6 @@
             WindowState = FormWindowState.Maximized;
             tableLayoutPanel_logueado.ResumeLayout(false);
             tableLayoutPanel_logueado.PerformLayout();
-            ((System.ComponentModel.ISupportInitialize)pictureBox1).EndInit();
             tableLayoutPanel1.ResumeLayout(false);
             tableLayoutPanel2.ResumeLayout(false);
             tableLayoutPanel2.PerformLayout();
@@ -342,8 +302,6 @@
 
         private TableLayoutPanel tableLayoutPanel_logueado;
         private Label label_titulo_persona_rol;
-        private FontAwesome.Sharp.IconButton button_regresar;
-        private PictureBox pictureBox1;
         private TableLayoutPanel tableLayoutPanel1;
         private TableLayoutPanel tableLayoutPanel2;
         private Label label_titulo_acciones;

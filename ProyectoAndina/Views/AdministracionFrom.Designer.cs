@@ -28,6 +28,7 @@
         /// </summary>
         private void InitializeComponent()
         {
+            panel_contenedor = new Panel();
             tableLayoutPanel_contenido = new TableLayoutPanel();
             panel1 = new Panel();
             tableLayoutPanel_transacciones = new TableLayoutPanel();
@@ -53,10 +54,9 @@
             tableLayoutPanel_personas = new TableLayoutPanel();
             pictureBox_personas = new PictureBox();
             label_titulo_persona = new Label();
-            label_titulo_administración = new Label();
-            iconButton_regresar = new FontAwesome.Sharp.IconButton();
-            pictureBox_logo_tipo = new PictureBox();
             tableLayoutPanel_contenedor_uno = new TableLayoutPanel();
+            label_titulo_administración = new Label();
+            panel_contenedor.SuspendLayout();
             tableLayoutPanel_contenido.SuspendLayout();
             panel1.SuspendLayout();
             tableLayoutPanel_transacciones.SuspendLayout();
@@ -76,9 +76,18 @@
             panel_persona_container.SuspendLayout();
             tableLayoutPanel_personas.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)pictureBox_personas).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)pictureBox_logo_tipo).BeginInit();
             tableLayoutPanel_contenedor_uno.SuspendLayout();
             SuspendLayout();
+            // 
+            // panel_contenedor
+            // 
+            panel_contenedor.Controls.Add(tableLayoutPanel_contenido);
+            panel_contenedor.Controls.Add(tableLayoutPanel_contenedor_uno);
+            panel_contenedor.Dock = DockStyle.Fill;
+            panel_contenedor.Location = new Point(0, 0);
+            panel_contenedor.Name = "panel_contenedor";
+            panel_contenedor.Size = new Size(1220, 971);
+            panel_contenedor.TabIndex = 0;
             // 
             // tableLayoutPanel_contenido
             // 
@@ -101,7 +110,7 @@
             tableLayoutPanel_contenido.RowStyles.Add(new RowStyle(SizeType.Percent, 49.7524757F));
             tableLayoutPanel_contenido.RowStyles.Add(new RowStyle(SizeType.Absolute, 20F));
             tableLayoutPanel_contenido.Size = new Size(1220, 847);
-            tableLayoutPanel_contenido.TabIndex = 91;
+            tableLayoutPanel_contenido.TabIndex = 93;
             // 
             // panel1
             // 
@@ -127,7 +136,6 @@
             tableLayoutPanel_transacciones.RowStyles.Add(new RowStyle(SizeType.Percent, 23.3766232F));
             tableLayoutPanel_transacciones.Size = new Size(271, 308);
             tableLayoutPanel_transacciones.TabIndex = 83;
-            tableLayoutPanel_transacciones.Click += tableLayoutPanel_transacciones_Click;
             // 
             // label_transacciones
             // 
@@ -178,7 +186,6 @@
             tableLayoutPanel_arqueo_cajas.RowStyles.Add(new RowStyle(SizeType.Percent, 23.3766232F));
             tableLayoutPanel_arqueo_cajas.Size = new Size(271, 308);
             tableLayoutPanel_arqueo_cajas.TabIndex = 82;
-            tableLayoutPanel_arqueo_cajas.Click += tableLayoutPanel_arqueo_cajas_Click;
             // 
             // label_titulo_arqueo
             // 
@@ -229,7 +236,6 @@
             tableLayoutPanel_cajas.RowStyles.Add(new RowStyle(SizeType.Percent, 25.3246746F));
             tableLayoutPanel_cajas.Size = new Size(271, 308);
             tableLayoutPanel_cajas.TabIndex = 0;
-            tableLayoutPanel_cajas.Click += tableLayoutPanel_cajas_Click;
             // 
             // label_titulo_caja
             // 
@@ -280,7 +286,6 @@
             tableLayoutPanel_asignar_rol.RowStyles.Add(new RowStyle(SizeType.Percent, 24.5161285F));
             tableLayoutPanel_asignar_rol.Size = new Size(265, 310);
             tableLayoutPanel_asignar_rol.TabIndex = 86;
-            tableLayoutPanel_asignar_rol.Click += tableLayoutPanel_asignar_rol_Click;
             // 
             // label_titulo_asignar_rol
             // 
@@ -331,7 +336,6 @@
             tableLayoutPanel_rol.RowStyles.Add(new RowStyle(SizeType.Percent, 24.8387089F));
             tableLayoutPanel_rol.Size = new Size(271, 310);
             tableLayoutPanel_rol.TabIndex = 0;
-            tableLayoutPanel_rol.Click += tableLayoutPanel_rol_Click;
             // 
             // label_titulo_rol
             // 
@@ -382,7 +386,6 @@
             tableLayoutPanel_personas.RowStyles.Add(new RowStyle(SizeType.Absolute, 72F));
             tableLayoutPanel_personas.Size = new Size(271, 310);
             tableLayoutPanel_personas.TabIndex = 0;
-            tableLayoutPanel_personas.Click += tableLayoutPanel_personas_Click;
             // 
             // pictureBox_personas
             // 
@@ -409,54 +412,6 @@
             label_titulo_persona.Text = "Personas";
             label_titulo_persona.TextAlign = ContentAlignment.MiddleCenter;
             // 
-            // label_titulo_administración
-            // 
-            label_titulo_administración.Anchor = AnchorStyles.Left | AnchorStyles.Right;
-            label_titulo_administración.AutoSize = true;
-            label_titulo_administración.Font = new Font("Segoe UI", 16F, FontStyle.Bold);
-            label_titulo_administración.ForeColor = Color.FromArgb(30, 60, 120);
-            label_titulo_administración.Location = new Point(308, 33);
-            label_titulo_administración.Name = "label_titulo_administración";
-            label_titulo_administración.RightToLeft = RightToLeft.Yes;
-            label_titulo_administración.Size = new Size(604, 37);
-            label_titulo_administración.TabIndex = 10;
-            label_titulo_administración.Text = "Todo sobre administración";
-            label_titulo_administración.TextAlign = ContentAlignment.MiddleCenter;
-            // 
-            // iconButton_regresar
-            // 
-            iconButton_regresar.Anchor = AnchorStyles.None;
-            iconButton_regresar.BackColor = Color.FromArgb(255, 128, 128);
-            iconButton_regresar.Cursor = Cursors.Hand;
-            iconButton_regresar.FlatAppearance.BorderSize = 0;
-            iconButton_regresar.FlatStyle = FlatStyle.Flat;
-            iconButton_regresar.Font = new Font("Segoe UI", 10F, FontStyle.Bold);
-            iconButton_regresar.ForeColor = Color.White;
-            iconButton_regresar.IconChar = FontAwesome.Sharp.IconChar.ArrowLeft;
-            iconButton_regresar.IconColor = Color.White;
-            iconButton_regresar.IconFont = FontAwesome.Sharp.IconFont.Auto;
-            iconButton_regresar.IconSize = 24;
-            iconButton_regresar.Location = new Point(63, 26);
-            iconButton_regresar.Name = "iconButton_regresar";
-            iconButton_regresar.Size = new Size(179, 52);
-            iconButton_regresar.TabIndex = 80;
-            iconButton_regresar.Text = "  Regresar";
-            iconButton_regresar.TextAlign = ContentAlignment.MiddleRight;
-            iconButton_regresar.TextImageRelation = TextImageRelation.ImageBeforeText;
-            iconButton_regresar.UseVisualStyleBackColor = false;
-            iconButton_regresar.Click += iconButton_regresar_Click;
-            // 
-            // pictureBox_logo_tipo
-            // 
-            pictureBox_logo_tipo.Dock = DockStyle.Fill;
-            pictureBox_logo_tipo.Image = Properties.Resources.Logotipo_color;
-            pictureBox_logo_tipo.Location = new Point(918, 3);
-            pictureBox_logo_tipo.Name = "pictureBox_logo_tipo";
-            pictureBox_logo_tipo.Size = new Size(299, 98);
-            pictureBox_logo_tipo.SizeMode = PictureBoxSizeMode.Zoom;
-            pictureBox_logo_tipo.TabIndex = 81;
-            pictureBox_logo_tipo.TabStop = false;
-            // 
             // tableLayoutPanel_contenedor_uno
             // 
             tableLayoutPanel_contenedor_uno.BackColor = Color.Transparent;
@@ -464,8 +419,6 @@
             tableLayoutPanel_contenedor_uno.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 25F));
             tableLayoutPanel_contenedor_uno.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 50F));
             tableLayoutPanel_contenedor_uno.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 25F));
-            tableLayoutPanel_contenedor_uno.Controls.Add(pictureBox_logo_tipo, 2, 0);
-            tableLayoutPanel_contenedor_uno.Controls.Add(iconButton_regresar, 0, 0);
             tableLayoutPanel_contenedor_uno.Controls.Add(label_titulo_administración, 1, 0);
             tableLayoutPanel_contenedor_uno.Dock = DockStyle.Top;
             tableLayoutPanel_contenedor_uno.Location = new Point(0, 0);
@@ -474,20 +427,35 @@
             tableLayoutPanel_contenedor_uno.RowStyles.Add(new RowStyle(SizeType.Percent, 100F));
             tableLayoutPanel_contenedor_uno.RowStyles.Add(new RowStyle(SizeType.Absolute, 20F));
             tableLayoutPanel_contenedor_uno.Size = new Size(1220, 124);
-            tableLayoutPanel_contenedor_uno.TabIndex = 90;
+            tableLayoutPanel_contenedor_uno.TabIndex = 92;
+            // 
+            // label_titulo_administración
+            // 
+            label_titulo_administración.Anchor = AnchorStyles.Left | AnchorStyles.Right;
+            label_titulo_administración.AutoSize = true;
+            label_titulo_administración.Font = new Font("Segoe UI", 28.2F, FontStyle.Bold, GraphicsUnit.Point, 0);
+            label_titulo_administración.ForeColor = Color.FromArgb(30, 60, 120);
+            label_titulo_administración.Location = new Point(308, 21);
+            label_titulo_administración.Name = "label_titulo_administración";
+            label_titulo_administración.RightToLeft = RightToLeft.Yes;
+            label_titulo_administración.Size = new Size(604, 62);
+            label_titulo_administración.TabIndex = 10;
+            label_titulo_administración.Text = "Administración";
+            label_titulo_administración.TextAlign = ContentAlignment.MiddleCenter;
             // 
             // AdministracionFrom
             // 
             AutoScaleDimensions = new SizeF(8F, 20F);
             AutoScaleMode = AutoScaleMode.Font;
+            BackColor = Color.White;
             ClientSize = new Size(1220, 971);
-            Controls.Add(tableLayoutPanel_contenido);
-            Controls.Add(tableLayoutPanel_contenedor_uno);
-            FormBorderStyle = FormBorderStyle.FixedDialog;
+            Controls.Add(panel_contenedor);
+            FormBorderStyle = FormBorderStyle.None;
             MinimizeBox = false;
             Name = "AdministracionFrom";
             Text = "AdministracionesForm";
             WindowState = FormWindowState.Maximized;
+            panel_contenedor.ResumeLayout(false);
             tableLayoutPanel_contenido.ResumeLayout(false);
             panel1.ResumeLayout(false);
             tableLayoutPanel_transacciones.ResumeLayout(false);
@@ -513,41 +481,40 @@
             tableLayoutPanel_personas.ResumeLayout(false);
             tableLayoutPanel_personas.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)pictureBox_personas).EndInit();
-            ((System.ComponentModel.ISupportInitialize)pictureBox_logo_tipo).EndInit();
             tableLayoutPanel_contenedor_uno.ResumeLayout(false);
             tableLayoutPanel_contenedor_uno.PerformLayout();
             ResumeLayout(false);
         }
 
         #endregion
+
+        private Panel panel_contenedor;
         private TableLayoutPanel tableLayoutPanel_contenido;
+        private Panel panel1;
+        private TableLayoutPanel tableLayoutPanel_transacciones;
+        private Label label_transacciones;
+        private PictureBox pictureBox1;
         private Panel panel_arqueo_container;
+        private TableLayoutPanel tableLayoutPanel_arqueo_cajas;
+        private Label label_titulo_arqueo;
+        private PictureBox pictureBox3;
         private Panel panel_caja_container;
+        private TableLayoutPanel tableLayoutPanel_cajas;
+        private Label label_titulo_caja;
+        private PictureBox pictureBox2;
         private Panel panel_asignar_rol_container;
+        private TableLayoutPanel tableLayoutPanel_asignar_rol;
+        private Label label_titulo_asignar_rol;
+        private PictureBox pictureBox_asignar_rol;
         private Panel panel_roles_container;
         private TableLayoutPanel tableLayoutPanel_rol;
+        private Label label_titulo_rol;
         private PictureBox pictureBox_roles;
         private Panel panel_persona_container;
         private TableLayoutPanel tableLayoutPanel_personas;
         private PictureBox pictureBox_personas;
         private Label label_titulo_persona;
-        private TableLayoutPanel tableLayoutPanel_asignar_rol;
-        private Label label_titulo_asignar_rol;
-        private PictureBox pictureBox_asignar_rol;
-        private Label label_titulo_rol;
-        private Panel panel1;
-        private TableLayoutPanel tableLayoutPanel_transacciones;
-        private Label label_transacciones;
-        private PictureBox pictureBox1;
-        private TableLayoutPanel tableLayoutPanel_arqueo_cajas;
-        private Label label_titulo_arqueo;
-        private PictureBox pictureBox3;
-        private TableLayoutPanel tableLayoutPanel_cajas;
-        private Label label_titulo_caja;
-        private PictureBox pictureBox2;
-        private Label label_titulo_administración;
-        private FontAwesome.Sharp.IconButton iconButton_regresar;
-        private PictureBox pictureBox_logo_tipo;
         private TableLayoutPanel tableLayoutPanel_contenedor_uno;
+        private Label label_titulo_administración;
     }
 }

@@ -16,7 +16,7 @@ using static ProyectoAndina.Utils.StylesAlertas;
 
 namespace ProyectoAndina.Views
 {
-    public partial class TransaccionesForm : KioskForm
+    public partial class TransaccionesForm : Form
     {
         private readonly TransaccionCajaController _transaccionCajaController;
         private readonly PersonaController _PersonaController;
@@ -50,7 +50,7 @@ namespace ProyectoAndina.Views
                 var persona = _PersonaController.ObtenerPorId(SessionUser.PerId);
                 if (persona != null)
                 {
-                    string loginResponse = await _apiService.LoginAsync(persona.correo, persona.password);
+                    string loginResponse = await _apiService.LoginAsync(persona.correo, persona.password, SessionUser.Mac);
 
                     if (!string.IsNullOrEmpty(loginResponse) &&
                         !loginResponse.StartsWith("Error") &&
@@ -180,12 +180,6 @@ namespace ProyectoAndina.Views
         {
             dgvDatos.Columns.Clear();
 
-            dgvDatos.Columns.Add(new DataGridViewTextBoxColumn
-            {
-                Name = "trans_id",
-                HeaderText = "ID",
-                Visible = false
-            });
 
             dgvDatos.Columns.Add(new DataGridViewTextBoxColumn
             {
@@ -217,12 +211,7 @@ namespace ProyectoAndina.Views
                 FillWeight = 15
             });
 
-            dgvDatos.Columns.Add(new DataGridViewTextBoxColumn
-            {
-                Name = "acciones",
-                HeaderText = "",
-                FillWeight = 5
-            });
+            
         }
         private void CmbRegistrosPorPagina_SelectedIndexChanged(object sender, EventArgs e)
         {

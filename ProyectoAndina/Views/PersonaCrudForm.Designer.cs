@@ -33,20 +33,20 @@
             panel1 = new Panel();
             pictureBox1 = new PictureBox();
             panel3 = new Panel();
-            textBox_seg_apellido = new TextBox();
-            textBox_seg_nombre = new TextBox();
-            label_password = new Label();
-            label_seg_apellido = new Label();
             label_seg_nombre = new Label();
+            label_seg_apellido = new Label();
+            textBox_seg_nombre = new TextBox();
+            textBox_seg_apellido = new TextBox();
+            label_password = new Label();
             textBox_contrasenia = new TextBox();
             iconPictureBox_eye_password = new FontAwesome.Sharp.IconPictureBox();
             panel2 = new Panel();
-            label_gmail = new Label();
-            textBox_pri_nombre = new TextBox();
-            textBox_pri_apellido = new TextBox();
-            textBox_correo = new TextBox();
-            label_apellido = new Label();
             label_nombre = new Label();
+            label_apellido = new Label();
+            textBox_pri_apellido = new TextBox();
+            textBox_pri_nombre = new TextBox();
+            label_gmail = new Label();
+            textBox_correo = new TextBox();
             tableLayoutPanel1 = new TableLayoutPanel();
             button_agregar_persona = new Button();
             panel4 = new Panel();
@@ -122,33 +122,15 @@
             panel3.Size = new Size(332, 208);
             panel3.TabIndex = 1;
             // 
-            // textBox_seg_apellido
+            // label_seg_nombre
             // 
-            textBox_seg_apellido.Font = new Font("Segoe UI", 16.2F);
-            textBox_seg_apellido.Location = new Point(3, 140);
-            textBox_seg_apellido.Name = "textBox_seg_apellido";
-            textBox_seg_apellido.Size = new Size(227, 43);
-            textBox_seg_apellido.TabIndex = 4;
-            textBox_seg_apellido.Click += textBox_seg_apellido_Click;
-            // 
-            // textBox_seg_nombre
-            // 
-            textBox_seg_nombre.Font = new Font("Segoe UI", 16.2F);
-            textBox_seg_nombre.Location = new Point(3, 50);
-            textBox_seg_nombre.Name = "textBox_seg_nombre";
-            textBox_seg_nombre.Size = new Size(227, 43);
-            textBox_seg_nombre.TabIndex = 3;
-            textBox_seg_nombre.Click += textBox_seg_nombre_Click;
-            // 
-            // label_password
-            // 
-            label_password.AutoSize = true;
-            label_password.Font = new Font("Segoe UI", 13.8F, FontStyle.Bold);
-            label_password.Location = new Point(16, 101);
-            label_password.Name = "label_password";
-            label_password.Size = new Size(140, 31);
-            label_password.TabIndex = 4;
-            label_password.Text = "Contraseña:";
+            label_seg_nombre.AutoSize = true;
+            label_seg_nombre.Font = new Font("Segoe UI", 13.8F, FontStyle.Bold);
+            label_seg_nombre.Location = new Point(3, 11);
+            label_seg_nombre.Name = "label_seg_nombre";
+            label_seg_nombre.Size = new Size(209, 31);
+            label_seg_nombre.TabIndex = 23;
+            label_seg_nombre.Text = "Segundo Nombre:";
             // 
             // label_seg_apellido
             // 
@@ -160,15 +142,33 @@
             label_seg_apellido.TabIndex = 24;
             label_seg_apellido.Text = "Segundo Apellido:";
             // 
-            // label_seg_nombre
+            // textBox_seg_nombre
             // 
-            label_seg_nombre.AutoSize = true;
-            label_seg_nombre.Font = new Font("Segoe UI", 13.8F, FontStyle.Bold);
-            label_seg_nombre.Location = new Point(3, 11);
-            label_seg_nombre.Name = "label_seg_nombre";
-            label_seg_nombre.Size = new Size(209, 31);
-            label_seg_nombre.TabIndex = 23;
-            label_seg_nombre.Text = "Segundo Nombre:";
+            textBox_seg_nombre.Font = new Font("Segoe UI", 16.2F);
+            textBox_seg_nombre.Location = new Point(3, 50);
+            textBox_seg_nombre.Name = "textBox_seg_nombre";
+            textBox_seg_nombre.Size = new Size(227, 43);
+            textBox_seg_nombre.TabIndex = 2;
+            textBox_seg_nombre.Click += textBox_seg_nombre_Click;
+            // 
+            // textBox_seg_apellido
+            // 
+            textBox_seg_apellido.Font = new Font("Segoe UI", 16.2F);
+            textBox_seg_apellido.Location = new Point(3, 140);
+            textBox_seg_apellido.Name = "textBox_seg_apellido";
+            textBox_seg_apellido.Size = new Size(227, 43);
+            textBox_seg_apellido.TabIndex = 5;
+            textBox_seg_apellido.Click += textBox_seg_apellido_Click;
+            // 
+            // label_password
+            // 
+            label_password.AutoSize = true;
+            label_password.Font = new Font("Segoe UI", 13.8F, FontStyle.Bold);
+            label_password.Location = new Point(16, 101);
+            label_password.Name = "label_password";
+            label_password.Size = new Size(140, 31);
+            label_password.TabIndex = 4;
+            label_password.Text = "Contraseña:";
             // 
             // textBox_contrasenia
             // 
@@ -207,15 +207,34 @@
             panel2.Size = new Size(332, 208);
             panel2.TabIndex = 0;
             // 
-            // label_gmail
+            // label_nombre
             // 
-            label_gmail.AutoSize = true;
-            label_gmail.Font = new Font("Segoe UI", 13.8F, FontStyle.Bold);
-            label_gmail.Location = new Point(16, 11);
-            label_gmail.Name = "label_gmail";
-            label_gmail.Size = new Size(92, 31);
-            label_gmail.TabIndex = 3;
-            label_gmail.Text = "Correo:";
+            label_nombre.AutoSize = true;
+            label_nombre.Font = new Font("Segoe UI", 13.8F, FontStyle.Bold);
+            label_nombre.Location = new Point(3, 11);
+            label_nombre.Name = "label_nombre";
+            label_nombre.Size = new Size(186, 31);
+            label_nombre.TabIndex = 0;
+            label_nombre.Text = "Primer Nombre:";
+            // 
+            // label_apellido
+            // 
+            label_apellido.AutoSize = true;
+            label_apellido.Font = new Font("Segoe UI", 13.8F, FontStyle.Bold);
+            label_apellido.Location = new Point(3, 101);
+            label_apellido.Name = "label_apellido";
+            label_apellido.Size = new Size(189, 31);
+            label_apellido.TabIndex = 1;
+            label_apellido.Text = "Primer Apellido:";
+            // 
+            // textBox_pri_apellido
+            // 
+            textBox_pri_apellido.Font = new Font("Segoe UI", 16.2F);
+            textBox_pri_apellido.Location = new Point(3, 140);
+            textBox_pri_apellido.Name = "textBox_pri_apellido";
+            textBox_pri_apellido.Size = new Size(227, 43);
+            textBox_pri_apellido.TabIndex = 4;
+            textBox_pri_apellido.Click += textBox_pri_apellido_Click;
             // 
             // textBox_pri_nombre
             // 
@@ -226,14 +245,15 @@
             textBox_pri_nombre.TabIndex = 1;
             textBox_pri_nombre.Click += textBox_pri_nombre_Click;
             // 
-            // textBox_pri_apellido
+            // label_gmail
             // 
-            textBox_pri_apellido.Font = new Font("Segoe UI", 16.2F);
-            textBox_pri_apellido.Location = new Point(3, 140);
-            textBox_pri_apellido.Name = "textBox_pri_apellido";
-            textBox_pri_apellido.Size = new Size(227, 43);
-            textBox_pri_apellido.TabIndex = 2;
-            textBox_pri_apellido.Click += textBox_pri_apellido_Click;
+            label_gmail.AutoSize = true;
+            label_gmail.Font = new Font("Segoe UI", 13.8F, FontStyle.Bold);
+            label_gmail.Location = new Point(16, 11);
+            label_gmail.Name = "label_gmail";
+            label_gmail.Size = new Size(92, 31);
+            label_gmail.TabIndex = 3;
+            label_gmail.Text = "Correo:";
             // 
             // textBox_correo
             // 
@@ -241,28 +261,8 @@
             textBox_correo.Location = new Point(16, 50);
             textBox_correo.Name = "textBox_correo";
             textBox_correo.Size = new Size(227, 43);
-            textBox_correo.TabIndex = 5;
+            textBox_correo.TabIndex = 3;
             textBox_correo.Click += textBox_correo_Click;
-            // 
-            // label_apellido
-            // 
-            label_apellido.AutoSize = true;
-            label_apellido.Font = new Font("Segoe UI", 13.8F, FontStyle.Bold);
-            label_apellido.Location = new Point(3, 101);
-            label_apellido.Name = "label_apellido";
-            label_apellido.Size = new Size(111, 31);
-            label_apellido.TabIndex = 1;
-            label_apellido.Text = "Apellido:";
-            // 
-            // label_nombre
-            // 
-            label_nombre.AutoSize = true;
-            label_nombre.Font = new Font("Segoe UI", 13.8F, FontStyle.Bold);
-            label_nombre.Location = new Point(3, 11);
-            label_nombre.Name = "label_nombre";
-            label_nombre.Size = new Size(108, 31);
-            label_nombre.TabIndex = 0;
-            label_nombre.Text = "Nombre:";
             // 
             // tableLayoutPanel1
             // 

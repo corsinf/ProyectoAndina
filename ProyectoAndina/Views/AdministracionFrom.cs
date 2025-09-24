@@ -11,7 +11,7 @@ using System.Windows.Forms;
 
 namespace ProyectoAndina.Views
 {
-    public partial class AdministracionFrom : KioskForm
+    public partial class AdministracionFrom : Form
     {
         public AdministracionFrom()
         {
@@ -35,65 +35,58 @@ namespace ProyectoAndina.Views
         private void iconButton_regresar_Click(object sender, EventArgs e)
         {
             TecladoHelper.CerrarTeclado();
-            var MenuPrincipalForm = new MenuPrincipalForm();
-            this.Hide();
-            MenuPrincipalForm.ShowDialog();
-            this.Close();
+            
+        }
+
+        private void AbrirFormEnPanel(object formhija)
+        {
+            if (this.panel_contenedor.Controls.Count > 0)
+                this.panel_contenedor.Controls.RemoveAt(0);
+            Form fh = formhija as Form;
+            fh.TopLevel = false;
+            fh.Dock = DockStyle.Fill;
+            this.panel_contenedor.Controls.Add(fh);
+            this.panel_contenedor.Tag = fh;
+            fh.Show();
+
         }
 
         private void tableLayoutPanel_personas_Click(object sender, EventArgs e)
         {
             TecladoHelper.CerrarTeclado();
-            var PersonaForm = new PersonaForm();
-            this.Hide();
-            PersonaForm.ShowDialog();
-            this.Close();
+            AbrirFormEnPanel(new PersonaForm());
         }
 
         private void tableLayoutPanel_rol_Click(object sender, EventArgs e)
         {
             TecladoHelper.CerrarTeclado();
-            var RolForm = new RolForm();
-            this.Hide();
-            RolForm.ShowDialog();
-            this.Close();
+            AbrirFormEnPanel(new RolForm());
+           
         }
 
         private void tableLayoutPanel_asignar_rol_Click(object sender, EventArgs e)
         {
             TecladoHelper.CerrarTeclado();
-            var PersonaRolForm = new PersonaRolForm();
-            this.Hide();
-            PersonaRolForm.ShowDialog();
-            this.Close();
+            AbrirFormEnPanel(new PersonaRolForm());
         }
 
         private void tableLayoutPanel_cajas_Click(object sender, EventArgs e)
         {
 
             TecladoHelper.CerrarTeclado();
-            var CajaForm = new CajaForm();
-            this.Hide();
-            CajaForm.ShowDialog();
-            this.Close();
+            AbrirFormEnPanel(new RolForm());
         }
 
         private void tableLayoutPanel_arqueo_cajas_Click(object sender, EventArgs e)
         {
             TecladoHelper.CerrarTeclado();
-            var ArqueosCajasForm = new ArqueosCajasForm();
-            this.Hide();
-            ArqueosCajasForm.ShowDialog();
-            this.Close();
+            AbrirFormEnPanel(new ArqueosCajasForm());
         }
 
         private void tableLayoutPanel_transacciones_Click(object sender, EventArgs e)
         {
             TecladoHelper.CerrarTeclado();
-            var TransaccionesForm = new TransaccionesForm();
-            this.Hide();
-            TransaccionesForm.ShowDialog();
-            this.Close();
+            AbrirFormEnPanel(new TransaccionesForm());
         }
     }
 }

@@ -14,7 +14,10 @@ namespace ProyectoAndina.Utils
             public static string NombreCompleto { get; set; }
             public static string Correo { get; set; }
             public static string Rol { get; set; }
-            // Agrega más campos si lo necesitas, como:
-            public static bool EsAdmin { get; set; }
+
+             public static string Mac { get; set; }
+
+        // Agrega más campos si lo necesitas, como:
+        public static bool EsAdmin { get; set; }
         }
 }

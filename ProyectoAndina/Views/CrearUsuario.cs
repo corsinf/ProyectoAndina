@@ -101,7 +101,7 @@ namespace ProyectoAndina.Views
             if (persona != null)
             {
                 // Esperar el resultado del login
-                string loginResponse = await _apiService.LoginAsync(personaToken.correo, personaToken.password);
+                string loginResponse = await _apiService.LoginAsync(personaToken.correo, personaToken.password, SessionUser.Mac);
 
                 if (!string.IsNullOrEmpty(loginResponse) && !loginResponse.StartsWith("Error") && !loginResponse.StartsWith("Excepción"))
                 {
@@ -134,18 +134,18 @@ namespace ProyectoAndina.Views
 
                                 if (objRespuesta != null)
                                 {
-                                    StylesAlertas.MostrarAlerta(this, "Cédula ya registrada", "¡Error!", TipoAlerta.Error);
+                                    StylesAlertas.MostrarAlerta(this, "La cédula ingresada no es válida.", "¡Error!", TipoAlerta.Error);
                                     return;
                                 }
 
                                 if (respuesta.Contains("\"status\":500") || respuesta.Contains("\"title\":\"Not Found\""))
                                 {
-                                    StylesAlertas.MostrarAlerta(this, "Cédula invalida", "¡Error!", TipoAlerta.Error);
+                                    StylesAlertas.MostrarAlerta(this, "La cédula ingresada no es válida.", "¡Error!", TipoAlerta.Error);
                                     return;
                                 }
 
 
-                                StylesAlertas.MostrarAlerta(this, "Registro actualizado correctamente", tipo: TipoAlerta.Success);
+                                StylesAlertas.MostrarAlerta(this, "Registro creado correctamente", tipo: TipoAlerta.Success);
 
                                 this.DialogResult = DialogResult.OK;
 
@@ -278,7 +278,7 @@ namespace ProyectoAndina.Views
             if (persona != null)
             {
                 // Esperar el resultado del login
-                string loginResponse = await _apiService.LoginAsync(persona.correo, persona.password);
+                string loginResponse = await _apiService.LoginAsync(persona.correo, persona.password, SessionUser.Mac);
 
                 if (!string.IsNullOrEmpty(loginResponse) && !loginResponse.StartsWith("Error") && !loginResponse.StartsWith("Excepción"))
                 {

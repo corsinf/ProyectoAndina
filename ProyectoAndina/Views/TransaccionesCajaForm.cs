@@ -20,7 +20,7 @@ using static ProyectoAndina.Utils.StylesAlertas;
 namespace ProyectoAndina.Views
 {
 
-    public partial class TransaccionesCajaForm : KioskForm
+    public partial class TransaccionesCajaForm : Form
     {
         private readonly PersonaController _PersonaController;
         private readonly CajaController _CajaController;
@@ -54,9 +54,7 @@ namespace ProyectoAndina.Views
 
             StyleButton.AplicarEstiloBotonBusqueda(iconPictureBox_search, textBox_buscar_placa);
             StyleButton.AplicarEstiloBotonBusqueda(iconPictureBox_buscar_usuario, textBox_usuario_encontrar);
-            //StyleButton.AplicarEstiloBotonBusqueda(iconPictureBox_dollar_entregado, textBox_val_entregado);
 
-            StyleContenedores.EstilizarTableLayout(tableLayoutPanel_datos_placa, Color.FromArgb(0, 148, 144));
 
 
 
@@ -77,11 +75,10 @@ namespace ProyectoAndina.Views
 
         private async void button_realizar_transaccion_Click(object sender, EventArgs e)
         {
-            if (!validador.ValidarTodosLosControles())
-            {
-                validador.MostrarMensajeValidacion();
-                return;
+            if (textBox_val_entregado.Text == "Monto entregado...") {
 
+                StylesAlertas.MostrarAlerta(this, "Complete el campo de valor entregado", "¡Error!", TipoAlerta.Error);
+                return;
             }
 
             if (sacarTipoPago() == 0)
@@ -163,7 +160,7 @@ namespace ProyectoAndina.Views
                 if (persona != null)
                 {
                     // Esperar el resultado del login
-                    string loginResponse = await _apiService.LoginAsync(persona.correo, persona.password);
+                    string loginResponse = await _apiService.LoginAsync(persona.correo, persona.password, SessionUser.Mac);
 
                     if (!string.IsNullOrEmpty(loginResponse) && !loginResponse.StartsWith("Error") && !loginResponse.StartsWith("Excepción"))
                     {
@@ -367,7 +364,7 @@ namespace ProyectoAndina.Views
                 if (persona != null)
                 {
                     // Esperar el resultado del login
-                    string loginResponse = await _apiService.LoginAsync(persona.correo, persona.password);
+                    string loginResponse = await _apiService.LoginAsync(persona.correo, persona.password, SessionUser.Mac);
 
                     if (!string.IsNullOrEmpty(loginResponse) && !loginResponse.StartsWith("Error") && !loginResponse.StartsWith("Excepción"))
                     {
@@ -501,7 +498,7 @@ namespace ProyectoAndina.Views
                 if (persona != null)
                 {
                     // Esperar el resultado del login
-                    string loginResponse = await _apiService.LoginAsync(persona.correo, persona.password);
+                    string loginResponse = await _apiService.LoginAsync(persona.correo, persona.password, SessionUser.Mac);
 
                     if (!string.IsNullOrEmpty(loginResponse) && !loginResponse.StartsWith("Error") && !loginResponse.StartsWith("Excepción"))
                     {
@@ -718,9 +715,8 @@ namespace ProyectoAndina.Views
         {
             button_consumidor_final.Enabled = false;
             button_con_datos.Enabled = true;
-            tableLayoutPanel_usuario_encontrado.Visible = false;
-            tableLayoutPanel_datos_usuario.Visible = false;
             button_agregar_user.Visible = false;
+            tableLayout_conDatos.Visible = false;
             id_usuario = 1;
             tipo_factura = 1;
         }
@@ -729,10 +725,9 @@ namespace ProyectoAndina.Views
         {
             button_consumidor_final.Enabled = true;
             button_con_datos.Enabled = false;
-            tableLayoutPanel_usuario_encontrado.Visible = true;
-            tableLayoutPanel_datos_usuario.Visible = true;
+            tableLayout_conDatos.Visible = false;
             button_realizar_transaccion.Enabled = false;
-            tableLayoutPanel_usuario_encontrado.Dock = DockStyle.Fill;
+            tableLayout_conDatos.Visible = true;
             tipo_factura = 2;
         }
 

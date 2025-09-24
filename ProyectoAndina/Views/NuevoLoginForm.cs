@@ -18,7 +18,7 @@ using static ProyectoAndina.Utils.StylesAlertas;
 
 namespace ProyectoAndina.Views
 {
-    public partial class NuevoLoginForm : KioskForm
+    public partial class NuevoLoginForm : Form
     {
 
         private readonly LoginController _loginController;
@@ -34,7 +34,7 @@ namespace ProyectoAndina.Views
             _PersonaRolController = new PersonaRolController();
             _PersonaController = new PersonaController();
             _apiService = new ApiService();
-            _FuncionesJson  = new FuncionesJson();
+            _FuncionesJson = new FuncionesJson();
             _CajaController = new CajaController();
             InitializeComponent();
             // Configurar labels con estilos UASB
@@ -49,11 +49,11 @@ namespace ProyectoAndina.Views
             StyleManager.ConfigurarTextBox(txtPassword, "Ingresa tu contraseña");
             // Configurar botones con estilos UASB
             StyleManager.ConfigurarBotonPrincipal(btnLogin);
-            
-        }
-        
 
-        
+        }
+
+
+
 
         private async void BtnLogin_Click(object sender, EventArgs e)
         {
@@ -79,23 +79,25 @@ namespace ProyectoAndina.Views
                 StylesAlertas.MostrarAlerta(this, "No existe esa caja", "¡Error!", TipoAlerta.Error);
                 return;
             }
-            
+
             try
             {
-              
-                    // Esperar el resultado del login
-                    string loginResponse = await _apiService.LoginAsync(correo, password);
 
-                    if (loginResponse.StartsWith("Error") || loginResponse.StartsWith("Excepción"))
-                    {
+                // Esperar el resultado del login
+                string loginResponse = await _apiService.LoginAsync(correo, password, MacAdrres);
+
+                MessageBox.Show(loginResponse);
+
+                if (loginResponse.StartsWith("Error") || loginResponse.StartsWith("Excepción"))
+                {
                     StylesAlertas.MostrarAlerta(this, "El usuario no existe", "¡Error!", TipoAlerta.Error);
                     return;
-                    }
+                }
 
-                    if (!string.IsNullOrEmpty(loginResponse) && !loginResponse.StartsWith("Error") && !loginResponse.StartsWith("Excepción"))
-                    {
-                        var obj = JsonConvert.DeserializeObject<dynamic>(loginResponse);
-                        string token = obj?.token;
+                if (!string.IsNullOrEmpty(loginResponse) && !loginResponse.StartsWith("Error") && !loginResponse.StartsWith("Excepción"))
+                {
+                    var obj = JsonConvert.DeserializeObject<dynamic>(loginResponse);
+                    string token = obj?.token;
 
                     if (!string.IsNullOrEmpty(token))
                     {
@@ -108,6 +110,7 @@ namespace ProyectoAndina.Views
                         SessionUser.NombreCompleto = objDatosToken.name;
                         SessionUser.Correo = objDatosToken.email;
                         SessionUser.Rol = objDatosToken.role;
+                        SessionUser.Mac = MacAdrres;
                         int per_id = objDatosToken.per_id;
                         var lista = _PersonaRolController.ObtenerPersonaRolValidacacion(per_id);
                         var personaRol = lista.FirstOrDefault();
@@ -118,22 +121,23 @@ namespace ProyectoAndina.Views
                         StyleManager.MostrarExito(lblMensaje, "Inicio de sesión exitoso");
                         TecladoHelper.CerrarTeclado();
 
-                        var menuPrincipalForm = new MenuPrincipalForm();
+                        var NuevoMenuForm = new NuevoMenuForm();
                         this.Hide();
-                        menuPrincipalForm.ShowDialog();
+                        NuevoMenuForm.ShowDialog();
                         this.Close();
 
                     }
-                    else {
+                    else
+                    {
                         StylesAlertas.MostrarAlerta(this, "Correo o contraseña incorrecta", "¡Error!", TipoAlerta.Error);
                         txtPassword.Clear();
                         txtCorreo.Focus();
                     }
                 }
 
-               
-                   
-               
+
+
+
             }
             catch (Exception ex)
             {
@@ -166,7 +170,7 @@ namespace ProyectoAndina.Views
         {
             base.OnLoad(e);
             // Activa el tap secreto sobre el logo
-            SetSecretExit(pictureBoxLogo, taps: 7, window: TimeSpan.FromSeconds(5));
+            //SetSecretExit(pictureBoxLogo, taps: 7, window: TimeSpan.FromSeconds(5));
             txtCorreo.Focus();
 
             //TecladoHelper.CerrarTeclado();
@@ -184,6 +188,11 @@ namespace ProyectoAndina.Views
             //TecladoHelper.CerrarTeclado();
 
             base.OnFormClosing(e);
+        }
+
+        private void pictureBoxLogo_Click(object sender, EventArgs e)
+        {
+            this.Close();
         }
     }
 }

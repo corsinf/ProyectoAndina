@@ -268,6 +268,7 @@
             pictureBoxLogo.SizeMode = PictureBoxSizeMode.Zoom;
             pictureBoxLogo.TabIndex = 1;
             pictureBoxLogo.TabStop = false;
+            pictureBoxLogo.Click += pictureBoxLogo_Click;
             // 
             // NuevoLoginForm
             // 
@@ -275,6 +276,7 @@
             AutoScaleMode = AutoScaleMode.Font;
             ClientSize = new Size(990, 630);
             Controls.Add(tableLayoutPanel1);
+            FormBorderStyle = FormBorderStyle.None;
             Name = "NuevoLoginForm";
             Text = "NuevoLoginForm";
             WindowState = FormWindowState.Maximized;

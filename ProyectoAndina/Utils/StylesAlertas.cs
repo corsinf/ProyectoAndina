@@ -51,10 +51,9 @@ namespace ProyectoAndina.Utils
         {
             if (owner == null) return DialogResult.Cancel;
 
-            // Calcular tamaño dinámico según el mensaje
-            Size tamaño = CalcularTamañoDialog(mensaje, titulo);
+            Size tamaño = new Size(420, 230);
 
-            // Crear form con el estilo exacto de Guna2MessageDialog
+            // Form sin bordes
             Form dialogForm = new Form
             {
                 Text = "",
@@ -64,164 +63,141 @@ namespace ProyectoAndina.Utils
                 MaximizeBox = false,
                 MinimizeBox = false,
                 ShowInTaskbar = false,
-                Owner = owner,                // Mantener dueño
-                BackColor = Color.FromArgb(240, 240, 240),
-                Font = new Font("Segoe UI", 9),
-                TopMost = true,               // 🔥 Siempre al frente
-                ShowIcon = false              // No mostrar icono en barra
-            };
-
-            // Panel principal con el estilo exacto de Guna2MessageDialog
-            Guna2Panel panelPrincipal = new Guna2Panel
-            {
-                Dock = DockStyle.Fill,
                 BackColor = Color.White,
-                BorderRadius = 8,
-                BorderThickness = 1,
-                BorderColor = Color.FromArgb(213, 218, 223),
+                Font = new Font("Segoe UI", 9),
+                TopMost = true,
+                ShowIcon = false,
+                KeyPreview = true
             };
 
-            // Header panel (parte superior morada como en tu imagen)
-            Guna2Panel headerPanel = new Guna2Panel
+            // 🎨 Colores según tipo
+            Color colorHeader;
+            FontAwesome.Sharp.IconChar iconoChar;
+            switch (tipo)
             {
-                Size = new Size(tamaño.Width - 2, 50),
-                Location = new Point(1, 1),
-                BackColor = Color.FromArgb(155, 126, 189), // Color morado del header
-                BorderRadius = 8
+                case TipoAlerta.Success:
+                    colorHeader = Color.FromArgb(40, 180, 99);
+                    iconoChar = FontAwesome.Sharp.IconChar.CheckCircle;
+                    break;
+                case TipoAlerta.Info:
+                    colorHeader = Color.FromArgb(52, 152, 219);
+                    iconoChar = FontAwesome.Sharp.IconChar.InfoCircle;
+                    break;
+                case TipoAlerta.Error:
+                    colorHeader = Color.FromArgb(231, 76, 60);
+                    iconoChar = FontAwesome.Sharp.IconChar.ExclamationCircle;
+                    break;
+                default:
+                    colorHeader = Color.Gray;
+                    iconoChar = FontAwesome.Sharp.IconChar.QuestionCircle;
+                    break;
+            }
+
+            // 🌈 Header
+            Guna2GradientPanel headerPanel = new Guna2GradientPanel
+            {
+                Dock = DockStyle.Top,
+                Height = 55,
+                FillColor = colorHeader,
+                FillColor2 = ControlPaint.Light(colorHeader, 0.2f),
+                BorderRadius = 8,
+                BackColor = Color.Transparent // 👈 elimina franja blanca
             };
 
-            // Título en el header
+            // Icono
+            FontAwesome.Sharp.IconPictureBox icono = new FontAwesome.Sharp.IconPictureBox
+            {
+                IconChar = iconoChar,
+                IconColor = Color.White,
+                IconFont = FontAwesome.Sharp.IconFont.Auto,
+                Size = new Size(28, 28),
+                Location = new Point(15, 13),
+                BackColor = Color.Transparent
+            };
+
+            // Título
             Label lblTitulo = new Label
             {
                 Text = titulo,
                 Font = new Font("Segoe UI", 11, FontStyle.Bold),
                 ForeColor = Color.White,
-                Location = new Point(45, 15),
-                Size = new Size(tamaño.Width - 100, 25),
-                TextAlign = ContentAlignment.MiddleLeft
+                Location = new Point(55, 15),
+                AutoSize = true,
+                BackColor = Color.Transparent // 👈 evita franja blanca
             };
 
-            // Icono en el header
-            PictureBox iconoHeader = new PictureBox
-            {
-                Location = new Point(15, 13),
-                Size = new Size(24, 24),
-                SizeMode = PictureBoxSizeMode.CenterImage,
-                BackColor = Color.Transparent
-            };
-
-            // Botón X para cerrar
-            Guna2Button btnCerrar = new Guna2Button
-            {
-                Text = "×",
-                Size = new Size(25, 25),
-                Location = new Point(tamaño.Width - 35, 12),
-                FillColor = Color.Transparent,
-                HoverState = { FillColor = Color.FromArgb(200, 200, 200) },
-                Font = new Font("Arial", 12, FontStyle.Bold),
-                ForeColor = Color.White,
-                BorderRadius = 4,
-                Cursor = Cursors.Hand
-            };
-
-            // Configurar icono según tipo
-            ConfigurarIconoHeader(iconoHeader, tipo);
-
-            // Mensaje principal
+            // Mensaje
             Label lblMensaje = new Label
             {
                 Text = mensaje,
                 Font = new Font("Segoe UI", 10),
                 ForeColor = Color.FromArgb(64, 64, 64),
-                Location = new Point(20, 70),
-                Size = new Size(tamaño.Width - 40, tamaño.Height - 140),
-                TextAlign = ContentAlignment.TopLeft,
-                AutoSize = false
+                Location = new Point(20, 75),
+                Size = new Size(tamaño.Width - 40, 70),
+                AutoSize = false,
+                BackColor = Color.Transparent
             };
 
-            // Botón Sí con colores según el tipo
+            // Botón Sí
             Guna2Button btnSi = new Guna2Button
             {
                 Text = "Sí",
-                Size = new Size(80, 35),
-                Location = new Point(tamaño.Width - 180, tamaño.Height - 50),
-                BorderRadius = 6,
-                Font = new Font("Segoe UI", 9, FontStyle.Bold),
+                Size = new Size(90, 36),
+                Location = new Point(tamaño.Width - 290, tamaño.Height - 60),
+                BorderRadius = 8,
+                FillColor = colorHeader,
+                Font = new Font("Segoe UI", 10, FontStyle.Bold),
+                ForeColor = Color.White,
+                Cursor = Cursors.Hand
+            };
+
+            // Botón No
+            Guna2Button btnNo = new Guna2Button
+            {
+                Text = "No",
+                Size = new Size(90, 36),
+                Location = new Point(tamaño.Width - 190, tamaño.Height - 60),
+                BorderRadius = 8,
+                FillColor = Color.Orange,
+                Font = new Font("Segoe UI", 10, FontStyle.Bold),
                 ForeColor = Color.White,
                 Cursor = Cursors.Hand
             };
 
             // Botón Cancelar
-            Guna2Button btnCancelar = new Guna2Button
-            {
-                Text = "Cancelar",
-                Size = new Size(80, 35),
-                Location = new Point(tamaño.Width - 90, tamaño.Height - 50),
-                BorderRadius = 6,
-                Font = new Font("Segoe UI", 9),
-                ForeColor = Color.FromArgb(64, 64, 64),
-                FillColor = Color.FromArgb(240, 240, 240),
-                BorderThickness = 1,
-                BorderColor = Color.FromArgb(213, 218, 223),
-                Cursor = Cursors.Hand
-            };
+            
 
-            // Configurar colores del botón Sí según el tipo
-            ConfigurarBotonSi(btnSi, tipo);
-
-            // Variable para el resultado
+            // Resultado
             DialogResult resultado = DialogResult.Cancel;
 
-            // Eventos
-            btnSi.Click += (s, e) => {
-                resultado = DialogResult.Yes;
-                dialogForm.Close();
+            btnSi.Click += (s, e) => { resultado = DialogResult.Yes; dialogForm.Close(); };
+            btnNo.Click += (s, e) => { resultado = DialogResult.No; dialogForm.Close(); };
+
+            dialogForm.KeyDown += (s, e) =>
+            {
+                if (e.KeyCode == Keys.Enter) { resultado = DialogResult.Yes; dialogForm.Close(); }
+                if (e.KeyCode == Keys.Escape) { resultado = DialogResult.Cancel; dialogForm.Close(); }
             };
 
-            btnCancelar.Click += (s, e) => {
-                resultado = DialogResult.Cancel;
-                dialogForm.Close();
-            };
-
-            btnCerrar.Click += (s, e) => {
-                resultado = DialogResult.Cancel;
-                dialogForm.Close();
-            };
-
-            // Eventos de teclado
-            dialogForm.KeyDown += (s, e) => {
-                if (e.KeyCode == Keys.Enter)
-                {
-                    resultado = DialogResult.Yes;
-                    dialogForm.Close();
-                }
-                else if (e.KeyCode == Keys.Escape)
-                {
-                    resultado = DialogResult.Cancel;
-                    dialogForm.Close();
-                }
-            };
-
-            dialogForm.KeyPreview = true;
-
-            // Ensamblar controles
+            // Ensamblar
+            headerPanel.Controls.Add(icono);
             headerPanel.Controls.Add(lblTitulo);
-            headerPanel.Controls.Add(iconoHeader);
-            headerPanel.Controls.Add(btnCerrar);
 
-            panelPrincipal.Controls.Add(headerPanel);
-            panelPrincipal.Controls.Add(lblMensaje);
-            panelPrincipal.Controls.Add(btnSi);
-            panelPrincipal.Controls.Add(btnCancelar);
+            dialogForm.Controls.Add(headerPanel);
+            dialogForm.Controls.Add(lblMensaje);
+            dialogForm.Controls.Add(btnSi);
+            dialogForm.Controls.Add(btnNo);
 
-            dialogForm.Controls.Add(panelPrincipal);
+            // Bordes redondeados + sombra
+            Guna2Elipse elipse = new Guna2Elipse { BorderRadius = 12, TargetControl = dialogForm };
+            Guna2ShadowForm shadow = new Guna2ShadowForm { TargetForm = dialogForm };
 
-            // Mostrar y devolver resultado
             dialogForm.ShowDialog(owner);
             dialogForm.Dispose();
 
             return resultado;
         }
+
 
         // Función para calcular el tamaño dinámico del diálogo
         private static Size CalcularTamañoDialog(string mensaje, string titulo)

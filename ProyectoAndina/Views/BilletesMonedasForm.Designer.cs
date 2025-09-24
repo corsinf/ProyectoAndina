@@ -78,9 +78,13 @@
             textBox_10_dollar = new TextBox();
             tableLayoutPanel5 = new TableLayoutPanel();
             panel_valor_arqueo = new Panel();
+            tableLayoutPanel6 = new TableLayoutPanel();
+            iconPictureBox1 = new FontAwesome.Sharp.IconPictureBox();
             label_total_monto = new Label();
             label_total_monto_valor = new Label();
             panel_valor_total = new Panel();
+            tableLayoutPanel4 = new TableLayoutPanel();
+            iconPictureBox_total_transacciones = new FontAwesome.Sharp.IconPictureBox();
             label_total_monto_arqueo = new Label();
             label_total_monto_arqueo_valor = new Label();
             panel_controles = new Panel();
@@ -105,7 +109,11 @@
             panel_diez_dolar.SuspendLayout();
             tableLayoutPanel5.SuspendLayout();
             panel_valor_arqueo.SuspendLayout();
+            tableLayoutPanel6.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)iconPictureBox1).BeginInit();
             panel_valor_total.SuspendLayout();
+            tableLayoutPanel4.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)iconPictureBox_total_transacciones).BeginInit();
             SuspendLayout();
             // 
             // tableLayoutPanel_logueado
@@ -830,64 +838,132 @@
             // panel_valor_arqueo
             // 
             panel_valor_arqueo.BackColor = Color.Transparent;
-            panel_valor_arqueo.Controls.Add(label_total_monto);
-            panel_valor_arqueo.Controls.Add(label_total_monto_valor);
+            panel_valor_arqueo.Controls.Add(tableLayoutPanel6);
             panel_valor_arqueo.Dock = DockStyle.Fill;
             panel_valor_arqueo.Location = new Point(3, 3);
             panel_valor_arqueo.Name = "panel_valor_arqueo";
             panel_valor_arqueo.Size = new Size(311, 91);
             panel_valor_arqueo.TabIndex = 106;
             // 
+            // tableLayoutPanel6
+            // 
+            tableLayoutPanel6.ColumnCount = 3;
+            tableLayoutPanel6.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 64.6789F));
+            tableLayoutPanel6.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 35.3211021F));
+            tableLayoutPanel6.ColumnStyles.Add(new ColumnStyle(SizeType.Absolute, 92F));
+            tableLayoutPanel6.Controls.Add(iconPictureBox1, 1, 0);
+            tableLayoutPanel6.Controls.Add(label_total_monto, 0, 0);
+            tableLayoutPanel6.Controls.Add(label_total_monto_valor, 2, 0);
+            tableLayoutPanel6.Dock = DockStyle.Fill;
+            tableLayoutPanel6.Location = new Point(0, 0);
+            tableLayoutPanel6.Name = "tableLayoutPanel6";
+            tableLayoutPanel6.RowCount = 1;
+            tableLayoutPanel6.RowStyles.Add(new RowStyle(SizeType.Percent, 50F));
+            tableLayoutPanel6.Size = new Size(311, 91);
+            tableLayoutPanel6.TabIndex = 0;
+            // 
+            // iconPictureBox1
+            // 
+            iconPictureBox1.Anchor = AnchorStyles.None;
+            iconPictureBox1.BackColor = Color.Transparent;
+            iconPictureBox1.ForeColor = Color.FromArgb(40, 167, 69);
+            iconPictureBox1.IconChar = FontAwesome.Sharp.IconChar.Usd;
+            iconPictureBox1.IconColor = Color.FromArgb(40, 167, 69);
+            iconPictureBox1.IconFont = FontAwesome.Sharp.IconFont.Auto;
+            iconPictureBox1.IconSize = 38;
+            iconPictureBox1.Location = new Point(156, 26);
+            iconPictureBox1.Name = "iconPictureBox1";
+            iconPictureBox1.Size = new Size(47, 38);
+            iconPictureBox1.SizeMode = PictureBoxSizeMode.CenterImage;
+            iconPictureBox1.TabIndex = 103;
+            iconPictureBox1.TabStop = false;
+            // 
             // label_total_monto
             // 
+            label_total_monto.Anchor = AnchorStyles.Left | AnchorStyles.Right;
             label_total_monto.AutoSize = true;
-            label_total_monto.Font = new Font("Segoe UI", 10F, FontStyle.Bold);
-            label_total_monto.Location = new Point(5, 15);
+            label_total_monto.Font = new Font("Segoe UI", 12F, FontStyle.Bold);
+            label_total_monto.Location = new Point(3, 31);
             label_total_monto.Name = "label_total_monto";
-            label_total_monto.Size = new Size(112, 23);
-            label_total_monto.TabIndex = 96;
+            label_total_monto.Size = new Size(135, 28);
+            label_total_monto.TabIndex = 98;
             label_total_monto.Text = "Total monto:";
             // 
             // label_total_monto_valor
             // 
+            label_total_monto_valor.Anchor = AnchorStyles.Left | AnchorStyles.Right;
             label_total_monto_valor.AutoSize = true;
-            label_total_monto_valor.Font = new Font("Segoe UI", 10F, FontStyle.Bold);
-            label_total_monto_valor.Location = new Point(154, 15);
+            label_total_monto_valor.Font = new Font("Segoe UI", 12F, FontStyle.Bold);
+            label_total_monto_valor.Location = new Point(221, 31);
             label_total_monto_valor.Name = "label_total_monto_valor";
-            label_total_monto_valor.Size = new Size(70, 23);
-            label_total_monto_valor.TabIndex = 97;
-            label_total_monto_valor.Text = "$ 00.00";
+            label_total_monto_valor.Size = new Size(87, 28);
+            label_total_monto_valor.TabIndex = 99;
+            label_total_monto_valor.Text = "00.00";
             // 
             // panel_valor_total
             // 
             panel_valor_total.BackColor = Color.Transparent;
-            panel_valor_total.Controls.Add(label_total_monto_arqueo);
-            panel_valor_total.Controls.Add(label_total_monto_arqueo_valor);
+            panel_valor_total.Controls.Add(tableLayoutPanel4);
             panel_valor_total.Dock = DockStyle.Fill;
             panel_valor_total.Location = new Point(320, 3);
             panel_valor_total.Name = "panel_valor_total";
             panel_valor_total.Size = new Size(311, 91);
             panel_valor_total.TabIndex = 107;
             // 
+            // tableLayoutPanel4
+            // 
+            tableLayoutPanel4.ColumnCount = 3;
+            tableLayoutPanel4.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 67.00507F));
+            tableLayoutPanel4.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 32.9949226F));
+            tableLayoutPanel4.ColumnStyles.Add(new ColumnStyle(SizeType.Absolute, 93F));
+            tableLayoutPanel4.Controls.Add(iconPictureBox_total_transacciones, 1, 0);
+            tableLayoutPanel4.Controls.Add(label_total_monto_arqueo, 0, 0);
+            tableLayoutPanel4.Controls.Add(label_total_monto_arqueo_valor, 2, 0);
+            tableLayoutPanel4.Dock = DockStyle.Fill;
+            tableLayoutPanel4.Location = new Point(0, 0);
+            tableLayoutPanel4.Name = "tableLayoutPanel4";
+            tableLayoutPanel4.RowCount = 1;
+            tableLayoutPanel4.RowStyles.Add(new RowStyle(SizeType.Percent, 50F));
+            tableLayoutPanel4.Size = new Size(311, 91);
+            tableLayoutPanel4.TabIndex = 0;
+            // 
+            // iconPictureBox_total_transacciones
+            // 
+            iconPictureBox_total_transacciones.Anchor = AnchorStyles.None;
+            iconPictureBox_total_transacciones.BackColor = Color.Transparent;
+            iconPictureBox_total_transacciones.ForeColor = Color.FromArgb(40, 167, 69);
+            iconPictureBox_total_transacciones.IconChar = FontAwesome.Sharp.IconChar.Usd;
+            iconPictureBox_total_transacciones.IconColor = Color.FromArgb(40, 167, 69);
+            iconPictureBox_total_transacciones.IconFont = FontAwesome.Sharp.IconFont.Auto;
+            iconPictureBox_total_transacciones.IconSize = 38;
+            iconPictureBox_total_transacciones.Location = new Point(158, 26);
+            iconPictureBox_total_transacciones.Name = "iconPictureBox_total_transacciones";
+            iconPictureBox_total_transacciones.Size = new Size(47, 38);
+            iconPictureBox_total_transacciones.SizeMode = PictureBoxSizeMode.CenterImage;
+            iconPictureBox_total_transacciones.TabIndex = 102;
+            iconPictureBox_total_transacciones.TabStop = false;
+            // 
             // label_total_monto_arqueo
             // 
+            label_total_monto_arqueo.Anchor = AnchorStyles.Left | AnchorStyles.Right;
             label_total_monto_arqueo.AutoSize = true;
-            label_total_monto_arqueo.Font = new Font("Segoe UI", 10F, FontStyle.Bold);
-            label_total_monto_arqueo.Location = new Point(3, 15);
+            label_total_monto_arqueo.Font = new Font("Segoe UI", 12F, FontStyle.Bold);
+            label_total_monto_arqueo.Location = new Point(3, 31);
             label_total_monto_arqueo.Name = "label_total_monto_arqueo";
-            label_total_monto_arqueo.Size = new Size(115, 23);
-            label_total_monto_arqueo.TabIndex = 98;
+            label_total_monto_arqueo.Size = new Size(140, 28);
+            label_total_monto_arqueo.TabIndex = 100;
             label_total_monto_arqueo.Text = "Total arqueo:";
             // 
             // label_total_monto_arqueo_valor
             // 
+            label_total_monto_arqueo_valor.Anchor = AnchorStyles.Left | AnchorStyles.Right;
             label_total_monto_arqueo_valor.AutoSize = true;
-            label_total_monto_arqueo_valor.Font = new Font("Segoe UI", 10F, FontStyle.Bold);
-            label_total_monto_arqueo_valor.Location = new Point(208, 15);
+            label_total_monto_arqueo_valor.Font = new Font("Segoe UI", 12F, FontStyle.Bold);
+            label_total_monto_arqueo_valor.Location = new Point(220, 31);
             label_total_monto_arqueo_valor.Name = "label_total_monto_arqueo_valor";
-            label_total_monto_arqueo_valor.Size = new Size(70, 23);
-            label_total_monto_arqueo_valor.TabIndex = 99;
-            label_total_monto_arqueo_valor.Text = "$ 00.00";
+            label_total_monto_arqueo_valor.Size = new Size(88, 28);
+            label_total_monto_arqueo_valor.TabIndex = 101;
+            label_total_monto_arqueo_valor.Text = "00.00";
             // 
             // panel_controles
             // 
@@ -946,9 +1022,13 @@
             panel_diez_dolar.PerformLayout();
             tableLayoutPanel5.ResumeLayout(false);
             panel_valor_arqueo.ResumeLayout(false);
-            panel_valor_arqueo.PerformLayout();
+            tableLayoutPanel6.ResumeLayout(false);
+            tableLayoutPanel6.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)iconPictureBox1).EndInit();
             panel_valor_total.ResumeLayout(false);
-            panel_valor_total.PerformLayout();
+            tableLayoutPanel4.ResumeLayout(false);
+            tableLayoutPanel4.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)iconPictureBox_total_transacciones).EndInit();
             ResumeLayout(false);
         }
 
@@ -1003,12 +1083,16 @@
         private TextBox textBox_10_dollar;
         private TableLayoutPanel tableLayoutPanel5;
         private Panel panel_valor_arqueo;
-        private Label label_total_monto;
-        private Label label_total_monto_valor;
         private Panel panel_valor_total;
-        private Label label_total_monto_arqueo;
-        private Label label_total_monto_arqueo_valor;
         private Panel panel_controles;
         private Button button_agregar_arqueo_billetes;
+        private TableLayoutPanel tableLayoutPanel4;
+        private Label label_total_monto_arqueo;
+        private Label label_total_monto_arqueo_valor;
+        private FontAwesome.Sharp.IconPictureBox iconPictureBox_total_transacciones;
+        private TableLayoutPanel tableLayoutPanel6;
+        private FontAwesome.Sharp.IconPictureBox iconPictureBox1;
+        private Label label_total_monto;
+        private Label label_total_monto_valor;
     }
 }

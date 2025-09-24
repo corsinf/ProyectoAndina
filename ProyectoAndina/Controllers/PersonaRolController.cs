@@ -195,10 +195,15 @@ WHERE pr.id_persona_rol = @IdPersonaRol";
             var lista = new List<persona_rolM>();
 
             string query = @"
-            SELECT p.per_id, p.primer_nombre, p.primer_apellido, p.cedula
-            FROM personas p
-            LEFT JOIN personas_roles pr ON p.per_id = pr.per_id
-            WHERE pr.per_id IS NULL";
+            SELECT 
+    p.per_id, 
+    p.primer_nombre, 
+    p.primer_apellido, 
+    p.cedula
+FROM personas p
+LEFT JOIN personas_roles pr ON p.per_id = pr.per_id
+WHERE pr.per_id IS NULL
+  AND p.estado = 1";
 
             using (var connection = _dbConnection.GetConnection())
             using (var command = new SqlCommand(query, connection))

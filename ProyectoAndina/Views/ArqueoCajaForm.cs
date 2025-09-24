@@ -20,7 +20,7 @@ using static ProyectoAndina.Utils.StylesAlertas;
 
 namespace ProyectoAndina.Views
 {
-    public partial class ArqueoCajaForm : KioskForm
+    public partial class ArqueoCajaForm : Form
     {
         private readonly ArqueoCajaController _AperturaCajaController;
         private readonly ArqueoBilletesController _ArqueoBilletesController;
@@ -31,13 +31,13 @@ namespace ProyectoAndina.Views
         private ValidacionHelper validador;
         public int arqueo_caja_id;
         public string tipo_arqueo;
-        
+
 
         public ArqueoCajaForm(int id_arqueo_caja)
         {
 
             InitializeComponent();
-           
+
 
             StyleButton.CrearBotonElegante(button_valor_apertura, IconChar.CashRegister);
             StyleButton.CrearBotonElegante(button_valor_cierre, IconChar.CashRegister);
@@ -46,11 +46,8 @@ namespace ProyectoAndina.Views
             StyleButton.CrearBotonElegante(button_tarde, IconChar.MountainSun);
             StyleButton.CrearBotonElegante(button_noche, IconChar.Moon);
 
-
-            StyleContenedores.EstilizarTableLayout(tableLayoutPanel_faltante, Color.Red);
-            StyleContenedores.EstilizarTableLayout(tableLayoutPanel_sobrante, Color.Orange);
-            StyleContenedores.EstilizarTableLayout(tableLayoutPanel_transacciones, Color.FromArgb(0, 148, 144));
-
+            StyleButton.CrearBotonElegante(button_cerrar_arqueo, IconChar.Lock);
+            StyleButton.CrearBotonElegante(button_apertura_de_caja, IconChar.LockOpen);
 
             _AperturaCajaController = new ArqueoCajaController();
             _CajaController = new CajaController();
@@ -75,29 +72,28 @@ namespace ProyectoAndina.Views
                 {
                     tipo_arqueo = "cierre";
                     cargar_datos_caja_abierta(id_arqueo_caja);
+
                 }
-                else {
+                else
+                {
                     tipo_arqueo = "apertura";
                     cargar_datos_caja_abierta(id_arqueo_caja);
                     StylesAlertas.MostrarAlerta(this, "Complete el arqueo de caja para continuar", "¡Error!", TipoAlerta.Error);
                 }
 
             }
-            else
-            {
-                enabled_apertura_caja();
-                tipo_arqueo = "apertura";
-                StyleButton.CrearBotonElegante(button_apertura_de_caja, IconChar.LockOpen);
-            }
+           
+
+           
         }
 
-       
+
 
         private void ConfigurarValidacion()
         {
             validador = new ValidacionHelper(this);
-            validador.AgregarControlRequerido(textBox_valor_apertura, "El nombre es requerido");
-            validador.AgregarControlRequerido(textBox_descripcion, "El nombre es requerido");
+            validador.AgregarControlRequerido(textBox_valor_apertura, "El valor de apertura es requerido");
+            validador.AgregarControlRequerido(textBox_descripcion, "El campo descripción es requerido");
         }
 
         private void ArqueoCajaForm_Paint(object sender, PaintEventArgs e)
@@ -105,20 +101,7 @@ namespace ProyectoAndina.Views
             StyleGenerales.PintarFondoDiagonal(this, e);
         }
 
-        public void enabled_apertura_caja()
-        {
-
-            textBox_total_en_caja.Enabled = false;
-            button_valor_cierre.Enabled = false;
-
-            panel_apertura.Dock = DockStyle.Fill;
-            panel_cierre.Visible = false;
-            panel_valor_apertura.Dock = DockStyle.Fill;
-            panel_valor_cierre.Visible = false;
-
-            button_apertura_de_caja.Text = "Crear Caja";
-
-        }
+        
 
         public void actulizarCamposCierreCaja()
         {
@@ -161,42 +144,28 @@ namespace ProyectoAndina.Views
             }
 
         }
-       
+
         public void cargar_datos_caja_abierta(int id_arqueo_caja)
         {
-
+            if (tipo_arqueo == "apertura")
+            {
+                textBox_total_en_caja.Enabled = false;
+                button_cerrar_arqueo.Enabled = false;
+                button_apertura_de_caja.Enabled = false;
+            }
+            else {
+                textBox_total_en_caja.Enabled = true;
+                button_apertura_de_caja.Enabled = false;
+                button_cerrar_arqueo.Enabled = true;
+                button_valor_cierre.Enabled = true;
+            }
             var cajaAbierta = _AperturaCajaController.ObtenerPorId(id_arqueo_caja);
             var cajaEncontrada = _CajaController.ObtenerPorId(cajaAbierta.caja_id);
-
-            if (tipo_arqueo == "cierre") {
-                panel_cierre.Dock = DockStyle.Fill;
-                panel_apertura.Visible = false;
-                panel_valor_cierre.Dock = DockStyle.Fill;
-                panel_valor_cierre.Visible = true;
-                tableLayoutPanel_transacciones.Visible = true;
-                StyleButton.CrearBotonElegante(button_apertura_de_caja, IconChar.Lock);
-                button_apertura_de_caja.Text = "Cerrar Caja";
-
-            }
-
-            if (tipo_arqueo == "apertura") {
-                button_apertura_de_caja.Text = "Crear";
-                button_apertura_de_caja.Enabled = false;
-                panel_apertura.Dock = DockStyle.Fill;
-                panel_cierre.Visible = false;
-                panel_valor_apertura.Dock = DockStyle.Fill;
-                panel_valor_cierre.Visible = false;
-                StyleButton.CrearBotonElegante(button_apertura_de_caja, IconChar.LockOpen);
-
-            }
-
-
-         
-
+           
 
             if (cajaAbierta != null)
             {
-                label_titulo_arqueo.Text = "Cierre de caja - " + cajaEncontrada.nombre; 
+                label_titulo_arqueo.Text = "Cierre de caja - " + cajaEncontrada.nombre;
                 textBox_valor_apertura.Enabled = false;
                 button_valor_apertura.Enabled = true;
                 button_maniana.Enabled = false;
@@ -209,15 +178,16 @@ namespace ProyectoAndina.Views
                 textBox_sobrante.Text = cajaAbierta.sobrante.ToString() ?? "0";
 
                 decimal total_en_caja = decimal.Parse(cajaAbierta.total_en_caja.ToString());
+                decimal valor_apertura = decimal.Parse(cajaAbierta.valor_apertura.ToString());
                 if (total_en_caja > 0)
                 {
                     textBox_total_en_caja.Text = cajaAbierta.total_en_caja.ToString();
-                    textBox_total_en_caja.Enabled = false;
+                    
                 }
-                else
-                {
-                    textBox_total_en_caja.Enabled = true;
+                if (valor_apertura > 0) {
+                    button_cerrar_arqueo.Enabled = false;
                 }
+                
             }
             else
             {
@@ -255,11 +225,7 @@ namespace ProyectoAndina.Views
                 // 2) Recién aquí revisas si devolvió OK
                 if (result == DialogResult.OK)
                 {
-                    panel_cierre.Dock = DockStyle.Fill;
-                    panel_apertura.Visible = false;
-                    panel_valor_cierre.Dock = DockStyle.Fill;
-                    panel_valor_cierre.Visible = true;
-                    tableLayoutPanel_transacciones.Visible = true;
+
                     button_apertura_de_caja.Enabled = true;
                 }
             }
@@ -282,6 +248,7 @@ namespace ProyectoAndina.Views
                 if (result == DialogResult.OK)
                 {
                     textBox_total_en_caja.Enabled = false;
+                    button_cerrar_arqueo.Enabled = true;
                     actulizarCamposCierreCaja();
                 }
             }
@@ -311,191 +278,115 @@ namespace ProyectoAndina.Views
 
         private void button_parar_apertura_caja_Click(object sender, EventArgs e)
         {
-            
+
         }
 
         private void button_apertura_de_caja_Click(object sender, EventArgs e)
         {
 
 
-           
-            if (tipo_arqueo == "apertura") {
-
-                if (!validador.ValidarTodosLosControles())
-                {
-                    validador.MostrarMensajeValidacion();
-                    return;
-                }
-                if (buscarTurnoDisponible() == "asignado") { 
-                    StylesAlertas.MostrarAlerta(this, "Seleccionar un turno", "¡Error!", TipoAlerta.Error);
-                    return;
-                }
-
-                var cajas = _CajaController.obtener_cajas_cerradas();
-                if (cajas == null)
-                {
-                    StylesAlertas.MostrarAlerta(this, "No existen cajas disponibles para la apertura", "¡Error!", TipoAlerta.Error);
-                    return;
-                }
-                decimal valor_apertura_normalizado = _FuncionesGenerales.ParseDecimalFromTextBoxNormalizado(textBox_valor_apertura.Text);
-
-                int cajaConfig = _FuncionesJson.CargarCajaDesdeConfig();
-
-
-                var caja = _CajaController.ObtenerPorId(cajaConfig);
-
-                if (caja == null)
-                {
-                    StylesAlertas.MostrarAlerta(this, "No existe esa caja", "¡Error!", TipoAlerta.Error);
-                    return;
-                }
-
-
-                    var arqueo = new arqueo_cajaM
-                    {
-                        caja_id = cajaConfig, // el ID real de la caja
-                        id_persona_rol = SessionUser.id_persona_rol,            // del login o sesión
-                        turno = buscarTurnoDisponible(),
-                        fecha_apertura = DateTime.Now,                           // apertura actual
-                        hora_cierre = DateTime.Now,
-                        valor_apertura = valor_apertura_normalizado,
-                        total_en_caja = 0,
-                        faltante = 0,
-                        sobrante = 0,
-                        observaciones = textBox_descripcion.Text.Trim(),
-                        estado = "A",
-                        pinpad_lote = "",        // si luego implementas
-                        pinpad_referencia = ""   // idem
-                    };
-
-                if (arqueo != null)
-                {
-                    arqueo_caja_id = _AperturaCajaController.Insertar_ReturnId(arqueo);
-                    StylesAlertas.MostrarAlerta(this, "Arqueo de Caja Creado Correctamente", tipo: TipoAlerta.Success);
-                    button_apertura_de_caja.Enabled = false;
-
-                    //estado controles
-                    textBox_total_en_caja.Enabled = true;
-                    textBox_valor_apertura.Enabled = false;
-                    button_valor_apertura.Enabled = true;
-
-
-                    SessionArqueoCaja.id_arqueo_caja = arqueo_caja_id;
-                    SessionArqueoCaja.montoValidar = valor_apertura_normalizado;
-                    SessionArqueoCaja.estadoArqueo = "A";
-
-                    using (var denominacionesdinero = new BilletesMonedasForm())
-                    {
-                        denominacionesdinero.StartPosition = FormStartPosition.CenterParent;
-
-                        // 1) Abres el modal y capturas el resultado
-                        var result = denominacionesdinero.ShowDialog(this);
-
-                        if (result == DialogResult.OK)     // 2) Evaluar resultado después de ShowDialog
-                        {
-                            button_apertura_de_caja.Enabled = true;
-                            TecladoHelper.CerrarTeclado();
-                            var MenuPrincipalForm = new MenuPrincipalForm();
-                            this.Hide();                 // Opcional: ocultas la ventana actual
-                            MenuPrincipalForm.ShowDialog();  // Bloquea hasta que RegistroForm se cierre
-                            this.Close();
-                        }
-                    }
-                }
-
+            if (!validador.ValidarTodosLosControles())
+            {
+                validador.MostrarMensajeValidacion();
+                return;
             }
             else {
-                if (!validarCamposCierre())
-                {
-                    StylesAlertas.MostrarAlerta(this, "Completar todos los campos para la apertura", "¡Error!", TipoAlerta.Error);
+                if (textBox_valor_apertura.Text == "Ingrese el valor..." || textBox_descripcion.Text == "Observaciones sobre la apertura de caja...") {
+
+                    StylesAlertas.MostrarAlerta(this, "Completar los campos", "¡Error!", TipoAlerta.Error);
                     return;
                 }
+            
+            }
+            if (buscarTurnoDisponible() == "asignado")
+            {
+                StylesAlertas.MostrarAlerta(this, "Seleccionar un turno", "¡Error!", TipoAlerta.Error);
+                return;
+            }
 
-                actulizarCamposCierreCaja();
-                decimal total_en_caja = _FuncionesGenerales.ParseDecimalFromTextBoxNormalizado(textBox_total_en_caja.Text);
-                decimal faltante = _FuncionesGenerales.ParseDecimalFromTextBoxNormalizado(textBox_faltante.Text);
-                decimal sobrante = _FuncionesGenerales.ParseDecimalFromTextBoxNormalizado(textBox_sobrante.Text);
+            var cajas = _CajaController.obtener_cajas_cerradas();
+            if (cajas == null)
+            {
+                StylesAlertas.MostrarAlerta(this, "No existen cajas disponibles para la apertura", "¡Error!", TipoAlerta.Error);
+                return;
+            }
+            decimal valor_apertura_normalizado = _FuncionesGenerales.ParseDecimalFromTextBoxNormalizado(textBox_valor_apertura.Text);
 
-                var tiposPagos = _TransaccionesCaja.ObtenerSumaPorTipoPago(SessionArqueoCaja.id_arqueo_caja);
-                decimal efectivo = 0;
-                decimal transferencia = 0;
-                decimal tarjeta = 0;
-
-                // Opción 1: Usando foreach con KeyValuePair
-                foreach (var tipo in tiposPagos)
-                {
-                    switch (tipo.Key) // Key es el tipo_pago_id
-                    {
-                        case 1: // EFECTIVO
-                            efectivo = tipo.Value; // Value es el total
-                            break;
-                        case 2: // TRANSFERENCIA
-                            transferencia = tipo.Value;
-                            break;
-                        case 3: // TARJETA
-                            tarjeta = tipo.Value;
-                            break;
-                    }
-                }
-
-                var arqueo = new arqueo_cajaM
-                {
-                    arqueo_id = SessionArqueoCaja.id_arqueo_caja,
-                    id_persona_rol = SessionUser.id_persona_rol,
-                    hora_cierre = DateTime.Now,
-                    total_transacciones = decimal.TryParse(textBox_total_transacciones.Text, out var trans) ? trans : 0,
-                    total_en_caja = total_en_caja,
-                    faltante = faltante,
-                    sobrante = sobrante,
-                    observaciones = textBox_descripcion.Text.Trim(),
-                    estado = "C",
-                    total_efectivo = efectivo,
-                    total_transferencia = transferencia,
-                    total_tarjeta = tarjeta,
-                };
-
-                var ArqueoCajaAbierto = _AperturaCajaController.ObtenerPorId(arqueo_caja_id);
-
-                if (arqueo_caja_id > 0)
-                {
-                    var resultado = StylesAlertas.MostrarConfirmacion(
-        this,
-        "¿Desea cerrar este arqueo de caja?",
-        "Confirmar",
-        StylesAlertas.TipoAlerta.Info);
-
-                    // Cambiar de DialogResult.OK a DialogResult.Yes
-                    if (resultado == DialogResult.Yes)
-                    {
-                        int idArqueoCaja = arqueo_caja_id;
-                        if (idArqueoCaja > 0)
-                        {
-                            _AperturaCajaController.Actualizar(arqueo);
-                            StylesAlertas.MostrarAlerta(this, "Arqueo de caja cerrado correctamente.", tipo: StylesAlertas.TipoAlerta.Success);
-                            var MenuPrincipalForm = new MenuPrincipalForm();
-                            this.Hide();
-                            MenuPrincipalForm.ShowDialog();
-                            this.Close();
-                        }
-                        else
-                        {
-                            StylesAlertas.MostrarAlerta(this, "ID del arqueo de caja no válido.", "¡Error!", StylesAlertas.TipoAlerta.Error);
-                        }
-                    }
-                }
-                else
-                {
-                    StylesAlertas.MostrarAlerta(this, "Seleccione una caja que desea eliminar.", "¡Error!", TipoAlerta.Error);
-                }
+            int cajaConfig = _FuncionesJson.CargarCajaDesdeConfig();
 
 
+            var caja = _CajaController.ObtenerPorId(cajaConfig);
+
+            if (caja == null)
+            {
+                StylesAlertas.MostrarAlerta(this, "No existe esa caja", "¡Error!", TipoAlerta.Error);
+                return;
             }
 
 
-           
+            var arqueo = new arqueo_cajaM
+            {
+                caja_id = cajaConfig, // el ID real de la caja
+                id_persona_rol = SessionUser.id_persona_rol,            // del login o sesión
+                turno = buscarTurnoDisponible(),
+                fecha_apertura = DateTime.Now,                           // apertura actual
+                hora_cierre = DateTime.Now,
+                valor_apertura = valor_apertura_normalizado,
+                total_en_caja = 0,
+                faltante = 0,
+                sobrante = 0,
+                observaciones = textBox_descripcion.Text.Trim(),
+                estado = "A",
+                pinpad_lote = "",        // si luego implementas
+                pinpad_referencia = ""   // idem
+            };
+
+            if (arqueo != null)
+            {
+                arqueo_caja_id = _AperturaCajaController.Insertar_ReturnId(arqueo);
+                StylesAlertas.MostrarAlerta(this, "Arqueo de Caja Creado Correctamente", tipo: TipoAlerta.Success);
+                button_apertura_de_caja.Enabled = false;
+
+                //estado controles
+                textBox_total_en_caja.Enabled = true;
+                textBox_valor_apertura.Enabled = false;
+                button_valor_apertura.Enabled = true;
+
+
+                SessionArqueoCaja.id_arqueo_caja = arqueo_caja_id;
+                SessionArqueoCaja.montoValidar = valor_apertura_normalizado;
+                SessionArqueoCaja.estadoArqueo = "A";
+
+                using (var denominacionesdinero = new BilletesMonedasForm())
+                {
+                    denominacionesdinero.StartPosition = FormStartPosition.CenterParent;
+
+                    // 1) Abres el modal y capturas el resultado
+                    var result = denominacionesdinero.ShowDialog(this);
+
+                    if (result == DialogResult.OK)     // 2) Evaluar resultado después de ShowDialog
+                    {
+                        TecladoHelper.CerrarTeclado();
+                        button_apertura_de_caja.Enabled = false;
+                        textBox_valor_apertura.Enabled = false;
+
+                    }
+                }
+            }
+
+
+
+            
+               
+
+
+            
+
+
+
         }
 
-       
+
 
 
         private bool validarCamposCierre()
@@ -620,8 +511,10 @@ namespace ProyectoAndina.Views
                 txt.ForeColor = Color.Black;
             }
 
-            
+
         }
+
+
 
 
 
@@ -629,8 +522,105 @@ namespace ProyectoAndina.Views
         {
             decimal total_en_caja = _FuncionesGenerales.ParseDecimalFromTextBoxNormalizado(textBox_total_en_caja.Text);
 
-            if (total_en_caja > 0) { 
+            if (total_en_caja > 0)
+            {
                 button_valor_cierre.Enabled = true;
+            }
+            else { 
+            
+                button_cerrar_arqueo.Enabled = false;
+            }
+        }
+
+        private void button_cerrar_arqueo_Click(object sender, EventArgs e)
+        {
+            if (!validarCamposCierre())
+            {
+                StylesAlertas.MostrarAlerta(this, "Completar todos los campos para la apertura", "¡Error!", TipoAlerta.Error);
+                return;
+            }
+            else {
+
+                if (textBox_total_en_caja.Text == "Ingrese el total...") {
+                    StylesAlertas.MostrarAlerta(this, "Ingrese el total en caja", "¡Error!", TipoAlerta.Error);
+                    return;
+                }
+            }
+
+                actulizarCamposCierreCaja();
+            decimal total_en_caja = _FuncionesGenerales.ParseDecimalFromTextBoxNormalizado(textBox_total_en_caja.Text);
+            decimal faltante = _FuncionesGenerales.ParseDecimalFromTextBoxNormalizado(textBox_faltante.Text);
+            decimal sobrante = _FuncionesGenerales.ParseDecimalFromTextBoxNormalizado(textBox_sobrante.Text);
+
+            var tiposPagos = _TransaccionesCaja.ObtenerSumaPorTipoPago(SessionArqueoCaja.id_arqueo_caja);
+            decimal efectivo = 0;
+            decimal transferencia = 0;
+            decimal tarjeta = 0;
+
+            // Opción 1: Usando foreach con KeyValuePair
+            foreach (var tipo in tiposPagos)
+            {
+                switch (tipo.Key) // Key es el tipo_pago_id
+                {
+                    case 1: // EFECTIVO
+                        efectivo = tipo.Value; // Value es el total
+                        break;
+                    case 2: // TRANSFERENCIA
+                        transferencia = tipo.Value;
+                        break;
+                    case 3: // TARJETA
+                        tarjeta = tipo.Value;
+                        break;
+                }
+            }
+
+            var arqueo = new arqueo_cajaM
+            {
+                arqueo_id = SessionArqueoCaja.id_arqueo_caja,
+                id_persona_rol = SessionUser.id_persona_rol,
+                hora_cierre = DateTime.Now,
+                total_transacciones = decimal.TryParse(textBox_total_transacciones.Text, out var trans) ? trans : 0,
+                total_en_caja = total_en_caja,
+                faltante = faltante,
+                sobrante = sobrante,
+                observaciones = textBox_descripcion.Text.Trim(),
+                estado = "C",
+                total_efectivo = efectivo,
+                total_transferencia = transferencia,
+                total_tarjeta = tarjeta,
+            };
+
+            var ArqueoCajaAbierto = _AperturaCajaController.ObtenerPorId(arqueo_caja_id);
+
+            if (arqueo_caja_id > 0)
+            {
+                var resultado = StylesAlertas.MostrarConfirmacion(
+    this,
+    "¿Desea cerrar este arqueo de caja?",
+    "Confirmar",
+    StylesAlertas.TipoAlerta.Info);
+
+                // Cambiar de DialogResult.OK a DialogResult.Yes
+                if (resultado == DialogResult.Yes)
+                {
+                    int idArqueoCaja = arqueo_caja_id;
+                    if (idArqueoCaja > 0)
+                    {
+                        _AperturaCajaController.Actualizar(arqueo);
+                        StylesAlertas.MostrarAlerta(this, "Arqueo de caja cerrado correctamente.", tipo: StylesAlertas.TipoAlerta.Success);
+                        button_cerrar_arqueo.Enabled = false;
+                        textBox_total_en_caja.Enabled = false;
+
+                    }
+                    else
+                    {
+                        StylesAlertas.MostrarAlerta(this, "ID del arqueo de caja no válido.", "¡Error!", StylesAlertas.TipoAlerta.Error);
+                    }
+                }
+            }
+            else
+            {
+                StylesAlertas.MostrarAlerta(this, "Seleccione una caja que desea eliminar.", "¡Error!", TipoAlerta.Error);
             }
         }
     }

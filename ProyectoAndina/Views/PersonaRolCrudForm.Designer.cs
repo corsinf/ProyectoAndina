@@ -132,6 +132,11 @@
             comboBox_personas.Name = "comboBox_personas";
             comboBox_personas.Size = new Size(195, 45);
             comboBox_personas.TabIndex = 73;
+            comboBox_personas.DropDownStyle = ComboBoxStyle.DropDownList; // opcional
+            comboBox_personas.MaxDropDownItems = 10;  // máximo de ítems visibles
+            comboBox_personas.IntegralHeight = false; // evita que Windows ajuste automáticamente
+            comboBox_personas.MaxDropDownItems = 10;  // máximo de ítems visibles
+            comboBox_personas.DropDownHeight = 300;   // altura máxima
             // 
             // label_roles
             // 
@@ -151,6 +156,11 @@
             comboBox_roles.Name = "comboBox_roles";
             comboBox_roles.Size = new Size(195, 45);
             comboBox_roles.TabIndex = 74;
+            comboBox_roles.DropDownStyle = ComboBoxStyle.DropDownList; // opcional
+            comboBox_roles.MaxDropDownItems = 10;  // máximo de ítems visibles
+            comboBox_roles.IntegralHeight = false; // evita que Windows ajuste automáticamente
+            comboBox_roles.MaxDropDownItems = 10;  // máximo de ítems visibles
+            comboBox_roles.DropDownHeight = 300;   // altura máxima
             // 
             // tableLayoutPanel3
             // 

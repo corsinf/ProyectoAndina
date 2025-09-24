@@ -15,7 +15,7 @@ using static ProyectoAndina.Utils.StylesAlertas;
 
 namespace ProyectoAndina.Views
 {
-    public partial class PersonaForm : KioskForm
+    public partial class PersonaForm : Form
     {
         private readonly PersonaController _PersonaController;
         private readonly ControladorPaginacion _paginacion;
@@ -343,9 +343,9 @@ namespace ProyectoAndina.Views
         private void iconButton_regresar_Click(object sender, EventArgs e)
         {
             TecladoHelper.CerrarTeclado();
-            var AdministracionFrom = new AdministracionFrom();
+            var NuevoMenuForm = new NuevoMenuForm();
             this.Hide();
-            AdministracionFrom.ShowDialog();
+            NuevoMenuForm.ShowDialog();
             this.Close();
         }
 

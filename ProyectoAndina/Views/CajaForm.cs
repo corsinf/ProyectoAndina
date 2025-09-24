@@ -14,7 +14,7 @@ using static ProyectoAndina.Utils.StylesAlertas;
 
 namespace ProyectoAndina.Views
 {
-    public partial class CajaForm : KioskForm
+    public partial class CajaForm : Form
     {
 
         private readonly CajaController _CajaController;

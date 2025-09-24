@@ -14,7 +14,7 @@ using static ProyectoAndina.Utils.StylesAlertas;
 
 namespace ProyectoAndina.Views
 {
-    public partial class ArqueosCajasForm : KioskForm
+    public partial class ArqueosCajasForm : Form
     {
         private readonly ArqueoCajaController _ArqueoCajaController;
         public int id_arqueo_caja;
@@ -111,14 +111,7 @@ namespace ProyectoAndina.Views
         {
             dgvDatos.Columns.Clear();
 
-            // ID oculto
-            dgvDatos.Columns.Add(new DataGridViewTextBoxColumn
-            {
-                Name = "arqueo_id",
-                HeaderText = "ID",
-                Visible = false
-            });
-
+            
             dgvDatos.Columns.Add(new DataGridViewTextBoxColumn
             {
                 Name = "monto_inicial",
@@ -164,12 +157,7 @@ namespace ProyectoAndina.Views
             });
 
             // Columna de acciones (menú de opciones)
-            dgvDatos.Columns.Add(new DataGridViewTextBoxColumn
-            {
-                Name = "acciones",
-                HeaderText = "",
-                FillWeight = 5
-            });
+           
         }
 
 
