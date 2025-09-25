@@ -37,18 +37,7 @@ namespace ProyectoAndina.Views
             _FuncionesJson = new FuncionesJson();
             _CajaController = new CajaController();
             InitializeComponent();
-            // Configurar labels con estilos UASB
-            StyleManager.ConfigurarLabel(lblTitulo, TipoLabel.TituloMedio);
-            StyleManager.ConfigurarLabel(lblSubtitulo, TipoLabel.CuerpoSmall);
-            StyleManager.ConfigurarLabel(lblCedula, TipoLabel.Subtitulo);
-            StyleManager.ConfigurarLabel(lblPassword, TipoLabel.Subtitulo);
-
-
-            // Configurar TextBoxes con estilo UASB
-            StyleManager.ConfigurarTextBox(txtCorreo, "ejemplo@correo.com");
-            StyleManager.ConfigurarTextBox(txtPassword, "Ingresa tu contraseña");
-            // Configurar botones con estilos UASB
-            StyleManager.ConfigurarBotonPrincipal(btnLogin);
+            
 
         }
 
@@ -58,7 +47,7 @@ namespace ProyectoAndina.Views
         private async void BtnLogin_Click(object sender, EventArgs e)
         {
 
-            StyleManager.OcultarMensaje(lblMensaje);
+            
 
             string correo = txtCorreo.Text.Trim();
             string password = txtPassword.Text;
@@ -131,7 +120,7 @@ namespace ProyectoAndina.Views
                         {
                             SessionUser.id_persona_rol = personaRol.IdPersonaRol;
                         }
-                        StyleManager.MostrarExito(lblMensaje, "Inicio de sesión exitoso");
+                       
                         TecladoHelper.CerrarTeclado();
 
                         var NuevoMenuForm = new NuevoMenuForm();
@@ -154,7 +143,7 @@ namespace ProyectoAndina.Views
             }
             catch (Exception ex)
             {
-                StyleManager.MostrarError(lblMensaje, "Error al conectar con la base de datos");
+               
                 MessageBox.Show($"Error: {ex.Message}", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
             finally

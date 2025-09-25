@@ -585,6 +585,7 @@
             textBox_valor_apertura.TabIndex = 89;
             textBox_valor_apertura.Text = "Ingrese el valor...";
             textBox_valor_apertura.Click += textBox_valor_apertura_Click;
+            textBox_valor_apertura.KeyPress += textBox_saldo_inicial_KeyPress;
             // 
             // iconPictureBox_dolar_apertura
             // 
@@ -1177,6 +1178,7 @@
             textBox_total_en_caja.TabIndex = 92;
             textBox_total_en_caja.Text = "Ingrese el total...";
             textBox_total_en_caja.Click += textBox_total_en_caja_Click;
+            textBox_total_en_caja.KeyPress += textBox_saldo_inicial_KeyPress;
             textBox_total_en_caja.Leave += textBox_total_en_caja_Leave;
             // 
             // iconPictureBox_dolar_cierre

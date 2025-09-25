@@ -3,19 +3,7 @@ using ProyectoAndina.Controllers;
 using ProyectoAndina.Helper;
 using ProyectoAndina.Models;
 using ProyectoAndina.Utils;
-using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Data;
-using System.Diagnostics;
-using System.Drawing;
 using System.Globalization;
-using System.Linq;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using System.Windows.Forms;
-using static Org.BouncyCastle.Math.EC.ECCurve;
 using static ProyectoAndina.Utils.StylesAlertas;
 
 namespace ProyectoAndina.Views
@@ -86,9 +74,9 @@ namespace ProyectoAndina.Views
                 }
 
             }
-           
 
-           
+
+
         }
 
 
@@ -105,7 +93,7 @@ namespace ProyectoAndina.Views
             StyleGenerales.PintarFondoDiagonal(this, e);
         }
 
-        
+
 
         public void actulizarCamposCierreCaja()
         {
@@ -159,7 +147,8 @@ namespace ProyectoAndina.Views
 
                 tabControl1.SelectedTab = tabPage1;
             }
-            else {
+            else
+            {
                 textBox_total_en_caja.Enabled = true;
                 button_apertura_de_caja.Enabled = false;
                 button_cerrar_arqueo.Enabled = true;
@@ -169,7 +158,7 @@ namespace ProyectoAndina.Views
             }
             var cajaAbierta = _AperturaCajaController.ObtenerPorId(id_arqueo_caja);
             var cajaEncontrada = _CajaController.ObtenerPorId(cajaAbierta.caja_id);
-           
+
 
             if (cajaAbierta != null)
             {
@@ -190,12 +179,13 @@ namespace ProyectoAndina.Views
                 if (total_en_caja > 0)
                 {
                     textBox_total_en_caja.Text = cajaAbierta.total_en_caja.ToString();
-                    
+
                 }
-                if (valor_apertura > 0) {
+                if (valor_apertura > 0)
+                {
                     button_cerrar_arqueo.Enabled = false;
                 }
-                
+
             }
             else
             {
@@ -209,11 +199,7 @@ namespace ProyectoAndina.Views
 
         private void iconButton_regresar_Click(object sender, EventArgs e)
         {
-            TecladoHelper.CerrarTeclado();
-            var MenuPrincipalForm = new MenuPrincipalForm();
-            this.Hide();                 // Opcional: ocultas la ventana actual
-            MenuPrincipalForm.ShowDialog();  // Bloquea hasta que RegistroForm se cierre
-            this.Close();
+
         }
 
         private void button_valor_apertura_Click(object sender, EventArgs e)
@@ -298,13 +284,15 @@ namespace ProyectoAndina.Views
                 validador.MostrarMensajeValidacion();
                 return;
             }
-            else {
-                if (textBox_valor_apertura.Text == "Ingrese el valor..." || textBox_descripcion.Text == "Observaciones sobre la apertura de caja...") {
+            else
+            {
+                if (textBox_valor_apertura.Text == "Ingrese el valor..." || textBox_descripcion.Text == "Observaciones sobre la apertura de caja...")
+                {
 
                     StylesAlertas.MostrarAlerta(this, "Completar los campos", "¡Error!", TipoAlerta.Error);
                     return;
                 }
-            
+
             }
             if (buscarTurnoDisponible() == "asignado")
             {
@@ -384,11 +372,11 @@ namespace ProyectoAndina.Views
 
 
 
-            
-               
 
 
-            
+
+
+
 
 
 
@@ -534,8 +522,9 @@ namespace ProyectoAndina.Views
             {
                 button_valor_cierre.Enabled = true;
             }
-            else { 
-            
+            else
+            {
+
                 button_cerrar_arqueo.Enabled = false;
             }
         }
@@ -547,15 +536,17 @@ namespace ProyectoAndina.Views
                 StylesAlertas.MostrarAlerta(this, "Completar todos los campos para la apertura", "¡Error!", TipoAlerta.Error);
                 return;
             }
-            else {
+            else
+            {
 
-                if (textBox_total_en_caja.Text == "Ingrese el total...") {
+                if (textBox_total_en_caja.Text == "Ingrese el total...")
+                {
                     StylesAlertas.MostrarAlerta(this, "Ingrese el total en caja", "¡Error!", TipoAlerta.Error);
                     return;
                 }
             }
 
-                actulizarCamposCierreCaja();
+            actulizarCamposCierreCaja();
             decimal total_en_caja = _FuncionesGenerales.ParseDecimalFromTextBoxNormalizado(textBox_total_en_caja.Text);
             decimal faltante = _FuncionesGenerales.ParseDecimalFromTextBoxNormalizado(textBox_faltante.Text);
             decimal sobrante = _FuncionesGenerales.ParseDecimalFromTextBoxNormalizado(textBox_sobrante.Text);

@@ -735,10 +735,7 @@ namespace ProyectoAndina.Views
         {
             TecladoHelper.CerrarTeclado();
 
-            var MenuPrincipalForm = new MenuPrincipalForm();
-            this.Hide();                 // Opcional: ocultas la ventana actual
-            MenuPrincipalForm.ShowDialog();  // Bloquea hasta que RegistroForm se cierre
-            this.Close();
+            
         }
 
         private void textBox_buscar_placa_Click(object sender, EventArgs e)
