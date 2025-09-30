@@ -21,6 +21,17 @@ namespace ProyectoAndina.Utils
             return config.SistemConfig.Caja;
         }
 
+        public string CargaImpresoraDesdeConfig()
+        {
+            string rutaArchivo = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "Config", "appsettings.json");
+            var json = File.ReadAllText(rutaArchivo);
+
+            var config = JsonConvert.DeserializeObject<AppConfig>(json)
+                         ?? throw new Exception("No se pudo cargar la configuración del JSON");
+
+            return config.PrinterConfig.Nombre;
+        }
+
         public string GetMacAddress()
         {
             return NetworkInterface

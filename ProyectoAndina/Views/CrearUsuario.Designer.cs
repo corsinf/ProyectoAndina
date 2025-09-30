@@ -84,6 +84,7 @@
             // 
             // textBox_cedula
             // 
+            textBox_cedula.Enabled = false;
             textBox_cedula.Font = new Font("Segoe UI", 16.2F);
             textBox_cedula.Location = new Point(27, 208);
             textBox_cedula.Name = "textBox_cedula";

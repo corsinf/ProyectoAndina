@@ -45,7 +45,7 @@ namespace ProyectoAndina.Views
             _FuncionesJson = new FuncionesJson();
             validador = new ValidacionHelper(this);
             ConfigurarValidacion();
-
+           
             this.Paint += ArqueoCajaForm_Paint;
             this.DoubleBuffered = true;
 
@@ -60,8 +60,9 @@ namespace ProyectoAndina.Views
                 {
                     tipo_arqueo = "cierre";
                     cargar_datos_caja_abierta(id_arqueo_caja);
-
                     tabControl1.SelectedTab = tabPage2;
+                    tabControl1.TabPages.Remove(tabPage1);
+
 
                 }
                 else
@@ -69,10 +70,15 @@ namespace ProyectoAndina.Views
                     tipo_arqueo = "apertura";
                     cargar_datos_caja_abierta(id_arqueo_caja);
                     StylesAlertas.MostrarAlerta(this, "Complete el arqueo de caja para continuar", "¡Error!", TipoAlerta.Error);
-
                     tabControl1.SelectedTab = tabPage1;
+                    tabControl1.TabPages.Remove(tabPage2);
+
                 }
 
+            }
+            else {
+                tabControl1.SelectedTab = tabPage1;
+                tabControl1.TabPages.Remove(tabPage2);
             }
 
 
@@ -141,20 +147,15 @@ namespace ProyectoAndina.Views
         {
             if (tipo_arqueo == "apertura")
             {
-                textBox_total_en_caja.Enabled = false;
                 button_cerrar_arqueo.Enabled = false;
+                textBox_total_en_caja.Enabled = false;
                 button_apertura_de_caja.Enabled = false;
-
-                tabControl1.SelectedTab = tabPage1;
             }
             else
             {
-                textBox_total_en_caja.Enabled = true;
                 button_apertura_de_caja.Enabled = false;
                 button_cerrar_arqueo.Enabled = true;
-                button_valor_cierre.Enabled = true;
-
-                tabControl1.SelectedTab = tabPage2;
+                textBox_total_en_caja.Enabled = true;
             }
             var cajaAbierta = _AperturaCajaController.ObtenerPorId(id_arqueo_caja);
             var cajaEncontrada = _CajaController.ObtenerPorId(cajaAbierta.caja_id);
@@ -179,12 +180,10 @@ namespace ProyectoAndina.Views
                 if (total_en_caja > 0)
                 {
                     textBox_total_en_caja.Text = cajaAbierta.total_en_caja.ToString();
+                    button_cerrar_arqueo.Enabled = true;
 
                 }
-                if (valor_apertura > 0)
-                {
-                    button_cerrar_arqueo.Enabled = false;
-                }
+                
 
             }
             else
@@ -241,7 +240,6 @@ namespace ProyectoAndina.Views
 
                 if (result == DialogResult.OK)
                 {
-                    textBox_total_en_caja.Enabled = false;
                     button_cerrar_arqueo.Enabled = true;
                     actulizarCamposCierreCaja();
                 }
@@ -608,7 +606,6 @@ namespace ProyectoAndina.Views
                         _AperturaCajaController.Actualizar(arqueo);
                         StylesAlertas.MostrarAlerta(this, "Arqueo de caja cerrado correctamente.", tipo: StylesAlertas.TipoAlerta.Success);
                         button_cerrar_arqueo.Enabled = false;
-                        textBox_total_en_caja.Enabled = false;
 
                     }
                     else

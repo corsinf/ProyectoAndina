@@ -25,7 +25,7 @@ namespace ProyectoAndina.Views
         public NuevoMenuForm()
         {
             InitializeComponent();
-            
+
             _ArqueoCajaController = new ArqueoCajaController();
             _ArqueoBilletesController = new ArqueoBilletesController();
             _RolController = new RolController();
@@ -33,6 +33,7 @@ namespace ProyectoAndina.Views
             _FuncionesJson = new FuncionesJson();
             CargarUsuarioLogueado();
             
+
 
             this.Paint += NuevoMenuForm_Paint;
         }
@@ -42,18 +43,20 @@ namespace ProyectoAndina.Views
             StyleGenerales.PintarFondoDiagonal(this, e);
         }
 
+       
+
         public void CargarUsuarioLogueado()
         {
             //label_persona_logueada.Text = "Bienvenido : " + SessionUser.Correo;
             //label_rol.Text = "Rol : " + SessionUser.Rol;
-           
+
             if (SessionUser.Rol == "cajero")
             {
-                tableLayoutPanel_admin.Visible= false;
+                tableLayoutPanel_admin.Visible = false;
 
                 tableLayoutPanel_admin.ColumnStyles[2].Width = 0;
             }
-          
+
         }
         private void AbrirFormEnPanel(object formhija)
         {
@@ -146,7 +149,8 @@ namespace ProyectoAndina.Views
 
         }
 
-        private void CambioEstiloNavegador(String modulo) {
+        private void CambioEstiloNavegador(String modulo)
+        {
 
             if (modulo == "admin")
             {
@@ -240,6 +244,23 @@ namespace ProyectoAndina.Views
             this.Hide();                 // Opcional: ocultas la ventana actual
             NuevoLoginForm.ShowDialog();  // Bloquea hasta que RegistroForm se cierre
             this.Close();
+        }
+
+        private void iconPictureBox_abrirBarrera_Click(object sender, EventArgs e)
+        {
+            using (var frm = new AbrirBarreraForm())
+            {
+                // Redundante si ya lo seteaste en el ctor; no hace daño:
+                frm.StartPosition = FormStartPosition.CenterParent;
+                frm.TopMost = true;
+
+                var resultado = frm.ShowDialog(this);  // ¡IMPORTANTE: owner!
+
+                if (resultado == DialogResult.OK)
+                {
+                    StylesAlertas.MostrarAlerta(this, "Barrera Abierta con exito", tipo: TipoAlerta.Success);
+                }
+            }
         }
     }
 }

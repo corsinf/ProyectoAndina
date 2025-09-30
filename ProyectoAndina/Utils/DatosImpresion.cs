@@ -66,6 +66,7 @@ namespace ProyectoAndina.Utils
             // 🚗 Datos de parqueo
             if (recibo.FechaEntrada.HasValue && recibo.FechaSalida.HasValue)
             {
+                ticket.AppendLine($"Placa: {recibo.Placa}");
                 ticket.AppendLine($"Entrada: {recibo.FechaEntrada:dd/MM/yyyy HH:mm}");
                 ticket.AppendLine($"Salida : {recibo.FechaSalida:dd/MM/yyyy HH:mm}");
                 ticket.AppendLine($"Tiempo : {recibo.TiempoConsumido}");

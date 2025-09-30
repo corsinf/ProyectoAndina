@@ -25,6 +25,7 @@
     public string DireccionCliente { get; set; }
 
     // Parqueo (entrada/salida)
+    public string Placa { get; set; }
     public DateTime? FechaEntrada { get; set; }
     public DateTime? FechaSalida { get; set; }
     public string TiempoConsumido { get; set; }

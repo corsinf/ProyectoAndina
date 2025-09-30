@@ -35,6 +35,9 @@
             tableLayoutPanel6 = new TableLayoutPanel();
             label_placa = new Label();
             textBox_buscar_placa = new TextBox();
+            tableLayoutPanel13 = new TableLayoutPanel();
+            label_desconocido = new Label();
+            iconPictureBox_placa_desconocida = new FontAwesome.Sharp.IconPictureBox();
             iconPictureBox_search = new FontAwesome.Sharp.IconPictureBox();
             iconSplitButton1 = new FontAwesome.Sharp.IconSplitButton();
             tableLayoutPanel1 = new TableLayoutPanel();
@@ -45,19 +48,18 @@
             button_consumidor_final = new Button();
             button_con_datos = new Button();
             tableLayout_conDatos = new TableLayoutPanel();
-            tableLayoutPanel_datos_usuario = new TableLayoutPanel();
-            label_telefono = new Label();
-            label_correo = new Label();
-            label_nombre = new Label();
-            label_cedula = new Label();
-            tableLayoutPanel_usuario_encontrado = new TableLayoutPanel();
             tableLayoutPanel7 = new TableLayoutPanel();
             tableLayoutPanel11 = new TableLayoutPanel();
             iconPictureBox_buscar_usuario = new FontAwesome.Sharp.IconPictureBox();
             textBox_usuario_encontrar = new TextBox();
             label_titulo_usuario = new Label();
-            tableLayoutPanel13 = new TableLayoutPanel();
+            tableLayoutPanel_agregar_usuario = new TableLayoutPanel();
             button_agregar_user = new Button();
+            tableLayoutPanel_datos_usuario = new TableLayoutPanel();
+            label_telefono = new Label();
+            label_correo = new Label();
+            label_nombre = new Label();
+            label_cedula = new Label();
             cardTable = new TableLayoutPanel();
             tableLayoutPanel_datos_placa = new TableLayoutPanel();
             tableLayoutPanel2 = new TableLayoutPanel();
@@ -79,11 +81,12 @@
             label_valor_cambio = new Label();
             tableLayoutPanel18 = new TableLayoutPanel();
             tableLayoutPanel22 = new TableLayoutPanel();
-            label_valor_a_cobrar = new Label();
+            textBox_valor_a_cobrar = new TextBox();
             iconPictureBox1 = new FontAwesome.Sharp.IconPictureBox();
             label_valor_cobrar = new Label();
-            tableLayoutPanel10 = new TableLayoutPanel();
+            tableLayoutPanel_cobro = new TableLayoutPanel();
             button_realizar_transaccion = new Button();
+            button_cobrar_desconocido = new Button();
             headerLabel = new Label();
             tableLayoutPanel4 = new TableLayoutPanel();
             tableLayoutPanel20 = new TableLayoutPanel();
@@ -95,18 +98,19 @@
             tableLayoutPanel_logueado.SuspendLayout();
             tableLayoutPanel9.SuspendLayout();
             tableLayoutPanel6.SuspendLayout();
+            tableLayoutPanel13.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)iconPictureBox_placa_desconocida).BeginInit();
             ((System.ComponentModel.ISupportInitialize)iconPictureBox_search).BeginInit();
             tableLayoutPanel1.SuspendLayout();
             tableLayoutPanel3.SuspendLayout();
             tableLayoutPanel5.SuspendLayout();
             tableLayoutPanel12.SuspendLayout();
             tableLayout_conDatos.SuspendLayout();
-            tableLayoutPanel_datos_usuario.SuspendLayout();
-            tableLayoutPanel_usuario_encontrado.SuspendLayout();
             tableLayoutPanel7.SuspendLayout();
             tableLayoutPanel11.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)iconPictureBox_buscar_usuario).BeginInit();
-            tableLayoutPanel13.SuspendLayout();
+            tableLayoutPanel_agregar_usuario.SuspendLayout();
+            tableLayoutPanel_datos_usuario.SuspendLayout();
             cardTable.SuspendLayout();
             tableLayoutPanel_datos_placa.SuspendLayout();
             tableLayoutPanel2.SuspendLayout();
@@ -121,7 +125,7 @@
             tableLayoutPanel18.SuspendLayout();
             tableLayoutPanel22.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)iconPictureBox1).BeginInit();
-            tableLayoutPanel10.SuspendLayout();
+            tableLayoutPanel_cobro.SuspendLayout();
             tableLayoutPanel4.SuspendLayout();
             tableLayoutPanel20.SuspendLayout();
             tableLayoutPanel21.SuspendLayout();
@@ -185,13 +189,13 @@
             // 
             tableLayoutPanel6.BackColor = Color.Transparent;
             tableLayoutPanel6.ColumnCount = 4;
-            tableLayoutPanel6.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 9.298532F));
-            tableLayoutPanel6.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 25.7748775F));
-            tableLayoutPanel6.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 35.5220261F));
-            tableLayoutPanel6.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 29.35699F));
+            tableLayoutPanel6.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 2.06669617F));
+            tableLayoutPanel6.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 24.3066883F));
+            tableLayoutPanel6.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 41.84339F));
+            tableLayoutPanel6.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 31.714325F));
             tableLayoutPanel6.Controls.Add(label_placa, 1, 0);
             tableLayoutPanel6.Controls.Add(textBox_buscar_placa, 2, 0);
-            tableLayoutPanel6.Controls.Add(iconPictureBox_search, 3, 0);
+            tableLayoutPanel6.Controls.Add(tableLayoutPanel13, 3, 0);
             tableLayoutPanel6.Dock = DockStyle.Fill;
             tableLayoutPanel6.Location = new Point(3, 3);
             tableLayoutPanel6.Name = "tableLayoutPanel6";
@@ -205,9 +209,9 @@
             label_placa.Anchor = AnchorStyles.Top | AnchorStyles.Bottom | AnchorStyles.Left | AnchorStyles.Right;
             label_placa.AutoSize = true;
             label_placa.Font = new Font("Segoe UI", 25F, FontStyle.Bold);
-            label_placa.Location = new Point(117, 0);
+            label_placa.Location = new Point(28, 0);
             label_placa.Name = "label_placa";
-            label_placa.Size = new Size(310, 115);
+            label_placa.Size = new Size(292, 115);
             label_placa.TabIndex = 70;
             label_placa.Text = "Digitar placa:";
             label_placa.TextAlign = ContentAlignment.MiddleRight;
@@ -216,12 +220,58 @@
             // 
             textBox_buscar_placa.Anchor = AnchorStyles.Left | AnchorStyles.Right;
             textBox_buscar_placa.Font = new Font("Segoe UI", 34.2F, FontStyle.Regular, GraphicsUnit.Point, 0);
-            textBox_buscar_placa.Location = new Point(433, 16);
+            textBox_buscar_placa.Location = new Point(326, 16);
             textBox_buscar_placa.Name = "textBox_buscar_placa";
-            textBox_buscar_placa.Size = new Size(429, 83);
+            textBox_buscar_placa.Size = new Size(507, 83);
             textBox_buscar_placa.TabIndex = 67;
             textBox_buscar_placa.Click += textBox_buscar_placa_Click;
-            textBox_buscar_placa.Leave += button_buscar_placa_Click;
+            textBox_buscar_placa.KeyDown += textBox_buscar_placa_KeyDown;
+            // 
+            // tableLayoutPanel13
+            // 
+            tableLayoutPanel13.ColumnCount = 3;
+            tableLayoutPanel13.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 52.5423737F));
+            tableLayoutPanel13.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 47.4576263F));
+            tableLayoutPanel13.ColumnStyles.Add(new ColumnStyle(SizeType.Absolute, 195F));
+            tableLayoutPanel13.Controls.Add(label_desconocido, 2, 0);
+            tableLayoutPanel13.Controls.Add(iconPictureBox_placa_desconocida, 1, 0);
+            tableLayoutPanel13.Controls.Add(iconPictureBox_search, 0, 0);
+            tableLayoutPanel13.Dock = DockStyle.Fill;
+            tableLayoutPanel13.Location = new Point(839, 3);
+            tableLayoutPanel13.Name = "tableLayoutPanel13";
+            tableLayoutPanel13.RowCount = 1;
+            tableLayoutPanel13.RowStyles.Add(new RowStyle(SizeType.Percent, 50F));
+            tableLayoutPanel13.Size = new Size(384, 109);
+            tableLayoutPanel13.TabIndex = 71;
+            // 
+            // label_desconocido
+            // 
+            label_desconocido.Anchor = AnchorStyles.Left | AnchorStyles.Right;
+            label_desconocido.AutoSize = true;
+            label_desconocido.Font = new Font("Microsoft Sans Serif", 16.2F, FontStyle.Bold, GraphicsUnit.Point, 0);
+            label_desconocido.Location = new Point(191, 38);
+            label_desconocido.Name = "label_desconocido";
+            label_desconocido.Size = new Size(190, 32);
+            label_desconocido.TabIndex = 120;
+            label_desconocido.Text = "Desconocido";
+            label_desconocido.TextAlign = ContentAlignment.MiddleCenter;
+            label_desconocido.Click += iconPictureBox_placa_desconocida_Click;
+            // 
+            // iconPictureBox_placa_desconocida
+            // 
+            iconPictureBox_placa_desconocida.Anchor = AnchorStyles.Right;
+            iconPictureBox_placa_desconocida.BackColor = Color.Transparent;
+            iconPictureBox_placa_desconocida.ForeColor = SystemColors.ControlText;
+            iconPictureBox_placa_desconocida.IconChar = FontAwesome.Sharp.IconChar.CheckCircle;
+            iconPictureBox_placa_desconocida.IconColor = SystemColors.ControlText;
+            iconPictureBox_placa_desconocida.IconFont = FontAwesome.Sharp.IconFont.Auto;
+            iconPictureBox_placa_desconocida.IconSize = 65;
+            iconPictureBox_placa_desconocida.Location = new Point(116, 22);
+            iconPictureBox_placa_desconocida.Name = "iconPictureBox_placa_desconocida";
+            iconPictureBox_placa_desconocida.Size = new Size(69, 65);
+            iconPictureBox_placa_desconocida.TabIndex = 77;
+            iconPictureBox_placa_desconocida.TabStop = false;
+            iconPictureBox_placa_desconocida.Click += iconPictureBox_placa_desconocida_Click;
             // 
             // iconPictureBox_search
             // 
@@ -232,10 +282,10 @@
             iconPictureBox_search.IconColor = SystemColors.ControlText;
             iconPictureBox_search.IconFont = FontAwesome.Sharp.IconFont.Auto;
             iconPictureBox_search.IconSize = 78;
-            iconPictureBox_search.Location = new Point(868, 18);
+            iconPictureBox_search.Location = new Point(3, 15);
             iconPictureBox_search.Name = "iconPictureBox_search";
-            iconPictureBox_search.Size = new Size(97, 78);
-            iconPictureBox_search.TabIndex = 75;
+            iconPictureBox_search.Size = new Size(78, 78);
+            iconPictureBox_search.TabIndex = 76;
             iconPictureBox_search.TabStop = false;
             iconPictureBox_search.Click += button_buscar_placa_Click;
             // 
@@ -344,6 +394,7 @@
             button_consumidor_final.BackColor = Color.FromArgb(127, 140, 141);
             button_consumidor_final.Cursor = Cursors.Hand;
             button_consumidor_final.Dock = DockStyle.Fill;
+            button_consumidor_final.Enabled = false;
             button_consumidor_final.FlatAppearance.BorderSize = 0;
             button_consumidor_final.FlatStyle = FlatStyle.Flat;
             button_consumidor_final.Font = new Font("Segoe UI", 10F, FontStyle.Bold);
@@ -361,6 +412,7 @@
             button_con_datos.BackColor = Color.FromArgb(127, 140, 141);
             button_con_datos.Cursor = Cursors.Hand;
             button_con_datos.Dock = DockStyle.Fill;
+            button_con_datos.Enabled = false;
             button_con_datos.FlatAppearance.BorderSize = 0;
             button_con_datos.FlatStyle = FlatStyle.Flat;
             button_con_datos.Font = new Font("Segoe UI", 10F, FontStyle.Bold);
@@ -377,8 +429,8 @@
             // 
             tableLayout_conDatos.ColumnCount = 1;
             tableLayout_conDatos.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 50F));
+            tableLayout_conDatos.Controls.Add(tableLayoutPanel7, 0, 0);
             tableLayout_conDatos.Controls.Add(tableLayoutPanel_datos_usuario, 0, 1);
-            tableLayout_conDatos.Controls.Add(tableLayoutPanel_usuario_encontrado, 0, 0);
             tableLayout_conDatos.Dock = DockStyle.Fill;
             tableLayout_conDatos.Location = new Point(3, 85);
             tableLayout_conDatos.Name = "tableLayout_conDatos";
@@ -388,6 +440,113 @@
             tableLayout_conDatos.Size = new Size(385, 326);
             tableLayout_conDatos.TabIndex = 99;
             tableLayout_conDatos.Visible = false;
+            // 
+            // tableLayoutPanel7
+            // 
+            tableLayoutPanel7.ColumnCount = 1;
+            tableLayoutPanel7.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 50F));
+            tableLayoutPanel7.Controls.Add(tableLayoutPanel11, 0, 0);
+            tableLayoutPanel7.Controls.Add(tableLayoutPanel_agregar_usuario, 0, 1);
+            tableLayoutPanel7.Dock = DockStyle.Fill;
+            tableLayoutPanel7.Location = new Point(3, 3);
+            tableLayoutPanel7.Name = "tableLayoutPanel7";
+            tableLayoutPanel7.RowCount = 2;
+            tableLayoutPanel7.RowStyles.Add(new RowStyle(SizeType.Percent, 50F));
+            tableLayoutPanel7.RowStyles.Add(new RowStyle(SizeType.Percent, 50F));
+            tableLayoutPanel7.Size = new Size(379, 154);
+            tableLayoutPanel7.TabIndex = 101;
+            // 
+            // tableLayoutPanel11
+            // 
+            tableLayoutPanel11.BackColor = Color.Transparent;
+            tableLayoutPanel11.ColumnCount = 3;
+            tableLayoutPanel11.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 30F));
+            tableLayoutPanel11.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 55F));
+            tableLayoutPanel11.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 15F));
+            tableLayoutPanel11.Controls.Add(iconPictureBox_buscar_usuario, 2, 0);
+            tableLayoutPanel11.Controls.Add(textBox_usuario_encontrar, 1, 0);
+            tableLayoutPanel11.Controls.Add(label_titulo_usuario, 0, 0);
+            tableLayoutPanel11.Dock = DockStyle.Fill;
+            tableLayoutPanel11.Location = new Point(3, 3);
+            tableLayoutPanel11.Name = "tableLayoutPanel11";
+            tableLayoutPanel11.RowCount = 1;
+            tableLayoutPanel11.RowStyles.Add(new RowStyle(SizeType.Percent, 100F));
+            tableLayoutPanel11.Size = new Size(373, 71);
+            tableLayoutPanel11.TabIndex = 101;
+            // 
+            // iconPictureBox_buscar_usuario
+            // 
+            iconPictureBox_buscar_usuario.Anchor = AnchorStyles.Left;
+            iconPictureBox_buscar_usuario.BackColor = Color.Transparent;
+            iconPictureBox_buscar_usuario.ForeColor = SystemColors.ControlText;
+            iconPictureBox_buscar_usuario.IconChar = FontAwesome.Sharp.IconChar.Search;
+            iconPictureBox_buscar_usuario.IconColor = SystemColors.ControlText;
+            iconPictureBox_buscar_usuario.IconFont = FontAwesome.Sharp.IconFont.Auto;
+            iconPictureBox_buscar_usuario.IconSize = 36;
+            iconPictureBox_buscar_usuario.Location = new Point(319, 17);
+            iconPictureBox_buscar_usuario.Name = "iconPictureBox_buscar_usuario";
+            iconPictureBox_buscar_usuario.Size = new Size(45, 36);
+            iconPictureBox_buscar_usuario.TabIndex = 122;
+            iconPictureBox_buscar_usuario.TabStop = false;
+            iconPictureBox_buscar_usuario.Click += button_buscar_usuario_Click;
+            // 
+            // textBox_usuario_encontrar
+            // 
+            textBox_usuario_encontrar.Anchor = AnchorStyles.Left | AnchorStyles.Right;
+            textBox_usuario_encontrar.Font = new Font("Microsoft Sans Serif", 16.2F);
+            textBox_usuario_encontrar.Location = new Point(114, 16);
+            textBox_usuario_encontrar.Name = "textBox_usuario_encontrar";
+            textBox_usuario_encontrar.Size = new Size(199, 38);
+            textBox_usuario_encontrar.TabIndex = 121;
+            textBox_usuario_encontrar.Click += textBox_usuario_encontrar_Click;
+            textBox_usuario_encontrar.KeyDown += textBox_usuario_encontrar_KeyDown;
+            // 
+            // label_titulo_usuario
+            // 
+            label_titulo_usuario.Anchor = AnchorStyles.Left | AnchorStyles.Right;
+            label_titulo_usuario.AutoSize = true;
+            label_titulo_usuario.Font = new Font("Microsoft Sans Serif", 16.2F);
+            label_titulo_usuario.Location = new Point(3, 19);
+            label_titulo_usuario.Name = "label_titulo_usuario";
+            label_titulo_usuario.Size = new Size(105, 32);
+            label_titulo_usuario.TabIndex = 119;
+            label_titulo_usuario.Text = "Cédula";
+            label_titulo_usuario.TextAlign = ContentAlignment.MiddleCenter;
+            // 
+            // tableLayoutPanel_agregar_usuario
+            // 
+            tableLayoutPanel_agregar_usuario.ColumnCount = 3;
+            tableLayoutPanel_agregar_usuario.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 20F));
+            tableLayoutPanel_agregar_usuario.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 60F));
+            tableLayoutPanel_agregar_usuario.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 20F));
+            tableLayoutPanel_agregar_usuario.Controls.Add(button_agregar_user, 1, 0);
+            tableLayoutPanel_agregar_usuario.Dock = DockStyle.Fill;
+            tableLayoutPanel_agregar_usuario.Location = new Point(3, 80);
+            tableLayoutPanel_agregar_usuario.Name = "tableLayoutPanel_agregar_usuario";
+            tableLayoutPanel_agregar_usuario.RowCount = 1;
+            tableLayoutPanel_agregar_usuario.RowStyles.Add(new RowStyle(SizeType.Percent, 100F));
+            tableLayoutPanel_agregar_usuario.Size = new Size(373, 71);
+            tableLayoutPanel_agregar_usuario.TabIndex = 102;
+            tableLayoutPanel_agregar_usuario.Visible = false;
+            // 
+            // button_agregar_user
+            // 
+            button_agregar_user.BackColor = Color.FromArgb(52, 152, 219);
+            button_agregar_user.Cursor = Cursors.Hand;
+            button_agregar_user.Dock = DockStyle.Fill;
+            button_agregar_user.Enabled = false;
+            button_agregar_user.FlatAppearance.BorderSize = 0;
+            button_agregar_user.FlatStyle = FlatStyle.Flat;
+            button_agregar_user.Font = new Font("Segoe UI", 10F, FontStyle.Bold);
+            button_agregar_user.ForeColor = Color.White;
+            button_agregar_user.Location = new Point(77, 3);
+            button_agregar_user.Name = "button_agregar_user";
+            button_agregar_user.Size = new Size(217, 65);
+            button_agregar_user.TabIndex = 99;
+            button_agregar_user.Text = "Agregar";
+            button_agregar_user.UseVisualStyleBackColor = false;
+            button_agregar_user.Visible = false;
+            button_agregar_user.Click += button_agregar_user_Click;
             // 
             // tableLayoutPanel_datos_usuario
             // 
@@ -452,125 +611,6 @@
             label_cedula.TabIndex = 82;
             label_cedula.Text = "🆔 Cédula";
             // 
-            // tableLayoutPanel_usuario_encontrado
-            // 
-            tableLayoutPanel_usuario_encontrado.ColumnCount = 1;
-            tableLayoutPanel_usuario_encontrado.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 100F));
-            tableLayoutPanel_usuario_encontrado.Controls.Add(tableLayoutPanel7, 0, 0);
-            tableLayoutPanel_usuario_encontrado.Dock = DockStyle.Fill;
-            tableLayoutPanel_usuario_encontrado.Location = new Point(3, 3);
-            tableLayoutPanel_usuario_encontrado.Name = "tableLayoutPanel_usuario_encontrado";
-            tableLayoutPanel_usuario_encontrado.RowCount = 1;
-            tableLayoutPanel_usuario_encontrado.RowStyles.Add(new RowStyle(SizeType.Percent, 100F));
-            tableLayoutPanel_usuario_encontrado.RowStyles.Add(new RowStyle(SizeType.Absolute, 20F));
-            tableLayoutPanel_usuario_encontrado.Size = new Size(379, 154);
-            tableLayoutPanel_usuario_encontrado.TabIndex = 99;
-            // 
-            // tableLayoutPanel7
-            // 
-            tableLayoutPanel7.ColumnCount = 1;
-            tableLayoutPanel7.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 50F));
-            tableLayoutPanel7.Controls.Add(tableLayoutPanel11, 0, 0);
-            tableLayoutPanel7.Controls.Add(tableLayoutPanel13, 0, 1);
-            tableLayoutPanel7.Dock = DockStyle.Fill;
-            tableLayoutPanel7.Location = new Point(3, 3);
-            tableLayoutPanel7.Name = "tableLayoutPanel7";
-            tableLayoutPanel7.RowCount = 2;
-            tableLayoutPanel7.RowStyles.Add(new RowStyle(SizeType.Percent, 50F));
-            tableLayoutPanel7.RowStyles.Add(new RowStyle(SizeType.Percent, 50F));
-            tableLayoutPanel7.Size = new Size(373, 148);
-            tableLayoutPanel7.TabIndex = 80;
-            // 
-            // tableLayoutPanel11
-            // 
-            tableLayoutPanel11.BackColor = Color.Transparent;
-            tableLayoutPanel11.ColumnCount = 3;
-            tableLayoutPanel11.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 30F));
-            tableLayoutPanel11.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 55F));
-            tableLayoutPanel11.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 15F));
-            tableLayoutPanel11.Controls.Add(iconPictureBox_buscar_usuario, 2, 0);
-            tableLayoutPanel11.Controls.Add(textBox_usuario_encontrar, 1, 0);
-            tableLayoutPanel11.Controls.Add(label_titulo_usuario, 0, 0);
-            tableLayoutPanel11.Dock = DockStyle.Fill;
-            tableLayoutPanel11.Location = new Point(3, 3);
-            tableLayoutPanel11.Name = "tableLayoutPanel11";
-            tableLayoutPanel11.RowCount = 1;
-            tableLayoutPanel11.RowStyles.Add(new RowStyle(SizeType.Percent, 100F));
-            tableLayoutPanel11.Size = new Size(367, 68);
-            tableLayoutPanel11.TabIndex = 101;
-            // 
-            // iconPictureBox_buscar_usuario
-            // 
-            iconPictureBox_buscar_usuario.Anchor = AnchorStyles.Left;
-            iconPictureBox_buscar_usuario.BackColor = Color.Transparent;
-            iconPictureBox_buscar_usuario.ForeColor = SystemColors.ControlText;
-            iconPictureBox_buscar_usuario.IconChar = FontAwesome.Sharp.IconChar.Search;
-            iconPictureBox_buscar_usuario.IconColor = SystemColors.ControlText;
-            iconPictureBox_buscar_usuario.IconFont = FontAwesome.Sharp.IconFont.Auto;
-            iconPictureBox_buscar_usuario.IconSize = 36;
-            iconPictureBox_buscar_usuario.Location = new Point(314, 16);
-            iconPictureBox_buscar_usuario.Name = "iconPictureBox_buscar_usuario";
-            iconPictureBox_buscar_usuario.Size = new Size(45, 36);
-            iconPictureBox_buscar_usuario.TabIndex = 122;
-            iconPictureBox_buscar_usuario.TabStop = false;
-            iconPictureBox_buscar_usuario.Click += button_buscar_usuario_Click;
-            // 
-            // textBox_usuario_encontrar
-            // 
-            textBox_usuario_encontrar.Anchor = AnchorStyles.Left | AnchorStyles.Right;
-            textBox_usuario_encontrar.Font = new Font("Microsoft Sans Serif", 16.2F);
-            textBox_usuario_encontrar.Location = new Point(113, 15);
-            textBox_usuario_encontrar.Name = "textBox_usuario_encontrar";
-            textBox_usuario_encontrar.Size = new Size(195, 38);
-            textBox_usuario_encontrar.TabIndex = 121;
-            textBox_usuario_encontrar.Click += textBox_usuario_encontrar_Click;
-            // 
-            // label_titulo_usuario
-            // 
-            label_titulo_usuario.Anchor = AnchorStyles.Left | AnchorStyles.Right;
-            label_titulo_usuario.AutoSize = true;
-            label_titulo_usuario.Font = new Font("Microsoft Sans Serif", 16.2F);
-            label_titulo_usuario.Location = new Point(3, 2);
-            label_titulo_usuario.Name = "label_titulo_usuario";
-            label_titulo_usuario.Size = new Size(104, 64);
-            label_titulo_usuario.TabIndex = 119;
-            label_titulo_usuario.Text = "Cédula";
-            label_titulo_usuario.TextAlign = ContentAlignment.MiddleCenter;
-            // 
-            // tableLayoutPanel13
-            // 
-            tableLayoutPanel13.ColumnCount = 3;
-            tableLayoutPanel13.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 20F));
-            tableLayoutPanel13.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 60F));
-            tableLayoutPanel13.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 20F));
-            tableLayoutPanel13.Controls.Add(button_agregar_user, 1, 0);
-            tableLayoutPanel13.Dock = DockStyle.Fill;
-            tableLayoutPanel13.Location = new Point(3, 77);
-            tableLayoutPanel13.Name = "tableLayoutPanel13";
-            tableLayoutPanel13.RowCount = 1;
-            tableLayoutPanel13.RowStyles.Add(new RowStyle(SizeType.Percent, 100F));
-            tableLayoutPanel13.Size = new Size(367, 68);
-            tableLayoutPanel13.TabIndex = 102;
-            // 
-            // button_agregar_user
-            // 
-            button_agregar_user.BackColor = Color.FromArgb(52, 152, 219);
-            button_agregar_user.Cursor = Cursors.Hand;
-            button_agregar_user.Dock = DockStyle.Fill;
-            button_agregar_user.Enabled = false;
-            button_agregar_user.FlatAppearance.BorderSize = 0;
-            button_agregar_user.FlatStyle = FlatStyle.Flat;
-            button_agregar_user.Font = new Font("Segoe UI", 10F, FontStyle.Bold);
-            button_agregar_user.ForeColor = Color.White;
-            button_agregar_user.Location = new Point(76, 3);
-            button_agregar_user.Name = "button_agregar_user";
-            button_agregar_user.Size = new Size(214, 62);
-            button_agregar_user.TabIndex = 99;
-            button_agregar_user.Text = "Agregar";
-            button_agregar_user.UseVisualStyleBackColor = false;
-            button_agregar_user.Visible = false;
-            button_agregar_user.Click += button_agregar_user_Click;
-            // 
             // cardTable
             // 
             cardTable.Anchor = AnchorStyles.Top | AnchorStyles.Left | AnchorStyles.Right;
@@ -598,7 +638,7 @@
             tableLayoutPanel_datos_placa.Controls.Add(tableLayoutPanel14, 0, 0);
             tableLayoutPanel_datos_placa.Controls.Add(tableLayoutPanel15, 0, 1);
             tableLayoutPanel_datos_placa.Controls.Add(tableLayoutPanel16, 0, 2);
-            tableLayoutPanel_datos_placa.Controls.Add(tableLayoutPanel10, 0, 4);
+            tableLayoutPanel_datos_placa.Controls.Add(tableLayoutPanel_cobro, 0, 4);
             tableLayoutPanel_datos_placa.Dock = DockStyle.Fill;
             tableLayoutPanel_datos_placa.Location = new Point(4, 64);
             tableLayoutPanel_datos_placa.Name = "tableLayoutPanel_datos_placa";
@@ -671,6 +711,7 @@
             textBox_val_entregado.Text = "Monto entregado...";
             textBox_val_entregado.TextAlign = HorizontalAlignment.Right;
             textBox_val_entregado.Click += textBox_val_entregado_Click;
+            textBox_val_entregado.TextChanged += textBox_val_entregado_TextChanged;
             textBox_val_entregado.KeyPress += textBox_val_entregado_KeyPress;
             textBox_val_entregado.Leave += textBox_val_entregado_Leave;
             // 
@@ -875,7 +916,7 @@
             tableLayoutPanel22.ColumnCount = 2;
             tableLayoutPanel22.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 35.7142868F));
             tableLayoutPanel22.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 64.28571F));
-            tableLayoutPanel22.Controls.Add(label_valor_a_cobrar, 1, 0);
+            tableLayoutPanel22.Controls.Add(textBox_valor_a_cobrar, 1, 0);
             tableLayoutPanel22.Controls.Add(iconPictureBox1, 0, 0);
             tableLayoutPanel22.Dock = DockStyle.Fill;
             tableLayoutPanel22.Location = new Point(112, 3);
@@ -885,18 +926,16 @@
             tableLayoutPanel22.Size = new Size(126, 50);
             tableLayoutPanel22.TabIndex = 100;
             // 
-            // label_valor_a_cobrar
+            // textBox_valor_a_cobrar
             // 
-            label_valor_a_cobrar.Anchor = AnchorStyles.Left | AnchorStyles.Right;
-            label_valor_a_cobrar.AutoSize = true;
-            label_valor_a_cobrar.Font = new Font("Microsoft Sans Serif", 13.8F);
-            label_valor_a_cobrar.ForeColor = Color.LightSeaGreen;
-            label_valor_a_cobrar.Location = new Point(48, 10);
-            label_valor_a_cobrar.Name = "label_valor_a_cobrar";
-            label_valor_a_cobrar.Size = new Size(75, 29);
-            label_valor_a_cobrar.TabIndex = 126;
-            label_valor_a_cobrar.Text = "0";
-            label_valor_a_cobrar.TextAlign = ContentAlignment.MiddleRight;
+            textBox_valor_a_cobrar.Anchor = AnchorStyles.Left | AnchorStyles.Right;
+            textBox_valor_a_cobrar.Enabled = false;
+            textBox_valor_a_cobrar.Font = new Font("Microsoft Sans Serif", 12F, FontStyle.Regular, GraphicsUnit.Point, 0);
+            textBox_valor_a_cobrar.Location = new Point(48, 10);
+            textBox_valor_a_cobrar.Name = "textBox_valor_a_cobrar";
+            textBox_valor_a_cobrar.Size = new Size(75, 30);
+            textBox_valor_a_cobrar.TabIndex = 129;
+            textBox_valor_a_cobrar.TextAlign = HorizontalAlignment.Right;
             // 
             // iconPictureBox1
             // 
@@ -926,20 +965,22 @@
             label_valor_cobrar.Text = "Cobrar:";
             label_valor_cobrar.TextAlign = ContentAlignment.MiddleLeft;
             // 
-            // tableLayoutPanel10
+            // tableLayoutPanel_cobro
             // 
-            tableLayoutPanel10.ColumnCount = 3;
-            tableLayoutPanel10.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 26.303318F));
-            tableLayoutPanel10.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 47.3933678F));
-            tableLayoutPanel10.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 26.303318F));
-            tableLayoutPanel10.Controls.Add(button_realizar_transaccion, 1, 0);
-            tableLayoutPanel10.Dock = DockStyle.Fill;
-            tableLayoutPanel10.Location = new Point(3, 275);
-            tableLayoutPanel10.Name = "tableLayoutPanel10";
-            tableLayoutPanel10.RowCount = 1;
-            tableLayoutPanel10.RowStyles.Add(new RowStyle(SizeType.Percent, 100F));
-            tableLayoutPanel10.Size = new Size(508, 65);
-            tableLayoutPanel10.TabIndex = 105;
+            tableLayoutPanel_cobro.ColumnCount = 4;
+            tableLayoutPanel_cobro.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 16.666666F));
+            tableLayoutPanel_cobro.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 33.3333321F));
+            tableLayoutPanel_cobro.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 33.3333321F));
+            tableLayoutPanel_cobro.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 16.666666F));
+            tableLayoutPanel_cobro.Controls.Add(button_realizar_transaccion, 1, 0);
+            tableLayoutPanel_cobro.Controls.Add(button_cobrar_desconocido, 2, 0);
+            tableLayoutPanel_cobro.Dock = DockStyle.Fill;
+            tableLayoutPanel_cobro.Location = new Point(3, 275);
+            tableLayoutPanel_cobro.Name = "tableLayoutPanel_cobro";
+            tableLayoutPanel_cobro.RowCount = 1;
+            tableLayoutPanel_cobro.RowStyles.Add(new RowStyle(SizeType.Percent, 100F));
+            tableLayoutPanel_cobro.Size = new Size(508, 65);
+            tableLayoutPanel_cobro.TabIndex = 105;
             // 
             // button_realizar_transaccion
             // 
@@ -951,13 +992,32 @@
             button_realizar_transaccion.FlatStyle = FlatStyle.Flat;
             button_realizar_transaccion.Font = new Font("Segoe UI", 10F, FontStyle.Bold);
             button_realizar_transaccion.ForeColor = Color.White;
-            button_realizar_transaccion.Location = new Point(136, 3);
+            button_realizar_transaccion.Location = new Point(87, 3);
             button_realizar_transaccion.Name = "button_realizar_transaccion";
-            button_realizar_transaccion.Size = new Size(234, 59);
+            button_realizar_transaccion.Size = new Size(163, 59);
             button_realizar_transaccion.TabIndex = 121;
             button_realizar_transaccion.Text = "Cobrar";
             button_realizar_transaccion.UseVisualStyleBackColor = false;
             button_realizar_transaccion.Click += button_realizar_transaccion_Click;
+            // 
+            // button_cobrar_desconocido
+            // 
+            button_cobrar_desconocido.BackColor = Color.FromArgb(46, 204, 113);
+            button_cobrar_desconocido.Cursor = Cursors.Hand;
+            button_cobrar_desconocido.Dock = DockStyle.Fill;
+            button_cobrar_desconocido.Enabled = false;
+            button_cobrar_desconocido.FlatAppearance.BorderSize = 0;
+            button_cobrar_desconocido.FlatStyle = FlatStyle.Flat;
+            button_cobrar_desconocido.Font = new Font("Segoe UI", 10F, FontStyle.Bold);
+            button_cobrar_desconocido.ForeColor = Color.White;
+            button_cobrar_desconocido.Location = new Point(256, 3);
+            button_cobrar_desconocido.Name = "button_cobrar_desconocido";
+            button_cobrar_desconocido.Size = new Size(163, 59);
+            button_cobrar_desconocido.TabIndex = 122;
+            button_cobrar_desconocido.Text = "Cobrar Desconocido";
+            button_cobrar_desconocido.UseVisualStyleBackColor = false;
+            button_cobrar_desconocido.Visible = false;
+            button_cobrar_desconocido.Click += button_cobrar_desconocido_Click;
             // 
             // headerLabel
             // 
@@ -1018,11 +1078,11 @@
             tableLayoutPanel21.Location = new Point(4, 64);
             tableLayoutPanel21.Name = "tableLayoutPanel21";
             tableLayoutPanel21.RowCount = 5;
-            tableLayoutPanel21.RowStyles.Add(new RowStyle(SizeType.Percent, 31.25F));
-            tableLayoutPanel21.RowStyles.Add(new RowStyle(SizeType.Percent, 3.125F));
-            tableLayoutPanel21.RowStyles.Add(new RowStyle(SizeType.Percent, 31.25F));
-            tableLayoutPanel21.RowStyles.Add(new RowStyle(SizeType.Percent, 3.125F));
-            tableLayoutPanel21.RowStyles.Add(new RowStyle(SizeType.Percent, 31.25F));
+            tableLayoutPanel21.RowStyles.Add(new RowStyle(SizeType.Percent, 45.4545441F));
+            tableLayoutPanel21.RowStyles.Add(new RowStyle(SizeType.Percent, 4.5454545F));
+            tableLayoutPanel21.RowStyles.Add(new RowStyle(SizeType.Percent, 0F));
+            tableLayoutPanel21.RowStyles.Add(new RowStyle(SizeType.Percent, 4.5454545F));
+            tableLayoutPanel21.RowStyles.Add(new RowStyle(SizeType.Percent, 45.4545441F));
             tableLayoutPanel21.Size = new Size(201, 266);
             tableLayoutPanel21.TabIndex = 97;
             // 
@@ -1030,11 +1090,12 @@
             // 
             button_transferencia.BackColor = Color.FromArgb(241, 196, 15);
             button_transferencia.Cursor = Cursors.Hand;
+            button_transferencia.Enabled = false;
             button_transferencia.FlatAppearance.BorderSize = 0;
             button_transferencia.FlatStyle = FlatStyle.Flat;
             button_transferencia.Font = new Font("Segoe UI", 10F, FontStyle.Bold);
             button_transferencia.ForeColor = Color.White;
-            button_transferencia.Location = new Point(3, 185);
+            button_transferencia.Location = new Point(3, 147);
             button_transferencia.Name = "button_transferencia";
             button_transferencia.Size = new Size(195, 77);
             button_transferencia.TabIndex = 86;
@@ -1051,9 +1112,9 @@
             button_tarjeta.FlatStyle = FlatStyle.Flat;
             button_tarjeta.Font = new Font("Segoe UI", 10F, FontStyle.Bold);
             button_tarjeta.ForeColor = Color.White;
-            button_tarjeta.Location = new Point(3, 94);
+            button_tarjeta.Location = new Point(3, 135);
             button_tarjeta.Name = "button_tarjeta";
-            button_tarjeta.Size = new Size(195, 77);
+            button_tarjeta.Size = new Size(195, 1);
             button_tarjeta.TabIndex = 83;
             button_tarjeta.Text = "Tarjeta";
             button_tarjeta.UseVisualStyleBackColor = false;
@@ -1071,7 +1132,7 @@
             button_efectivo.ForeColor = Color.White;
             button_efectivo.Location = new Point(3, 3);
             button_efectivo.Name = "button_efectivo";
-            button_efectivo.Size = new Size(195, 77);
+            button_efectivo.Size = new Size(195, 114);
             button_efectivo.TabIndex = 80;
             button_efectivo.Text = "Efectivo";
             button_efectivo.UseVisualStyleBackColor = false;
@@ -1110,20 +1171,22 @@
             tableLayoutPanel9.ResumeLayout(false);
             tableLayoutPanel6.ResumeLayout(false);
             tableLayoutPanel6.PerformLayout();
+            tableLayoutPanel13.ResumeLayout(false);
+            tableLayoutPanel13.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)iconPictureBox_placa_desconocida).EndInit();
             ((System.ComponentModel.ISupportInitialize)iconPictureBox_search).EndInit();
             tableLayoutPanel1.ResumeLayout(false);
             tableLayoutPanel3.ResumeLayout(false);
             tableLayoutPanel5.ResumeLayout(false);
             tableLayoutPanel12.ResumeLayout(false);
             tableLayout_conDatos.ResumeLayout(false);
-            tableLayoutPanel_datos_usuario.ResumeLayout(false);
-            tableLayoutPanel_datos_usuario.PerformLayout();
-            tableLayoutPanel_usuario_encontrado.ResumeLayout(false);
             tableLayoutPanel7.ResumeLayout(false);
             tableLayoutPanel11.ResumeLayout(false);
             tableLayoutPanel11.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)iconPictureBox_buscar_usuario).EndInit();
-            tableLayoutPanel13.ResumeLayout(false);
+            tableLayoutPanel_agregar_usuario.ResumeLayout(false);
+            tableLayoutPanel_datos_usuario.ResumeLayout(false);
+            tableLayoutPanel_datos_usuario.PerformLayout();
             cardTable.ResumeLayout(false);
             tableLayoutPanel_datos_placa.ResumeLayout(false);
             tableLayoutPanel2.ResumeLayout(false);
@@ -1146,7 +1209,7 @@
             tableLayoutPanel22.ResumeLayout(false);
             tableLayoutPanel22.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)iconPictureBox1).EndInit();
-            tableLayoutPanel10.ResumeLayout(false);
+            tableLayoutPanel_cobro.ResumeLayout(false);
             tableLayoutPanel4.ResumeLayout(false);
             tableLayoutPanel20.ResumeLayout(false);
             tableLayoutPanel21.ResumeLayout(false);
@@ -1181,20 +1244,6 @@
         private TableLayoutPanel tableLayoutPanel12;
         private Button button_consumidor_final;
         private Button button_con_datos;
-        private TableLayoutPanel tableLayout_conDatos;
-        private TableLayoutPanel tableLayoutPanel_usuario_encontrado;
-        private TableLayoutPanel tableLayoutPanel7;
-        private TableLayoutPanel tableLayoutPanel11;
-        private FontAwesome.Sharp.IconPictureBox iconPictureBox_buscar_usuario;
-        private TextBox textBox_usuario_encontrar;
-        private Label label_titulo_usuario;
-        private TableLayoutPanel tableLayoutPanel13;
-        private Button button_agregar_user;
-        private TableLayoutPanel tableLayoutPanel_datos_usuario;
-        private Label label_telefono;
-        private Label label_correo;
-        private Label label_nombre;
-        private Label label_cedula;
         private TableLayoutPanel tableLayoutPanel4;
         private TableLayoutPanel tableLayoutPanel20;
         private Label label2;
@@ -1208,16 +1257,33 @@
         private Label label_valor_cambio;
         private TableLayoutPanel tableLayoutPanel18;
         private TableLayoutPanel tableLayoutPanel22;
-        private Label label_valor_a_cobrar;
         private FontAwesome.Sharp.IconPictureBox iconPictureBox1;
         private Label label_valor_cobrar;
-        private TableLayoutPanel tableLayoutPanel10;
+        private TableLayoutPanel tableLayoutPanel_cobro;
         private Button button_realizar_transaccion;
         private Button button_tarjeta;
         private Button button_transferencia;
         private TableLayoutPanel tableLayoutPanel6;
         private Label label_placa;
         private TextBox textBox_buscar_placa;
+        private TableLayoutPanel tableLayout_conDatos;
+        private TableLayoutPanel tableLayoutPanel7;
+        private TableLayoutPanel tableLayoutPanel11;
+        private FontAwesome.Sharp.IconPictureBox iconPictureBox_buscar_usuario;
+        private TextBox textBox_usuario_encontrar;
+        private Label label_titulo_usuario;
+        private TableLayoutPanel tableLayoutPanel_agregar_usuario;
+        private Button button_agregar_user;
+        private TableLayoutPanel tableLayoutPanel_datos_usuario;
+        private Label label_telefono;
+        private Label label_correo;
+        private Label label_nombre;
+        private Label label_cedula;
+        private TableLayoutPanel tableLayoutPanel13;
+        private FontAwesome.Sharp.IconPictureBox iconPictureBox_placa_desconocida;
         private FontAwesome.Sharp.IconPictureBox iconPictureBox_search;
+        private Label label_desconocido;
+        private TextBox textBox_valor_a_cobrar;
+        private Button button_cobrar_desconocido;
     }
 }

@@ -55,11 +55,9 @@ namespace ProyectoAndina.Views
 
             if (accion == 1)
             {
-                textBox_cedula.Enabled = true;
             }
             else if (accion == 2) {
                 CargarDatos();
-                textBox_cedula.Enabled = false;
             }
         }
         private void ConfigurarValidacion()

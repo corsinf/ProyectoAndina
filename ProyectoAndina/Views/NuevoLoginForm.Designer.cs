@@ -84,9 +84,9 @@
             // tableLayoutPanel3
             // 
             tableLayoutPanel3.ColumnCount = 3;
-            tableLayoutPanel3.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 16.41529F));
-            tableLayoutPanel3.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 67.16941F));
-            tableLayoutPanel3.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 16.4152946F));
+            tableLayoutPanel3.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 18.66204F));
+            tableLayoutPanel3.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 62.6759148F));
+            tableLayoutPanel3.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 18.66204F));
             tableLayoutPanel3.Controls.Add(tableLayoutPanel6, 1, 3);
             tableLayoutPanel3.Controls.Add(lblMensaje, 1, 5);
             tableLayoutPanel3.Controls.Add(tableLayoutPanel4, 1, 1);
@@ -96,13 +96,13 @@
             tableLayoutPanel3.Location = new Point(0, 0);
             tableLayoutPanel3.Name = "tableLayoutPanel3";
             tableLayoutPanel3.RowCount = 7;
-            tableLayoutPanel3.RowStyles.Add(new RowStyle(SizeType.Percent, 9.740255F));
-            tableLayoutPanel3.RowStyles.Add(new RowStyle(SizeType.Percent, 16.2337666F));
-            tableLayoutPanel3.RowStyles.Add(new RowStyle(SizeType.Percent, 16.2337666F));
-            tableLayoutPanel3.RowStyles.Add(new RowStyle(SizeType.Percent, 16.2337666F));
-            tableLayoutPanel3.RowStyles.Add(new RowStyle(SizeType.Percent, 16.2337666F));
-            tableLayoutPanel3.RowStyles.Add(new RowStyle(SizeType.Percent, 16.2337666F));
-            tableLayoutPanel3.RowStyles.Add(new RowStyle(SizeType.Percent, 9.09091F));
+            tableLayoutPanel3.RowStyles.Add(new RowStyle(SizeType.Percent, 11.3150349F));
+            tableLayoutPanel3.RowStyles.Add(new RowStyle(SizeType.Percent, 13.5585356F));
+            tableLayoutPanel3.RowStyles.Add(new RowStyle(SizeType.Percent, 10.6175976F));
+            tableLayoutPanel3.RowStyles.Add(new RowStyle(SizeType.Percent, 10.3235035F));
+            tableLayoutPanel3.RowStyles.Add(new RowStyle(SizeType.Percent, 13.5585356F));
+            tableLayoutPanel3.RowStyles.Add(new RowStyle(SizeType.Percent, 13.5585356F));
+            tableLayoutPanel3.RowStyles.Add(new RowStyle(SizeType.Percent, 27.0682564F));
             tableLayoutPanel3.Size = new Size(489, 624);
             tableLayoutPanel3.TabIndex = 0;
             // 
@@ -113,41 +113,41 @@
             tableLayoutPanel6.Controls.Add(txtPassword, 0, 1);
             tableLayoutPanel6.Controls.Add(lblPassword, 0, 0);
             tableLayoutPanel6.Dock = DockStyle.Fill;
-            tableLayoutPanel6.Location = new Point(83, 265);
+            tableLayoutPanel6.Location = new Point(94, 223);
             tableLayoutPanel6.Name = "tableLayoutPanel6";
             tableLayoutPanel6.RowCount = 2;
             tableLayoutPanel6.RowStyles.Add(new RowStyle(SizeType.Percent, 50F));
             tableLayoutPanel6.RowStyles.Add(new RowStyle(SizeType.Percent, 50F));
-            tableLayoutPanel6.Size = new Size(322, 95);
+            tableLayoutPanel6.Size = new Size(300, 58);
             tableLayoutPanel6.TabIndex = 13;
             // 
             // txtPassword
             // 
-            txtPassword.Anchor = AnchorStyles.None;
+            txtPassword.Anchor = AnchorStyles.Top | AnchorStyles.Left | AnchorStyles.Right;
             txtPassword.Font = new Font("Segoe UI", 13.8F);
-            txtPassword.Location = new Point(11, 52);
+            txtPassword.Location = new Point(3, 32);
             txtPassword.Name = "txtPassword";
             txtPassword.PasswordChar = '●';
-            txtPassword.Size = new Size(300, 38);
+            txtPassword.Size = new Size(294, 38);
             txtPassword.TabIndex = 8;
             txtPassword.Click += txtPassword_Click;
             // 
             // lblPassword
             // 
-            lblPassword.Anchor = AnchorStyles.Left | AnchorStyles.Right;
+            lblPassword.Anchor = AnchorStyles.Bottom | AnchorStyles.Left | AnchorStyles.Right;
             lblPassword.Font = new Font("Segoe UI", 13.8F);
-            lblPassword.Location = new Point(3, 8);
+            lblPassword.Location = new Point(3, 0);
             lblPassword.Name = "lblPassword";
-            lblPassword.Size = new Size(316, 30);
+            lblPassword.Size = new Size(294, 29);
             lblPassword.TabIndex = 7;
             lblPassword.Text = "Contraseña:";
-            lblPassword.TextAlign = ContentAlignment.MiddleCenter;
+            lblPassword.TextAlign = ContentAlignment.MiddleLeft;
             // 
             // lblMensaje
             // 
             lblMensaje.Anchor = AnchorStyles.None;
             lblMensaje.Font = new Font("Segoe UI", 13.8F, FontStyle.Regular, GraphicsUnit.Point, 0);
-            lblMensaje.Location = new Point(94, 481);
+            lblMensaje.Location = new Point(94, 376);
             lblMensaje.Name = "lblMensaje";
             lblMensaje.Size = new Size(300, 67);
             lblMensaje.TabIndex = 10;
@@ -161,21 +161,21 @@
             tableLayoutPanel4.Controls.Add(lblSubtitulo, 0, 0);
             tableLayoutPanel4.Controls.Add(lblTitulo, 0, 1);
             tableLayoutPanel4.Dock = DockStyle.Fill;
-            tableLayoutPanel4.Location = new Point(83, 63);
+            tableLayoutPanel4.Location = new Point(94, 73);
             tableLayoutPanel4.Name = "tableLayoutPanel4";
             tableLayoutPanel4.RowCount = 2;
             tableLayoutPanel4.RowStyles.Add(new RowStyle(SizeType.Percent, 50F));
             tableLayoutPanel4.RowStyles.Add(new RowStyle(SizeType.Percent, 50F));
-            tableLayoutPanel4.Size = new Size(322, 95);
+            tableLayoutPanel4.Size = new Size(300, 78);
             tableLayoutPanel4.TabIndex = 11;
             // 
             // lblSubtitulo
             // 
             lblSubtitulo.Anchor = AnchorStyles.Left | AnchorStyles.Right;
             lblSubtitulo.Font = new Font("Segoe UI", 12F, FontStyle.Regular, GraphicsUnit.Point, 0);
-            lblSubtitulo.Location = new Point(3, 11);
+            lblSubtitulo.Location = new Point(3, 4);
             lblSubtitulo.Name = "lblSubtitulo";
-            lblSubtitulo.Size = new Size(316, 25);
+            lblSubtitulo.Size = new Size(294, 31);
             lblSubtitulo.TabIndex = 6;
             lblSubtitulo.Text = "Bienvenido, ingresa tus credenciales";
             lblSubtitulo.TextAlign = ContentAlignment.MiddleCenter;
@@ -184,11 +184,11 @@
             // 
             lblTitulo.Anchor = AnchorStyles.Left | AnchorStyles.Right;
             lblTitulo.Font = new Font("Segoe UI", 16.2F, FontStyle.Bold, GraphicsUnit.Point, 0);
-            lblTitulo.Location = new Point(3, 51);
+            lblTitulo.Location = new Point(3, 42);
             lblTitulo.Name = "lblTitulo";
-            lblTitulo.Size = new Size(316, 40);
+            lblTitulo.Size = new Size(294, 32);
             lblTitulo.TabIndex = 5;
-            lblTitulo.Text = "SISTEMA ANDINA";
+            lblTitulo.Text = "PUNTO DE PAGO";
             lblTitulo.TextAlign = ContentAlignment.MiddleCenter;
             // 
             // tableLayoutPanel5
@@ -198,40 +198,40 @@
             tableLayoutPanel5.Controls.Add(txtCorreo, 0, 1);
             tableLayoutPanel5.Controls.Add(lblCedula, 0, 0);
             tableLayoutPanel5.Dock = DockStyle.Fill;
-            tableLayoutPanel5.Location = new Point(83, 164);
+            tableLayoutPanel5.Location = new Point(94, 157);
             tableLayoutPanel5.Name = "tableLayoutPanel5";
             tableLayoutPanel5.RowCount = 2;
             tableLayoutPanel5.RowStyles.Add(new RowStyle(SizeType.Percent, 50F));
             tableLayoutPanel5.RowStyles.Add(new RowStyle(SizeType.Percent, 50F));
-            tableLayoutPanel5.Size = new Size(322, 95);
+            tableLayoutPanel5.Size = new Size(300, 60);
             tableLayoutPanel5.TabIndex = 12;
             // 
             // txtCorreo
             // 
-            txtCorreo.Anchor = AnchorStyles.None;
+            txtCorreo.Anchor = AnchorStyles.Bottom | AnchorStyles.Left | AnchorStyles.Right;
             txtCorreo.Font = new Font("Segoe UI", 13.8F);
-            txtCorreo.Location = new Point(11, 52);
+            txtCorreo.Location = new Point(3, 33);
             txtCorreo.Name = "txtCorreo";
-            txtCorreo.Size = new Size(300, 38);
+            txtCorreo.Size = new Size(294, 38);
             txtCorreo.TabIndex = 6;
             txtCorreo.Click += txtCorreo_Click;
             // 
             // lblCedula
             // 
-            lblCedula.Anchor = AnchorStyles.Left | AnchorStyles.Right;
+            lblCedula.Anchor = AnchorStyles.Bottom | AnchorStyles.Left | AnchorStyles.Right;
             lblCedula.Font = new Font("Segoe UI", 13.8F);
-            lblCedula.Location = new Point(3, 5);
+            lblCedula.Location = new Point(3, 1);
             lblCedula.Name = "lblCedula";
-            lblCedula.Size = new Size(316, 37);
+            lblCedula.Size = new Size(294, 29);
             lblCedula.TabIndex = 5;
-            lblCedula.Text = "Correo Electrónico:";
-            lblCedula.TextAlign = ContentAlignment.MiddleCenter;
+            lblCedula.Text = "Usuario:";
+            lblCedula.TextAlign = ContentAlignment.BottomLeft;
             // 
             // btnLogin
             // 
-            btnLogin.Anchor = AnchorStyles.None;
+            btnLogin.Anchor = AnchorStyles.Left | AnchorStyles.Right;
             btnLogin.Font = new Font("Segoe UI", 12F, FontStyle.Regular, GraphicsUnit.Point, 0);
-            btnLogin.Location = new Point(94, 384);
+            btnLogin.Location = new Point(94, 296);
             btnLogin.Name = "btnLogin";
             btnLogin.Size = new Size(300, 59);
             btnLogin.TabIndex = 9;

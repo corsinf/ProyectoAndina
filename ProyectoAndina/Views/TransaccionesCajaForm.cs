@@ -26,6 +26,7 @@ namespace ProyectoAndina.Views
         private readonly CajaController _CajaController;
         private readonly ArqueoCajaController _ArqueoCajaController;
         private readonly TransaccionCajaController _TransaccionCajaController;
+        private readonly FuncionesJson _FuncionesJson;
         private readonly ApiService _apiService;
         private readonly FuncionesGenerales _funcionesGenerales = new FuncionesGenerales();
         private ValidacionHelper validador;
@@ -39,6 +40,8 @@ namespace ProyectoAndina.Views
 
 
             StyleButton.CrearBotonElegante(button_realizar_transaccion, FontAwesome.Sharp.IconChar.CashRegister);
+            StyleButton.CrearBotonElegante(button_cobrar_desconocido, FontAwesome.Sharp.IconChar.CashRegister);
+
             // Métodos de pago
             StyleButton.CrearBotonElegante(button_efectivo, FontAwesome.Sharp.IconChar.MoneyBillWave);
             StyleButton.CrearBotonElegante(button_tarjeta, FontAwesome.Sharp.IconChar.CreditCard);
@@ -58,7 +61,9 @@ namespace ProyectoAndina.Views
 
 
 
+
             _PersonaController = new PersonaController();
+            _FuncionesJson = new FuncionesJson();
             _CajaController = new CajaController();
             _ArqueoCajaController = new();
             _apiService = new ApiService();
@@ -66,6 +71,7 @@ namespace ProyectoAndina.Views
             validador = new ValidacionHelper(this);
             ConfigurarValidacion();
             this.Paint += TransaccionesCajaForm_Paint;
+            mostrarBotonCobro("Placa");
         }
         private void ConfigurarValidacion()
         {
@@ -73,23 +79,83 @@ namespace ProyectoAndina.Views
             validador.AgregarControlRequerido(textBox_val_entregado, "El campo nombre es requerido");
         }
 
+        public void mostrarBotonCobro(String tipoCobro)
+        {
+
+            if (tipoCobro == "Placa")
+            {
+                tableLayoutPanel_cobro.ColumnStyles[2].Width = 0;
+
+                // Ajusta las visibles
+                tableLayoutPanel_cobro.ColumnStyles[0].SizeType = SizeType.Percent;
+                tableLayoutPanel_cobro.ColumnStyles[0].Width = 20F;
+
+                tableLayoutPanel_cobro.ColumnStyles[1].SizeType = SizeType.Percent;
+                tableLayoutPanel_cobro.ColumnStyles[1].Width = 60F;
+
+                tableLayoutPanel_cobro.ColumnStyles[3].SizeType = SizeType.Percent;
+                tableLayoutPanel_cobro.ColumnStyles[3].Width = 20F;
+
+                textBox_valor_a_cobrar.Enabled = false;
+                iconPictureBox_placa_desconocida.IconColor = Color.Black;
+                label_desconocido.ForeColor = Color.Black;
+            }
+            if (tipoCobro == "Desconocido")
+            {
+                tableLayoutPanel_cobro.ColumnStyles[1].Width = 0;
+
+                // Ajusta las visibles
+                tableLayoutPanel_cobro.ColumnStyles[0].SizeType = SizeType.Percent;
+                tableLayoutPanel_cobro.ColumnStyles[0].Width = 20F;
+
+                tableLayoutPanel_cobro.ColumnStyles[2].SizeType = SizeType.Percent;
+                tableLayoutPanel_cobro.ColumnStyles[2].Width = 60F;
+
+                tableLayoutPanel_cobro.ColumnStyles[3].SizeType = SizeType.Percent;
+                tableLayoutPanel_cobro.ColumnStyles[3].Width = 20F;
+
+                iconPictureBox_placa_desconocida.IconColor = Color.Red;
+                label_desconocido.ForeColor = Color.Red;
+            }
+
+        }
+
+        private void enabledBotones()
+        {
+            button_realizar_transaccion.Enabled = false;
+            button_transferencia.Enabled = false;
+            button_efectivo.Enabled = false;
+            button_consumidor_final.Enabled = false;
+            button_con_datos.Enabled = false;
+        }
+
         private async void button_realizar_transaccion_Click(object sender, EventArgs e)
         {
-            if (textBox_val_entregado.Text == "Monto entregado...") {
+            if (textBox_val_entregado.Text == "Monto entregado...")
+            {
 
                 StylesAlertas.MostrarAlerta(this, "Complete el campo de valor entregado", "¡Error!", TipoAlerta.Error);
                 return;
             }
 
-            if (sacarTipoPago() == 0)
+            if (sacarTipoPago() == 0 || sacarTipoFactura() == 0)
             {
-                StylesAlertas.MostrarAlerta(this, "Seleccionar tipo de pago", "¡Error!", TipoAlerta.Error);
+                StylesAlertas.MostrarAlerta(this, "Seleccionar tipo de pago o factura", "¡Error!", TipoAlerta.Error);
                 return;
 
             }
 
+            if (sacarTipoFactura() == 2)
+            {
+                if (textBox_usuario_encontrar.Text == "" || label_cedula.Text == "🆔 Cédula")
+                {
+                    StylesAlertas.MostrarAlerta(this, "Seleccionar una persona", "¡Error!", TipoAlerta.Error);
+                    return;
+                }
+            }
+
             string valorEntregadoEncerado = textBox_val_entregado.Text.Trim();
-            string valorCambioEncerado = label_valor_a_cobrar.Text.Trim();
+            string valorCambioEncerado = textBox_valor_a_cobrar.Text.Trim();
 
             if (valorEntregadoEncerado == "" || valorCambioEncerado == "")
             {
@@ -130,7 +196,7 @@ namespace ProyectoAndina.Views
                 string descripcion = "Generado desde la aplicacion de escritorio";
                 int id_arqueo_caja = SessionArqueoCaja.id_arqueo_caja;
 
-                string valor_cobrar = label_valor_a_cobrar.Text.Replace("💰", "").Trim();
+                string valor_cobrar = textBox_valor_a_cobrar.Text.Replace("💰", "").Trim();
                 decimal valor_a_cobrar = _funcionesGenerales.ParseDecimalFromTextBoxNormalizado(valor_cobrar);
 
 
@@ -214,6 +280,8 @@ namespace ProyectoAndina.Views
 
                                 StylesAlertas.MostrarAlerta(this, "Transacción realizada correctamente", tipo: TipoAlerta.Success);
 
+
+
                                 decimal porcentaje = 0.15m; // 15%
                                 decimal montoDescuento = transaccionCaja.valor_a_cobrar * porcentaje; // 15% del valor a cobrar
                                 decimal subTotal = transaccionCaja.valor_a_cobrar - montoDescuento;
@@ -231,6 +299,7 @@ namespace ProyectoAndina.Views
                                         Total = total,
                                         SistemaPago = "consumidor",
                                         FechaSalida = DateTime.Now,
+                                        Placa = textBox_buscar_placa.Text.Trim(),
                                         FechaEntrada = DateTime.Parse(tiempo_estacionamiento),
                                         TiempoConsumido = fecha_ingreso,
                                         Caja = cajaTransaccion.nombre,
@@ -243,6 +312,7 @@ namespace ProyectoAndina.Views
                                     recibo.Subtotal = subTotal;
                                     recibo.Total = total;
                                     recibo.SistemaPago = "ruc";
+                                    recibo.Placa = textBox_buscar_placa.Text.Trim();
                                     recibo.FechaSalida = DateTime.Now;
                                     recibo.FechaEntrada = DateTime.Parse(tiempo_estacionamiento);
                                     recibo.TiempoConsumido = fecha_ingreso;
@@ -250,31 +320,68 @@ namespace ProyectoAndina.Views
                                     recibo.Cajero = persona.nombre_completo;
                                 }
 
+                                var listaImpresoras = ConfiguracionImpresora.ObtenerImpresoras();
+                                var impresoraConfig = _FuncionesJson.CargaImpresoraDesdeConfig();
 
-
-                                // 'this' aquí es tu form padre (por ejemplo, tu KioskForm)
-                                using (var frm = new ImpresionComprobanteForm(recibo))
+                                // Verifica si el nombre no es nulo o vacío
+                                if (!string.IsNullOrWhiteSpace(impresoraConfig))
                                 {
-                                    // Redundante si ya lo seteaste en el ctor; no hace daño:
-                                    frm.StartPosition = FormStartPosition.CenterParent;
-                                    frm.TopMost = true;
+                                    // Busca si existe en la lista (ignora mayúsculas/minúsculas)
+                                    var encontrada = listaImpresoras
+                                        .FirstOrDefault(p => p.Equals(impresoraConfig, StringComparison.OrdinalIgnoreCase));
 
-                                    var resultado = frm.ShowDialog(this);  // ¡IMPORTANTE: owner!
-
-                                    if (resultado == DialogResult.OK)
+                                    if (encontrada != null)
                                     {
-                                        StylesAlertas.MostrarAlerta(this, "Impresión finalizada con éxito.", tipo: TipoAlerta.Success);
+                                        ConfiguracionImpresora.ImpresoraSeleccionada = encontrada;
+
+                                        using (var frm = new ImprimirTransaccionForm(recibo))
+                                        {
+                                            frm.StartPosition = FormStartPosition.CenterParent;
+                                            frm.TopMost = true;
+
+                                            var resultado = frm.ShowDialog(this);  // ¡IMPORTANTE: owner!
+
+                                            if (resultado == DialogResult.OK)
+                                            {
+                                                StylesAlertas.MostrarAlerta(this, "Impresión finalizada con éxito.", tipo: TipoAlerta.Success);
+                                            }
+
+                                        }
+                                    }
+                                    else
+                                    {
+                                        using (var frm = new ImpresionComprobanteForm(recibo))
+                                        {
+                                            // Redundante si ya lo seteaste en el ctor; no hace daño:
+                                            frm.StartPosition = FormStartPosition.CenterParent;
+                                            frm.TopMost = true;
+
+                                            var resultado = frm.ShowDialog(this);  // ¡IMPORTANTE: owner!
+
+                                            if (resultado == DialogResult.OK)
+                                            {
+                                                StylesAlertas.MostrarAlerta(this, "Impresión finalizada con éxito.", tipo: TipoAlerta.Success);
+                                            }
+                                        }
                                     }
                                 }
-
+                                else
+                                {
+                                    // Si en el JSON no vino nada, también usa la predeterminada
+                                    ConfiguracionImpresora.ImpresoraSeleccionada = ConfiguracionImpresora.ObtenerImpresoraPredeterminada();
+                                }
 
                             }
-
+                            button_transferencia.Enabled = false;
+                            button_efectivo.Enabled = false;
+                            button_realizar_transaccion.Enabled = false;
+                            button_con_datos.Enabled = false;
+                            button_consumidor_final.Enabled = false;
+                            textBox_val_entregado.Enabled = false;
                             _funcionesGenerales.LimpiarCampos(this);
-
                             label_valor_hora_ingreso.Text = "";
                             label_valor_tiempo.Text = "";
-                            label_valor_a_cobrar.Text = "";
+                            textBox_valor_a_cobrar.Text = "";
                             label_valor_de_cambio.Text = "";
 
                             label_nombre.Text = "";
@@ -333,9 +440,6 @@ namespace ProyectoAndina.Views
                         Email = personaUltima.correo,
                         DireccionCliente = personaUltima.direccion,
                     };
-
-                    button_con_datos.Enabled = false;
-                    button_consumidor_final.Enabled = true;
                     tipo_factura = 2;
                 }
 
@@ -346,125 +450,108 @@ namespace ProyectoAndina.Views
 
             }
         }
-
-        private async void button_buscar_placa_Click(object sender, EventArgs e)
+        private async Task BuscarPlacaAsync(string placa)
         {
-
             try
             {
-                string placa = textBox_buscar_placa.Text.Trim();
+                mostrarBotonCobro("Placa");
 
-                if (placa == "")
+                if (string.IsNullOrWhiteSpace(placa))
                 {
                     StylesAlertas.MostrarAlerta(this, "No hay ningun campo en la placa", "¡Error!", TipoAlerta.Error);
+                    enabledBotones();
                     return;
                 }
+
                 var persona = _PersonaController.ObtenerPorId(SessionUser.PerId);
 
-                if (persona != null)
+                if (persona == null)
                 {
-                    // Esperar el resultado del login
-                    string loginResponse = await _apiService.LoginAsync(persona.correo, persona.password, SessionUser.Mac);
+                    StylesAlertas.MostrarAlerta(this, "No hay un usuario logueado.", "¡Error!", TipoAlerta.Error);
+                    return;
+                }
 
-                    if (!string.IsNullOrEmpty(loginResponse) && !loginResponse.StartsWith("Error") && !loginResponse.StartsWith("Excepción"))
+                string loginResponse = await _apiService.LoginAsync(persona.correo, persona.password, SessionUser.Mac);
+
+                if (string.IsNullOrEmpty(loginResponse) || loginResponse.StartsWith("Error") || loginResponse.StartsWith("Excepción"))
+                {
+                    MessageBox.Show("Error en login: " + loginResponse);
+                    return;
+                }
+
+                var obj = JsonConvert.DeserializeObject<dynamic>(loginResponse);
+                string token = obj?.token;
+
+                if (string.IsNullOrEmpty(token))
+                {
+                    StylesAlertas.MostrarAlerta(this, "No se pudo obtener el token del login.", "¡Error!", TipoAlerta.Error);
+                    return;
+                }
+
+                string respuesta = await _apiService.VerificarPlacaAsync(placa, token);
+                var objRespuesta = JsonConvert.DeserializeObject<dynamic>(respuesta);
+
+                if (objRespuesta.code != null)
+                {
+                    string codigo = objRespuesta.code;
+                    string mensaje = objRespuesta.msg;
+
+                    if (codigo == "0")
                     {
-                        // Aquí normalmente viene un JSON con el token
-                        // Ejemplo: { "token": "eyJhbGciOi..." }
-                        var obj = JsonConvert.DeserializeObject<dynamic>(loginResponse);
-                        string token = obj?.token;
+                        StylesAlertas.MostrarAlerta(this, "No hay respuesta del servidor", "¡Error!", TipoAlerta.Error);
+                        enabledBotones();
+                        _funcionesGenerales.LimpiarCampos(this);
+                        return;
+                    }
 
+                    if (codigo == "128")
+                    {
+                        StylesAlertas.MostrarAlerta(this, "No existe el vehiculo", "¡Error!", TipoAlerta.Error);
 
-                        if (!string.IsNullOrEmpty(token))
-                        {
-                            // ✅ Ya tienes el token. Ahora puedes usarlo para otra operación
-                            string respuesta = await _apiService.VerificarPlacaAsync(placa, token);
+                        button_realizar_transaccion.Enabled = false;
+                        button_transferencia.Enabled = false;
+                        button_efectivo.Enabled = false;
+                        button_consumidor_final.Enabled = false;
+                        button_con_datos.Enabled = false;
+                        textBox_val_entregado.Enabled = false;
+                        _funcionesGenerales.LimpiarCampos(this);
+                        enabledBotones();
 
-                            var objRespuesta = JsonConvert.DeserializeObject<dynamic>(respuesta);
+                        return;
+                    }
+                }
 
+                if (objRespuesta?.traducido != null)
+                {
+                    string placaActual = objRespuesta.traducido.Placa;
+                    string HoraIngreso = objRespuesta.traducido.HoraIngreso;
+                    string TiempoEstacionamiento = objRespuesta.traducido.TiempoEstacionado;
+                    string TipoRegla = objRespuesta.traducido.TipoRegla;
+                    string NombreRegla = objRespuesta.traducido.NombreRegla;
+                    string MontoPagar = objRespuesta.traducido.MontoAPagar;
 
-                            if (objRespuesta.code != null)
-                            {
-                                string codigo = objRespuesta.code;
-                                string mensaje = objRespuesta.msg;
-
-                                // Si el código no es "0" (éxito), hay un error
-                                if (codigo == "0")
-                                {
-                                    StylesAlertas.MostrarAlerta(this, "No hay respuesta del servidor", "¡Error!", TipoAlerta.Error);
-
-
-                                    _funcionesGenerales.LimpiarCampos(this);
-
-                                    return; // Salir del método
-                                }
-                                if (codigo == "128")
-                                {
-                                    StylesAlertas.MostrarAlerta(this, "No existe el vehiculo", "¡Error!", TipoAlerta.Error);
-
-
-                                    _funcionesGenerales.LimpiarCampos(this);
-
-                                    return; // Salir del método
-                                }
-                            }
-
-                            if (objRespuesta?.traducido != null)
-                            {
-                                // Acceder correctamente a las propiedades (sin .Artemis)
-                                string placaActual = objRespuesta.traducido.Placa;
-                                string HoraIngreso = objRespuesta.traducido.HoraIngreso;
-                                string TiempoEstacionamiento = objRespuesta.traducido.TiempoEstacionado;
-                                string TipoRegla = objRespuesta.traducido.TipoRegla;
-                                string NombreRegla = objRespuesta.traducido.NombreRegla;
-                                string MontoPagar = objRespuesta.traducido.MontoAPagar;
-
-                                if (MontoPagar == "0.00")
-                                {
-                                    label_valor_hora_ingreso.Text = "⏰" + HoraIngreso;
-                                    label_valor_tiempo.Text = "⌛" + TiempoEstacionamiento;
-                                    label_valor_a_cobrar.Text = "" + MontoPagar;
-                                    button_realizar_transaccion.Enabled = false;
-                                    textBox_val_entregado.Enabled = false;
-
-                                }
-                                else
-                                {
-                                    label_valor_hora_ingreso.Text = "⏰" + HoraIngreso;
-                                    label_valor_tiempo.Text = "⌛" + TiempoEstacionamiento;
-                                    label_valor_a_cobrar.Text = "" + MontoPagar;
-                                    button_realizar_transaccion.Enabled = true;
-                                    textBox_val_entregado.Enabled = true;
-
-
-                                }
-
-                                // Asignar a los TextBox
-
-
-                            }
-                            else
-                            {
-                                StylesAlertas.MostrarAlerta(this, "La respuesta no contiene la estructura esperada", "¡Error!", TipoAlerta.Error);
-                            }
-
-
-
-                            //string montoPagar = objRespuesta.Artemis.traducido.Placa;
-
-                        }
-                        else
-                        {
-                            StylesAlertas.MostrarAlerta(this, "No se pudo obtener el token del login.", "¡Error!", TipoAlerta.Error);
-                        }
+                    if (MontoPagar == "0.00")
+                    {
+                        label_valor_hora_ingreso.Text = "⏰" + HoraIngreso;
+                        label_valor_tiempo.Text = "⌛" + TiempoEstacionamiento;
+                        textBox_valor_a_cobrar.Text = "" + MontoPagar;
+                        textBox_val_entregado.Enabled = false;
+                        enabledBotones();
                     }
                     else
                     {
-                        MessageBox.Show("Error en login: " + loginResponse);
+                        label_valor_hora_ingreso.Text = "⏰" + HoraIngreso;
+                        label_valor_tiempo.Text = "⌛" + TiempoEstacionamiento;
+                        textBox_valor_a_cobrar.Text = "" + MontoPagar;
+                        button_realizar_transaccion.Enabled = true;
+                        button_con_datos.Enabled = true;
+                        button_consumidor_final.Enabled = true;
+                        textBox_val_entregado.Enabled = true;
                     }
                 }
                 else
                 {
-                    StylesAlertas.MostrarAlerta(this, "No hay un usuario logueado.", "¡Error!", TipoAlerta.Error);
+                    StylesAlertas.MostrarAlerta(this, "La respuesta no contiene la estructura esperada", "¡Error!", TipoAlerta.Error);
                 }
             }
             catch (Exception ex)
@@ -473,108 +560,115 @@ namespace ProyectoAndina.Views
             }
         }
 
+
+        private async void button_buscar_placa_Click(object sender, EventArgs e)
+        {
+            string placa = textBox_buscar_placa.Text.Trim();
+            await BuscarPlacaAsync(placa);
+        }
+
         private async void button_buscar_usuario_Click(object sender, EventArgs e)
         {
             string cedula = textBox_usuario_encontrar.Text.Trim();
-
-
-
-            if (cedula == "")
-            {
-                StylesAlertas.MostrarAlerta(this, "Ingrese el CI/RUC del usuario", "¡Error!", TipoAlerta.Error);
-                label_nombre.Text = "👤 Nombre: ";
-                label_correo.Text = "📧 Correo: ";
-                label_cedula.Text = "🆔 Cédula: ";
-                label_telefono.Text = "📞 Teléfono: ";
-                id_usuario = 1;
-                return;
-            }
-            else
-            {
-
-
-                var persona = _PersonaController.ObtenerPorId(SessionUser.PerId);
-
-                if (persona != null)
-                {
-                    // Esperar el resultado del login
-                    string loginResponse = await _apiService.LoginAsync(persona.correo, persona.password, SessionUser.Mac);
-
-                    if (!string.IsNullOrEmpty(loginResponse) && !loginResponse.StartsWith("Error") && !loginResponse.StartsWith("Excepción"))
-                    {
-                        // Aquí normalmente viene un JSON con el token
-                        // Ejemplo: { "token": "eyJhbGciOi..." }
-                        var obj = JsonConvert.DeserializeObject<dynamic>(loginResponse);
-                        string token = obj?.token;
-
-
-                        if (!string.IsNullOrEmpty(token))
-                        {
-                            // ✅ Ya tienes el token. Ahora puedes usarlo para otra operación
-                            string respuesta = await _apiService.GetPersonaPorCedulaAsync(cedula, token);
-
-                            // Validar si la API devolvió vacío o lista vacía
-                            if (string.IsNullOrWhiteSpace(respuesta) || respuesta == "[]" || respuesta == "null")
-                            {
-                                StylesAlertas.MostrarAlerta(
-                                    this,
-                                    "No se encontró el usuario",
-                                    "¡Error!",
-                                    TipoAlerta.Error,
-                                    4000
-                                );
-                                button_agregar_user.Visible = true;
-                                button_agregar_user.Enabled = true;
-                                button_realizar_transaccion.Enabled = false;
-
-                                return;
-                            }
-
-                            if (respuesta.Contains("\"status\":404") || respuesta.Contains("\"title\":\"Not Found\""))
-                            {
-                                StylesAlertas.MostrarAlerta(this, "No se encontro el usuario", "¡Error!", TipoAlerta.Error);
-                                button_realizar_transaccion.Enabled = false;
-                                return;
-                            }
-                            var objRespuesta = JsonConvert.DeserializeObject<dynamic>(respuesta);
-
-                            if (objRespuesta != null)
-                            {
-                                button_agregar_user.Visible = false;
-                                label_nombre.Text = "👤 Nombre: " + objRespuesta.nombre_completo;
-                                label_correo.Text = "📧 Correo: " + objRespuesta.correo;
-                                label_cedula.Text = "🆔 Cédula: " + objRespuesta.cedula;
-                                label_telefono.Text = "📞 Teléfono: " + objRespuesta.telefono_1;
-                                id_usuario = objRespuesta.per_id;
-                                button_realizar_transaccion.Enabled = true;
-
-                                recibo = new ReciboModel
-                                {
-                                    Fecha = DateTime.Now,
-                                    Hora = DateTime.Now,
-                                    Cliente = objRespuesta.nombre_completo,
-                                    CI_RUC = objRespuesta.cedula,
-                                    TelefonoCliente = objRespuesta.telefono_1,
-                                    Email = objRespuesta.correo,
-                                    DireccionCliente = objRespuesta.direccion,
-                                };
-
-                                button_con_datos.Enabled = false;
-                                button_consumidor_final.Enabled = true;
-                                tipo_factura = 2;
-                            }
-
-                        }
-                    }
-
-                }
-
-            }
+            await BuscarUsuarioPorCedulaAsync(cedula);
         }
         private void TransaccionesCajaForm_Paint(object sender, PaintEventArgs e)
         {
             StyleGenerales.PintarFondoDiagonal(this, e);
         }
+        private async Task BuscarUsuarioPorCedulaAsync(string cedula)
+        {
+            try
+            {
+                if (string.IsNullOrWhiteSpace(cedula))
+                {
+                    StylesAlertas.MostrarAlerta(this, "Ingrese el CI/RUC del usuario", "¡Error!", TipoAlerta.Error);
+                    label_nombre.Text = "👤 Nombre: ";
+                    label_correo.Text = "📧 Correo: ";
+                    label_cedula.Text = "🆔 Cédula: ";
+                    label_telefono.Text = "📞 Teléfono: ";
+                    id_usuario = 1;
+                    return;
+                }
+
+                var persona = _PersonaController.ObtenerPorId(SessionUser.PerId);
+                if (persona == null)
+                {
+                    StylesAlertas.MostrarAlerta(this, "No hay un usuario logueado.", "¡Error!", TipoAlerta.Error);
+                    return;
+                }
+
+                // Login para obtener token
+                string loginResponse = await _apiService.LoginAsync(persona.correo, persona.password, SessionUser.Mac);
+                if (string.IsNullOrEmpty(loginResponse) || loginResponse.StartsWith("Error") || loginResponse.StartsWith("Excepción"))
+                {
+                    MessageBox.Show("Error en login: " + loginResponse);
+                    return;
+                }
+
+                var obj = JsonConvert.DeserializeObject<dynamic>(loginResponse);
+                string token = obj?.token;
+                if (string.IsNullOrEmpty(token))
+                {
+                    StylesAlertas.MostrarAlerta(this, "No se pudo obtener el token del login.", "¡Error!", TipoAlerta.Error);
+                    return;
+                }
+
+                // Llamar API para buscar usuario
+                string respuesta = await _apiService.GetPersonaPorCedulaAsync(cedula, token);
+
+                if (string.IsNullOrWhiteSpace(respuesta) || respuesta == "[]" || respuesta == "null")
+                {
+                    StylesAlertas.MostrarAlerta(this, "No se encontró el usuario", "¡Error!", TipoAlerta.Error, 4000);
+                    button_agregar_user.Visible = true;
+                    button_agregar_user.Enabled = true;
+                    button_realizar_transaccion.Enabled = false;
+                    tableLayoutPanel_agregar_usuario.Visible = true;
+                    return;
+                }
+
+                if (respuesta.Contains("\"status\":404") || respuesta.Contains("\"title\":\"Not Found\""))
+                {
+                    StylesAlertas.MostrarAlerta(this, "No se encontró el usuario", "¡Error!", TipoAlerta.Error);
+                    button_realizar_transaccion.Enabled = false;
+                    return;
+                }
+
+                var objRespuesta = JsonConvert.DeserializeObject<dynamic>(respuesta);
+                if (objRespuesta != null)
+                {
+                    button_agregar_user.Visible = false;
+
+                    // Mostrar datos en labels
+                    label_nombre.Text = "👤 Nombre: " + objRespuesta.nombre_completo;
+                    label_correo.Text = "📧 Correo: " + objRespuesta.correo;
+                    label_cedula.Text = "🆔 Cédula: " + objRespuesta.cedula;
+                    label_telefono.Text = "📞 Teléfono: " + objRespuesta.telefono_1;
+
+                    id_usuario = objRespuesta.per_id;
+                    button_realizar_transaccion.Enabled = true;
+
+                    // Preparar el recibo
+                    recibo = new ReciboModel
+                    {
+                        Fecha = DateTime.Now,
+                        Hora = DateTime.Now,
+                        Cliente = objRespuesta.nombre_completo,
+                        CI_RUC = objRespuesta.cedula,
+                        TelefonoCliente = objRespuesta.telefono_1,
+                        Email = objRespuesta.correo,
+                        DireccionCliente = objRespuesta.direccion,
+                    };
+
+                    tipo_factura = 2;
+                }
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show("Error al buscar usuario: " + ex.Message);
+            }
+        }
+
 
 
 
@@ -619,7 +713,7 @@ namespace ProyectoAndina.Views
 
 
             // Procesar valor a cobrar
-            string texto = label_valor_a_cobrar.Text.Replace("💰", "").Trim();
+            string texto = textBox_valor_a_cobrar.Text.Replace("💰", "").Trim();
             string textoCobrar = texto;
 
             // Quitar símbolos de moneda y espacios
@@ -689,11 +783,32 @@ namespace ProyectoAndina.Views
             return valor;
         }
 
+
+        private int sacarTipoFactura()
+        {
+
+            int valor = 0;
+
+            if (button_consumidor_final.Enabled == false)
+            {
+                return valor = 1;
+            }
+            else if (button_con_datos.Enabled == false)
+            {
+                return valor = 2;
+            }
+
+
+            return valor;
+        }
+
         private void button_efectivo_Click(object sender, EventArgs e)
         {
             button_efectivo.Enabled = false;
             button_tarjeta.Enabled = true;
             button_transferencia.Enabled = true;
+
+            textBox_val_entregado.Enabled = true;
         }
 
         private void button_transferencia_Click(object sender, EventArgs e)
@@ -701,6 +816,36 @@ namespace ProyectoAndina.Views
             button_efectivo.Enabled = true;
             button_tarjeta.Enabled = true;
             button_transferencia.Enabled = false;
+            textBox_val_entregado.Enabled = false;
+
+            string textoCobrar = textBox_valor_a_cobrar.Text.Trim();
+            CultureInfo cultura = CultureInfo.InvariantCulture;
+
+            decimal valorCobrar;
+
+            if (decimal.TryParse(textoCobrar, NumberStyles.Any, cultura, out valorCobrar))
+            {
+                textBox_val_entregado.Text = valorCobrar.ToString("0.00", cultura);
+            }
+            else
+            {
+                textBox_val_entregado.Text = "0.00";
+            }
+
+
+            using (var frm = new VerificarTransaccionForm())
+            {
+                // Redundante si ya lo seteaste en el ctor; no hace daño:
+                frm.StartPosition = FormStartPosition.CenterParent;
+                frm.TopMost = true;
+
+                var resultado = frm.ShowDialog(this);  // ¡IMPORTANTE: owner!
+
+                if (resultado == DialogResult.OK)
+                {
+                    StylesAlertas.MostrarAlerta(this, "Transacción verificada con exito.", tipo: TipoAlerta.Success);
+                }
+            }
         }
 
         private void button_tarjeta_Click(object sender, EventArgs e)
@@ -716,7 +861,11 @@ namespace ProyectoAndina.Views
             button_consumidor_final.Enabled = false;
             button_con_datos.Enabled = true;
             button_agregar_user.Visible = false;
+            button_transferencia.Enabled = true;
+            button_efectivo.Enabled = false;
             tableLayout_conDatos.Visible = false;
+            tableLayoutPanel_agregar_usuario.Visible = false;
+
             id_usuario = 1;
             tipo_factura = 1;
         }
@@ -725,8 +874,9 @@ namespace ProyectoAndina.Views
         {
             button_consumidor_final.Enabled = true;
             button_con_datos.Enabled = false;
+            button_transferencia.Enabled = true;
+            button_efectivo.Enabled = false;
             tableLayout_conDatos.Visible = false;
-            button_realizar_transaccion.Enabled = false;
             tableLayout_conDatos.Visible = true;
             tipo_factura = 2;
         }
@@ -735,7 +885,7 @@ namespace ProyectoAndina.Views
         {
             TecladoHelper.CerrarTeclado();
 
-            
+
         }
 
         private void textBox_buscar_placa_Click(object sender, EventArgs e)
@@ -830,6 +980,315 @@ namespace ProyectoAndina.Views
                     txt.Text = "";
                     txt.ForeColor = Color.Black;
                 }
+            }
+        }
+
+        private void textBox_val_entregado_TextChanged(object sender, EventArgs e)
+        {
+
+        }
+
+        private void iconPictureBox_placa_desconocida_Click(object sender, EventArgs e)
+        {
+            textBox_valor_a_cobrar.Enabled = true;
+            textBox_val_entregado.Enabled = true;
+            button_transferencia.Enabled = true;
+            button_consumidor_final.Enabled = true;
+            button_con_datos.Enabled = true;
+            button_cobrar_desconocido.Enabled = true;
+            button_cobrar_desconocido.Visible = true;
+
+            mostrarBotonCobro("Desconocido");
+
+        }
+
+        private async void button_cobrar_desconocido_Click(object sender, EventArgs e)
+        {
+            if (textBox_val_entregado.Text == "Monto entregado...")
+            {
+
+                StylesAlertas.MostrarAlerta(this, "Complete el campo de valor entregado", "¡Error!", TipoAlerta.Error);
+                return;
+            }
+            if (textBox_valor_a_cobrar.Text == "")
+            {
+
+                StylesAlertas.MostrarAlerta(this, "Complete el campo de valor a cobrar", "¡Error!", TipoAlerta.Error);
+                return;
+            }
+
+
+            if (textBox_buscar_placa.Text == "")
+            {
+
+                StylesAlertas.MostrarAlerta(this, "Complete el campo de la placa", "¡Error!", TipoAlerta.Error);
+                return;
+            }
+
+
+            if (sacarTipoPago() == 0 || sacarTipoFactura() == 0)
+            {
+                StylesAlertas.MostrarAlerta(this, "Seleccionar tipo de pago o factura", "¡Error!", TipoAlerta.Error);
+                return;
+
+            }
+
+            if (sacarTipoFactura() == 2)
+            {
+                if (textBox_usuario_encontrar.Text == "" || label_cedula.Text == "🆔 Cédula")
+                {
+                    StylesAlertas.MostrarAlerta(this, "Seleccionar una persona", "¡Error!", TipoAlerta.Error);
+                    return;
+                }
+            }
+
+            string valorEntregadoEncerado = textBox_val_entregado.Text.Trim();
+            string valorCambioEncerado = textBox_valor_a_cobrar.Text.Trim();
+
+            if (valorEntregadoEncerado == "" || valorCambioEncerado == "")
+            {
+                StylesAlertas.MostrarAlerta(this, "Agregar un valor entregado por el usuario", "¡Error!", TipoAlerta.Error);
+                return;
+            }
+            string texto = label_valor_de_cambio.Text.Replace("💰", "").Trim();
+            decimal valorEntregado = _funcionesGenerales.ParseDecimalFromTextBoxNormalizado(textBox_val_entregado.Text);
+            decimal valorCambio = _funcionesGenerales.ParseDecimalFromTextBoxNormalizado(texto);
+
+            if (tipo_factura == 1)
+            {
+                if (valorEntregado > 49)
+                {
+                    StylesAlertas.MostrarAlerta(this, "El consumidor final no puede realizar pagos mayor a 50 dolares", "¡Error!", TipoAlerta.Error);
+                    return;
+                }
+            }
+            else if (tipo_factura == 2)
+            {
+                if (id_usuario == 0 || label_nombre.Text.Trim() == "")
+                {
+                    StylesAlertas.MostrarAlerta(this, "Seleccionar un usuario", "¡Error!", TipoAlerta.Error);
+                    return;
+                }
+
+            }
+            else if (tipo_factura == 0)
+            {
+                StylesAlertas.MostrarAlerta(this, "Seleccione un tipo de factura", "¡Error!", TipoAlerta.Error);
+                return;
+            }
+
+
+            // Validar que los valores sean mayores o iguales a cero (opcional)
+            if (valorEntregado >= 0 && valorCambio >= 0)
+            {
+                string descripcion = "Generado desde la aplicacion de escritorio sin placa";
+                int id_arqueo_caja = SessionArqueoCaja.id_arqueo_caja;
+
+                string valor_cobrar = textBox_valor_a_cobrar.Text.Replace("💰", "").Trim();
+                decimal valor_a_cobrar = _funcionesGenerales.ParseDecimalFromTextBoxNormalizado(valor_cobrar);
+
+
+                string tiempo_estacionamiento = label_valor_hora_ingreso.Text.Replace("⏰", "").Trim();
+                string fecha_ingreso = label_valor_tiempo.Text.Replace("⌛", "").Trim();
+
+
+                string placa = textBox_buscar_placa.Text.Trim();
+
+                var transaccionCaja = new TransaccionCajaM
+                {
+                    arqueo_id = id_arqueo_caja,
+                    per_id_cliente = id_usuario,
+                    fecha_transaccion = DateTime.Now,
+                    valor_a_cobrar = valor_a_cobrar,
+                    valor_entregado = valorEntregado,
+                    tipo_pago_id = sacarTipoPago(),
+                    descripcion = descripcion,
+                    placa = placa
+                };
+
+                var persona = _PersonaController.ObtenerPorId(SessionUser.PerId);
+                var arqueoCaja = _ArqueoCajaController.ObtenerPorId(id_arqueo_caja);
+                var cajaTransaccion = _CajaController.ObtenerPorId(arqueoCaja.caja_id);
+
+
+                if (persona != null)
+                {
+                    // Esperar el resultado del login
+                    string loginResponse = await _apiService.LoginAsync(persona.correo, persona.password, SessionUser.Mac);
+
+                    if (!string.IsNullOrEmpty(loginResponse) && !loginResponse.StartsWith("Error") && !loginResponse.StartsWith("Excepción"))
+                    {
+                        // Aquí normalmente viene un JSON con el token
+                        // Ejemplo: { "token": "eyJhbGciOi..." }
+                        var obj = JsonConvert.DeserializeObject<dynamic>(loginResponse);
+                        string token = obj?.token;
+
+
+                        if (!string.IsNullOrEmpty(token))
+                        {
+
+
+                            string Transaccion = await _apiService.CrearTransaccionCajaAsync(transaccionCaja, token);
+
+
+
+                            if (Transaccion.StartsWith("Error") || Transaccion.StartsWith("Excepción"))
+                            {
+                                //MessageBox.Show("❌ No se pudo registrar la transacción: " + Transaccion,
+                                //               "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                                StylesAlertas.MostrarAlerta(this, "No se pudo completar la transacción", "¡Error!", TipoAlerta.Error);
+                            }
+                            else
+                            {
+                                // Si tu API devuelve la transacción creada en JSON
+                                var objTransaccion = JsonConvert.DeserializeObject<TransaccionCajaM>(Transaccion);
+                                // MessageBox.Show("✅ Transacción registrada con ID: " + objTransaccion.arqueo_id,
+                                //                "Éxito", MessageBoxButtons.OK, MessageBoxIcon.Information);
+
+                                StylesAlertas.MostrarAlerta(this, "Transacción realizada correctamente", tipo: TipoAlerta.Success);
+
+
+
+                                decimal porcentaje = 0.15m; // 15%
+                                decimal montoDescuento = transaccionCaja.valor_a_cobrar * porcentaje; // 15% del valor a cobrar
+                                decimal subTotal = transaccionCaja.valor_a_cobrar - montoDescuento;
+                                decimal total = valor_a_cobrar; // si no hay impuestos adicionales
+
+                                if (tipo_factura == 1)
+                                {
+
+                                    recibo = new ReciboModel
+                                    {
+                                        Fecha = DateTime.Now,
+                                        Hora = DateTime.Now,
+                                        IVA15 = montoDescuento,
+                                        Subtotal = subTotal,
+                                        Total = total,
+                                        SistemaPago = "consumidor",
+                                        FechaSalida = DateTime.Now,
+                                        Placa = textBox_buscar_placa.Text.Trim(),
+                                        FechaEntrada = DateTime.Parse(tiempo_estacionamiento),
+                                        TiempoConsumido = fecha_ingreso,
+                                        Caja = cajaTransaccion.nombre,
+                                        Cajero = persona.nombre_completo,
+                                    };
+                                }
+                                else if (tipo_factura == 2)
+                                {
+                                    recibo.IVA15 = montoDescuento;
+                                    recibo.Subtotal = subTotal;
+                                    recibo.Total = total;
+                                    recibo.SistemaPago = "ruc";
+                                    recibo.Placa = textBox_buscar_placa.Text.Trim();
+                                    recibo.FechaSalida = DateTime.Now;
+                                    recibo.FechaEntrada = DateTime.Parse(tiempo_estacionamiento);
+                                    recibo.TiempoConsumido = fecha_ingreso;
+                                    recibo.Caja = cajaTransaccion.nombre;
+                                    recibo.Cajero = persona.nombre_completo;
+                                }
+
+                                var listaImpresoras = ConfiguracionImpresora.ObtenerImpresoras();
+                                var impresoraConfig = _FuncionesJson.CargaImpresoraDesdeConfig();
+
+                                // Verifica si el nombre no es nulo o vacío
+                                if (!string.IsNullOrWhiteSpace(impresoraConfig))
+                                {
+                                    // Busca si existe en la lista (ignora mayúsculas/minúsculas)
+                                    var encontrada = listaImpresoras
+                                        .FirstOrDefault(p => p.Equals(impresoraConfig, StringComparison.OrdinalIgnoreCase));
+
+                                    if (encontrada != null)
+                                    {
+                                        ConfiguracionImpresora.ImpresoraSeleccionada = encontrada;
+
+                                        using (var frm = new ImprimirTransaccionForm(recibo))
+                                        {
+                                            frm.StartPosition = FormStartPosition.CenterParent;
+                                            frm.TopMost = true;
+
+                                            var resultado = frm.ShowDialog(this);  // ¡IMPORTANTE: owner!
+
+                                            if (resultado == DialogResult.OK)
+                                            {
+                                                StylesAlertas.MostrarAlerta(this, "Impresión finalizada con éxito.", tipo: TipoAlerta.Success);
+                                            }
+
+                                        }
+                                    }
+                                    else
+                                    {
+                                        using (var frm = new ImpresionComprobanteForm(recibo))
+                                        {
+                                            // Redundante si ya lo seteaste en el ctor; no hace daño:
+                                            frm.StartPosition = FormStartPosition.CenterParent;
+                                            frm.TopMost = true;
+
+                                            var resultado = frm.ShowDialog(this);  // ¡IMPORTANTE: owner!
+
+                                            if (resultado == DialogResult.OK)
+                                            {
+                                                StylesAlertas.MostrarAlerta(this, "Impresión finalizada con éxito.", tipo: TipoAlerta.Success);
+                                            }
+                                        }
+                                    }
+                                }
+                                else
+                                {
+                                    // Si en el JSON no vino nada, también usa la predeterminada
+                                    ConfiguracionImpresora.ImpresoraSeleccionada = ConfiguracionImpresora.ObtenerImpresoraPredeterminada();
+                                }
+
+                            }
+                            button_transferencia.Enabled = false;
+                            button_efectivo.Enabled = false;
+                            button_realizar_transaccion.Enabled = false;
+                            button_con_datos.Enabled = false;
+                            button_consumidor_final.Enabled = false;
+                            textBox_val_entregado.Enabled = false;
+                            _funcionesGenerales.LimpiarCampos(this);
+                            label_valor_hora_ingreso.Text = "";
+                            label_valor_tiempo.Text = "";
+                            textBox_valor_a_cobrar.Text = "";
+                            label_valor_de_cambio.Text = "";
+
+                            label_nombre.Text = "";
+                            label_correo.Text = "";
+                            label_cedula.Text = "";
+                            label_telefono.Text = "";
+
+                        }
+                        else
+                        {
+                            StylesAlertas.MostrarAlerta(this, "No se pudo obtener el token del login.", "Aviso", TipoAlerta.Info);
+                        }
+
+                    }
+                }
+
+            }
+            else
+            {
+                StylesAlertas.MostrarAlerta(this, "Por favor ingrese un número válido.", "Aviso", TipoAlerta.Info);
+            }
+        }
+
+        private async void textBox_buscar_placa_KeyDown(object sender, KeyEventArgs e)
+        {
+            if (e.KeyCode == Keys.Enter)
+            {
+                e.SuppressKeyPress = true; // evita el sonido "ding"
+                string placa = textBox_buscar_placa.Text.Trim();
+                await BuscarPlacaAsync(placa);
+            }
+        }
+
+        private async void textBox_usuario_encontrar_KeyDown(object sender, KeyEventArgs e)
+        {
+            if (e.KeyCode == Keys.Enter)
+            {
+                e.SuppressKeyPress = true; // evita el sonido "ding"
+                string cedula = textBox_usuario_encontrar.Text.Trim();
+                await BuscarUsuarioPorCedulaAsync(cedula);
             }
         }
     }

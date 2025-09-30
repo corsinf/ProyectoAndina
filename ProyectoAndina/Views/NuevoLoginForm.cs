@@ -37,11 +37,7 @@ namespace ProyectoAndina.Views
             _FuncionesJson = new FuncionesJson();
             _CajaController = new CajaController();
             InitializeComponent();
-            
-
         }
-
-
 
 
         private async void BtnLogin_Click(object sender, EventArgs e)
