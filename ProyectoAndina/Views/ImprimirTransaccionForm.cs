@@ -16,6 +16,7 @@ namespace ProyectoAndina.Views
         private System.Windows.Forms.Timer progressTimer;
         private int currentProgress = 0;
         private readonly ReciboModel reciboActual;
+        private bool yaImprimio = false;
         public ImprimirTransaccionForm(ReciboModel reciboActual)
         {
             this.reciboActual = reciboActual;
@@ -30,9 +31,9 @@ namespace ProyectoAndina.Views
             progressBar_cargar.Maximum = 100;
             progressBar_cargar.Value = 0;
 
-            // Configurar el Timer
+            // Configurar el Timer (10ms x 100 pasos = 1000ms = 1s)
             progressTimer = new System.Windows.Forms.Timer();
-            progressTimer.Interval = 30; // 30ms por cada incremento (3000ms / 100 incrementos = 30ms)
+            progressTimer.Interval = 10;
             progressTimer.Tick += ProgressTimer_Tick;
 
             // Inicializar el label
@@ -41,6 +42,8 @@ namespace ProyectoAndina.Views
             // Iniciar la simulación automáticamente
             IniciarCarga();
         }
+
+
 
         private void ProgressTimer_Tick(object sender, EventArgs e)
         {
@@ -70,26 +73,36 @@ namespace ProyectoAndina.Views
             // Iniciar el timer
             progressTimer.Start();
         }
-
+        
         private async void OnCargaCompleta()
         {
-            // Aquí puedes agregar lo que quieres que suceda cuando termine la carga
-            // Por ejemplo:
-            // MessageBox.Show("Verificación completada!", "Éxito", MessageBoxButtons.OK, MessageBoxIcon.Information);
-            // this.Close(); // Si quieres cerrar el formulario
+            if (yaImprimio)
+                return; // si ya imprimió, no hace nada
 
-            // O cualquier otra lógica que necesites
-            await Task.Run(() =>
+            yaImprimio = true; // marca que ya imprimió
+
+            try
             {
-                var impresor = new DatosImpresion();
-                impresor.ImprimirRecibo(reciboActual, ConfiguracionImpresora.ImpresoraSeleccionada);
-                AbrirCajon(ConfiguracionImpresora.ImpresoraSeleccionada);
-            });
+                await Task.Run(() =>
+                {
+                    var impresor = new DatosImpresion();
+                    impresor.ImprimirRecibo(reciboActual, ConfiguracionImpresora.ImpresoraSeleccionada);
+                    AbrirCajon(ConfiguracionImpresora.ImpresoraSeleccionada);
+                });
 
-            this.DialogResult = DialogResult.OK; // cierra ShowDialog con OK
-            this.Close();
-          
+                this.DialogResult = DialogResult.OK;
+                this.Close();
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(this, "Ocurrió un error al imprimir el comprobante.",
+                    "Impresión", MessageBoxButtons.OK, MessageBoxIcon.Error);
+
+                // Si quieres permitir reintento en caso de error, descomenta:
+                yaImprimio = false;
+            }
         }
+
 
         // Método público para reiniciar la carga si lo necesitas
         public void ReiniciarCarga()

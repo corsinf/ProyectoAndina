@@ -620,6 +620,10 @@ namespace ProyectoAndina.Views
                 if (string.IsNullOrWhiteSpace(respuesta) || respuesta == "[]" || respuesta == "null")
                 {
                     StylesAlertas.MostrarAlerta(this, "No se encontró el usuario", "¡Error!", TipoAlerta.Error, 4000);
+                    label_nombre.Text = "👤 Nombre: ";
+                    label_correo.Text = "📧 Correo: ";
+                    label_cedula.Text = "🆔 Cédula: ";
+                    label_telefono.Text = "📞 Teléfono: ";
                     button_agregar_user.Visible = true;
                     button_agregar_user.Enabled = true;
                     button_realizar_transaccion.Enabled = false;
@@ -631,6 +635,10 @@ namespace ProyectoAndina.Views
                 {
                     StylesAlertas.MostrarAlerta(this, "No se encontró el usuario", "¡Error!", TipoAlerta.Error);
                     button_realizar_transaccion.Enabled = false;
+                    label_nombre.Text = "👤 Nombre: ";
+                    label_correo.Text = "📧 Correo: ";
+                    label_cedula.Text = "🆔 Cédula: ";
+                    label_telefono.Text = "📞 Teléfono: ";
                     return;
                 }
 
@@ -1018,6 +1026,7 @@ namespace ProyectoAndina.Views
             }
 
 
+
             if (textBox_buscar_placa.Text == "")
             {
 
@@ -1053,6 +1062,16 @@ namespace ProyectoAndina.Views
             string texto = label_valor_de_cambio.Text.Replace("💰", "").Trim();
             decimal valorEntregado = _funcionesGenerales.ParseDecimalFromTextBoxNormalizado(textBox_val_entregado.Text);
             decimal valorCambio = _funcionesGenerales.ParseDecimalFromTextBoxNormalizado(texto);
+
+            decimal valorCobrar = _funcionesGenerales.ParseDecimalFromTextBoxNormalizado(textBox_valor_a_cobrar.Text);
+
+            if (valorCobrar < 0.50m)
+            {
+                StylesAlertas.MostrarAlerta(this, "El valor a cobrar debe ser mayor 0.50", "¡Error!", TipoAlerta.Error);
+                return;
+            }
+
+
 
             if (tipo_factura == 1)
             {
@@ -1167,7 +1186,9 @@ namespace ProyectoAndina.Views
                                         SistemaPago = "consumidor",
                                         FechaSalida = DateTime.Now,
                                         Placa = textBox_buscar_placa.Text.Trim(),
-                                        FechaEntrada = DateTime.Parse(tiempo_estacionamiento),
+                                        FechaEntrada = (string.IsNullOrWhiteSpace(tiempo_estacionamiento) || tiempo_estacionamiento == "--")
+                                         ? (DateTime?)null
+                                         : DateTime.Parse(tiempo_estacionamiento),
                                         TiempoConsumido = fecha_ingreso,
                                         Caja = cajaTransaccion.nombre,
                                         Cajero = persona.nombre_completo,
@@ -1181,7 +1202,9 @@ namespace ProyectoAndina.Views
                                     recibo.SistemaPago = "ruc";
                                     recibo.Placa = textBox_buscar_placa.Text.Trim();
                                     recibo.FechaSalida = DateTime.Now;
-                                    recibo.FechaEntrada = DateTime.Parse(tiempo_estacionamiento);
+                                    recibo.FechaEntrada = (string.IsNullOrWhiteSpace(tiempo_estacionamiento) || tiempo_estacionamiento == "--")
+                                         ? (DateTime?)null
+                                         : DateTime.Parse(tiempo_estacionamiento);
                                     recibo.TiempoConsumido = fecha_ingreso;
                                     recibo.Caja = cajaTransaccion.nombre;
                                     recibo.Cajero = persona.nombre_completo;
@@ -1290,6 +1313,11 @@ namespace ProyectoAndina.Views
                 string cedula = textBox_usuario_encontrar.Text.Trim();
                 await BuscarUsuarioPorCedulaAsync(cedula);
             }
+        }
+
+        private void textBox_usuario_encontrar_TextChanged(object sender, EventArgs e)
+        {
+            button_agregar_user.Visible = false;
         }
     }
 }

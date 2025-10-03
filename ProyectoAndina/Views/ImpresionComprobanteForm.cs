@@ -9,6 +9,7 @@ namespace ProyectoAndina.Views
     public partial class ImpresionComprobanteForm : Form
     {
         private readonly ReciboModel reciboActual;
+        private bool yaImprimio = false;
 
         public ImpresionComprobanteForm(ReciboModel reciboActual)
         {
@@ -66,11 +67,14 @@ namespace ProyectoAndina.Views
 
         private async void button_imprimir_Click(object sender, EventArgs e)
         {
-            // Evita doble clic
+            if (yaImprimio)
+                return; // no ejecutar de nuevo
+
+            yaImprimio = true;
             button_imprimir.Enabled = false;
+
             try
             {
-                // Por si no hay selección (fallback)
                 if (string.IsNullOrWhiteSpace(ConfiguracionImpresora.ImpresoraSeleccionada) &&
                     comboBoxImpresoras.SelectedItem is string impresoraSel)
                 {
@@ -84,8 +88,6 @@ namespace ProyectoAndina.Views
                     return;
                 }
 
-                // Si ImprimirRecibo es bloqueante, puedes envolverlo en Task.Run
-                // para no congelar el UI. Si ya es rápido/sincrónico, puedes llamarlo directo.
                 await Task.Run(() =>
                 {
                     var impresor = new DatosImpresion();
@@ -93,21 +95,20 @@ namespace ProyectoAndina.Views
                     AbrirCajon(ConfiguracionImpresora.ImpresoraSeleccionada);
                 });
 
-                this.DialogResult = DialogResult.OK; // cierra ShowDialog con OK
+                this.DialogResult = DialogResult.OK;
                 this.Close();
             }
             catch (Exception ex)
             {
-                // No cierres el form; muestra el error
                 Debug.WriteLine($"Error imprimiendo: {ex}");
                 MessageBox.Show(this, "Ocurrió un error al imprimir el comprobante.",
                     "Impresión", MessageBoxButtons.OK, MessageBoxIcon.Error);
-            }
-            finally
-            {
+
+                yaImprimio = false; // si falló, permites reintentar
                 button_imprimir.Enabled = true;
             }
         }
+
 
         private void AbrirCajon(string nombreImpresora)
         {

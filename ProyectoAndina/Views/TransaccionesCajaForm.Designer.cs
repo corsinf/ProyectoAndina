@@ -499,6 +499,7 @@
             textBox_usuario_encontrar.Size = new Size(199, 38);
             textBox_usuario_encontrar.TabIndex = 121;
             textBox_usuario_encontrar.Click += textBox_usuario_encontrar_Click;
+            textBox_usuario_encontrar.TextChanged += textBox_usuario_encontrar_TextChanged;
             textBox_usuario_encontrar.KeyDown += textBox_usuario_encontrar_KeyDown;
             // 
             // label_titulo_usuario
@@ -936,6 +937,8 @@
             textBox_valor_a_cobrar.Size = new Size(75, 30);
             textBox_valor_a_cobrar.TabIndex = 129;
             textBox_valor_a_cobrar.TextAlign = HorizontalAlignment.Right;
+            textBox_valor_a_cobrar.KeyPress += textBox_val_entregado_KeyPress;
+            textBox_valor_a_cobrar.Leave += textBox_val_entregado_Leave;
             // 
             // iconPictureBox1
             // 

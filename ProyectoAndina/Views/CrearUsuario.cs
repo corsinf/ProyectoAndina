@@ -78,6 +78,49 @@ namespace ProyectoAndina.Views
         {
             string cedula = textBox_cedula.Text.Trim();
 
+            string identificacion = textBox_cedula.Text.Trim();
+
+            int metodo = ObtenerMetodoPago();
+
+            if (metodo == 0)
+            {
+                StylesAlertas.MostrarAlerta(this, "Seleccione el tipo de identificación", "¡Error!", TipoAlerta.Error);
+                return;
+            }
+
+            if (metodo == 1) // RUC
+            {
+                if (identificacion.Length <= 10 || !identificacion.EndsWith("001"))
+                {
+                    StylesAlertas.MostrarAlerta(this, "El RUC debe tener más de 10 dígitos y terminar en '001'.", "¡Error!", TipoAlerta.Error);
+                    return;
+                }
+            }
+            else if (metodo == 2) // Cédula
+            {
+                if (identificacion.Length != 10)
+                {
+                    StylesAlertas.MostrarAlerta(this, "La cédula debe tener exactamente 10 dígitos.", "¡Error!", TipoAlerta.Error);
+                    return;
+                }
+            }
+            else if (metodo == 3) // Pasaporte
+            {
+                if (identificacion.Length < 6 || identificacion.Length > 12)
+                {
+                    StylesAlertas.MostrarAlerta(this, "El pasaporte debe tener entre 6 y 12 caracteres.", "¡Error!", TipoAlerta.Error);
+                    return;
+                }
+
+                // opcional: validar que contenga letras y números
+                if (!System.Text.RegularExpressions.Regex.IsMatch(identificacion, @"^[A-Za-z0-9]+$"))
+                {
+                    StylesAlertas.MostrarAlerta(this, "El pasaporte solo puede contener letras y números.", "¡Error!", TipoAlerta.Error);
+                    return;
+                }
+            }
+
+
             //revisar sobre persona y rol
             if (!validador.ValidarTodosLosControles())
             {
@@ -91,7 +134,8 @@ namespace ProyectoAndina.Views
                 correo = textBox_correo.Text.Trim(),
                 telefono_1 = textBox_telefono?.Text.Trim() ?? "",
                 direccion = textBox_direccion?.Text.Trim() ?? "",
-                observaciones = "Creado desde la aplicacion de escritorio"
+                observaciones = "Creado desde la aplicacion de escritorio",
+                idRucCedula = ObtenerMetodoPago().ToString()
             };
 
             var personaToken = _PersonaController.ObtenerPorId(SessionUser.PerId);
@@ -123,19 +167,7 @@ namespace ProyectoAndina.Views
                         {
                             try
                             {
-                                
-                                // ✅ Ya tienes el token. Ahora puedes usarlo para otra operación
-                                string respuestaEncontrado = await _apiService.GetPersonaPorCedulaAsync(cedula, token);
-
                                 string respuesta = await _apiService.CrearPersonaAsync(persona, token);
-                                var objRespuesta = JsonConvert.DeserializeObject<dynamic>(respuestaEncontrado);
-
-                                if (objRespuesta != null)
-                                {
-                                    StylesAlertas.MostrarAlerta(this, "La cédula ingresada no es válida.", "¡Error!", TipoAlerta.Error);
-                                    return;
-                                }
-
                                 if (respuesta.Contains("\"status\":500") || respuesta.Contains("\"title\":\"Not Found\""))
                                 {
                                     StylesAlertas.MostrarAlerta(this, "La cédula ingresada no es válida.", "¡Error!", TipoAlerta.Error);
@@ -262,6 +294,17 @@ namespace ProyectoAndina.Views
             TecladoHelper.MostrarTeclado();
         }
 
+        private int ObtenerMetodoPago()
+        {
+            if (radioButton_ruc.Checked) return 1;
+            if (radioButton_cedula.Checked) return 2;
+            if (radioButton_pasaporte.Checked) return 3;
+            if (radioButton_otro.Checked) return 4;
+
+            return 0; // ninguno seleccionado
+        }
+
+
         private async void CargarDatos()
         {
             string cedula = textBox_cedula.Text.Trim();
@@ -269,9 +312,12 @@ namespace ProyectoAndina.Views
             if (cedula == "")
             {
                 StylesAlertas.MostrarAlerta(this, "Ingrese el CI/RUC del usuario", "¡Error!", TipoAlerta.Error);
+                return;
             }
 
-            var persona = _PersonaController.ObtenerPorId(SessionUser.PerId);
+            
+
+                var persona = _PersonaController.ObtenerPorId(SessionUser.PerId);
 
             if (persona != null)
             {
